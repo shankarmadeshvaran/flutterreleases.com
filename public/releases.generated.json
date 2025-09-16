@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "generated_at": "2025-09-16T19:01:38.105Z",
+    "count": 1
+  },
+  "items": [
+    {
+      "flutter_version": "3.35.0",
+      "channel": "dev",
+      "released": "2025-09-16",
+      "dart_version": null,
+      "engine_revision": null,
+      "commit_ref": null,
+      "requires": {},
+      "platforms": {},
+      "notes_url": "https://github.com/flutter/flutter/blob/main/docs/releases/Flutter-build-release-channels.md",
+      "notes": [
+        {
+          "type": "release-notes",
+          "title": "Release notes",
+          "url": "https://github.com/flutter/flutter/blob/main/docs/releases/Flutter-build-release-channels.md"
+        }
+      ],
+      "ref_url": "https://github.com/flutter/flutter/blob/main/docs/releases/Flutter-build-release-channels.md",
+      "summary": "If you want to use Flutter in China, check out using Flutter in China. If you're not developing in China, ignore this notice and follow the other instructions on this page.",
+      "verified": false
+    }
+  ]
+}

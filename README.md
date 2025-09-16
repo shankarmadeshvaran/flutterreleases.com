@@ -1,48 +1,76 @@
-# FlutterReleases - Starter (Next.js + Tailwind)
+# FlutterReleases
 
-This is a minimal static Next.js site that reads `public/data/releases.json` and renders a searchable/filterable table. The site is exportable and works well on Cloudflare Pages or any static host.
+[![Flutter Releases](https://img.shields.io/badge/Flutter-SDK-blue)](https://flutterreleases.com)
+[![Dart Releases](https://img.shields.io/badge/Dart-SDK-0175C2)](https://flutterreleases.com)
+[![Next.js](https://img.shields.io/badge/Built%20with-Next.js-black)](https://nextjs.org)
+[![TailwindCSS](https://img.shields.io/badge/Styled%20with-TailwindCSS-38B2AC)](https://tailwindcss.com)
 
-## Quick start
+[FlutterReleases.com](https://flutterreleases.com) is an **unofficial, community-maintained resource** that lists all **Flutter SDK releases** along with corresponding **Dart SDK versions**, release notes, and download links.  
 
-1. Install deps
+The goal is to provide a **single, consolidated place** to browse Flutter’s **stable, beta, and dev releases**, making it easier for developers to stay up to date.
 
-```bash
-npm install
-```
+---
 
-2. Run dev
+## 🌐 Website
 
-```bash
-npm run dev
-```
+👉 Visit: [https://flutterreleases.com](https://flutterreleases.com)  
 
-3. Build + export (static site)
+Features include:
+- A searchable list of all Flutter SDK releases  
+- Quick access to release notes and SDK downloads  
+- JSON API at `/releases.json`  
+- RSS feed at `/feed.xml`  
+- SEO-friendly release pages  
 
-```bash
-npm run build
-npm run export
-# output will be in the `out/` folder
-```
+---
 
-## Deploy to Cloudflare Pages
+## 🛠️ Tech Stack
 
-1. Push this repo to GitHub.
-2. Open Cloudflare Pages and "Create a project". Connect your GitHub repo.
-3. Set the build command to:
+FlutterReleases.com is built with modern web tools:
+- **Next.js** (React framework for static site generation)  
+- **Tailwind CSS** (utility-first styling, dark mode support)  
+- **Node.js scripts** for release data aggregation  
+- **Static JSON + RSS + Sitemap** for developer-friendly integration and SEO  
 
-```
-npm run build && npm run export
-```
+---
 
-4. Set the build output directory to:
+## 🤝 Contributing
 
-```
-out
-```
+We welcome contributions from the Flutter community!  
+You can help improve [FlutterReleases.com](https://flutterreleases.com) in several ways:
 
-5. Deploy. Cloudflare Pages will provision HTTPS automatically once DNS is configured.
+1. **Report issues**  
+   - Use [GitHub Issues](../../issues) if you notice missing data, broken links, or incorrect release details.
 
-## Notes
-- Keep `public/data/releases.json` updated by your ingestion script (GitHub Actions). The site reads that file at build time; updates require a new build (the ingestion workflow can commit to the repo to trigger a build).
-- This starter is intentionally simple: no server runtime, client-side Lunr search, and static export for easy hosting.
-```
+2. **Improve release data**  
+   - Extend or fix the data generation script (`scripts/generate-releases.js`)  
+   - Add missing metadata such as Dart versions, engine revisions, or release notes  
+
+3. **Frontend improvements**  
+   - Enhance UI components in `components/`  
+   - Improve SEO with better metadata in `components/Seo.js`  
+   - Add small UX refinements (filters, search, etc.)
+
+4. **Documentation**  
+   - Improve this README  
+   - Add examples of how to use the JSON API or RSS feed  
+
+### Contribution Guidelines
+
+- Fork the repository and create a branch for your work.  
+- Keep pull requests focused (small, single-purpose).  
+- Ensure code runs without errors (`npm run build`).  
+- Validate generated data with tools like `jq` (JSON) and `xmllint` (XML).  
+
+---
+
+## 🛡️ Disclaimer
+
+This is **not an official Google or Flutter website**.  
+All downloads are hosted by Google, and links on this site take you directly to Flutter’s official resources.  
+
+---
+
+## 📜 License
+
+[MIT](LICENSE)

@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-  <title>FlutterReleases — Unofficial Flutter &amp; Dart releases</title>
-  <link>https://flutterreleases.com</link>
-  <description>Latest Flutter &amp; Dart releases (stable, beta, dev)</description>
+  <atom:link href="https://flutterreleases.pages.dev/feed.xml" rel="self" type="application/rss+xml" />
+  <title>FlutterReleases — Flutter &amp; Dart releases</title>
+  <link>https://flutterreleases.pages.dev</link>
+  <description>Browse the latest Flutter releases with matching Dart SDK versions, release notes, and direct download links — updated across stable, beta, and dev channels.</description>
   <language>en-US</language>
-  <lastBuildDate>2025-09-16T17:16:38.945Z</lastBuildDate>
+  <pubDate>2025-09-16T18:07:02.755Z</pubDate>
+  <ttl>60</ttl>
   
   <item>
     <title>Flutter 3.19.0-0.1.pre (dev)</title>
     <link>https://github.com/flutter/flutter/releases/tag/3.19.0-0.1.pre</link>
     <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.19.0-0.1.pre</guid>
     <pubDate>Thu, 11 Jan 2024 00:00:00 GMT</pubDate>
-    <description>The release of the Flutter 3.19 beta contains the changes noted below.</description>
+    
+    <description><![CDATA[<p>The release of the Flutter 3.19 beta contains the changes noted below.</p>
+<p>Released: 2024-01-11</p>]]></description>
   </item>
 
   <item>
@@ -20,7 +24,9 @@
     <link>https://github.com/flutter/flutter/releases/tag/3.18.0-0.1.pre</link>
     <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.18.0-0.1.pre</guid>
     <pubDate>Tue, 12 Dec 2023 00:00:00 GMT</pubDate>
-    <description>The release of the Flutter 3.18 beta contains the changes noted below.</description>
+    
+    <description><![CDATA[<p>The release of the Flutter 3.18 beta contains the changes noted below.</p>
+<p>Released: 2023-12-12</p>]]></description>
   </item>
 
   <item>
@@ -28,7 +34,9 @@
     <link>https://github.com/flutter/flutter/releases/tag/3.17.0-0.1.pre</link>
     <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.17.0-0.1.pre</guid>
     <pubDate>Mon, 11 Dec 2023 00:00:00 GMT</pubDate>
-    <description>The release of the Flutter 3.17 beta contains the changes noted below.</description>
+    
+    <description><![CDATA[<p>The release of the Flutter 3.17 beta contains the changes noted below.</p>
+<p>Released: 2023-12-11</p>]]></description>
   </item>
 
   <item>
@@ -36,7 +44,9 @@
     <link>https://github.com/flutter/flutter/releases/tag/3.16.0-0.1.pre</link>
     <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.16.0-0.1.pre</guid>
     <pubDate>Fri, 20 Oct 2023 00:00:00 GMT</pubDate>
-    <description>The release of the Flutter 3.16 beta contains the changes noted below.</description>
+    
+    <description><![CDATA[<p>The release of the Flutter 3.16 beta contains the changes noted below.</p>
+<p>Released: 2023-10-20</p>]]></description>
   </item>
 
   <item>
@@ -44,7 +54,9 @@
     <link>https://github.com/flutter/flutter/releases/tag/3.15.0-15.1.pre</link>
     <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.15.0-15.1.pre</guid>
     <pubDate>Fri, 15 Sep 2023 00:00:00 GMT</pubDate>
-    <description>The release of the Flutter 3.15 beta contains the changes noted below.</description>
+    
+    <description><![CDATA[<p>The release of the Flutter 3.15 beta contains the changes noted below.</p>
+<p>Released: 2023-09-15</p>]]></description>
   </item>
 
   <item>
@@ -52,7 +64,9 @@
     <link>https://github.com/flutter/flutter/releases/tag/3.14.0-0.1.pre</link>
     <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.14.0-0.1.pre</guid>
     <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-    <description># Flutter 3.14 beta</description>
+    
+    <description><![CDATA[<p># Flutter 3.14 beta</p>
+<p>Released: 2023-08-21</p>]]></description>
   </item>
 
   <item>
@@ -60,7 +74,9 @@
     <link>https://github.com/flutter/flutter/releases/tag/3.13.0-0.1.pre</link>
     <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.13.0-0.1.pre</guid>
     <pubDate>Wed, 12 Jul 2023 00:00:00 GMT</pubDate>
-    <description># Flutter 3.13 beta</description>
+    
+    <description><![CDATA[<p># Flutter 3.13 beta</p>
+<p>Released: 2023-07-12</p>]]></description>
   </item>
 </channel>
 </rss>

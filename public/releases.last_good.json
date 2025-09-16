@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2025-09-16T16:37:40.254Z",
+    "generated_at": "2025-09-16T18:07:02.754Z",
     "count": 7
   },
   "items": [
@@ -15,6 +15,7 @@
       "notes_url": null,
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.19.0-0.1.pre",
       "summary": "The release of the Flutter 3.19 beta contains the changes noted below.",
+      "seo_description": "The release of the Flutter 3.19 beta contains the changes noted below.",
       "verified": false
     },
     {
@@ -28,6 +29,7 @@
       "notes_url": null,
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.18.0-0.1.pre",
       "summary": "The release of the Flutter 3.18 beta contains the changes noted below.",
+      "seo_description": "The release of the Flutter 3.18 beta contains the changes noted below.",
       "verified": false
     },
     {
@@ -41,6 +43,7 @@
       "notes_url": null,
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.17.0-0.1.pre",
       "summary": "The release of the Flutter 3.17 beta contains the changes noted below.",
+      "seo_description": "The release of the Flutter 3.17 beta contains the changes noted below.",
       "verified": false
     },
     {
@@ -54,6 +57,7 @@
       "notes_url": null,
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.16.0-0.1.pre",
       "summary": "The release of the Flutter 3.16 beta contains the changes noted below.",
+      "seo_description": "The release of the Flutter 3.16 beta contains the changes noted below.",
       "verified": false
     },
     {
@@ -67,6 +71,7 @@
       "notes_url": null,
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.15.0-15.1.pre",
       "summary": "The release of the Flutter 3.15 beta contains the changes noted below.",
+      "seo_description": "The release of the Flutter 3.15 beta contains the changes noted below.",
       "verified": false
     },
     {
@@ -80,6 +85,7 @@
       "notes_url": null,
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.14.0-0.1.pre",
       "summary": "# Flutter 3.14 beta",
+      "seo_description": "# Flutter 3.14 beta",
       "verified": false
     },
     {
@@ -93,6 +99,7 @@
       "notes_url": null,
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.13.0-0.1.pre",
       "summary": "# Flutter 3.13 beta",
+      "seo_description": "# Flutter 3.13 beta",
       "verified": false
     }
   ]
