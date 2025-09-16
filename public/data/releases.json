@@ -1,0 +1,161 @@
+{
+  "generated_at": "2025-01-16T00:00:00Z",
+  "items": [
+    {
+      "version": "3.24.0",
+      "release_type": "Release",
+      "build": "9b9b5434eb",
+      "released": "11 Sep 2024",
+      "requires": "macOS 13+, Windows 10+, Linux",
+      "dart": "3.5.0",
+      "channel": "stable",
+      "download": "https://docs.flutter.dev/get-started/install",
+      "release_notes": "https://docs.flutter.dev/release/release-notes#3.24.0",
+      "summary": "Performance improvements and bug fixes"
+    },
+    {
+      "version": "3.23.0",
+      "release_type": "Release", 
+      "build": "44e6dfdfd",
+      "released": "5 Jul 2024",
+      "requires": "macOS 12+, Windows 10+, Linux",
+      "dart": "3.4.3",
+      "channel": "stable",
+      "download": "https://docs.flutter.dev/get-started/install",
+      "release_notes": "https://docs.flutter.dev/release/release-notes#3.23.0",
+      "summary": "Material 3 updates and accessibility improvements"
+    },
+    {
+      "version": "3.22.0",
+      "release_type": "Release",
+      "build": "8b5b4c4c4c",
+      "released": "14 May 2024", 
+      "requires": "macOS 12+, Windows 10+, Linux",
+      "dart": "3.4.0",
+      "channel": "stable",
+      "download": "https://docs.flutter.dev/get-started/install",
+      "release_notes": "https://docs.flutter.dev/release/release-notes#3.22.0",
+      "summary": "New widgets and platform improvements"
+    },
+    {
+      "version": "3.19.0",
+      "release_type": "Release",
+      "build": "7a4c3b3b3b",
+      "released": "7 Mar 2024",
+      "requires": "macOS 12+, Windows 10+, Linux", 
+      "dart": "3.3.0",
+      "channel": "stable",
+      "download": "https://docs.flutter.dev/get-started/install",
+      "release_notes": "https://docs.flutter.dev/release/release-notes#3.19.0",
+      "summary": "WebAssembly support and performance enhancements"
+    },
+    {
+      "version": "3.16.0",
+      "release_type": "Release",
+      "build": "6b3a2a2a2a",
+      "released": "8 Nov 2023",
+      "requires": "macOS 12+, Windows 10+, Linux",
+      "dart": "3.2.0", 
+      "channel": "stable",
+      "download": "https://docs.flutter.dev/get-started/install",
+      "release_notes": "https://docs.flutter.dev/release/release-notes#3.16.0",
+      "summary": "Impeller renderer and Material You updates"
+    },
+    {
+      "version": "3.13.0",
+      "release_type": "Release",
+      "build": "5a29191919",
+      "released": "6 Sep 2023",
+      "requires": "macOS 12+, Windows 10+, Linux",
+      "dart": "3.1.0",
+      "channel": "stable", 
+      "download": "https://docs.flutter.dev/get-started/install",
+      "release_notes": "https://docs.flutter.dev/release/release-notes#3.13.0",
+      "summary": "Sliver improvements and platform updates"
+    },
+    {
+      "version": "3.10.0",
+      "release_type": "Release",
+      "build": "4a18181818",
+      "released": "10 May 2023",
+      "requires": "macOS 12+, Windows 10+, Linux",
+      "dart": "3.0.0",
+      "channel": "stable",
+      "download": "https://docs.flutter.dev/get-started/install", 
+      "release_notes": "https://docs.flutter.dev/release/release-notes#3.10.0",
+      "summary": "Dart 3.0 support and Material 3 components"
+    },
+    {
+      "version": "3.7.0",
+      "release_type": "Release",
+      "build": "3a17171717",
+      "released": "25 Jan 2023",
+      "requires": "macOS 12+, Windows 10+, Linux",
+      "dart": "2.19.0",
+      "channel": "stable",
+      "download": "https://docs.flutter.dev/get-started/install",
+      "release_notes": "https://docs.flutter.dev/release/release-notes#3.7.0", 
+      "summary": "iOS 16 support and performance improvements"
+    },
+    {
+      "version": "3.3.0",
+      "release_type": "Release",
+      "build": "2a16161616",
+      "released": "23 Aug 2022",
+      "requires": "macOS 12+, Windows 10+, Linux",
+      "dart": "2.18.0",
+      "channel": "stable",
+      "download": "https://docs.flutter.dev/get-started/install",
+      "release_notes": "https://docs.flutter.dev/release/release-notes#3.3.0",
+      "summary": "macOS and Linux desktop improvements"
+    },
+    {
+      "version": "3.0.0",
+      "release_type": "Release", 
+      "build": "1a15151515",
+      "released": "3 May 2022",
+      "requires": "macOS 12+, Windows 10+, Linux",
+      "dart": "2.17.0",
+      "channel": "stable",
+      "download": "https://docs.flutter.dev/get-started/install",
+      "release_notes": "https://docs.flutter.dev/release/release-notes#3.0.0",
+      "summary": "Major milestone with desktop and web improvements"
+    },
+    {
+      "version": "3.25.0",
+      "release_type": "Beta",
+      "build": "8c7b6b6b6b",
+      "released": "15 Jan 2025",
+      "requires": "macOS 13+, Windows 10+, Linux",
+      "dart": "3.6.0",
+      "channel": "beta",
+      "download": "https://docs.flutter.dev/get-started/install",
+      "release_notes": "https://docs.flutter.dev/release/release-notes#3.25.0",
+      "summary": "Upcoming features and experimental APIs"
+    },
+    {
+      "version": "3.24.1",
+      "release_type": "Beta",
+      "build": "7b6a5a5a5a",
+      "released": "2 Jan 2025", 
+      "requires": "macOS 13+, Windows 10+, Linux",
+      "dart": "3.5.1",
+      "channel": "beta",
+      "download": "https://docs.flutter.dev/get-started/install",
+      "release_notes": "https://docs.flutter.dev/release/release-notes#3.24.1",
+      "summary": "Beta testing for next stable release"
+    },
+    {
+      "version": "3.26.0",
+      "release_type": "Main",
+      "build": "9d8c7c7c7c",
+      "released": "20 Jan 2025",
+      "requires": "macOS 13+, Windows 10+, Linux", 
+      "dart": "3.7.0",
+      "channel": "main",
+      "download": "https://docs.flutter.dev/get-started/install",
+      "release_notes": "https://docs.flutter.dev/release/release-notes#3.26.0",
+      "summary": "Latest development build with cutting-edge features"
+    }
+  ]
+}
