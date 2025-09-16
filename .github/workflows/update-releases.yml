@@ -1,0 +1,65 @@
+name: update-releases
+
+# Triggers: push, schedule, manual
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    # hourly (UTC). Adjust cron as desired.
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write   # allow committing back to the repo
+  id-token: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository (full)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true   # needed to push using the injected GITHUB_TOKEN
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run generator script
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}            # set this in repo Secrets
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    # optional (Actions provides it by default)
+        run: |
+          echo "SITE_URL=$SITE_URL"
+          node scripts/generate-releases.js
+
+      - name: Commit generated files if changed
+        env:
+          GIT_AUTHOR_NAME: "github-actions[bot]"
+          GIT_AUTHOR_EMAIL: "github-actions[bot]@users.noreply.github.com"
+        run: |
+          # Files we expect the generator to produce
+          FILES="public/releases.json public/feed.xml public/sitemap.xml public/data/releases.generated.json"
+
+          # Configure git
+          git config user.name "$GIT_AUTHOR_NAME"
+          git config user.email "$GIT_AUTHOR_EMAIL"
+
+          # Add and commit if there are changes
+          git add $FILES || true
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit"
+            exit 0
+          fi
+
+          git commit -m "chore(releases): regenerate data & feeds [skip ci]" || true
+          # push back to the branch that triggered the workflow
+          git push origin HEAD:main
