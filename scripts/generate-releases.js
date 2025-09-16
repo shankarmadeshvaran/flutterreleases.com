@@ -1,11 +1,13 @@
 // scripts/generate-releases.js
-// Generates public/releases.json, public/feed.xml, public/sitemap.xml
-// and public/data/releases.generated.json
-//
+// Safe generator for FlutterReleases
 // Usage:
-// SITE_URL="https://flutterreleases.pages.dev" node scripts/generate-releases.js
+//   SITE_URL="https://flutterreleases.pages.dev" node scripts/generate-releases.js
 //
-// Note: In GitHub Actions, use the built-in GITHUB_TOKEN: it's available as process.env.GITHUB_TOKEN.
+// Behavior:
+// - Generates: public/data/releases.generated.json, public/releases.json, public/feed.xml, public/sitemap.xml
+// - Validates items; if validation fails, does NOT overwrite public/releases.json.
+// - Keeps last-good backup at public/releases.last_good.json
+// - Writes generation_status.json to show success/failure details.
 
 import fs from 'fs';
 import path from 'path';
@@ -14,40 +16,39 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ---- fetch setup: use global fetch if available, else dynamic import node-fetch ----
+// --- fetch setup (use global fetch if available, else node-fetch) ---
 let _fetch = global.fetch;
 if (!_fetch) {
   try {
     const mod = await import('node-fetch');
     _fetch = mod.default;
   } catch (e) {
-    console.error('No global fetch available and failed to import node-fetch. Install node-fetch or use Node 18+.');
+    console.error('No global fetch and failed to import node-fetch. Install node-fetch or use Node 18+.');
     process.exit(1);
   }
 }
 
-// ---- config ----
+// --- config ---
 const OUT_DIR = path.join(process.cwd(), 'public');
 const DATA_DIR = path.join(OUT_DIR, 'data');
-const SOURCE_FILE = path.join(DATA_DIR, 'releases.json'); // optional manual override file
+const SOURCE_FILE = path.join(DATA_DIR, 'releases.json'); // optional manual overrides
 const OUTPUT_CANONICAL = path.join(DATA_DIR, 'releases.generated.json');
 const OUTPUT_API = path.join(OUT_DIR, 'releases.json');
 const OUTPUT_RSS = path.join(OUT_DIR, 'feed.xml');
 const OUTPUT_SITEMAP = path.join(OUT_DIR, 'sitemap.xml');
+const STATUS_FILE = path.join(OUT_DIR, 'generation_status.json');
+const LAST_GOOD = path.join(OUT_DIR, 'releases.last_good.json');
 
 const SITE_URL = (process.env.SITE_URL || '').replace(/\/$/, '') || 'https://flutterreleases.pages.dev';
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
 
-// channels to try
+// channels & manifest templates (best-effort)
 const CHANNELS = ['stable', 'beta', 'dev', 'main'];
-
-// manifest URL templates to try (may change over time)
 const CHANNEL_MANIFEST_URLS = [
-  (ch) => `https://storage.googleapis.com/flutter_infra_release/releases/releases_${ch}.json`,
-  // add more templates here if you discover other manifests
+  (ch) => `https://storage.googleapis.com/flutter_infra_release/releases/releases_${ch}.json`
 ];
 
-// ---- helpers ----
+// --- small helpers ---
 function escapeXml(str = '') {
   return String(str)
     .replace(/&/g, '&amp;')
@@ -57,63 +58,55 @@ function escapeXml(str = '') {
     .replace(/'/g, '&apos;');
 }
 
-async function fetchJsonRest(url, opts = {}) {
-  try {
-    const headers = Object.assign({}, opts.headers || {});
-    if (GITHUB_TOKEN) headers['Authorization'] = `token ${GITHUB_TOKEN}`;
-    headers['Accept'] = headers['Accept'] || 'application/vnd.github.v3+json';
-    const res = await _fetch(url, { ...opts, headers });
-    const rateLimit = res.headers?.get?.('x-ratelimit-remaining');
-    if (rateLimit) {
-      console.debug(`GitHub REST rate remaining: ${rateLimit}`);
-    }
-    if (!res.ok) {
-      // return null to indicate fallback possible
-      console.warn(`fetchJsonRest: ${res.status} ${res.statusText} - ${url}`);
-      return null;
-    }
-    return await res.json();
-  } catch (err) {
-    console.warn('fetchJsonRest error', err.message || err);
-    return null;
-  }
+function atomicWrite(filePath, content) {
+  const tmp = filePath + '.tmp';
+  fs.writeFileSync(tmp, content, 'utf8');
+  fs.renameSync(tmp, filePath); // atomic replace on POSIX
 }
 
-async function fetchGraphql(query, variables = {}) {
-  try {
-    const url = 'https://api.github.com/graphql';
-    const headers = { 'Content-Type': 'application/json' };
-    if (GITHUB_TOKEN) headers['Authorization'] = `bearer ${GITHUB_TOKEN}`;
-    const res = await _fetch(url, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ query, variables }),
-    });
-    if (!res.ok) {
-      console.warn('fetchGraphql: non-ok', res.status, await res.text());
-      return null;
-    }
-    const json = await res.json();
-    if (json.errors) console.warn('GraphQL errors:', json.errors);
-    return json.data || null;
-  } catch (err) {
-    console.warn('fetchGraphql error', err.message || err);
-    return null;
-  }
+function nowIso() {
+  return new Date().toISOString();
 }
 
-// try to fetch a URL and parse JSON (no auth)
+// Minimal validation: ensure items array present and non-empty, first item has a version.
+function validateItems(items) {
+  if (!Array.isArray(items)) return { ok: false, reason: 'items not an array' };
+  if (items.length === 0) return { ok: false, reason: 'items length is 0' };
+  if (!items[0] || !items[0].flutter_version) return { ok: false, reason: 'first item missing flutter_version' };
+  return { ok: true, reason: 'ok', count: items.length };
+}
+
+// --- HTTP utilities ---
 async function fetchJsonNoAuth(url) {
   try {
     const res = await _fetch(url);
     if (!res.ok) return null;
     return await res.json();
-  } catch (err) {
+  } catch (e) {
     return null;
   }
 }
 
-// ---- fetchers ----
+async function fetchJsonRest(url) {
+  try {
+    const headers = {};
+    if (GITHUB_TOKEN) headers['Authorization'] = `token ${GITHUB_TOKEN}`;
+    headers['Accept'] = 'application/vnd.github.v3+json';
+    const res = await _fetch(url, { headers });
+    if (!res.ok) {
+      console.warn(`fetchJsonRest: ${res.status} ${url}`);
+      return null;
+    }
+    const rateRemaining = res.headers?.get?.('x-ratelimit-remaining');
+    if (rateRemaining) console.debug(`GitHub REST rate remaining: ${rateRemaining}`);
+    return await res.json();
+  } catch (e) {
+    console.warn('fetchJsonRest error', e.message || e);
+    return null;
+  }
+}
+
+// Try channel manifests (best-effort; may not exist)
 async function fetchChannelManifests() {
   const manifests = {};
   for (const ch of CHANNELS) {
@@ -129,164 +122,203 @@ async function fetchChannelManifests() {
         console.log('no');
       }
     }
-    if (!manifests[ch]) {
-      console.warn(`No manifest found for channel ${ch}`);
-    }
+    if (!manifests[ch]) console.warn(`No manifest found for channel ${ch}`);
   }
   return manifests;
 }
 
+// Primary GitHub releases fetch
 async function fetchGithubReleases() {
-  // REST fetch releases (per_page up to 200)
   const url = 'https://api.github.com/repos/flutter/flutter/releases?per_page=200';
   const data = await fetchJsonRest(url);
   if (!data) {
-    // fallback: try GraphQL minimal query to fetch tags (rare)
-    console.warn('Falling back: GitHub releases REST API failed or unauthenticated.');
+    console.warn('Failed to fetch GitHub releases');
     return [];
   }
   return Array.isArray(data) ? data : [];
 }
 
-// ---- normalization & merge ----
+// --- Normalizers & fallbacks ---
+// Build items from manifests (if available)
 function normalizeFromManifests(manifests) {
   const itemsByVersion = new Map();
-
   for (const [channel, info] of Object.entries(manifests)) {
-    if (!info || !info.json) continue;
-    const json = info.json;
-    // typical manifest shape: { releases: [ ... ] }
-    if (Array.isArray(json.releases)) {
-      for (const r of json.releases) {
-        const version = r.version || r.flutter_version || r.name || (r.archive && r.archive.version);
-        if (!version) continue;
-        const key = version;
-        const current = itemsByVersion.get(key) || {
-          flutter_version: version,
-          channel,
-          released: r.release_date || r.date || r.published || null,
-          dart_version: r.dart_sdk_version || r.dart_version || (r.dart_sdk && r.dart_sdk.version) || null,
-          engine_revision: r.engine || r.engine_revision || null,
-          devtools_version: r.devtools_version || null,
-          requires: {},
-          platforms: {},
-          notes_url: r.release_notes || null,
-          ref_url: null,
-          summary: r.summary || r.notes || null,
-          verified: false
-        };
-
-        // archives or files
-        if (r.archive && typeof r.archive === 'object') {
-          for (const [k, v] of Object.entries(r.archive)) {
-            if (!v) continue;
-            current.platforms[k] = typeof v === 'string' ? v : v.url || v.path || JSON.stringify(v);
-          }
+    if (!info || !info.json || !Array.isArray(info.json.releases)) continue;
+    for (const r of info.json.releases) {
+      const version = r.version || r.flutter_version || r.name || (r.archive && r.archive.version);
+      if (!version) continue;
+      const key = version;
+      const cur = itemsByVersion.get(key) || {
+        flutter_version: version,
+        channel,
+        released: r.release_date || r.date || r.published || null,
+        dart_version: r.dart_sdk_version || r.dart_version || null,
+        engine_revision: r.engine || r.engine_revision || null,
+        requires: {},
+        platforms: {},
+        notes_url: r.release_notes || null,
+        ref_url: null,
+        summary: r.summary || r.notes || null,
+        verified: false
+      };
+      if (r.archive && typeof r.archive === 'object') {
+        for (const [k, v] of Object.entries(r.archive)) {
+          if (!v) continue;
+          cur.platforms[k] = typeof v === 'string' ? v : v.url || v.path || JSON.stringify(v);
         }
-        if (r.files && Array.isArray(r.files)) {
-          for (const f of r.files) {
-            if (!f) continue;
-            const name = f.name || f.archive || f.path || '';
-            const url = f.url || f.archive_url || f.download_url || f.path;
-            if (!url) continue;
-            if (/mac/i.test(name) && /arm/i.test(name)) current.platforms.macos_arm64 = url;
-            else if (/mac/i.test(name)) current.platforms.macos_x64 = url;
-            else if (/win/i.test(name) || /\.exe$/.test(url)) current.platforms.windows_x64 = url;
-            else if (/linux/i.test(name) || /\.tar\.gz$/.test(url)) current.platforms.linux_x64 = url;
-          }
-        }
-
-        itemsByVersion.set(key, current);
       }
-    } else {
-      // unknown manifest shape - ignore
+      if (r.files && Array.isArray(r.files)) {
+        for (const f of r.files) {
+          const name = f.name || f.archive || f.path || '';
+          const url = f.url || f.archive_url || f.download_url || f.path;
+          if (!url) continue;
+          if (/mac/i.test(name) && /arm/i.test(name)) cur.platforms.macos_arm64 = url;
+          else if (/mac/i.test(name)) cur.platforms.macos_x64 = url;
+          else if (/win/i.test(name) || /\.exe$/.test(url)) cur.platforms.windows_x64 = url;
+          else if (/linux/i.test(name) || /\.tar\.gz$/.test(url)) cur.platforms.linux_x64 = url;
+        }
+      }
+      itemsByVersion.set(key, cur);
     }
   }
-
   return Array.from(itemsByVersion.values());
 }
 
+// Fallback: map GitHub releases to items
+function inferChannelFromTagOrName(tagOrName) {
+  if (!tagOrName) return 'stable';
+  const s = String(tagOrName).toLowerCase();
+  if (s.includes('beta') || s.includes('-beta')) return 'beta';
+  if (s.includes('dev') || s.includes('main') || s.includes('-dev') || s.includes('.pre')) return 'dev';
+  if (s.includes('rc')) return 'rc';
+  return 'stable';
+}
+function extractDartVersionFromText(text) {
+  if (!text) return null;
+  const m = text.match(/\bDart(?: SDK)?\s*[:\-]?\s*([0-9]+\.[0-9]+(?:\.[0-9]+)?)/i);
+  if (m) return m[1];
+  return null;
+}
+function extractEngineRevisionFromText(text) {
+  if (!text) return null;
+  const m = text.match(/engine(?:\srevision)?[: ]+([0-9a-f]{7,40})/i) || text.match(/engine[: ]+([0-9a-f]{7,40})/i);
+  if (m) return m[1];
+  return null;
+}
+function mapAssetsToPlatforms(assets = []) {
+  const platforms = {};
+  for (const a of assets || []) {
+    if (!a || !a.name || !a.browser_download_url) continue;
+    const name = a.name.toLowerCase();
+    const url = a.browser_download_url;
+    if ((name.includes('macos') || name.includes('darwin')) && name.includes('arm')) platforms.macos_arm64 = url;
+    else if (name.includes('macos') || name.includes('darwin')) platforms.macos_x64 = url;
+    else if (name.includes('windows') || name.endsWith('.exe') || name.includes('.msi')) platforms.windows_x64 = url;
+    else if (name.includes('linux') || name.endsWith('.tar.gz') || name.includes('.deb') || name.includes('.rpm')) platforms.linux_x64 = url;
+    else {
+      if (name.includes('arm64')) platforms.macos_arm64 = platforms.macos_arm64 || url;
+      if (name.includes('x64') || name.includes('x86_64')) platforms.linux_x64 = platforms.linux_x64 || url;
+    }
+  }
+  return platforms;
+}
+function githubReleasesToItems(ghReleases) {
+  if (!Array.isArray(ghReleases)) return [];
+  const out = [];
+  for (const r of ghReleases) {
+    const rawTag = r.tag_name || r.name || '';
+    const version = String(rawTag).replace(/^v/, '').trim();
+    if (!version) continue;
+    const channel = inferChannelFromTagOrName(rawTag || r.name);
+    let summary = null;
+    if (r.body) {
+      const first = r.body.split('\n').find(l => l.trim().length > 0);
+      summary = first ? first.trim().slice(0, 800) : null;
+    }
+    const item = {
+      flutter_version: version,
+      channel,
+      released: r.published_at ? new Date(r.published_at).toISOString().split('T')[0] : null,
+      dart_version: extractDartVersionFromText(r.body) || null,
+      engine_revision: extractEngineRevisionFromText(r.body) || null,
+      requires: {},
+      platforms: mapAssetsToPlatforms(r.assets),
+      notes_url: null,
+      ref_url: r.html_url || null,
+      summary,
+      verified: false
+    };
+    item.verified = Object.values(item.platforms).some(u => typeof u === 'string' && u.includes('storage.googleapis.com'));
+    out.push(item);
+  }
+  return out;
+}
+
+// Merge GH metadata into manifest-derived items (when manifests exist)
 function mergeWithGithub(items, ghReleases) {
   const ghByTag = new Map();
   for (const r of ghReleases) {
     const tag = r.tag_name || r.name;
     if (!tag) continue;
+    ghByTag.set(tag.replace(/^v/, ''), r);
     ghByTag.set(tag, r);
   }
-
   for (const it of items) {
-    const tagsToTry = [it.flutter_version, 'v' + it.flutter_version];
+    const candidates = [it.flutter_version, 'v' + it.flutter_version];
     let gh = null;
-    for (const t of tagsToTry) {
+    for (const t of candidates) {
       if (ghByTag.has(t)) { gh = ghByTag.get(t); break; }
     }
     if (!gh) {
       for (const [tag, r] of ghByTag.entries()) {
-        if (tag.includes(it.flutter_version) || (r.name && r.name.includes(it.flutter_version))) {
-          gh = r; break;
-        }
+        if (tag.includes(it.flutter_version) || (r.name && r.name.includes(it.flutter_version))) { gh = r; break; }
       }
     }
     if (gh) {
-      it.ref_url = gh.html_url || it.ref_url;
-      if (!it.summary && gh.body) {
-        const first = gh.body.split('\n').find(l => l.trim().length > 0);
-        it.summary = (first && first.length < 400) ? first : (gh.body.slice(0, 400));
-      }
-      if (!it.released && gh.published_at) it.released = gh.published_at;
-      if (!it.engine_revision && gh.body) {
-        const m = gh.body.match(/engine revision[: ]*([0-9a-f]{7,40})/i) || gh.body.match(/engine[: ]*([0-9a-f]{7,40})/i);
-        if (m) it.engine_revision = m[1];
-      }
-      // if GitHub assets include downloadable SDKs, map them (rare)
-      if (Array.isArray(gh.assets) && gh.assets.length) {
-        for (const a of gh.assets) {
-          if (!a || !a.name || !a.browser_download_url) continue;
-          const name = a.name.toLowerCase();
-          if (name.includes('macos') && name.includes('arm')) it.platforms.macos_arm64 = a.browser_download_url;
-          else if (name.includes('macos')) it.platforms.macos_x64 = a.browser_download_url;
-          else if (name.includes('windows')) it.platforms.windows_x64 = a.browser_download_url;
-          else if (name.includes('linux')) it.platforms.linux_x64 = a.browser_download_url;
-        }
-      }
+      it.ref_url = it.ref_url || gh.html_url;
+      it.summary = it.summary || (gh.body && gh.body.split('\n').find(l => l.trim().length > 0));
+      it.released = it.released || (gh.published_at ? new Date(gh.published_at).toISOString().split('T')[0] : null);
+      it.engine_revision = it.engine_revision || extractEngineRevisionFromText(gh.body);
+      const extraPlatforms = mapAssetsToPlatforms(gh.assets);
+      it.platforms = { ...(it.platforms || {}), ...extraPlatforms };
+      it.verified = it.verified || Object.values(it.platforms).some(u => typeof u === 'string' && u.includes('storage.googleapis.com'));
     }
-
-    // verification: does any platform link point to official storage.googleapis.com ?
-    it.verified = Object.values(it.platforms).some(u => typeof u === 'string' && u.includes('storage.googleapis.com'));
     if (it.released) {
       try { it.released = new Date(it.released).toISOString().split('T')[0]; } catch(e) {}
     }
   }
-
   return items;
 }
 
-// ---- generate outputs ----
+// RSS & sitemap (escape all dynamic content)
 function generateRss(items) {
-  const lastBuild = new Date().toISOString();
+  const lastBuild = nowIso();
   const rssItems = items.map(it => {
     const title = `Flutter ${it.flutter_version} (${it.channel || 'stable'})`;
     const link = it.ref_url || it.notes_url || `${SITE_URL}/`;
     const pubDate = it.released ? new Date(it.released).toUTCString() : new Date().toUTCString();
-    const description = escapeXml(it.summary || `Release ${it.flutter_version}`);
+    const description = it.summary || `Release ${it.flutter_version}`;
     return `
   <item>
     <title>${escapeXml(title)}</title>
     <link>${escapeXml(link)}</link>
     <guid isPermaLink="false">${escapeXml(link)}</guid>
-    <pubDate>${pubDate}</pubDate>
-    <description>${description}</description>
+    <pubDate>${escapeXml(pubDate)}</pubDate>
+    <description>${escapeXml(description)}</description>
   </item>`;
   }).join('\n');
+
+  const channelTitle = 'FlutterReleases — Unofficial Flutter & Dart releases';
+  const channelDesc = 'Latest Flutter & Dart releases (stable, beta, dev)';
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-  <title>FlutterReleases — Unofficial Flutter &amp; Dart releases</title>
+  <title>${escapeXml(channelTitle)}</title>
   <link>${escapeXml(SITE_URL)}</link>
-  <description>Latest Flutter & Dart releases (stable, beta, dev)</description>
+  <description>${escapeXml(channelDesc)}</description>
   <language>en-US</language>
-  <lastBuildDate>${lastBuild}</lastBuildDate>
+  <lastBuildDate>${escapeXml(lastBuild)}</lastBuildDate>
   ${rssItems}
 </channel>
 </rss>`;
@@ -296,13 +328,13 @@ function generateSitemap(items) {
   const urls = [];
   urls.push({
     loc: `${SITE_URL}/`,
-    lastmod: new Date().toISOString(),
+    lastmod: nowIso(),
     changefreq: 'daily',
     priority: '0.8'
   });
   for (const it of items) {
     const loc = `${SITE_URL}/releases/${encodeURIComponent(it.flutter_version)}`;
-    urls.push({ loc, lastmod: it.released || new Date().toISOString(), changefreq: 'monthly', priority: '0.6' });
+    urls.push({ loc, lastmod: it.released || nowIso(), changefreq: 'monthly', priority: '0.6' });
   }
   const sitemapItems = urls.map(u => `
   <url>
@@ -319,7 +351,7 @@ function generateSitemap(items) {
 
 function normalizeApi(items) {
   return {
-    meta: { generated_at: new Date().toISOString(), count: items.length },
+    meta: { generated_at: nowIso(), count: items.length },
     items: items.map(it => ({
       flutter_version: it.flutter_version,
       channel: it.channel || 'stable',
@@ -336,67 +368,82 @@ function normalizeApi(items) {
   };
 }
 
-// ---- main ----
+// --- main workflow ---
 async function main() {
   if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 
-  // optional manual source
+  // load manual source if present (manual overrides)
   let manual = null;
   if (fs.existsSync(SOURCE_FILE)) {
-    try {
-      manual = JSON.parse(fs.readFileSync(SOURCE_FILE, 'utf8'));
-      console.log('Loaded manual source', SOURCE_FILE);
-    } catch (e) {
-      console.warn('Failed parsing manual source', e.message);
-    }
+    try { manual = JSON.parse(fs.readFileSync(SOURCE_FILE, 'utf8')); console.log('Loaded manual source', SOURCE_FILE); }
+    catch(e) { console.warn('Failed parsing manual source', e.message); }
   }
 
-  // fetch manifests
+  // try manifests (best-effort)
   const manifests = await fetchChannelManifests();
 
-  // build items from manifests
+  // build items
   let items = normalizeFromManifests(manifests);
 
-  // merge github metadata
+  // fetch GitHub releases
   const gh = await fetchGithubReleases();
-  if (Array.isArray(gh) && gh.length) {
+
+  // fallback or merge
+  if ((!items || items.length === 0) && Array.isArray(gh) && gh.length) {
+    console.log('No manifest items found — creating items directly from GitHub releases');
+    items = githubReleasesToItems(gh);
+  } else if (Array.isArray(gh) && gh.length) {
     items = mergeWithGithub(items, gh);
   }
 
-  // merge manual overrides
+  // apply manual overrides (manual is authoritative per-version)
   if (manual && Array.isArray(manual.items)) {
-    const m = new Map(manual.items.map(it => [it.flutter_version, it]));
-    items = items.map(it => (m.has(it.flutter_version) ? { ...it, ...m.get(it.flutter_version) } : it));
+    const overrides = new Map(manual.items.map(it => [it.flutter_version, it]));
+    items = items.map(it => overrides.has(it.flutter_version) ? { ...it, ...overrides.get(it.flutter_version) } : it);
   }
 
-  // sort by released desc
+  // sort newest first
   items.sort((a,b) => {
     const da = a.released ? new Date(a.released).getTime() : 0;
     const db = b.released ? new Date(b.released).getTime() : 0;
     return db - da;
   });
 
-  // write canonical
-  fs.writeFileSync(OUTPUT_CANONICAL, JSON.stringify({ generated_at: new Date().toISOString(), items }, null, 2), 'utf8');
-  console.log('Wrote', OUTPUT_CANONICAL);
+  // validate
+  const check = validateItems(items);
+  if (!check.ok) {
+    console.error('Generation validation failed:', check.reason);
 
-  // normalized API
-  const api = normalizeApi(items);
-  fs.writeFileSync(OUTPUT_API, JSON.stringify(api, null, 2), 'utf8');
-  console.log('Wrote', OUTPUT_API);
+    // write a failed canonical file for debugging
+    atomicWrite(path.join(DATA_DIR, 'releases.failed.json'), JSON.stringify({ generated_at: nowIso(), items }, null, 2));
 
-  // RSS
-  const rss = generateRss(items);
-  fs.writeFileSync(OUTPUT_RSS, rss, 'utf8');
-  console.log('Wrote', OUTPUT_RSS);
+    // update status file (served publicly)
+    atomicWrite(STATUS_FILE, JSON.stringify({ status: 'failed', reason: check.reason, generated_at: nowIso(), count: items.length }, null, 2));
 
-  // sitemap
-  const sitemap = generateSitemap(items);
-  fs.writeFileSync(OUTPUT_SITEMAP, sitemap, 'utf8');
-  console.log('Wrote', OUTPUT_SITEMAP);
+    console.log('Aborting publish; public files left unchanged.');
+    return;
+  }
 
-  console.log('Done. Items:', items.length);
+  // write canonical and public outputs atomically (rotate last-good)
+  try {
+    // write canonical generated JSON
+    atomicWrite(OUTPUT_CANONICAL, JSON.stringify({ generated_at: nowIso(), items }, null, 2));
+    // rotate last-good
+    if (fs.existsSync(OUTPUT_API)) fs.copyFileSync(OUTPUT_API, LAST_GOOD);
+    // write public API + feeds
+    atomicWrite(OUTPUT_API, JSON.stringify(normalizeApi(items), null, 2));
+    atomicWrite(OUTPUT_RSS, generateRss(items));
+    atomicWrite(OUTPUT_SITEMAP, generateSitemap(items));
+    // write success status
+    atomicWrite(STATUS_FILE, JSON.stringify({ status: 'ok', generated_at: nowIso(), count: items.length }, null, 2));
+    console.log('Wrote outputs successfully. Items:', items.length);
+  } catch (e) {
+    console.error('Failed to write outputs atomically:', e.message || e);
+    // try to write failure debug file
+    atomicWrite(path.join(DATA_DIR, 'releases.failed.json'), JSON.stringify({ generated_at: nowIso(), items }, null, 2));
+    atomicWrite(STATUS_FILE, JSON.stringify({ status: 'failed', reason: 'write-error', error: String(e), generated_at: nowIso() }, null, 2));
+  }
 }
 
 main().catch(err => {
