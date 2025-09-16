@@ -1,42 +1,225 @@
 {
   "meta": {
-    "generated_at": "2025-09-17T00:00:00.000Z",
-    "count": 8
+    "generated_at": "2025-09-16T20:35:32.672Z",
+    "count": 7
   },
   "items": [
     {
-      "flutter_version": "3.35.0",
-      "channel": "stable",
-      "released": "2025-09-16",
-      "dart_version": "3.9.0",
-      "engine_revision": "172237",
-      "requires": {
-        "macOS": "macOS 13+",
-        "Windows": "Windows 10+",
-        "Linux": "Standard dev tools"
-      },
+      "flutter_version": "3.19.0-0.1.pre",
+      "channel": "dev",
+      "released": "2024-01-11",
+      "dart_version": null,
+      "engine_revision": null,
+      "commit_ref": null,
+      "requires": {},
       "platforms": {},
-      "notes_url": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
-      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.35.0",
-      "summary": "Flutter 3.35 — performance boost and web hot reload improvements.",
-      "verified": true
+      "notes_url": "https://github.com/flutter/flutter/releases/tag/3.19.0-0.1.pre",
+      "notes": [
+        {
+          "type": "release-notes",
+          "title": "Release notes & changelog",
+          "url": "https://github.com/flutter/flutter/releases/tag/3.19.0-0.1.pre"
+        },
+        {
+          "type": "release-notes",
+          "title": "Release notes 3.19.0-0.1.pre",
+          "url": "https://docs.flutter.dev/release/release-notes#3-19-0-0-1-pre"
+        },
+        {
+          "type": "breaking",
+          "title": "Breaking changes 3.19.0-0.1.pre",
+          "url": "https://docs.flutter.dev/release/migration-3-19-0-0-1-pre"
+        }
+      ],
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.19.0-0.1.pre",
+      "summary": "The release of the Flutter 3.19 beta contains the changes noted below.\r",
+      "verified": false
     },
     {
-      "flutter_version": "3.32.0",
-      "channel": "stable",
-      "released": "2025-06-12",
-      "dart_version": "3.8.0",
-      "engine_revision": "171xxx",
-      "requires": {
-        "macOS": "macOS 13+",
-        "Windows": "Windows 10+",
-        "Linux": "Standard dev tools"
-      },
+      "flutter_version": "3.18.0-0.1.pre",
+      "channel": "dev",
+      "released": "2023-12-12",
+      "dart_version": null,
+      "engine_revision": null,
+      "commit_ref": null,
+      "requires": {},
       "platforms": {},
-      "notes_url": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
-      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.32.0",
-      "summary": "Flutter 3.32 — Impeller renderer updates and Material 3 polish.",
-      "verified": true
+      "notes_url": "https://github.com/flutter/flutter/releases/tag/3.18.0-0.1.pre",
+      "notes": [
+        {
+          "type": "release-notes",
+          "title": "Release notes & changelog",
+          "url": "https://github.com/flutter/flutter/releases/tag/3.18.0-0.1.pre"
+        },
+        {
+          "type": "release-notes",
+          "title": "Release notes 3.18.0-0.1.pre",
+          "url": "https://docs.flutter.dev/release/release-notes#3-18-0-0-1-pre"
+        },
+        {
+          "type": "breaking",
+          "title": "Breaking changes 3.18.0-0.1.pre",
+          "url": "https://docs.flutter.dev/release/migration-3-18-0-0-1-pre"
+        }
+      ],
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.18.0-0.1.pre",
+      "summary": "The release of the Flutter 3.18 beta contains the changes noted below.\r",
+      "verified": false
+    },
+    {
+      "flutter_version": "3.17.0-0.1.pre",
+      "channel": "dev",
+      "released": "2023-12-11",
+      "dart_version": null,
+      "engine_revision": null,
+      "commit_ref": null,
+      "requires": {},
+      "platforms": {},
+      "notes_url": "https://github.com/flutter/flutter/releases/tag/3.17.0-0.1.pre",
+      "notes": [
+        {
+          "type": "release-notes",
+          "title": "Release notes & changelog",
+          "url": "https://github.com/flutter/flutter/releases/tag/3.17.0-0.1.pre"
+        },
+        {
+          "type": "release-notes",
+          "title": "Release notes 3.17.0-0.1.pre",
+          "url": "https://docs.flutter.dev/release/release-notes#3-17-0-0-1-pre"
+        },
+        {
+          "type": "breaking",
+          "title": "Breaking changes 3.17.0-0.1.pre",
+          "url": "https://docs.flutter.dev/release/migration-3-17-0-0-1-pre"
+        }
+      ],
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.17.0-0.1.pre",
+      "summary": "The release of the Flutter 3.17 beta contains the changes noted below.\r",
+      "verified": false
+    },
+    {
+      "flutter_version": "3.16.0-0.1.pre",
+      "channel": "dev",
+      "released": "2023-10-20",
+      "dart_version": null,
+      "engine_revision": null,
+      "commit_ref": null,
+      "requires": {},
+      "platforms": {},
+      "notes_url": "https://github.com/flutter/flutter/releases/tag/3.16.0-0.1.pre",
+      "notes": [
+        {
+          "type": "release-notes",
+          "title": "Release notes & changelog",
+          "url": "https://github.com/flutter/flutter/releases/tag/3.16.0-0.1.pre"
+        },
+        {
+          "type": "release-notes",
+          "title": "Release notes 3.16.0-0.1.pre",
+          "url": "https://docs.flutter.dev/release/release-notes#3-16-0-0-1-pre"
+        },
+        {
+          "type": "breaking",
+          "title": "Breaking changes 3.16.0-0.1.pre",
+          "url": "https://docs.flutter.dev/release/migration-3-16-0-0-1-pre"
+        }
+      ],
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.16.0-0.1.pre",
+      "summary": "The release of the Flutter 3.16 beta contains the changes noted below.\r",
+      "verified": false
+    },
+    {
+      "flutter_version": "3.15.0-15.1.pre",
+      "channel": "dev",
+      "released": "2023-09-15",
+      "dart_version": null,
+      "engine_revision": null,
+      "commit_ref": null,
+      "requires": {},
+      "platforms": {},
+      "notes_url": "https://github.com/flutter/flutter/releases/tag/3.15.0-15.1.pre",
+      "notes": [
+        {
+          "type": "release-notes",
+          "title": "Release notes & changelog",
+          "url": "https://github.com/flutter/flutter/releases/tag/3.15.0-15.1.pre"
+        },
+        {
+          "type": "release-notes",
+          "title": "Release notes 3.15.0-15.1.pre",
+          "url": "https://docs.flutter.dev/release/release-notes#3-15-0-15-1-pre"
+        },
+        {
+          "type": "breaking",
+          "title": "Breaking changes 3.15.0-15.1.pre",
+          "url": "https://docs.flutter.dev/release/migration-3-15-0-15-1-pre"
+        }
+      ],
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.15.0-15.1.pre",
+      "summary": "The release of the Flutter 3.15 beta contains the changes noted below.\r",
+      "verified": false
+    },
+    {
+      "flutter_version": "3.14.0-0.1.pre",
+      "channel": "dev",
+      "released": "2023-08-21",
+      "dart_version": null,
+      "engine_revision": null,
+      "commit_ref": null,
+      "requires": {},
+      "platforms": {},
+      "notes_url": "https://github.com/flutter/flutter/releases/tag/3.14.0-0.1.pre",
+      "notes": [
+        {
+          "type": "release-notes",
+          "title": "Release notes & changelog",
+          "url": "https://github.com/flutter/flutter/releases/tag/3.14.0-0.1.pre"
+        },
+        {
+          "type": "release-notes",
+          "title": "Release notes 3.14.0-0.1.pre",
+          "url": "https://docs.flutter.dev/release/release-notes#3-14-0-0-1-pre"
+        },
+        {
+          "type": "breaking",
+          "title": "Breaking changes 3.14.0-0.1.pre",
+          "url": "https://docs.flutter.dev/release/migration-3-14-0-0-1-pre"
+        }
+      ],
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.14.0-0.1.pre",
+      "summary": "# Flutter 3.14 beta\r",
+      "verified": false
+    },
+    {
+      "flutter_version": "3.13.0-0.1.pre",
+      "channel": "dev",
+      "released": "2023-07-12",
+      "dart_version": null,
+      "engine_revision": null,
+      "commit_ref": null,
+      "requires": {},
+      "platforms": {},
+      "notes_url": "https://github.com/flutter/flutter/releases/tag/3.13.0-0.1.pre",
+      "notes": [
+        {
+          "type": "release-notes",
+          "title": "Release notes & changelog",
+          "url": "https://github.com/flutter/flutter/releases/tag/3.13.0-0.1.pre"
+        },
+        {
+          "type": "release-notes",
+          "title": "Release notes 3.13.0-0.1.pre",
+          "url": "https://docs.flutter.dev/release/release-notes#3-13-0-0-1-pre"
+        },
+        {
+          "type": "breaking",
+          "title": "Breaking changes 3.13.0-0.1.pre",
+          "url": "https://docs.flutter.dev/release/migration-3-13-0-0-1-pre"
+        }
+      ],
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.13.0-0.1.pre",
+      "summary": "# Flutter 3.13 beta\r",
+      "verified": false
     }
   ]
 }
