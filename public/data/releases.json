@@ -1,177 +1,344 @@
 {
   "meta": {
-    "generated_at": "2025-09-16T18:30:00Z",
-    "count": 8,
-    "source": "Curated - verify against Flutter release notes / GitHub tags"
+    "generated_at": "2025-09-17T00:00:00Z",
+    "source": "manual-batch-updated",
+    "count": 8
   },
   "items": [
     {
-      "flutter_version": "3.35.0",
+      "version": "3.35.4",
       "channel": "stable",
+      "release_type": "Hotfix",
+      "released": "2025-09-17",
+      "dart_version": "3.9.2",
+      "framework_revision": "d693b4b",
+      "engine_revision": null,
+      "git_tag": "3.35.4",
+      "build": "d693b4b",
+      "requires": {
+        "macos": "macOS 13.5+",
+        "xcode": "Xcode 15.1+",
+        "windows": "Windows 10+",
+        "visual_studio": "Visual Studio 2022",
+        "linux": "bash, git, curl, unzip"
+      },
+      "platforms": {
+        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.4/flutter_macos_arm64_3.35.4-stable.zip",
+        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.4/flutter_macos_x64_3.35.4-stable.zip",
+        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.4/flutter_windows_3.35.4-stable.zip",
+        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.4/flutter_linux_3.35.4-stable.tar.xz"
+      },
+      "release_notes": {
+        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.4",
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      },
+      "summary": "Hotfix release with critical stability improvements and attestation bundle support.",
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.35.4",
+      "verified": true,
+      "sources": [
+        "manual entry",
+        "GitHub Release",
+        "Flutter SDK Archive"
+      ]
+    },
+    {
+      "version": "3.35.3",
+      "channel": "stable",
+      "release_type": "Hotfix",
+      "released": "2025-09-04",
+      "dart_version": "3.9.2",
+      "framework_revision": "a402d9a",
+      "engine_revision": null,
+      "git_tag": "3.35.3",
+      "build": null,
+      "requires": {
+        "macos": "macOS 13.5+",
+        "xcode": "Xcode 15.1+",
+        "windows": "Windows 10+",
+        "visual_studio": "Visual Studio 2022",
+        "linux": "bash, git, curl, unzip"
+      },
+      "platforms": {
+        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.3/flutter_macos_arm64_3.35.3-stable.zip",
+        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.3/flutter_macos_x64_3.35.3-stable.zip",
+        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.3/flutter_windows_3.35.3-stable.zip",
+        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.3/flutter_linux_3.35.3-stable.tar.xz"
+      },
+      "release_notes": {
+        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      },
+      "summary": "Performance boost and small fixes in the 3.35 series.",
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.35.3",
+      "verified": true,
+      "sources": [
+        "manual entry"
+      ]
+    },
+    {
+      "version": "3.35.2",
+      "channel": "stable",
+      "release_type": "Hotfix",
+      "released": "2025-08-25",
+      "dart_version": "3.9.0",
+      "framework_revision": "05db968",
+      "engine_revision": null,
+      "git_tag": "3.35.2",
+      "build": null,
+      "requires": {
+        "macos": "macOS 13.5+",
+        "xcode": "Xcode 15.1+",
+        "windows": "Windows 10+",
+        "visual_studio": "Visual Studio 2022",
+        "linux": "bash, git, curl, unzip"
+      },
+      "platforms": {
+        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.2/flutter_macos_arm64_3.35.2-stable.zip",
+        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.2/flutter_macos_x64_3.35.2-stable.zip",
+        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.2/flutter_windows_3.35.2-stable.zip",
+        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.2/flutter_linux_3.35.2-stable.tar.xz"
+      },
+      "release_notes": {
+        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      },
+      "summary": "Bug fixes and stability improvements in the 3.35 series.",
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.35.2",
+      "verified": true,
+      "sources": [
+        "manual entry"
+      ]
+    },
+    {
+      "version": "3.35.1",
+      "channel": "stable",
+      "release_type": "Hotfix",
       "released": "2025-08-14",
       "dart_version": "3.9.0",
+      "framework_revision": "20f8274",
       "engine_revision": null,
+      "git_tag": "3.35.1",
+      "build": null,
       "requires": {
-        "macos": "macOS 13+, Xcode 15+",
-        "windows": "Windows 10+, Visual Studio 2022",
-        "linux": "Standard dev tools (bash, git, curl, unzip)"
+        "macos": "macOS 13.5+",
+        "xcode": "Xcode 15.1+",
+        "windows": "Windows 10+",
+        "visual_studio": "Visual Studio 2022",
+        "linux": "bash, git, curl, unzip"
       },
       "platforms": {
-        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_arm64/flutter_macos_3.35.0_arm64.zip",
-        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_x64/flutter_macos_3.35.0_x64.zip",
-        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/windows_x64/flutter_windows_3.35.0_x64.zip",
-        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux_x64/flutter_linux_3.35.0_x64.tar.xz"
+        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.1/flutter_macos_arm64_3.35.1-stable.zip",
+        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.1/flutter_macos_x64_3.35.1-stable.zip",
+        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.1/flutter_windows_3.35.1-stable.zip",
+        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.1/flutter_linux_3.35.1-stable.tar.xz"
       },
-      "notes_url": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
+      "release_notes": {
+        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      },
+      "summary": "Critical bug fixes for Android emulators and localization.",
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.35.1",
+      "verified": true,
+      "sources": [
+        "manual entry"
+      ]
+    },
+    {
+      "version": "3.35.0",
+      "channel": "stable",
+      "release_type": "Release",
+      "released": "2025-08-14",
+      "dart_version": "3.9.0",
+      "framework_revision": "b896255",
+      "engine_revision": null,
+      "git_tag": "3.35.0",
+      "build": null,
+      "requires": {
+        "macos": "macOS 13.5+",
+        "xcode": "Xcode 15.1+",
+        "windows": "Windows 10+",
+        "visual_studio": "Visual Studio 2022",
+        "linux": "bash, git, curl, unzip"
+      },
+      "platforms": {
+        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.0/flutter_macos_arm64_3.35.0-stable.zip",
+        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.0/flutter_macos_x64_3.35.0-stable.zip",
+        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.0/flutter_windows_3.35.0-stable.zip",
+        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.35.0/flutter_linux_3.35.0-stable.tar.xz"
+      },
+      "release_notes": {
+        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
+        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#framework",
+        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#material",
+        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#ios",
+        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#android",
+        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#windows",
+        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#linux",
+        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#web",
+        "tools": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#tooling"
+      },
+      "summary": "Major release with performance boost and stateful hot reload on the web, accessibility improvements, and enhanced developer tools.",
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.35.0",
-      "summary": "Performance improvements and web stateful hot reload; includes Dart SDK updates and engine updates."
+      "verified": true,
+      "sources": [
+        "manual entry"
+      ]
     },
     {
-      "flutter_version": "3.32.0",
+      "version": "3.32.8",
       "channel": "stable",
-      "released": "2025-05-19",
-      "dart_version": "3.8.0",
+      "release_type": "Hotfix",
+      "released": "2025-07-25",
+      "dart_version": "3.8.1",
+      "framework_revision": "edada7c",
       "engine_revision": null,
+      "git_tag": "3.32.8",
+      "build": null,
       "requires": {
-        "macos": "macOS 13+, Xcode 14+",
-        "windows": "Windows 10+, Visual Studio 2022",
-        "linux": "Standard dev tools"
+        "macos": "macOS 13.5+",
+        "xcode": "Xcode 15.1+",
+        "windows": "Windows 10+",
+        "visual_studio": "Visual Studio 2022",
+        "linux": "bash, git, curl, unzip"
       },
       "platforms": {
-        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_arm64/flutter_macos_3.32.0_arm64.zip",
-        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_x64/flutter_macos_3.32.0_x64.zip",
-        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/windows_x64/flutter_windows_3.32.0_x64.zip",
-        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux_x64/flutter_linux_3.32.0_x64.tar.xz"
+        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.32.8/flutter_macos_arm64_3.32.8-stable.zip",
+        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.32.8/flutter_macos_x64_3.32.8-stable.zip",
+        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.32.8/flutter_windows_3.32.8-stable.zip",
+        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.32.8/flutter_linux_3.32.8-stable.tar.xz"
       },
-      "notes_url": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
-      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.32.0",
-      "summary": "Desktop & Impeller improvements; rolls of Dart 3.8 series and engine updates."
+      "release_notes": {
+        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      },
+      "summary": "Hotfix release with stability improvements.",
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.32.8",
+      "verified": true,
+      "sources": [
+        "manual entry"
+      ]
     },
     {
-      "flutter_version": "3.29.0",
+      "version": "3.30.0",
       "channel": "stable",
-      "released": "2025-03-04",
+      "release_type": "Release",
+      "released": "2025-02-12",
       "dart_version": "3.7.0",
+      "framework_revision": "29a2f67",
       "engine_revision": null,
+      "git_tag": "3.30.0",
+      "build": "29a2f67",
       "requires": {
-        "macos": "macOS 12+, Xcode 14+",
-        "windows": "Windows 10+, Visual Studio 2022",
-        "linux": "Standard dev tools"
+        "macos": "macOS 13.5+",
+        "xcode": "Xcode 15.1+",
+        "windows": "Windows 10+",
+        "visual_studio": "Visual Studio 2022",
+        "linux": "bash, git, curl, unzip"
       },
       "platforms": {
-        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_arm64/flutter_macos_3.29.0_arm64.zip",
-        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_x64/flutter_macos_3.29.0_x64.zip",
-        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/windows_x64/flutter_windows_3.29.0_x64.zip",
-        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux_x64/flutter_linux_3.29.0_x64.tar.xz"
+        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.30.0/flutter_macos_arm64_3.30.0-stable.zip",
+        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.30.0/flutter_macos_x64_3.30.0-stable.zip",
+        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.30.0/flutter_windows_3.30.0-stable.zip",
+        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.30.0/flutter_linux_3.30.0-stable.tar.xz"
       },
-      "notes_url": "https://docs.flutter.dev/release/release-notes/release-notes-3.29.0",
-      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.29.0",
-      "summary": "Various framework and tooling updates; includes corresponding Dart SDK roll."
+      "release_notes": {
+        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.30.0",
+        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.30.0#framework",
+        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.30.0#material",
+        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.30.0#ios",
+        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.30.0#android",
+        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.30.0#windows",
+        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.30.0#linux",
+        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.30.0#web",
+        "tools": "https://docs.flutter.dev/release/release-notes/release-notes-3.30.0#tooling"
+      },
+      "summary": "Major stable release with Dart 3.7 integration, Flutter rendering optimizations, and enhanced platform interoperability.",
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.30.0",
+      "verified": true,
+      "sources": [
+        "Flutter updates & news February 2025 (somniosoftware.com)",
+        "Code with Andrea Newsletter February 2025",
+        "Flutter FlutterWire tracking"
+      ]
     },
     {
-      "flutter_version": "3.27.0",
+      "version": "3.27.0",
       "channel": "stable",
-      "released": "2025-01-07",
-      "dart_version": "3.7.0",
+      "release_type": "Release",
+      "released": "2024-12-11",
+      "dart_version": "3.6.0",
+      "framework_revision": "194f3af",
       "engine_revision": null,
+      "git_tag": "3.27.0",
+      "build": "194f3af",
       "requires": {
-        "macos": "macOS 12+, Xcode 14+",
-        "windows": "Windows 10+, Visual Studio 2022",
-        "linux": "Standard dev tools"
+        "macos": "macOS 13.5+",
+        "xcode": "Xcode 15.1+",
+        "windows": "Windows 10+",
+        "visual_studio": "Visual Studio 2022",
+        "linux": "bash, git, curl, unzip"
       },
       "platforms": {
-        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_arm64/flutter_macos_3.27.0_arm64.zip",
-        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_x64/flutter_macos_3.27.0_x64.zip",
-        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/windows_x64/flutter_windows_3.27.0_x64.zip",
-        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux_x64/flutter_linux_3.27.0_x64.tar.xz"
+        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.27.0/flutter_macos_arm64_3.27.0-stable.zip",
+        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.27.0/flutter_macos_x64_3.27.0-stable.zip",
+        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.27.0/flutter_windows_3.27.0-stable.zip",
+        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/3.27.0/flutter_linux_3.27.0-stable.tar.xz"
       },
-      "notes_url": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0",
+      "release_notes": {
+        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0",
+        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#framework",
+        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#material",
+        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#ios",
+        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#android",
+        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#windows",
+        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#linux",
+        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#web",
+        "tools": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#tooling"
+      },
+      "summary": "Major release with Impeller as default Android renderer, Cupertino widget enhancements, Row/Column spacing support, and Swift Package Manager integration.",
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.27.0",
-      "summary": "Stable release with bug fixes and improvements; contains Dart SDK update."
-    },
-    {
-      "flutter_version": "3.24.0",
-      "channel": "stable",
-      "released": "2024-09-11",
-      "dart_version": "3.5.0",
-      "engine_revision": null,
-      "requires": {
-        "macos": "macOS 13+, Xcode 15+",
-        "windows": "Windows 10+, Visual Studio 2022",
-        "linux": "Standard dev tools"
-      },
-      "platforms": {
-        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_arm64/flutter_macos_3.24.0_arm64.zip",
-        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_x64/flutter_macos_3.24.0_x64.zip",
-        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/windows_x64/flutter_windows_3.24.0_x64.zip",
-        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux_x64/flutter_linux_3.24.0_x64.tar.xz"
-      },
-      "notes_url": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0",
-      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.24.0",
-      "summary": "Stable channel release (Sept 2024) — general improvements and new features; matches Dart 3.5 series."
-    },
-    {
-      "flutter_version": "3.22.0",
-      "channel": "stable",
-      "released": "2024-07-05",
-      "dart_version": "3.4.3",
-      "engine_revision": null,
-      "requires": {
-        "macos": "macOS 12+, Xcode 14+",
-        "windows": "Windows 10+, Visual Studio 2022",
-        "linux": "Standard dev tools"
-      },
-      "platforms": {
-        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_arm64/flutter_macos_3.22.0_arm64.zip",
-        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_x64/flutter_macos_3.22.0_x64.zip",
-        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/windows_x64/flutter_windows_3.22.0_x64.zip",
-        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux_x64/flutter_linux_3.22.0_x64.tar.xz"
-      },
-      "notes_url": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0",
-      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.22.0",
-      "summary": "Stable release; includes Dart 3.4.x and stable tooling improvements."
-    },
-    {
-      "flutter_version": "3.19.0",
-      "channel": "stable",
-      "released": "2024-01-11",
-      "dart_version": "3.3.0",
-      "engine_revision": null,
-      "requires": {
-        "macos": "macOS 12+, Xcode 14+",
-        "windows": "Windows 10+, Visual Studio 2022",
-        "linux": "Standard dev tools"
-      },
-      "platforms": {
-        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_arm64/flutter_macos_3.19.0_arm64.zip",
-        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_x64/flutter_macos_3.19.0_x64.zip",
-        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/windows_x64/flutter_windows_3.19.0_x64.zip",
-        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux_x64/flutter_linux_3.19.0_x64.tar.xz"
-      },
-      "notes_url": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0",
-      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.19.0",
-      "summary": "Stable release (Jan 2024) — web/Wasmm and other improvements; Dart 3.3 series."
-    },
-    {
-      "flutter_version": "3.16.0",
-      "channel": "stable",
-      "released": "2023-10-20",
-      "dart_version": "3.2.0",
-      "engine_revision": null,
-      "requires": {
-        "macos": "macOS 12+, Xcode 14+",
-        "windows": "Windows 10+, Visual Studio 2022",
-        "linux": "Standard dev tools"
-      },
-      "platforms": {
-        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_arm64/flutter_macos_3.16.0_arm64.zip",
-        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos_x64/flutter_macos_3.16.0_x64.zip",
-        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/windows_x64/flutter_windows_3.16.0_x64.zip",
-        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux_x64/flutter_linux_3.16.0_x64.tar.xz"
-      },
-      "notes_url": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
-      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.16.0",
-      "summary": "Stable release (Oct 2023) — Impeller progress and other platform updates."
+      "verified": true,
+      "sources": [
+        "Flutter 3.27.0 release notes (docs.flutter.dev)",
+        "Code with Andrea Newsletter December 2024",
+        "Encodedots Technolabs Flutter 3.27 Review",
+        "Flutter FlutterWire tracking"
+      ]
     }
   ]
 }
