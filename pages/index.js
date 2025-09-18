@@ -83,7 +83,7 @@ export default function Home({ data }) {
             <p className="text-base text-flutter-gray-600 dark:text-flutter-gray-400">
               Stay up-to-date via our{' '}
               <a
-                href="/releases.json"
+                href="/data/releases.json"
                 className="text-red-500 font-medium underline"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -146,7 +146,6 @@ export default function Home({ data }) {
 export async function getStaticProps() {
   const tryPaths = [
     path.join(process.cwd(), 'public', 'data', 'releases.json'),
-    path.join(process.cwd(), 'public', 'releases.json'),
   ];
 
   console.log('>>> getStaticProps START (server) —', new Date().toISOString());
@@ -165,7 +164,7 @@ export async function getStaticProps() {
   }
 
   if (!chosenPath) {
-    console.warn('getStaticProps: no releases.json found in public/data or public/');
+    console.warn('getStaticProps: no releases.json found in public/data');
     return { props: { data: { meta: { generated_at: null, count: 0 }, items: [] } } };
   }
 

@@ -18,6 +18,7 @@ const GENERATED_PATH = path.join(OUT_DIR, 'releases.generated.json');
 const FINAL_PATH = path.join(OUT_DIR, 'releases.json');
 const LAST_GOOD = path.join(OUT_DIR, 'releases.last_good.json');
 const STATUS_PATH = path.join(OUT_DIR, 'generation_status.json');
+const FEED_PATH = path.join(OUT_DIR, 'feed.xml');
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || null;
 const SITE_URL = process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://flutterreleases.com';
@@ -78,6 +79,79 @@ function pushNote(notes, type, title, url){
 function docsAnchorFromVersion(version){
   if(!version) return '';
   return version.replace(/\./g,'-').replace(/\s+/g,'-').toLowerCase();
+}
+
+// --- RSS helpers ---
+function xmlEscape(s){
+  if (s === null || s === undefined) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+function toRfc822(d){
+  try {
+    const dt = (typeof d === 'string') ? new Date(d) : d;
+    // Fallback to now if invalid
+    const valid = isNaN(dt?.getTime?.()) ? new Date() : dt;
+    return valid.toUTCString();
+  } catch {
+    return new Date().toUTCString();
+  }
+}
+
+function buildRssXml(items, siteUrl, generatedAt){
+  const baseUrl = siteUrl?.replace(/\/$/, '') || 'https://flutterreleases.com';
+  const channelTitle = 'FlutterReleases — Flutter & Dart releases';
+  const channelLink = baseUrl;
+  const channelDesc = 'Browse the latest Flutter releases with matching Dart SDK versions, release notes, and direct download links — updated across stable, beta, and dev channels.';
+  const pubDate = toRfc822(generatedAt || new Date());
+
+  const lines = [];
+  lines.push('<?xml version="1.0" encoding="UTF-8"?>');
+  lines.push('<?xml-stylesheet type="text/xsl" href="/feed.xsl"?>');
+  lines.push('<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">');
+  lines.push('<channel>');
+  lines.push(`  <atom:link href="${xmlEscape(baseUrl + '/feed.xml')}" rel="self" type="application/rss+xml" />`);
+  lines.push(`  <title>${xmlEscape(channelTitle)}</title>`);
+  lines.push(`  <link>${xmlEscape(channelLink)}</link>`);
+  lines.push(`  <description>${xmlEscape(channelDesc)}</description>`);
+  lines.push('  <language>en-US</language>');
+  lines.push(`  <pubDate>${xmlEscape(pubDate)}</pubDate>`);
+  lines.push('  <ttl>60</ttl>');
+  lines.push('  ');
+
+  for(const it of items){
+    const version = it.flutter_version || it.version || '(unknown)';
+    const channel = it.channel || 'stable';
+    const released = it.released || null;
+    const link = it.ref_url || (version ? `https://github.com/flutter/flutter/releases/tag/${encodeURIComponent(version)}` : baseUrl);
+    const guid = link;
+    const title = `Flutter ${version} (${channel})`;
+    const pub = toRfc822(released || new Date());
+    const summary = it.summary || `Details for Flutter ${version}.`;
+    const descParts = [];
+    if (summary) descParts.push(`<p>${xmlEscape(summary)}</p>`);
+    if (released) descParts.push(`<p>Released: ${xmlEscape(released)}</p>`);
+    const cdata = ['<![CDATA[', descParts.join('\n'), ']]>'].join('');
+
+    lines.push('  <item>');
+    lines.push(`    <title>${xmlEscape(title)}</title>`);
+    lines.push(`    <link>${xmlEscape(link)}</link>`);
+    lines.push(`    <guid isPermaLink="false">${xmlEscape(guid)}</guid>`);
+    lines.push(`    <pubDate>${xmlEscape(pub)}</pubDate>`);
+    lines.push('    ');
+    lines.push(`    <description>${cdata}</description>`);
+    lines.push('  </item>');
+    lines.push('');
+  }
+
+  lines.push('</channel>');
+  lines.push('</rss>');
+  return lines.join('\n');
 }
 
 // find manifest entry helper
@@ -366,6 +440,26 @@ async function run(){
 
     // move generated -> final
     safeWriteAtomic(FINAL_PATH, outStr);
+
+    // also generate RSS feed, preferring public/data/releases.json if present (to mirror pages/index.js)
+    try{
+      let itemsForFeed = finalItems;
+      try{
+        const dataFile = path.join(DATA_DIR, 'releases.json');
+        if (fs.existsSync(dataFile)){
+          const rawTxt = fs.readFileSync(dataFile, 'utf8');
+          const parsed = JSON.parse(rawTxt);
+          const cand = Array.isArray(parsed?.items) ? parsed.items : (Array.isArray(parsed) ? parsed : []);
+          if (cand.length > 0) itemsForFeed = cand;
+        }
+      }catch(_inner){ /* ignore and fall back */ }
+
+      const rssXml = buildRssXml(itemsForFeed, SITE_URL, out.meta.generated_at);
+      safeWriteAtomic(FEED_PATH, rssXml);
+    }catch(e){
+      // Non-fatal: record in status
+      status.errors.push(`feed_generation_failed:${String(e)}`);
+    }
 
     // write status
     status.generated_at = nowIso();
