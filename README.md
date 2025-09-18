@@ -4,6 +4,7 @@
 [![Dart Releases](https://img.shields.io/badge/Dart-SDK-0175C2)](https://flutterreleases.com)
 [![Next.js](https://img.shields.io/badge/Built%20with-Next.js-black)](https://nextjs.org)
 [![TailwindCSS](https://img.shields.io/badge/Styled%20with-TailwindCSS-38B2AC)](https://tailwindcss.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 [FlutterReleases.com](https://flutterreleases.com) is an **unofficial, community-maintained resource** that lists all **Flutter SDK releases** along with corresponding **Dart SDK versions**, release notes, and download links.  
 
@@ -18,7 +19,7 @@ The goal is to provide a **single, consolidated place** to browse Flutter’s **
 Features include:
 - A searchable list of all Flutter SDK releases  
 - Quick access to release notes and SDK downloads  
-- JSON API at `/releases.json`  
+- JSON API at `/data/releases.json`  
 - RSS feed at `/feed.xml`  
 - SEO-friendly release pages  
 
@@ -73,4 +74,4 @@ All downloads are hosted by Google, and links on this site take you directly to 
 
 ## 📜 License
 
-[MIT](LICENSE)
+This project is licensed under the **MIT License**. See the [LICENSE](./LICENSE) file for details.
