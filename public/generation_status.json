@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "generated_at": "2025-09-18T12:56:22.240Z",
+  "generated_at": "2025-09-18T13:22:39.474Z",
   "counts": {},
   "channels": {
     "dev": {
@@ -9,5 +9,6 @@
     }
   },
   "errors": [],
-  "count": 7
+  "feed_count": 8,
+  "count": 8
 }

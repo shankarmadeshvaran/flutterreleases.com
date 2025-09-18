@@ -19,6 +19,7 @@ const FINAL_PATH = path.join(OUT_DIR, 'releases.json');
 const LAST_GOOD = path.join(OUT_DIR, 'releases.last_good.json');
 const STATUS_PATH = path.join(OUT_DIR, 'generation_status.json');
 const FEED_PATH = path.join(OUT_DIR, 'feed.xml');
+const SITEMAP_PATH = path.join(OUT_DIR, 'sitemap.xml');
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || null;
 const SITE_URL = process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://flutterreleases.com';
@@ -44,8 +45,8 @@ async function fetchJson(url, timeout = 10000) {
     clearTimeout(t);
     return null;
   }
-}
 
+}
 async function headOk(url, timeout = 5000) {
   try {
     const controller = new AbortController();
@@ -151,6 +152,38 @@ function buildRssXml(items, siteUrl, generatedAt){
 
   lines.push('</channel>');
   lines.push('</rss>');
+  return lines.join('\n');
+}
+
+function buildSitemapXml(siteUrl, lastMod){
+  const baseUrl = siteUrl?.replace(/\/$/, '') || 'https://flutterreleases.com';
+  const lm = (lastMod ? new Date(lastMod) : new Date()).toISOString();
+  const lines = [];
+  lines.push('<?xml version="1.0" encoding="UTF-8"?>');
+  lines.push('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
+  // Home
+  lines.push('  <url>');
+  lines.push(`    <loc>${xmlEscape(baseUrl + '/')}</loc>`);
+  lines.push(`    <lastmod>${xmlEscape(lm)}</lastmod>`);
+  lines.push('    <changefreq>daily</changefreq>');
+  lines.push('    <priority>0.8</priority>');
+  lines.push('  </url>');
+  // Feed
+  lines.push('  <url>');
+  lines.push(`    <loc>${xmlEscape(baseUrl + '/feed.xml')}</loc>`);
+  lines.push(`    <lastmod>${xmlEscape(lm)}</lastmod>`);
+  lines.push('    <changefreq>daily</changefreq>');
+  lines.push('    <priority>0.5</priority>');
+  lines.push('  </url>');
+  // JSON API
+  lines.push('  <url>');
+  lines.push(`    <loc>${xmlEscape(baseUrl + '/data/releases.json')}</loc>`);
+  lines.push(`    <lastmod>${xmlEscape(lm)}</lastmod>`);
+  lines.push('    <changefreq>daily</changefreq>');
+  lines.push('    <priority>0.5</priority>');
+  lines.push('  </url>');
+  lines.push('');
+  lines.push('</urlset>');
   return lines.join('\n');
 }
 
@@ -419,8 +452,19 @@ async function run(){
       process.exit(1);
     }
 
-    // write generated then atomically move to final
-    const out = { meta: { generated_at: nowIso(), count: finalItems.length }, items: finalItems };
+    // Determine canonical output: prefer curated public/data/releases.json if present
+    let out = { meta: { generated_at: nowIso(), count: finalItems.length }, items: finalItems };
+    try {
+      const dataFile = path.join(DATA_DIR, 'releases.json');
+      if (fs.existsSync(dataFile)) {
+        const rawTxt = fs.readFileSync(dataFile, 'utf8');
+        const parsed = JSON.parse(rawTxt);
+        const cand = Array.isArray(parsed?.items) ? parsed.items : (Array.isArray(parsed) ? parsed : []);
+        if (cand.length > 0) {
+          out = { meta: { generated_at: nowIso(), count: cand.length }, items: cand };
+        }
+      }
+    } catch (_) { /* ignore if invalid; fall back to generated */ }
     const outStr = JSON.stringify(out, null, 2);
 
     if(DRY_RUN){
@@ -456,6 +500,13 @@ async function run(){
 
       const rssXml = buildRssXml(itemsForFeed, SITE_URL, out.meta.generated_at);
       safeWriteAtomic(FEED_PATH, rssXml);
+
+      // and sitemap
+      const smXml = buildSitemapXml(SITE_URL, out.meta.generated_at);
+      safeWriteAtomic(SITEMAP_PATH, smXml);
+
+      // record feed count in status for clarity
+      status.feed_count = Array.isArray(itemsForFeed) ? itemsForFeed.length : 0;
     }catch(e){
       // Non-fatal: record in status
       status.errors.push(`feed_generation_failed:${String(e)}`);
@@ -463,7 +514,7 @@ async function run(){
 
     // write status
     status.generated_at = nowIso();
-    status.count = finalItems.length;
+    status.count = Array.isArray(out.items) ? out.items.length : finalItems.length;
     // compute per-channel verification summary
     const byCh = {};
     for(const it of finalItems){
@@ -474,7 +525,7 @@ async function run(){
     status.channels = byCh;
     safeWriteAtomic(STATUS_PATH, JSON.stringify(status, null, 2));
 
-    console.log(`Done. Items: ${finalItems.length}`);
+    console.log(`Done. Items: ${status.count} (feed: ${status.feed_count ?? 'n/a'})`);
     return;
 
   }catch(err){
