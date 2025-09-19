@@ -7,11 +7,11 @@ export default function ReleaseTable({ data }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState(Array.isArray(data?.items) ? data.items : []);
 
-  // Field helpers
-  const getVersion = item => item.version || item.flutter_version || item.flutterVersion || '—';
-  const getReleaseType = item => (item && (item.release_type || item.releaseType || item.type || item.release)) || 'Release';
-  const getReleased = item => item.released || item.published || item.date || '—';
-  const getDart = item => item.dart_version || item.dart || item.dartVersion || '—';
+  // Field helpers (normalized by models/Release.js)
+  const getVersion = item => item.version || '—';
+  const getReleaseType = item => item?.release_type || 'Release';
+  const getReleased = item => item.released || '—';
+  const getDart = item => item.dart_version || '—';
 
   // Date formatting -> "15 Sep 2025"
   function formatDateToDDMonYYYY(dateStr) {
@@ -158,8 +158,6 @@ export default function ReleaseTable({ data }) {
    function renderReleaseNotes(item) {
     const rn = item.release_notes || item.notes || item.notes_url || item.notesUrl || null;
 
-    // debug: remove after verification
-    // console.log(`[RN-debug] ${item.version || item.flutter_version} release_notes=`, rn);
 
     if (!rn) return <span className="text-flutter-gray-500">—</span>;
 

@@ -4,6 +4,7 @@ import path from 'path';
 import Seo from '../components/Seo';
 import ReleaseTable from '../components/ReleaseTable';
 import Header from '../components/Header.js';
+import { normalizeReleases } from '../models/Release.js';
 
 export default function Home({ data }) {
   // Feature flag to control donate button visibility
@@ -154,104 +155,8 @@ export async function getStaticProps() {
   // Accept either { meta, items } or an array (items)
   const rawItems = Array.isArray(raw.items) ? raw.items : (Array.isArray(raw) ? raw : []);
 
-  // tiny utility: pick first non-empty key in order
-  const pick = (...keys) => obj => {
-    for (const k of keys) {
-      if (!obj) break;
-      const v = obj[k];
-      if (v !== undefined && v !== null && String(v).trim() !== '') return v;
-    }
-    return null;
-  };
-
-  // Normalize release_notes for a raw item.
-  const normalizeNotes = (rawItem) => {
-    // If there's an explicit release_notes object, filter null/empty values
-    if (rawItem.release_notes && typeof rawItem.release_notes === 'object') {
-      const cleaned = Object.entries(rawItem.release_notes)
-        .filter(([k, v]) => v !== null && v !== undefined && String(v).trim() !== '')
-        .reduce((acc, [k, v]) => {
-          acc[k] = String(v).trim();
-          return acc;
-        }, {});
-      return Object.keys(cleaned).length ? cleaned : null;
-    }
-
-    // fallback single URL props
-    const fallback = rawItem.notes_url || rawItem.notesUrl || rawItem.release_notes_url || rawItem.ref_url || rawItem.notes || null;
-    if (!fallback || String(fallback).trim() === '') return null;
-    const base = String(fallback).trim();
-
-    // If this is a full release, synthesize per-section anchors (only if release_type === 'Release')
-    const releaseType = (rawItem.release_type || rawItem.type || rawItem.releaseType || rawItem.release || '').toString().toLowerCase();
-    if (releaseType === 'release') {
-      // generate anchors (defensive — they may or may not actually exist on the page)
-      return {
-        base,
-        framework: `${base}#framework`,
-        material: `${base}#material`,
-        ios: `${base}#ios`,
-        android: `${base}#android`,
-        windows: `${base}#windows`,
-        linux: `${base}#linux`,
-        web: `${base}#web`,
-        tools: `${base}#tooling`,
-      };
-    }
-
-    // non-Release => only base
-    return { base };
-  };
-
-  // Normalize each item to the shape ReleaseTable expects
-  const normalized = rawItems.map((it, idx) => {
-    // several possible keys historically used (compat)
-    const version = it.version || it.flutter_version || it.flutterVersion || it.flutterVersionString || null;
-    const channel = it.channel || 'stable';
-    const release_type = it.release_type || it.type || it.releaseType || (it.release ? String(it.release) : 'Release');
-    const released = it.released || it.published || it.date || null;
-    const dart_version = it.dart_version || it.dart || it.dartVersion || null;
-    const framework_revision = it.framework_revision || it.framework || it.frameworkRevision || null;
-    const engine_revision = it.engine_revision || it.engine || null;
-    const git_tag = it.git_tag || it.tag || null;
-    const build = it.build || it.engine_revision || null;
-    const requires = it.requires || {};
-    const platforms = it.platforms || it.download || it.platform || {};
-    const summary = it.summary || it.description || '';
-    const ref_url = it.ref_url || it.ref || it.url || null;
-    const verified = typeof it.verified === 'boolean' ? it.verified : !!(it.sources && it.sources.includes('GitHub Release'));
-    const sources = it.sources || [];
-
-    const release_notes = normalizeNotes(it);
-
-    if (VERBOSE) {
-      console.log(`raw item ${idx}: candidateVersion=${version || '(missing)'} keys=[${Object.keys(it).join(',')}]`);
-      if (VERBOSE && release_notes) {
-        const keys = Object.keys(release_notes).join(',');
-        console.log(`[RN-debug] ${version || '(no-version)'} release_notes= ${JSON.stringify(release_notes)} -> sectionsKeys=${keys}`);
-      }
-    }
-
-    return {
-      version,
-      channel,
-      release_type,
-      released,
-      dart_version,
-      framework_revision,
-      engine_revision,
-      git_tag,
-      build,
-      requires,
-      platforms,
-      release_notes, // either null or object of key->url (only truthy entries)
-      summary,
-      ref_url,
-      verified: !!verified,
-      sources,
-      __raw: it, // keep raw in case ReleaseTable needs to inspect
-    };
-  });
+  // Normalize each item to the shape ReleaseTable expects using the model
+  const normalized = normalizeReleases(rawItems, { verbose: VERBOSE });
 
   // compact meta
   const meta = raw.meta || { generated_at: null, count: normalized.length };
