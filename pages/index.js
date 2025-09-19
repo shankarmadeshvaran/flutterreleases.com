@@ -94,7 +94,7 @@ export default function Home({ data }) {
           <footer className="mt-16 pt-8 border-t border-flutter-gray-200 dark:border-flutter-gray-700">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <p className="text-sm text-flutter-gray-500 dark:text-flutter-gray-400">
-                flutterreleases.com is under development and maintained by{' '}
+                Made with <span aria-hidden>❤️</span> by{' '}
                 <a
                   href="https://x.com/devinmaking"
                   className="text-flutter-blue-500 hover:text-flutter-blue-600"
@@ -102,6 +102,15 @@ export default function Home({ data }) {
                   rel="noreferrer"
                 >
                   @devinmaking
+                </a>
+                {' '}—{' '}
+                <a
+                  href="https://github.com/shankarmadeshvaran/flutterreleases.com"
+                  className="text-flutter-blue-500 hover:text-flutter-blue-600"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View on GitHub
                 </a>
               </p>
               <div className="text-xs text-flutter-gray-400 dark:text-flutter-gray-500">

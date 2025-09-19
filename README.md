@@ -148,3 +148,5 @@ All downloads are hosted by Google, and links on this site take you directly to 
 ## 📜 License
 
 This project is licensed under the **MIT License**. See the [LICENSE](./LICENSE) file for details.
+
+Made with ❤️ by [@devinmaking](https://x.com/devinmaking)
