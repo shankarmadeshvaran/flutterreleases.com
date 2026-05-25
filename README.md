@@ -1,65 +1,128 @@
-# sandbox-app-template
+# flutterreleases.com
 
-Monorepo: Bun workspaces + Turborepo.
+Browse every Flutter release — version, Dart SDK, channel, downloads, and release notes — in one place. Updated daily via GitHub Actions.
+
+**Live site:** [flutterreleases.com](https://flutterreleases.com)
+
+---
+
+## Stack
+
+| Layer | Tech |
+|---|---|
+| Frontend | React + Vite 7 + Tailwind CSS v4 |
+| Routing | Wouter |
+| Build | Bun + Turborepo monorepo |
+| Deploy | Cloudflare Pages (via GitHub Actions) |
+| Data pipeline | Node.js scripts + GitHub Actions (daily cron) |
+
+---
 
 ## Project Structure
 
 ```
-.env                         Secrets (gitignored), loaded via Vite's loadEnv
+.github/
+  workflows/
+    deploy.yml           ← Builds + deploys to Cloudflare Pages on push to main
+    crawl-releases.yml   ← Daily cron: crawls Flutter releases API → releases.json
+    update-releases.yml  ← Regenerates feed.xml + sitemap.xml after data updates
 packages/
-  web/                       Unified server (API + web frontend via Vite)
-    vite.config.ts           Vite 7 config — loads .env, sets port, registers plugins
-    index.html               Frontend HTML entry
-    vite/plugins/
-      hono-dev-plugin.ts     Intercepts /api/* in dev, forwards to Hono via SSR
-      runable-analytics-plugin.ts
-    src/
-      api/
-        index.ts             Hono routes (.basePath('api')) + AppType export
-        database/
-          index.ts           Database client (Turso/LibSQL)
-          schema.ts          Drizzle schema
-      web/
-        main.tsx             App entry
-        app.tsx              Root component + Wouter routing
-        pages/               Page components
-        components/          UI components
-        hooks/
-          use-desktop.ts     Desktop detection
-        lib/
-          api.ts             Typed API client (hono client)
-          desktop.ts         Electron API types
-          utils.ts           Shared utilities
-        styles.css           Tailwind CSS entry
-  mobile/                    Expo + React Native + expo-router
-    app/                     File-based routing
-    lib/
-      api.ts                 Typed API client
-  desktop/                   Electron shell (loads web app from server)
-    electron/
-      main.ts                Main process + IPC handlers
-      preload.ts             contextBridge API
-    vite.config.ts           Vite config
+  web/
+    src/web/
+      pages/
+        index.tsx        ← Main page (filter, pagination, dark mode)
+      components/
+        Hero.tsx         ← Latest stable/beta pills (clickable → release notes)
+        Header.tsx       ← Nav, dark mode toggle, Twitter + donate links
+        FilterBar.tsx    ← Channel filter + search
+        ReleaseTable.tsx ← Expandable rows, download chips, release note links
+        Pagination.tsx
+        Footer.tsx
+      hooks/
+        useReleases.ts   ← Fetches + normalises releases.json data
+        useDarkMode.ts
+      types/
+        release.ts       ← Release, Channel, ReleaseType types
+    public/
+      data/
+        releases.json    ← Source of truth, updated by crawler
+scripts/
+  crawl-releases.js      ← Hits Flutter releases API, writes releases.json
+  generate-releases.js   ← Generates feed.xml, sitemap.xml
 ```
 
-## Environment Variables
+---
 
-Secrets and credentials live in `.env` at the project root (gitignored). Vite's `loadEnv` loads them into `process.env` at dev/build time (configured in `packages/web/vite.config.ts`). In API code (Hono), use `process.env.YOUR_VAR`. In browser code, only `VITE_`-prefixed vars are exposed via `import.meta.env.VITE_YOUR_VAR`. Drizzle scripts use `bun --env-file=../../.env` to load env vars directly.
-
-## Desktop UI
-
-The desktop app has no separate renderer by default. It loads the web app from `packages/web`; desktop-specific UI should live in `packages/web/src/web/` and be gated with `useDesktop()` / `window.electronAPI`. Keep `packages/desktop` for Electron window setup, menus/tray/shortcuts, IPC handlers, native OS APIs, and packaging. Only add a separate desktop renderer when the product intentionally needs a different desktop-only UI architecture.
-
-## Servers
-
-Dev servers are started and managed automatically — no need to run them manually.
-
-## Database
+## Local Development
 
 ```sh
-cd packages/web
-bun run db:push        # Push schema to database
-bun run db:generate    # Generate migration files
-bun run db:migrate     # Run migrations
-bun run db:studio      # Open Drizzle Studio
+bun install
+bun run dev        # starts Vite dev server at http://localhost:4200
 ```
+
+## Build
+
+```sh
+bun run build:web  # outputs to packages/web/dist
+```
+
+---
+
+## Deploy
+
+Merging to `main` automatically triggers the **Deploy to Cloudflare Pages** workflow.
+
+### Required GitHub Secrets
+
+| Secret | Where to get it |
+|---|---|
+| `CLOUDFLARE_API_TOKEN` | Cloudflare dashboard → My Profile → API Tokens → Create Token (use "Edit Cloudflare Workers" template or Pages:Edit permission) |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare dashboard → right sidebar on any domain or Workers/Pages overview |
+
+Add both under **Settings → Secrets and variables → Actions** in the repo.
+
+### Cloudflare Pages project setup (one-time)
+
+If the Pages project doesn't exist yet, create it first:
+```sh
+bunx wrangler pages project create flutterreleases
+```
+Or create it in the Cloudflare dashboard under **Workers & Pages → Create application → Pages**.
+
+The workflow uses:
+- **Build command:** `bun run build:web`
+- **Output directory:** `packages/web/dist`
+- **Project name:** `flutterreleases`
+
+---
+
+## Data Pipeline
+
+| Workflow | Trigger | What it does |
+|---|---|---|
+| `crawl-releases.yml` | Daily 06:00 UTC | Hits Flutter's release API, writes `public/data/releases.json`, commits |
+| `update-releases.yml` | On push to `main` (data files) | Regenerates `feed.xml`, `sitemap.xml`, commits |
+| `deploy.yml` | On push to `main` | Builds Vite app, deploys to Cloudflare Pages |
+
+---
+
+## UI Features
+
+- **Hero pills** — Latest stable + beta versions shown at top; click to open release notes in new tab
+- **Release table** — All releases paginated (10/page), filterable by channel (stable/beta/dev) and search
+- **Expandable rows** — Click any row to expand: system requirements, all platform downloads, all release note links
+- **Dark mode** — Persisted via localStorage
+- **All links open in new tab** — Downloads, release notes, everything
+
+---
+
+## Redesign (May 2025)
+
+The `redesign` branch introduced a full rewrite from Next.js → Vite + React:
+
+- Replaced Next.js with a Bun monorepo (Turborepo + Vite)
+- New design system with CSS variables for theming, dark mode
+- Flutter/Dart version pills with proper brand colours (no broken SVG icons)
+- Removed "LATEST" badge from table rows — Hero pills serve that purpose
+- Fixed all table links to open in new tab (`target="_blank"`) with `stopPropagation()` so row expand doesn't fire
+- Added Cloudflare Pages deploy workflow (`deploy.yml`)
