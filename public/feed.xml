@@ -7,9 +7,1709 @@
   <link>https://flutterreleases.com</link>
   <description>Browse the latest Flutter releases with matching Dart SDK versions, release notes, and direct download links — updated across stable, beta, and dev channels.</description>
   <language>en-US</language>
-  <pubDate>Mon, 25 May 2026 10:32:30 GMT</pubDate>
+  <pubDate>Mon, 25 May 2026 10:38:49 GMT</pubDate>
   <ttl>60</ttl>
   
+  <item>
+    <title>Flutter 3.44.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.44.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.44.0</guid>
+    <pubDate>Mon, 18 May 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 3.44.0 stable release.</p>
+<p>Released: 2026-05-18</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.41.9 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.41.9</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.41.9</guid>
+    <pubDate>Thu, 30 Apr 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.41 series.</p>
+<p>Released: 2026-04-30</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.41.8 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.41.8</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.41.8</guid>
+    <pubDate>Mon, 27 Apr 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.41 series.</p>
+<p>Released: 2026-04-27</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.41.7 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.41.7</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.41.7</guid>
+    <pubDate>Thu, 16 Apr 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.41 series.</p>
+<p>Released: 2026-04-16</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.41.6 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.41.6</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.41.6</guid>
+    <pubDate>Thu, 26 Mar 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.41 series.</p>
+<p>Released: 2026-03-26</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.41.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.41.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.41.5</guid>
+    <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.41 series.</p>
+<p>Released: 2026-03-18</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.41.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.41.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.41.4</guid>
+    <pubDate>Wed, 04 Mar 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.41 series.</p>
+<p>Released: 2026-03-04</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.41.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.41.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.41.3</guid>
+    <pubDate>Wed, 04 Mar 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.41 series.</p>
+<p>Released: 2026-03-04</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.41.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.41.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.41.2</guid>
+    <pubDate>Thu, 19 Feb 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.41 series.</p>
+<p>Released: 2026-02-19</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.41.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.41.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.41.1</guid>
+    <pubDate>Fri, 13 Feb 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.41 series.</p>
+<p>Released: 2026-02-13</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.41.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.41.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.41.0</guid>
+    <pubDate>Wed, 11 Feb 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 3.41.0 stable release.</p>
+<p>Released: 2026-02-11</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.38.10 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.38.10</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.38.10</guid>
+    <pubDate>Wed, 11 Feb 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.38 series.</p>
+<p>Released: 2026-02-11</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.38.9 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.38.9</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.38.9</guid>
+    <pubDate>Thu, 29 Jan 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.38 series.</p>
+<p>Released: 2026-01-29</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.38.8 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.38.8</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.38.8</guid>
+    <pubDate>Tue, 27 Jan 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.38 series.</p>
+<p>Released: 2026-01-27</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.38.7 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.38.7</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.38.7</guid>
+    <pubDate>Wed, 14 Jan 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.38 series.</p>
+<p>Released: 2026-01-14</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.38.6 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.38.6</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.38.6</guid>
+    <pubDate>Thu, 08 Jan 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.38 series.</p>
+<p>Released: 2026-01-08</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.38.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.38.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.38.5</guid>
+    <pubDate>Fri, 12 Dec 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.38 series.</p>
+<p>Released: 2025-12-12</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.38.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.38.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.38.4</guid>
+    <pubDate>Thu, 04 Dec 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.38 series.</p>
+<p>Released: 2025-12-04</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.38.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.38.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.38.3</guid>
+    <pubDate>Fri, 21 Nov 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.38 series.</p>
+<p>Released: 2025-11-21</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.38.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.38.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.38.2</guid>
+    <pubDate>Tue, 18 Nov 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.38 series.</p>
+<p>Released: 2025-11-18</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.38.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.38.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.38.1</guid>
+    <pubDate>Thu, 13 Nov 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.38 series.</p>
+<p>Released: 2025-11-13</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.38.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.38.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.38.0</guid>
+    <pubDate>Wed, 12 Nov 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 3.38.0 stable release.</p>
+<p>Released: 2025-11-12</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.35.7 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.35.7</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.35.7</guid>
+    <pubDate>Thu, 23 Oct 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.35 series.</p>
+<p>Released: 2025-10-23</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.35.6 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.35.6</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.35.6</guid>
+    <pubDate>Thu, 09 Oct 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.35 series.</p>
+<p>Released: 2025-10-09</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.35.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.35.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.35.5</guid>
+    <pubDate>Mon, 29 Sep 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.35 series.</p>
+<p>Released: 2025-09-29</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.32.7 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.32.7</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.32.7</guid>
+    <pubDate>Wed, 16 Jul 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.32 series.</p>
+<p>Released: 2025-07-16</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.32.6 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.32.6</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.32.6</guid>
+    <pubDate>Wed, 09 Jul 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.32 series.</p>
+<p>Released: 2025-07-09</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.32.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.32.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.32.5</guid>
+    <pubDate>Wed, 25 Jun 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.32 series.</p>
+<p>Released: 2025-06-25</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.32.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.32.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.32.4</guid>
+    <pubDate>Fri, 13 Jun 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.32 series.</p>
+<p>Released: 2025-06-13</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.32.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.32.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.32.3</guid>
+    <pubDate>Wed, 11 Jun 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.32 series.</p>
+<p>Released: 2025-06-11</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.32.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.32.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.32.2</guid>
+    <pubDate>Wed, 04 Jun 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.32 series.</p>
+<p>Released: 2025-06-04</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.32.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.32.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.32.1</guid>
+    <pubDate>Thu, 29 May 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.32 series.</p>
+<p>Released: 2025-05-29</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.32.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.32.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.32.0</guid>
+    <pubDate>Tue, 20 May 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 3.32.0 stable release.</p>
+<p>Released: 2025-05-20</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.29.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.29.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.29.3</guid>
+    <pubDate>Mon, 14 Apr 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.29 series.</p>
+<p>Released: 2025-04-14</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.29.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.29.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.29.2</guid>
+    <pubDate>Fri, 14 Mar 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.29 series.</p>
+<p>Released: 2025-03-14</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.29.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.29.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.29.1</guid>
+    <pubDate>Thu, 06 Mar 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.29 series.</p>
+<p>Released: 2025-03-06</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.29.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.29.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.29.0</guid>
+    <pubDate>Wed, 12 Feb 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 3.29.0 stable release.</p>
+<p>Released: 2025-02-12</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.27.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.27.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.27.4</guid>
+    <pubDate>Wed, 05 Feb 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.27 series.</p>
+<p>Released: 2025-02-05</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.27.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.27.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.27.3</guid>
+    <pubDate>Tue, 21 Jan 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.27 series.</p>
+<p>Released: 2025-01-21</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.27.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.27.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.27.2</guid>
+    <pubDate>Mon, 13 Jan 2025 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.27 series.</p>
+<p>Released: 2025-01-13</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.27.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.27.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.27.1</guid>
+    <pubDate>Mon, 16 Dec 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.27 series.</p>
+<p>Released: 2024-12-16</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.24.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.24.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.24.5</guid>
+    <pubDate>Thu, 14 Nov 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.24 series.</p>
+<p>Released: 2024-11-14</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.24.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.24.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.24.4</guid>
+    <pubDate>Thu, 24 Oct 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.24 series.</p>
+<p>Released: 2024-10-24</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.24.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.24.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.24.3</guid>
+    <pubDate>Thu, 12 Sep 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.24 series.</p>
+<p>Released: 2024-09-12</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.24.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.24.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.24.2</guid>
+    <pubDate>Wed, 04 Sep 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.24 series.</p>
+<p>Released: 2024-09-04</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.24.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.24.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.24.1</guid>
+    <pubDate>Wed, 21 Aug 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.24 series.</p>
+<p>Released: 2024-08-21</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.24.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.24.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.24.0</guid>
+    <pubDate>Tue, 06 Aug 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 3.24.0 stable release.</p>
+<p>Released: 2024-08-06</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.22.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.22.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.22.3</guid>
+    <pubDate>Thu, 18 Jul 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.22 series.</p>
+<p>Released: 2024-07-18</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.22.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.22.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.22.2</guid>
+    <pubDate>Thu, 06 Jun 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.22 series.</p>
+<p>Released: 2024-06-06</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.22.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.22.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.22.1</guid>
+    <pubDate>Wed, 22 May 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.22 series.</p>
+<p>Released: 2024-05-22</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.22.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.22.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.22.0</guid>
+    <pubDate>Mon, 13 May 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 3.22.0 stable release.</p>
+<p>Released: 2024-05-13</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.19.6 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.19.6</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.19.6</guid>
+    <pubDate>Wed, 17 Apr 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.19 series.</p>
+<p>Released: 2024-04-17</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.19.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.19.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.19.5</guid>
+    <pubDate>Thu, 28 Mar 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.19 series.</p>
+<p>Released: 2024-03-28</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.19.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.19.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.19.4</guid>
+    <pubDate>Thu, 21 Mar 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.19 series.</p>
+<p>Released: 2024-03-21</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.19.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.19.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.19.3</guid>
+    <pubDate>Fri, 08 Mar 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.19 series.</p>
+<p>Released: 2024-03-08</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.19.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.19.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.19.2</guid>
+    <pubDate>Wed, 28 Feb 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.19 series.</p>
+<p>Released: 2024-02-28</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.19.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.19.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.19.1</guid>
+    <pubDate>Wed, 21 Feb 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.19 series.</p>
+<p>Released: 2024-02-21</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.19.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.19.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.19.0</guid>
+    <pubDate>Thu, 15 Feb 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 3.19.0 stable release.</p>
+<p>Released: 2024-02-15</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.16.9 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.16.9</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.16.9</guid>
+    <pubDate>Thu, 25 Jan 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.16 series.</p>
+<p>Released: 2024-01-25</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.16.8 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.16.8</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.16.8</guid>
+    <pubDate>Wed, 17 Jan 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.16 series.</p>
+<p>Released: 2024-01-17</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.16.7 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.16.7</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.16.7</guid>
+    <pubDate>Thu, 11 Jan 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.16 series.</p>
+<p>Released: 2024-01-11</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.16.6 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.16.6</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.16.6</guid>
+    <pubDate>Wed, 10 Jan 2024 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.16 series.</p>
+<p>Released: 2024-01-10</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.16.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.16.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.16.5</guid>
+    <pubDate>Wed, 20 Dec 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.16 series.</p>
+<p>Released: 2023-12-20</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.16.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.16.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.16.4</guid>
+    <pubDate>Wed, 13 Dec 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.16 series.</p>
+<p>Released: 2023-12-13</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.16.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.16.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.16.3</guid>
+    <pubDate>Wed, 06 Dec 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.16 series.</p>
+<p>Released: 2023-12-06</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.16.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.16.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.16.2</guid>
+    <pubDate>Thu, 30 Nov 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.16 series.</p>
+<p>Released: 2023-11-30</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.16.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.16.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.16.1</guid>
+    <pubDate>Mon, 27 Nov 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.16 series.</p>
+<p>Released: 2023-11-27</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.16.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.16.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.16.0</guid>
+    <pubDate>Wed, 15 Nov 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 3.16.0 stable release.</p>
+<p>Released: 2023-11-15</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.13.9 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.13.9</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.13.9</guid>
+    <pubDate>Wed, 25 Oct 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.13 series.</p>
+<p>Released: 2023-10-25</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.13.8 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.13.8</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.13.8</guid>
+    <pubDate>Wed, 18 Oct 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.13 series.</p>
+<p>Released: 2023-10-18</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.13.7 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.13.7</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.13.7</guid>
+    <pubDate>Wed, 11 Oct 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.13 series.</p>
+<p>Released: 2023-10-11</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.13.6 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.13.6</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.13.6</guid>
+    <pubDate>Wed, 27 Sep 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.13 series.</p>
+<p>Released: 2023-09-27</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.13.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.13.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.13.5</guid>
+    <pubDate>Wed, 20 Sep 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.13 series.</p>
+<p>Released: 2023-09-20</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.13.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.13.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.13.4</guid>
+    <pubDate>Wed, 13 Sep 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.13 series.</p>
+<p>Released: 2023-09-13</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.13.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.13.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.13.3</guid>
+    <pubDate>Wed, 13 Sep 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.13 series.</p>
+<p>Released: 2023-09-13</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.13.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.13.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.13.2</guid>
+    <pubDate>Wed, 30 Aug 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.13 series.</p>
+<p>Released: 2023-08-30</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.13.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.13.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.13.1</guid>
+    <pubDate>Wed, 23 Aug 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.13 series.</p>
+<p>Released: 2023-08-23</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.13.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.13.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.13.0</guid>
+    <pubDate>Wed, 16 Aug 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 3.13.0 stable release.</p>
+<p>Released: 2023-08-16</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.10.6 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.10.6</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.10.6</guid>
+    <pubDate>Thu, 13 Jul 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.10 series.</p>
+<p>Released: 2023-07-13</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.10.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.10.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.10.5</guid>
+    <pubDate>Wed, 14 Jun 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.10 series.</p>
+<p>Released: 2023-06-14</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.10.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.10.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.10.4</guid>
+    <pubDate>Wed, 07 Jun 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.10 series.</p>
+<p>Released: 2023-06-07</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.10.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.10.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.10.3</guid>
+    <pubDate>Fri, 02 Jun 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.10 series.</p>
+<p>Released: 2023-06-02</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.10.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.10.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.10.2</guid>
+    <pubDate>Wed, 24 May 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.10 series.</p>
+<p>Released: 2023-05-24</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.10.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.10.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.10.1</guid>
+    <pubDate>Wed, 17 May 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.10 series.</p>
+<p>Released: 2023-05-17</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.10.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.10.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.10.0</guid>
+    <pubDate>Wed, 10 May 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 3.10.0 stable release.</p>
+<p>Released: 2023-05-10</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.7.12 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.7.12</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.7.12</guid>
+    <pubDate>Thu, 20 Apr 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.7 series.</p>
+<p>Released: 2023-04-20</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.7.11 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.7.11</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.7.11</guid>
+    <pubDate>Wed, 12 Apr 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.7 series.</p>
+<p>Released: 2023-04-12</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.7.10 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.7.10</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.7.10</guid>
+    <pubDate>Wed, 05 Apr 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.7 series.</p>
+<p>Released: 2023-04-05</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.7.9 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.7.9</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.7.9</guid>
+    <pubDate>Thu, 30 Mar 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.7 series.</p>
+<p>Released: 2023-03-30</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.7.8 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.7.8</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.7.8</guid>
+    <pubDate>Wed, 22 Mar 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.7 series.</p>
+<p>Released: 2023-03-22</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.7.7 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.7.7</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.7.7</guid>
+    <pubDate>Wed, 08 Mar 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.7 series.</p>
+<p>Released: 2023-03-08</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.7.6 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.7.6</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.7.6</guid>
+    <pubDate>Wed, 01 Mar 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.7 series.</p>
+<p>Released: 2023-03-01</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.7.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.7.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.7.5</guid>
+    <pubDate>Thu, 23 Feb 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.7 series.</p>
+<p>Released: 2023-02-23</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.7.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.7.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.7.4</guid>
+    <pubDate>Tue, 21 Feb 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.7 series.</p>
+<p>Released: 2023-02-21</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.7.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.7.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.7.3</guid>
+    <pubDate>Thu, 09 Feb 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.7 series.</p>
+<p>Released: 2023-02-09</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.7.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.7.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.7.2</guid>
+    <pubDate>Wed, 08 Feb 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.7 series.</p>
+<p>Released: 2023-02-08</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.7.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.7.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.7.1</guid>
+    <pubDate>Wed, 01 Feb 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.7 series.</p>
+<p>Released: 2023-02-01</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.7.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.7.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.7.0</guid>
+    <pubDate>Tue, 24 Jan 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 3.7.0 stable release.</p>
+<p>Released: 2023-01-24</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.3.10 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.3.10</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.3.10</guid>
+    <pubDate>Mon, 23 Jan 2023 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.3 series.</p>
+<p>Released: 2023-01-23</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.3.9 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.3.9</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.3.9</guid>
+    <pubDate>Wed, 23 Nov 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.3 series.</p>
+<p>Released: 2022-11-23</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.3.8 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.3.8</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.3.8</guid>
+    <pubDate>Wed, 09 Nov 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.3 series.</p>
+<p>Released: 2022-11-09</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.3.7 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.3.7</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.3.7</guid>
+    <pubDate>Wed, 02 Nov 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.3 series.</p>
+<p>Released: 2022-11-02</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.3.6 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.3.6</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.3.6</guid>
+    <pubDate>Wed, 26 Oct 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.3 series.</p>
+<p>Released: 2022-10-26</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.3.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.3.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.3.5</guid>
+    <pubDate>Wed, 19 Oct 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.3 series.</p>
+<p>Released: 2022-10-19</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.3.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.3.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.3.4</guid>
+    <pubDate>Wed, 05 Oct 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.3 series.</p>
+<p>Released: 2022-10-05</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.3.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.3.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.3.3</guid>
+    <pubDate>Wed, 28 Sep 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.3 series.</p>
+<p>Released: 2022-09-28</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.3.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.3.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.3.2</guid>
+    <pubDate>Wed, 14 Sep 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.3 series.</p>
+<p>Released: 2022-09-14</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.3.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.3.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.3.1</guid>
+    <pubDate>Wed, 07 Sep 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.3 series.</p>
+<p>Released: 2022-09-07</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.3.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.3.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.3.0</guid>
+    <pubDate>Tue, 30 Aug 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 3.3.0 stable release.</p>
+<p>Released: 2022-08-30</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.0.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.0.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.0.5</guid>
+    <pubDate>Wed, 13 Jul 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.0 series.</p>
+<p>Released: 2022-07-13</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.0.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.0.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.0.4</guid>
+    <pubDate>Fri, 01 Jul 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.0 series.</p>
+<p>Released: 2022-07-01</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.0.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.0.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.0.3</guid>
+    <pubDate>Wed, 22 Jun 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.0 series.</p>
+<p>Released: 2022-06-22</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.0.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.0.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.0.2</guid>
+    <pubDate>Fri, 10 Jun 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.0 series.</p>
+<p>Released: 2022-06-10</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.0.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.0.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.0.1</guid>
+    <pubDate>Fri, 20 May 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 3.0 series.</p>
+<p>Released: 2022-05-20</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.0.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/3.0.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/3.0.0</guid>
+    <pubDate>Wed, 11 May 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 3.0.0 stable release.</p>
+<p>Released: 2022-05-11</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.10.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.10.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.10.5</guid>
+    <pubDate>Mon, 18 Apr 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.10 series.</p>
+<p>Released: 2022-04-18</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.10.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.10.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.10.4</guid>
+    <pubDate>Mon, 28 Mar 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.10 series.</p>
+<p>Released: 2022-03-28</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.10.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.10.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.10.3</guid>
+    <pubDate>Thu, 03 Mar 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.10 series.</p>
+<p>Released: 2022-03-03</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.10.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.10.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.10.2</guid>
+    <pubDate>Sat, 19 Feb 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.10 series.</p>
+<p>Released: 2022-02-19</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.10.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.10.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.10.1</guid>
+    <pubDate>Thu, 10 Feb 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.10 series.</p>
+<p>Released: 2022-02-10</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.10.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.10.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.10.0</guid>
+    <pubDate>Thu, 03 Feb 2022 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 2.10.0 stable release.</p>
+<p>Released: 2022-02-03</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.8.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.8.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.8.1</guid>
+    <pubDate>Thu, 16 Dec 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.8 series.</p>
+<p>Released: 2021-12-16</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.8.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.8.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.8.0</guid>
+    <pubDate>Thu, 09 Dec 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 2.8.0 stable release.</p>
+<p>Released: 2021-12-09</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.5.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.5.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.5.3</guid>
+    <pubDate>Fri, 15 Oct 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.5 series.</p>
+<p>Released: 2021-10-15</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.5.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.5.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.5.2</guid>
+    <pubDate>Thu, 30 Sep 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.5 series.</p>
+<p>Released: 2021-09-30</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.5.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.5.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.5.1</guid>
+    <pubDate>Fri, 17 Sep 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.5 series.</p>
+<p>Released: 2021-09-17</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.5.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.5.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.5.0</guid>
+    <pubDate>Wed, 08 Sep 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 2.5.0 stable release.</p>
+<p>Released: 2021-09-08</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.2.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.2.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.2.3</guid>
+    <pubDate>Thu, 01 Jul 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.2 series.</p>
+<p>Released: 2021-07-01</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.2.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.2.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.2.2</guid>
+    <pubDate>Fri, 11 Jun 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.2 series.</p>
+<p>Released: 2021-06-11</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.2.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.2.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.2.1</guid>
+    <pubDate>Thu, 27 May 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.2 series.</p>
+<p>Released: 2021-05-27</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.2.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.2.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.2.0</guid>
+    <pubDate>Tue, 18 May 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 2.2.0 stable release.</p>
+<p>Released: 2021-05-18</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.0.6 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.0.6</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.0.6</guid>
+    <pubDate>Fri, 30 Apr 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.0 series.</p>
+<p>Released: 2021-04-30</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.0.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.0.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.0.5</guid>
+    <pubDate>Fri, 16 Apr 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.0 series.</p>
+<p>Released: 2021-04-16</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.0.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.0.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.0.4</guid>
+    <pubDate>Fri, 02 Apr 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.0 series.</p>
+<p>Released: 2021-04-02</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.0.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.0.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.0.3</guid>
+    <pubDate>Fri, 19 Mar 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.0 series.</p>
+<p>Released: 2021-03-19</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.0.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.0.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.0.2</guid>
+    <pubDate>Fri, 12 Mar 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.0 series.</p>
+<p>Released: 2021-03-12</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.0.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.0.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.0.1</guid>
+    <pubDate>Thu, 04 Mar 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 2.0 series.</p>
+<p>Released: 2021-03-04</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 2.0.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/2.0.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/2.0.0</guid>
+    <pubDate>Wed, 03 Mar 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 2.0.0 stable release.</p>
+<p>Released: 2021-03-03</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.22.6 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.22.6</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.22.6</guid>
+    <pubDate>Mon, 25 Jan 2021 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.22 series.</p>
+<p>Released: 2021-01-25</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.22.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.22.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.22.5</guid>
+    <pubDate>Thu, 10 Dec 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.22 series.</p>
+<p>Released: 2020-12-10</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.22.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.22.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.22.4</guid>
+    <pubDate>Fri, 13 Nov 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.22 series.</p>
+<p>Released: 2020-11-13</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.22.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.22.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.22.3</guid>
+    <pubDate>Fri, 30 Oct 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.22 series.</p>
+<p>Released: 2020-10-30</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.22.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.22.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.22.2</guid>
+    <pubDate>Fri, 16 Oct 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.22 series.</p>
+<p>Released: 2020-10-16</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.22.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.22.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.22.1</guid>
+    <pubDate>Thu, 08 Oct 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.22 series.</p>
+<p>Released: 2020-10-08</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.22.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.22.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.22.0</guid>
+    <pubDate>Thu, 01 Oct 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 1.22.0 stable release.</p>
+<p>Released: 2020-10-01</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.20.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.20.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.20.4</guid>
+    <pubDate>Tue, 15 Sep 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.20 series.</p>
+<p>Released: 2020-09-15</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.20.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.20.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.20.3</guid>
+    <pubDate>Wed, 02 Sep 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.20 series.</p>
+<p>Released: 2020-09-02</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.20.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.20.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.20.2</guid>
+    <pubDate>Thu, 13 Aug 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.20 series.</p>
+<p>Released: 2020-08-13</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.20.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.20.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.20.1</guid>
+    <pubDate>Thu, 06 Aug 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.20 series.</p>
+<p>Released: 2020-08-06</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.20.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.20.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.20.0</guid>
+    <pubDate>Wed, 05 Aug 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 1.20.0 stable release.</p>
+<p>Released: 2020-08-05</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.17.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.17.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.17.5</guid>
+    <pubDate>Wed, 01 Jul 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.17 series.</p>
+<p>Released: 2020-07-01</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.17.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.17.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.17.4</guid>
+    <pubDate>Thu, 18 Jun 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.17 series.</p>
+<p>Released: 2020-06-18</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.17.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.17.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.17.3</guid>
+    <pubDate>Thu, 04 Jun 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.17 series.</p>
+<p>Released: 2020-06-04</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.17.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.17.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.17.2</guid>
+    <pubDate>Thu, 28 May 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.17 series.</p>
+<p>Released: 2020-05-28</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.17.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.17.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.17.1</guid>
+    <pubDate>Wed, 13 May 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.17 series.</p>
+<p>Released: 2020-05-13</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 1.17.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/1.17.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/1.17.0</guid>
+    <pubDate>Wed, 06 May 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter 1.17.0 stable release.</p>
+<p>Released: 2020-05-06</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter v1.12.13+hotfix.9 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/v1.12.13+hotfix.9</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/v1.12.13+hotfix.9</guid>
+    <pubDate>Fri, 17 Apr 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.12 series.</p>
+<p>Released: 2020-04-17</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter v1.12.13+hotfix.8 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/v1.12.13+hotfix.8</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/v1.12.13+hotfix.8</guid>
+    <pubDate>Tue, 11 Feb 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.12 series.</p>
+<p>Released: 2020-02-11</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter v1.12.13+hotfix.7 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/v1.12.13+hotfix.7</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/v1.12.13+hotfix.7</guid>
+    <pubDate>Mon, 27 Jan 2020 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.12 series.</p>
+<p>Released: 2020-01-27</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter v1.12.13+hotfix.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/v1.12.13+hotfix.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/v1.12.13+hotfix.5</guid>
+    <pubDate>Wed, 11 Dec 2019 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.12 series.</p>
+<p>Released: 2019-12-11</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter v1.9.1+hotfix.6 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/v1.9.1+hotfix.6</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/v1.9.1+hotfix.6</guid>
+    <pubDate>Wed, 23 Oct 2019 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.9 series.</p>
+<p>Released: 2019-10-23</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter v1.9.1+hotfix.5 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/v1.9.1+hotfix.5</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/v1.9.1+hotfix.5</guid>
+    <pubDate>Thu, 17 Oct 2019 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.9 series.</p>
+<p>Released: 2019-10-17</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter v1.9.1+hotfix.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/v1.9.1+hotfix.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/v1.9.1+hotfix.4</guid>
+    <pubDate>Tue, 01 Oct 2019 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.9 series.</p>
+<p>Released: 2019-10-01</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter v1.9.1+hotfix.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/v1.9.1+hotfix.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/v1.9.1+hotfix.2</guid>
+    <pubDate>Tue, 10 Sep 2019 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.9 series.</p>
+<p>Released: 2019-09-10</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter v1.7.8+hotfix.4 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/v1.7.8+hotfix.4</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/v1.7.8+hotfix.4</guid>
+    <pubDate>Wed, 24 Jul 2019 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.7 series.</p>
+<p>Released: 2019-07-24</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter v1.7.8+hotfix.3 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/v1.7.8+hotfix.3</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/v1.7.8+hotfix.3</guid>
+    <pubDate>Tue, 09 Jul 2019 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.7 series.</p>
+<p>Released: 2019-07-09</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter v1.7.8+hotfix.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/v1.7.8+hotfix.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/v1.7.8+hotfix.2</guid>
+    <pubDate>Mon, 08 Jul 2019 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.7 series.</p>
+<p>Released: 2019-07-08</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter v1.5.4-hotfix.2 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/v1.5.4-hotfix.2</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/v1.5.4-hotfix.2</guid>
+    <pubDate>Tue, 07 May 2019 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.5 series.</p>
+<p>Released: 2019-05-07</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter v1.2.1 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/v1.2.1</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/v1.2.1</guid>
+    <pubDate>Tue, 26 Feb 2019 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Hotfix release with stability improvements for the 1.2 series.</p>
+<p>Released: 2019-02-26</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter v1.0.0 (stable)</title>
+    <link>https://github.com/flutter/flutter/releases/tag/v1.0.0</link>
+    <guid isPermaLink="false">https://github.com/flutter/flutter/releases/tag/v1.0.0</guid>
+    <pubDate>Tue, 04 Dec 2018 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p>Flutter v1.0.0 stable release.</p>
+<p>Released: 2018-12-04</p>]]></description>
+  </item>
+
   <item>
     <title>Flutter 3.35.4 (stable)</title>
     <link>https://github.com/flutter/flutter/releases/tag/3.35.4</link>
