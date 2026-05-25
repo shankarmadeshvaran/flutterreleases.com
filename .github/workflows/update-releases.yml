@@ -57,7 +57,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add packages/web/public/releases.json packages/web/public/feed.xml packages/web/public/sitemap.xml packages/web/public/generation_status.json || true
+          git add packages/web/public/feed.xml packages/web/public/sitemap.xml packages/web/public/generation_status.json || true
           if ! git diff --staged --quiet; then
             git commit -m "chore(generator): update feed, sitemap and release data"
             git pull --rebase && git push

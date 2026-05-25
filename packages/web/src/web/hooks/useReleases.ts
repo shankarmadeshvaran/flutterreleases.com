@@ -13,7 +13,7 @@ function normalizeRelease(raw: any): Release {
   const req = raw.requires || {};
 
   return {
-    version: raw.version || "—",
+    version: raw.version || raw.flutter_version || "—",
     dartVersion: raw.dart_version || raw.dart || "—",
     channel: (raw.channel || "stable") as Channel,
     releaseType: raw.release_type || raw.releaseType || "Release",
