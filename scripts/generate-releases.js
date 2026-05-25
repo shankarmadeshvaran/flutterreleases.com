@@ -477,13 +477,9 @@ async function run(){
     // write generated
     safeWriteAtomic(GENERATED_PATH, outStr);
 
-    // backup last good
-    if(fs.existsSync(FINAL_PATH)){
-      fs.copyFileSync(FINAL_PATH, LAST_GOOD);
-    }
-
-    // move generated -> final
-    safeWriteAtomic(FINAL_PATH, outStr);
+    // NOTE: releases.json is owned exclusively by the crawler workflow (crawl-releases.yml).
+    // The generator must NOT overwrite it — doing so replaces crawler data with stale generated data.
+    // Backup and overwrite of FINAL_PATH intentionally removed.
 
     // also generate RSS feed, preferring public/data/releases.json if present (to mirror pages/index.js)
     try{

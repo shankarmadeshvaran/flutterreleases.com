@@ -30,6 +30,23 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Validate releases.json
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          from pathlib import Path
+          p = Path('packages/web/public/releases.json')
+          if not p.exists():
+              sys.exit('releases.json missing — aborting deploy')
+          d = json.loads(p.read_text())
+          items = d.get('items', d) if isinstance(d, dict) else d
+          if len(items) < 50:
+              sys.exit(f'releases.json has only {len(items)} items — aborting deploy (stale data)')
+          if 'version' not in items[0]:
+              sys.exit(f'releases.json missing "version" key (got: {list(items[0].keys())[:4]}) — wrong schema')
+          print(f'releases.json OK: {len(items)} items, schema valid')
+          PY
+
       - name: Build web
         run: bun run build:web
 
