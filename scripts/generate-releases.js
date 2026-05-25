@@ -12,7 +12,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const OUT_DIR = path.join(process.cwd(), 'public');
+const OUT_DIR = path.join(process.cwd(), 'packages', 'web', 'public');
 const DATA_DIR = path.join(OUT_DIR, 'data');
 const GENERATED_PATH = path.join(OUT_DIR, 'releases.generated.json');
 const FINAL_PATH = path.join(OUT_DIR, 'releases.json');

@@ -26,7 +26,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-const CURATED_PATH = path.join(ROOT, 'public', 'data', 'releases.json');
+const CURATED_PATH = path.join(ROOT, 'packages', 'web', 'public', 'releases.json');
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || null;
 const DRY_RUN = process.argv.includes('--dry-run');

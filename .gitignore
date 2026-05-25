@@ -1,42 +1,77 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# generated snapshot — not needed in git
+packages/web/public/releases.last_good.json
 
-public/releases.last_good.json
 # dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+node_modules
 
-# testing
-/coverage
+# output
+out
+dist
+dist-electron
+release
+web-build
+*.tgz
 
-# next.js
-/.next/
-/out/
+# code coverage
+coverage
+*.lcov
 
-# production
-/build
+# logs
+logs
+_.log
+report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
-# misc
+# local databases
+*.db
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+.env*.local
+
+# caches
+.eslintcache
+.cache
+*.tsbuildinfo
+.turbo
+
+# IntelliJ based IDEs
+.idea
+
+# macOS
 .DS_Store
+
+# Expo
+.expo/
+expo-env.d.ts
+
+# Native
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
 *.pem
 
+# Metro
+.metro-health-check*
+
 # debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
+npm-debug.*
+yarn-debug.*
+yarn-error.*
 
-# env files (can opt-in for committing if needed)
-.env*
+# generated native folders
+ios
+android
 
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# scripts/ is tracked — data pipeline lives here
+!scripts/
+!packages/mobile/scripts/
+packages/mobile/scripts/*
+!packages/mobile/scripts/generate-ios-certs.py

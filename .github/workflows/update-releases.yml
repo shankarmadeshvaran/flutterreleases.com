@@ -4,11 +4,10 @@ on:
   push:
     branches: [ "main", "master" ]
     paths:
-      - 'public/data/releases.json'
+      - 'packages/web/public/releases.json'
       - 'scripts/**'
       - '.github/workflows/update-releases.yml'
       - 'package.json'
-      - 'package-lock.json'
   workflow_dispatch: {}
 
 permissions:
@@ -36,20 +35,20 @@ jobs:
           node-version: '24'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci 2>/dev/null || npm install
 
-      - name: Run generator (build releases.json, feed.xml, sitemap.xml)
+      - name: Run generator (build feed.xml, sitemap.xml)
         run: node scripts/generate-releases.js
 
       - name: Validate generated output
         id: validate
         run: |
-          if [ ! -f public/feed.xml ]; then
+          if [ ! -f packages/web/public/feed.xml ]; then
             echo "ok=false" >> $GITHUB_OUTPUT
             echo "reason=no_feed" >> $GITHUB_OUTPUT
             exit 0
           fi
-          if [ ! -f public/sitemap.xml ]; then
+          if [ ! -f packages/web/public/sitemap.xml ]; then
             echo "ok=false" >> $GITHUB_OUTPUT
             echo "reason=no_sitemap" >> $GITHUB_OUTPUT
             exit 0
@@ -61,7 +60,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/releases.json public/feed.xml public/sitemap.xml public/data/releases.generated.json public/generation_status.json || true
+          git add packages/web/public/releases.json packages/web/public/feed.xml packages/web/public/sitemap.xml packages/web/public/generation_status.json || true
           if ! git diff --staged --quiet; then
             git commit -m "chore(generator): update feed, sitemap and release data"
             git push
