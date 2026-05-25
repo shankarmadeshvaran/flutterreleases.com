@@ -7343,7 +7343,7 @@
         "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#windows",
         "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#linux",
         "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#web",
-        "tools": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#tooling"
+        "tools": null
       },
       "summary": "Major release with performance boost and stateful hot reload on the web, accessibility improvements, and enhanced developer tools.",
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.35.0",
@@ -7425,7 +7425,7 @@
         "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.30.0#windows",
         "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.30.0#linux",
         "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.30.0#web",
-        "tools": "https://docs.flutter.dev/release/release-notes/release-notes-3.30.0#tooling"
+        "tools": null
       },
       "summary": "Major stable release with Dart 3.7 integration, Flutter rendering optimizations, and enhanced platform interoperability.",
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.30.0",
@@ -7468,7 +7468,7 @@
         "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#windows",
         "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#linux",
         "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#web",
-        "tools": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#tooling"
+        "tools": null
       },
       "summary": "Major release with Impeller as default Android renderer, Cupertino widget enhancements, Row/Column spacing support, and Swift Package Manager integration.",
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.27.0",
