@@ -67,8 +67,8 @@ yarn-error.*
 ios
 android
 
-# scripts (local-only provisioning)
-scripts/
+# scripts/ is tracked — data pipeline lives here
+!scripts/
 !packages/mobile/scripts/
 packages/mobile/scripts/*
 !packages/mobile/scripts/generate-ios-certs.py

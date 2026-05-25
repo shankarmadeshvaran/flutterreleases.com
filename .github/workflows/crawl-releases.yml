@@ -1,0 +1,46 @@
+name: Crawl Flutter Releases
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # daily at 06:00 UTC
+  workflow_dispatch: {}    # manual trigger from GitHub UI
+
+permissions:
+  contents: write
+
+concurrency:
+  group: crawl-releases
+  cancel-in-progress: true
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: '24'
+
+      - name: Run crawler
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/crawl-releases.js
+
+      - name: Commit updated releases.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add packages/web/public/releases.json
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(crawler): auto-update Flutter releases"
+            git push
+          else
+            echo "No new releases found. Nothing to commit."
+          fi
