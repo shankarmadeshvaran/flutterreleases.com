@@ -45,12 +45,6 @@ export default function Home({ data }) {
             </p>
             <p className="text-base text-flutter-gray-600 dark:text-flutter-gray-400 mb-2">
               This is not an official Google website. A free resource for the Flutter community.
-              {SHOW_DONATE_BUTTON && (
-                <span>
-                  {' '}<a href="https://buymeacoffee.com/shankarmadeshvaran" target="_blank" rel="noreferrer" className="text-red-500 hover:text-red-600 font-medium">Please consider donating</a>
-                  {' '}to help maintain it.
-                </span>
-              )}
             </p>
             <p className="text-base text-flutter-gray-600 dark:text-flutter-gray-400">
               Stay up-to-date via our{' '}

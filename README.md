@@ -4,149 +4,214 @@
 [![Dart Releases](https://img.shields.io/badge/Dart-SDK-0175C2)](https://flutterreleases.com)
 [![Next.js](https://img.shields.io/badge/Built%20with-Next.js-black)](https://nextjs.org)
 [![TailwindCSS](https://img.shields.io/badge/Styled%20with-TailwindCSS-38B2AC)](https://tailwindcss.com)
-[![Node 18+](https://img.shields.io/badge/Node-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org)
+[![Node 24+](https://img.shields.io/badge/Node-24%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-[FlutterReleases.com](https://flutterreleases.com) is an **unofficial, community-maintained resource** that lists all **Flutter SDK releases** along with corresponding **Dart SDK versions**, release notes, and download links.  
+[FlutterReleases.com](https://flutterreleases.com) is an **unofficial, community-maintained resource** listing all Flutter SDK releases with Dart versions, release notes, and download links — automatically kept up to date.
 
-The goal is to provide a **single, consolidated place** to browse Flutter’s **stable, beta, and dev releases**, making it easier for developers to stay up to date.
-
-Follow on X: [@devinmaking](https://x.com/devinmaking)
+Follow: [@devinmaking](https://x.com/devinmaking)
 
 ---
 
-## 🌐 Website
+## Features
 
-👉 Visit: [https://flutterreleases.com](https://flutterreleases.com)
-
-## ✨ Features
-
-- Searchable table of Flutter SDK releases with filters.
-- Quick access to release notes (full and per-section for full “Release” items).
-- JSON API at `/data/releases.json`.
-- RSS feed at `/feed.xml`.
-- SEO-friendly static pages and a sitemap at `/sitemap.xml`.
+- Searchable, filterable table (stable / beta / main / hotfix)
+- Paginated results — 10 releases per page
+- Per-release download links (macOS arm64/x64, Windows, Linux)
+- Release notes with per-section CTAs (Framework, iOS, Android, Web, etc.)
+- JSON API at `/data/releases.json`
+- RSS feed at `/feed.xml`
+- Sitemap at `/sitemap.xml`
 
 ---
 
-## 🛠️ Tech Stack
+## How releases are kept up to date
 
-FlutterReleases.com is built with modern web tools:
-- **Next.js** (React framework for static site generation)  
-- **Tailwind CSS** (utility-first styling, dark mode support)  
-- **Node.js scripts** for release data aggregation  
-- **Static JSON + RSS + Sitemap** for developer-friendly integration and SEO  
+Two GitHub Actions workflows run in sequence:
 
----
+```
+[crawl-releases.yml]  ──►  public/data/releases.json  ──►  [update-releases.yml]
+      (daily + on-demand)         (commit to main)            (feed.xml + sitemap.xml)
+```
 
-## 🧱 Architecture
+### Workflow 1 — `crawl-releases.yml`
 
-- `models/Release.js` — Normalizes raw release items into a consistent shape used by the UI.
-- `pages/index.js` — Loads release data from `public/data/releases.json` (preferred) or `public/releases.json` and passes normalized items to the UI via `getStaticProps()`.
-- `components/ReleaseTable.js` — Renders the releases table (search, filters, downloads, notes CTAs).
-- Releases are currently manually curated in `public/data/releases.json` (the generator is optional and not used in this workflow).
-- `feed.xml`, `sitemap.xml` (uses official manifests and GitHub API; prefers curated data when present).
+Runs daily at 06:00 UTC (or manually via `workflow_dispatch`).  
+Executes `scripts/crawl-releases.js` which:
 
----
+1. Loads the current `public/data/releases.json`
+2. Fetches all releases from the **Google Flutter SDK Archive** (stable by default; pass `--all-channels` for beta too)
+3. Compares versions — only processes entries not already in the JSON
+4. For each new version:
+   - Pulls framework revision and summary from **GitHub API** (`flutter/flutter` tags + releases)
+   - Infers `release_type` (Hotfix if patch > 0, otherwise Release)
+   - Constructs `release_notes` URLs from the docs.flutter.dev pattern
+   - Detects `requires` (macOS, Xcode, Windows, Visual Studio, Linux) based on the Flutter version number
+5. Writes new entries to the top of `items[]` and commits back to `main`
 
-## 🚀 Getting Started
+### Workflow 2 — `update-releases.yml`
 
-Prerequisites:
-- Node 18+ (required for global `fetch` in the generator and modern Next.js features)
-
-Install and run:
-- `npm ci`
-- `npm run dev` — start development server
-- `npm run build` — production build
-- `npm run start` — start production server
-- `npm run export` — static export (if desired)
-
-
-## 📜 NPM Scripts
-
-- `dev` — Start Next.js development server
-- `build` — Build for production
-- `start` — Start production server
-- `export` — Export static files (optional)
+Triggers on any push to `main` that touches `public/data/releases.json`.  
+Runs `scripts/generate-releases.js` to rebuild:
+- `public/feed.xml` — RSS feed
+- `public/sitemap.xml` — XML sitemap
+- `public/releases.json` — legacy fallback
+- `public/generation_status.json` — build metadata
 
 ---
 
-## 🗂️ Project Structure
+## Running the crawler manually
+
+```bash
+# Stable releases only (default)
+node scripts/crawl-releases.js
+
+# Stable + beta
+node scripts/crawl-releases.js --all-channels
+
+# Dry run — preview output, no file writes
+node scripts/crawl-releases.js --dry-run
+
+# With a GitHub token (avoids rate limits)
+GITHUB_TOKEN=your_token node scripts/crawl-releases.js
+```
+
+A `GITHUB_TOKEN` is recommended. Without it, GitHub API requests are unauthenticated and rate-limited to 60/hour.
+
+---
+
+## Data schema
+
+Each entry in `public/data/releases.json` follows this shape:
+
+```jsonc
+{
+  "version": "3.32.0",                       // Flutter SDK version
+  "channel": "stable",                        // stable | beta | main
+  "release_type": "Release",                  // Release | Hotfix
+  "released": "2025-05-20",                   // ISO 8601 date
+  "dart_version": "3.8.0",                    // Dart SDK version
+  "framework_revision": "abc1234",            // 7-char git sha
+  "engine_revision": "def5678",               // engine commit sha
+  "summary": "...",                           // first line of GitHub release body
+  "requires": {
+    "macos": "macOS 13.5+",
+    "xcode": "Xcode 15.1+",
+    "windows": "Windows 10+",
+    "visual_studio": "Visual Studio 2022",
+    "linux": "bash, git, curl, unzip"
+  },
+  "platforms": {
+    "macos_arm64": "https://storage.googleapis.com/...",
+    "macos_x64":   "https://storage.googleapis.com/...",
+    "windows_x64": "https://storage.googleapis.com/...",
+    "linux_x64":   "https://storage.googleapis.com/..."
+  },
+  "release_notes": {
+    "base":      "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
+    "framework": "https://docs.flutter.dev/...#framework-changes",
+    "material":  "https://docs.flutter.dev/...#material-library",
+    "ios":       "https://docs.flutter.dev/...#ios",
+    "android":   "https://docs.flutter.dev/...#android",
+    "web":       "https://docs.flutter.dev/...#web",
+    "windows":   "https://docs.flutter.dev/...#windows",
+    "linux":     "https://docs.flutter.dev/...#linux"
+  }
+}
+```
+
+Notes:
+- `release_notes.base` is `null` for very old releases (e.g. v1.0.0) where no docs page exists
+- `release_notes.tools` anchor is always `null` — the `#tools` anchor does not exist on Flutter release notes pages
+- Hotfix entries share the base URL of their `.0` parent (e.g. `3.32.1` → `release-notes-3.32.0`)
+
+---
+
+## Project structure
 
 ```
 .
 ├── components/
-│   ├── Header.js
-│   ├── ReleaseTable.js
-│   └── Seo.js
+│   ├── Header.js           # Top nav, dark mode toggle
+│   ├── ReleaseTable.js     # Main table — search, filters, pagination, downloads, notes
+│   └── Seo.js              # <head> meta tags
 ├── models/
-│   └── Release.js
+│   └── Release.js          # Normalizes raw JSON entries into UI-ready shape
 ├── pages/
-│   └── index.js
+│   └── index.js            # getStaticProps loads releases.json, passes to ReleaseTable
 ├── public/
 │   ├── data/
-│   │   └── releases.json     # curated, preferred
-│   ├── releases.json         # generated fallback
-│   ├── feed.xml              # generated
-│   ├── sitemap.xml           # generated
-│   └── ...
+│   │   └── releases.json   # Primary data source (crawler output)
+│   ├── releases.json       # Legacy fallback (generator output)
+│   ├── feed.xml            # RSS feed
+│   ├── sitemap.xml         # XML sitemap
+│   └── generation_status.json
 ├── scripts/
-│   └── generate-releases.js
-├── styles/
-│   └── globals.css (tailwind)
+│   ├── crawl-releases.js   # Fetches new Flutter releases and updates releases.json
+│   └── generate-releases.js # Builds feed.xml, sitemap.xml from releases.json
+├── .github/workflows/
+│   ├── crawl-releases.yml  # Runs crawler daily (06:00 UTC)
+│   └── update-releases.yml # Rebuilds feed/sitemap on releases.json change
 └── README.md
 ```
 
 ---
 
-## 🧭 Coding Standards
+## Local development
 
-- Use ES Modules (ESM) across the repository.
-- Use Tailwind CSS for styling; keep classnames descriptive and consistent.
-- Ensure data returned from `getStaticProps()` is JSON-serializable (POJOs only). Do not return class instances.
-- Keep components simple and presentational; centralize data normalization in `models/Release.js`.
+```bash
+# Prerequisites: Node 24+
 
----
+npm ci
+npm run dev      # dev server at http://localhost:3000
+npm run build    # production build
+npm run start    # production server
+```
 
-## 🤝 Contributing
+To test the crawler locally, copy `.env.example` to `.env` and set `GITHUB_TOKEN`, then run:
 
-We welcome contributions from the Flutter community!  
-You can help improve [FlutterReleases.com](https://flutterreleases.com) in several ways:
-
-1. **Report issues**  
-   - Use [GitHub Issues](../../issues) if you notice missing data, broken links, or incorrect release details.
-
-2. **Improve release data**  
-   - Extend or fix the data generation script (`scripts/generate-releases.js`)  
-   - Add missing metadata such as Dart versions, engine revisions, or release notes  
-
-3. **Frontend improvements**  
-   - Enhance UI components in `components/`  
-   - Improve SEO with better metadata in `components/Seo.js`  
-   - Add small UX refinements (filters, search, etc.)
-
-4. **Documentation**  
-   - Improve this README  
-   - Add examples of how to use the JSON API or RSS feed  
-
-### Contribution Guidelines
-
-- Fork the repository and create a branch for your work.  
-- Keep pull requests focused (small, single-purpose).  
-- Ensure code runs without errors (`npm run build`).  
-Validate generated data with tools like `jq` (JSON) and `xmllint` (XML).  
+```bash
+node scripts/crawl-releases.js --dry-run
+```
 
 ---
 
-## 🛡️ Disclaimer
+## Tech stack
 
-This is **not an official Google or Flutter website**.  
-All downloads are hosted by Google, and links on this site take you directly to Flutter’s official resources.  
+- **Next.js** — React framework, static site generation via `getStaticProps`
+- **Tailwind CSS** — utility-first styling, dark mode
+- **lunr** — client-side full-text search
+- **Node.js** — crawler and generator scripts
+- **GitHub Actions** — fully automated daily updates
 
 ---
 
-## 📜 License
+## Contributing
 
-This project is licensed under the **MIT License**. See the [LICENSE](./LICENSE) file for details.
+Contributions are welcome.
+
+1. **Bug reports / missing data** — open a [GitHub Issue](../../issues)
+2. **Crawler improvements** — edit `scripts/crawl-releases.js`; test with `--dry-run` first
+3. **UI improvements** — edit components in `components/`; follow existing Tailwind patterns
+4. **Schema additions** — update both the crawler output and `models/Release.js` normalization
+
+### Guidelines
+
+- Fork → branch → PR (keep PRs small and focused)
+- Run `npm run build` before submitting — no build errors
+- Validate JSON with `jq . public/data/releases.json` and XML with `xmllint`
+- Crawler PRs should include a `--dry-run` output sample in the PR description
+
+---
+
+## Disclaimer
+
+Not affiliated with Google or the Flutter team. All SDK downloads are hosted by Google; links go directly to Flutter's official infrastructure.
+
+---
+
+## License
+
+MIT — see [LICENSE](./LICENSE)
 
 Made with ❤️ by [@devinmaking](https://x.com/devinmaking)

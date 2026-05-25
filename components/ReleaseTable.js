@@ -2,10 +2,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import lunr from 'lunr';
 
+const ITEMS_PER_PAGE = 10;
+
 export default function ReleaseTable({ data }) {
   const [filter, setFilter] = useState('All Releases');
   const [query, setQuery] = useState('');
   const [results, setResults] = useState(Array.isArray(data?.items) ? data.items : []);
+  const [page, setPage] = useState(1);
 
   // Field helpers (normalized by models/Release.js)
   const getVersion = item => item.version || '—';
@@ -274,6 +277,7 @@ export default function ReleaseTable({ data }) {
     list.sort((a, b) => parseDate(getReleased(a)).getTime() - parseDate(getReleased(b)).getTime());
     list = list.reverse();
     setResults(list);
+    setPage(1);
   }, [filter, query, data, idx]);
 
   return (
@@ -315,7 +319,7 @@ export default function ReleaseTable({ data }) {
             </thead>
 
             <tbody>
-              {results.map((item, idx) => (
+              {results.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE).map((item, idx) => (
                 <tr key={idx} className="border-b border-flutter-gray-200 dark:border-flutter-gray-800 hover:bg-flutter-gray-50 dark:hover:bg-flutter-gray-900 transition-colors">
                   {/* Version */}
                   <td className="py-6 px-6 align-top text-left">
@@ -369,6 +373,63 @@ export default function ReleaseTable({ data }) {
           </table>
         </div>
       </div>
+
+      {/* Pagination */}
+      {results.length > ITEMS_PER_PAGE && (() => {
+        const totalPages = Math.ceil(results.length / ITEMS_PER_PAGE);
+        const btnBase = "px-3 py-1.5 text-xs font-medium rounded-md transition-colors";
+        const btnActive = `${btnBase} bg-flutter-blue-500 text-white`;
+        const btnInactive = `${btnBase} bg-flutter-gray-100 dark:bg-flutter-gray-800 text-flutter-gray-700 dark:text-flutter-gray-300 hover:bg-flutter-gray-200 dark:hover:bg-flutter-gray-700`;
+        const btnDisabled = `${btnBase} bg-flutter-gray-100 dark:bg-flutter-gray-800 text-flutter-gray-400 dark:text-flutter-gray-600 cursor-not-allowed`;
+
+        // Build page number window: always show first, last, and ±2 around current
+        const pageNums = [];
+        for (let i = 1; i <= totalPages; i++) {
+          if (i === 1 || i === totalPages || (i >= page - 2 && i <= page + 2)) {
+            pageNums.push(i);
+          }
+        }
+        // Insert ellipsis markers
+        const withEllipsis = [];
+        let prev = null;
+        for (const n of pageNums) {
+          if (prev !== null && n - prev > 1) withEllipsis.push('...');
+          withEllipsis.push(n);
+          prev = n;
+        }
+
+        return (
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            <button
+              onClick={() => setPage(p => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className={page === 1 ? btnDisabled : btnInactive}
+            >
+              ← Prev
+            </button>
+
+            {withEllipsis.map((item, i) =>
+              item === '...'
+                ? <span key={`e${i}`} className="px-1 text-flutter-gray-400 dark:text-flutter-gray-600 text-xs">…</span>
+                : <button
+                    key={item}
+                    onClick={() => setPage(item)}
+                    className={page === item ? btnActive : btnInactive}
+                  >
+                    {item}
+                  </button>
+            )}
+
+            <button
+              onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+              disabled={page === totalPages}
+              className={page === totalPages ? btnDisabled : btnInactive}
+            >
+              Next →
+            </button>
+          </div>
+        );
+      })()}
 
       {/* Footer */}
       <div className="mt-4 pt-2 border-t border-flutter-gray-200 dark:border-flutter-gray-700 text-sm text-flutter-gray-500">
