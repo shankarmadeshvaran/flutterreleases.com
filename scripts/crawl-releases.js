@@ -6,20 +6,17 @@
 //   1. Google Flutter SDK Archive  — canonical versions, download URLs, Dart version, commit hash
 //   2. GitHub flutter/flutter tags — framework_revision (7-char short sha)
 //   3. GitHub flutter/flutter releases — release body for summary extraction
-//   4. docs.flutter.dev pattern   — release notes URL construction
+//   4. docs.flutter.dev — release notes URLs (verified with real HEAD requests)
 //
-// How it works:
-//   - Loads current public/data/releases.json
-//   - Fetches all releases from SDK archive (stable channel only by default)
-//   - Compares: finds versions not already in your JSON
-//   - For each new version: builds a full entry matching your exact schema
-//   - Detects release_type (Hotfix vs Release) by checking if it's a patch version
-//   - Generates a summary by reading GitHub release body (first meaningful line)
-//   - Appends new entries to the top of items[] and writes back
+// URL Verification:
+//   - release_notes.base: HEAD checked — set to null if 404
+//   - release_notes section anchors: only set for anchors confirmed to exist in page HTML
+//   - ref_url: HEAD checked — falls back to v-prefixed tag if plain version 404s
+//   - platforms download URLs: sourced directly from Google's SDK archive (trusted, not re-checked)
 //
 // Usage:
 //   node scripts/crawl-releases.js               # stable only (default)
-//   node scripts/crawl-releases.js --all-channels # stable + beta + main
+//   node scripts/crawl-releases.js --all-channels # stable + beta
 //   node scripts/crawl-releases.js --dry-run      # preview, no write
 //   GITHUB_TOKEN=xxx node scripts/crawl-releases.js
 
@@ -39,7 +36,10 @@ const CHANNELS = ALL_CHANNELS ? ['stable', 'beta'] : ['stable'];
 const BASE_ARCHIVE_URL = 'https://storage.googleapis.com/flutter_infra_release/releases';
 const GITHUB_API = 'https://api.github.com';
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// Section anchors we attempt to verify on release notes pages
+const RELEASE_NOTE_ANCHORS = ['framework', 'material', 'ios', 'android', 'windows', 'linux', 'web', 'tools'];
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 async function fetchJson(url, { silent = false } = {}) {
   const headers = { 'User-Agent': 'FlutterReleasesCrawler/1.0 (+https://flutterreleases.com)' };
@@ -59,6 +59,41 @@ async function fetchJson(url, { silent = false } = {}) {
   }
 }
 
+// HTTP HEAD check — returns true if URL responds 200
+async function urlExists(url) {
+  try {
+    const res = await fetch(url, {
+      method: 'HEAD',
+      headers: { 'User-Agent': 'FlutterReleasesCrawler/1.0 (+https://flutterreleases.com)' },
+      redirect: 'follow',
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+// Fetch page HTML and return which of the given anchor ids actually exist
+async function verifyAnchors(pageUrl, anchors) {
+  try {
+    const res = await fetch(pageUrl, {
+      headers: { 'User-Agent': 'FlutterReleasesCrawler/1.0 (+https://flutterreleases.com)' },
+    });
+    if (!res.ok) return new Set();
+    const html = await res.text();
+    const found = new Set();
+    for (const anchor of anchors) {
+      // Match id="anchor" or id='anchor'
+      if (new RegExp(`id=["']${anchor}["']`).test(html)) {
+        found.add(anchor);
+      }
+    }
+    return found;
+  } catch {
+    return new Set();
+  }
+}
+
 function shortSha(hash) {
   return hash ? hash.slice(0, 7) : null;
 }
@@ -69,9 +104,12 @@ function safeWrite(filePath, content) {
   fs.renameSync(tmp, filePath);
 }
 
-// Detect release type: if patch version > 0 it's a Hotfix, otherwise a Release
+// Detect release type: patch > 0 = Hotfix, patch = 0 = Release
+// Also handles legacy formats like v1.12.13+hotfix.9 and v1.5.4-hotfix.2
 function detectReleaseType(version) {
-  const parts = version.split('.');
+  if (version.includes('hotfix') || version.includes('hotfix')) return 'Hotfix';
+  const clean = version.replace(/^v/, '');
+  const parts = clean.split('.');
   const patch = parseInt(parts[2] || '0', 10);
   return patch > 0 ? 'Hotfix' : 'Release';
 }
@@ -82,14 +120,11 @@ function cleanDartVersion(raw) {
   return raw.split(' ')[0].trim();
 }
 
-// Detect minimum macOS/Windows/Xcode requirements based on Flutter version
-// Based on Flutter's documented requirements: https://docs.flutter.dev/get-started/install
+// Detect minimum requirements based on Flutter version
 function detectRequirements(version) {
-  const [major, minor] = version.split('.').map(Number);
+  const clean = version.replace(/^v/, '');
+  const [major, minor] = clean.split('.').map(Number);
 
-  // Flutter 3.29+ requires macOS 13.5+, Xcode 15.4+
-  // Flutter 3.22+ requires macOS 12+, Xcode 15.0+
-  // Flutter 3.10+ requires macOS 11+, Xcode 14.0+
   let macos = 'macOS 12+';
   let xcode = 'Xcode 15.0+';
 
@@ -99,6 +134,9 @@ function detectRequirements(version) {
   } else if (major === 3 && minor >= 10) {
     macos = 'macOS 12+';
     xcode = 'Xcode 14.0+';
+  } else if (major < 3) {
+    macos = 'macOS 10.14+';
+    xcode = 'Xcode 12.0+';
   }
 
   return {
@@ -110,29 +148,36 @@ function detectRequirements(version) {
   };
 }
 
-// Build release_notes URLs based on your existing pattern:
-//   Major releases (x.x.0): base + section anchors
-//   Hotfixes (x.x.N): base points to the .0 release notes page
-function buildReleaseNotes(version, releaseType) {
-  const parts = version.split('.');
+// Build and VERIFY release_notes URLs:
+//   - HEAD checks the base URL (set null if 404)
+//   - Fetches page HTML once and checks which section anchors actually exist
+async function buildReleaseNotes(version, releaseType) {
+  // For hotfixes, point to the parent .0 release notes page
+  const clean = version.replace(/^v/, '');
+  const parts = clean.split('.');
   const baseVersion = `${parts[0]}.${parts[1]}.0`;
   const baseUrl = `https://docs.flutter.dev/release/release-notes/release-notes-${baseVersion}`;
 
-  if (releaseType === 'Release') {
-    // Major release: include section anchors
+  // HEAD check the base URL
+  const baseExists = await urlExists(baseUrl);
+
+  if (!baseExists) {
+    // No release notes page exists for this version
     return {
-      base: baseUrl,
-      framework: `${baseUrl}#framework`,
-      material: `${baseUrl}#material`,
-      ios: `${baseUrl}#ios`,
-      android: `${baseUrl}#android`,
-      windows: `${baseUrl}#windows`,
-      linux: `${baseUrl}#linux`,
-      web: `${baseUrl}#web`,
-      tools: `${baseUrl}#tools`,
+      base: null,
+      framework: null,
+      material: null,
+      ios: null,
+      android: null,
+      windows: null,
+      linux: null,
+      web: null,
+      tools: null,
     };
-  } else {
-    // Hotfix: only base URL (points to parent release notes)
+  }
+
+  if (releaseType !== 'Release') {
+    // Hotfix: base only, no anchors (page is shared with .0)
     return {
       base: baseUrl,
       framework: null,
@@ -145,17 +190,44 @@ function buildReleaseNotes(version, releaseType) {
       tools: null,
     };
   }
+
+  // Major release: verify which anchors actually exist on the page
+  const existingAnchors = await verifyAnchors(baseUrl, RELEASE_NOTE_ANCHORS);
+
+  return {
+    base: baseUrl,
+    framework: existingAnchors.has('framework') ? `${baseUrl}#framework` : null,
+    material: existingAnchors.has('material') ? `${baseUrl}#material` : null,
+    ios: existingAnchors.has('ios') ? `${baseUrl}#ios` : null,
+    android: existingAnchors.has('android') ? `${baseUrl}#android` : null,
+    windows: existingAnchors.has('windows') ? `${baseUrl}#windows` : null,
+    linux: existingAnchors.has('linux') ? `${baseUrl}#linux` : null,
+    web: existingAnchors.has('web') ? `${baseUrl}#web` : null,
+    tools: existingAnchors.has('tools') ? `${baseUrl}#tools` : null,
+  };
+}
+
+// Verify and return the correct GitHub release URL for a version.
+// Flutter tags can be bare (3.44.0) or v-prefixed (v1.0.0) — try both.
+async function buildRefUrl(version) {
+  const bare = `https://github.com/flutter/flutter/releases/tag/${version}`;
+  if (await urlExists(bare)) return bare;
+
+  // Try with v prefix for older versions
+  const withV = `https://github.com/flutter/flutter/releases/tag/v${version}`;
+  if (await urlExists(withV)) return withV;
+
+  return null;
 }
 
 // Extract a clean one-line summary from GitHub release body
 function extractSummary(body, version, releaseType) {
   if (!body) {
     return releaseType === 'Hotfix'
-      ? `Hotfix release with stability improvements.`
+      ? `Hotfix release with stability improvements for the ${version.replace(/^v/, '').split('.').slice(0, 2).join('.')} series.`
       : `Flutter ${version} stable release.`;
   }
 
-  // Try to find the first meaningful non-empty, non-heading, non-link line
   const lines = body
     .split('\n')
     .map(l => l.trim())
@@ -171,14 +243,13 @@ function extractSummary(body, version, releaseType) {
     );
 
   if (lines.length > 0) {
-    // Truncate to ~120 chars
     let summary = lines[0].replace(/\*\*/g, '').replace(/`/g, '').trim();
     if (summary.length > 120) summary = summary.slice(0, 117) + '...';
     return summary;
   }
 
   return releaseType === 'Hotfix'
-    ? `Hotfix release with stability improvements for the ${version.split('.').slice(0,2).join('.')} series.`
+    ? `Hotfix release with stability improvements for the ${version.replace(/^v/, '').split('.').slice(0, 2).join('.')} series.`
     : `Flutter ${version} stable release.`;
 }
 
@@ -193,8 +264,6 @@ async function fetchSDKArchive(channel) {
   const windowsData = await fetchJson(`${BASE_ARCHIVE_URL}/releases_windows.json`);
 
   const baseUrl = data.base_url;
-
-  // Build per-version lookup from all 3 platform archives
   const byVersion = {};
 
   function addEntry(release, platform) {
@@ -210,15 +279,13 @@ async function fetchSDKArchive(channel) {
       };
     }
     const arch = release.dart_sdk_arch || 'x64';
-    const url = `${baseUrl}/${release.archive}`;
-    byVersion[v].platforms[`${platform}_${arch}`] = url;
+    byVersion[v].platforms[`${platform}_${arch}`] = `${baseUrl}/${release.archive}`;
   }
 
   for (const r of data.releases) addEntry(r, 'linux');
   if (macosData) for (const r of macosData.releases) addEntry(r, 'macos');
   if (windowsData) for (const r of windowsData.releases) addEntry(r, 'windows');
 
-  // Remap platform keys to your schema: linux_x64, macos_arm64, macos_x64, windows_x64
   const result = {};
   for (const [version, info] of Object.entries(byVersion)) {
     result[version] = {
@@ -236,7 +303,6 @@ async function fetchSDKArchive(channel) {
 }
 
 async function fetchGithubTag(version) {
-  // Get the commit sha for a flutter tag
   const data = await fetchJson(
     `${GITHUB_API}/repos/flutter/flutter/git/refs/tags/${encodeURIComponent(version)}`,
     { silent: true }
@@ -246,12 +312,11 @@ async function fetchGithubTag(version) {
 }
 
 async function fetchGithubRelease(version) {
-  // Some flutter versions have GitHub releases with body text (summaries)
   const data = await fetchJson(
     `${GITHUB_API}/repos/flutter/flutter/releases/tags/${encodeURIComponent(version)}`,
     { silent: true }
   );
-  return data; // may be null
+  return data;
 }
 
 // ── Core logic ────────────────────────────────────────────────────────────────
@@ -261,7 +326,6 @@ async function run() {
   console.log('━'.repeat(50));
   if (DRY_RUN) console.log('  Mode: DRY RUN (no files will be written)\n');
 
-  // 1. Load existing curated releases.json
   if (!fs.existsSync(CURATED_PATH)) {
     console.error(`  ✗ Cannot find ${CURATED_PATH}`);
     process.exit(1);
@@ -275,16 +339,13 @@ async function run() {
   for (const channel of CHANNELS) {
     console.log(`📦 Channel: ${channel}`);
 
-    // 2. Fetch SDK archive for this channel
     const archiveMap = await fetchSDKArchive(channel);
     const archiveVersions = Object.keys(archiveMap);
 
-    // Sort by release date, newest first
     archiveVersions.sort((a, b) =>
       archiveMap[b].release_date.localeCompare(archiveMap[a].release_date)
     );
 
-    // 3. Find new versions
     const newVersions = archiveVersions.filter(v => !existingVersions.has(v));
     console.log(`  Found ${archiveVersions.length} total, ${newVersions.length} new\n`);
 
@@ -293,28 +354,30 @@ async function run() {
       continue;
     }
 
-    // 4. Build full entries for each new version
     for (const version of newVersions) {
       const info = archiveMap[version];
       const releaseType = detectReleaseType(version);
       const dartVersion = cleanDartVersion(info.dart_sdk_version);
       const releaseDate = info.release_date ? info.release_date.split('T')[0] : null;
 
-      console.log(`  → ${version} (${releaseType}, ${dartVersion}, ${releaseDate})`);
+      process.stdout.write(`  → ${version} (${releaseType}) ...`);
 
-      // Fetch framework revision from git tag
+      // framework_revision from git tag sha
       let frameworkRevision = shortSha(info.hash);
       const tagSha = await fetchGithubTag(version);
       if (tagSha) frameworkRevision = tagSha;
 
-      // Try to get summary from GitHub release body
-      let summary = null;
+      // summary from GitHub release body
       const ghRelease = await fetchGithubRelease(version);
-      if (ghRelease?.body) {
-        summary = extractSummary(ghRelease.body, version, releaseType);
-      } else {
-        summary = extractSummary(null, version, releaseType);
-      }
+      const summary = extractSummary(ghRelease?.body || null, version, releaseType);
+
+      // Verified release notes URLs (real HEAD check + anchor scrape)
+      const releaseNotes = await buildReleaseNotes(version, releaseType);
+
+      // Verified GitHub ref URL (tries bare tag, then v-prefixed)
+      const refUrl = await buildRefUrl(version);
+
+      process.stdout.write(` ✓\n`);
 
       const entry = {
         version,
@@ -328,9 +391,9 @@ async function run() {
         build: frameworkRevision,
         requires: detectRequirements(version),
         platforms: info.platforms,
-        release_notes: buildReleaseNotes(version, releaseType),
+        release_notes: releaseNotes,
         summary,
-        ref_url: `https://github.com/flutter/flutter/releases/tag/${version}`,
+        ref_url: refUrl,
         verified: true,
         sources: ['Flutter SDK Archive', 'GitHub Tags'],
       };
@@ -356,7 +419,7 @@ async function run() {
     process.exit(0);
   }
 
-  // 5. Prepend new items (newest first) and write back
+  // Prepend new items (newest first) and write back
   const updatedItems = [...newItems, ...(existing.items || [])];
 
   const output = {
@@ -373,9 +436,8 @@ async function run() {
   console.log(`\n✅ Done. ${CURATED_PATH} updated.`);
   console.log(`   Total releases: ${updatedItems.length} (${newItems.length} new)\n`);
 
-  // Output for GitHub Actions step summary
   if (process.env.GITHUB_STEP_SUMMARY) {
-    const summary = [
+    const stepSummary = [
       `## 🕷 Crawler Run`,
       `| | |`,
       `|---|---|`,
@@ -386,7 +448,7 @@ async function run() {
       `### New Releases`,
       ...newItems.map(i => `- **Flutter ${i.version}** (${i.channel} / ${i.release_type}) — Dart ${i.dart_version} — Released ${i.released}`),
     ].join('\n');
-    fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary + '\n');
+    fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, stepSummary + '\n');
   }
 }
 
