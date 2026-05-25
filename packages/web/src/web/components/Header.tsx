@@ -66,6 +66,21 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
               {item.label}
             </a>
           ))}
+          {/* Contact — opens X profile */}
+          <a
+            href="https://x.com/devinmaking"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1.5 rounded-md text-sm transition-colors duration-150 inline-flex items-center gap-1.5"
+            style={{ color: "var(--text-secondary)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.26 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            Contact
+          </a>
         </nav>
 
         {/* Actions */}

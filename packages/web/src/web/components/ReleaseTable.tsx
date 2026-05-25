@@ -141,9 +141,10 @@ function ExpandedRow({ release }: { release: Release }) {
 
 interface ReleaseTableProps {
   releases: Release[];
+  latestStableVersion?: string;
 }
 
-export function ReleaseTable({ releases }: ReleaseTableProps) {
+export function ReleaseTable({ releases, latestStableVersion }: ReleaseTableProps) {
   const [expanded, setExpanded] = useState<string | null>(null);
 
   const toggle = (version: string) =>
@@ -183,14 +184,17 @@ export function ReleaseTable({ releases }: ReleaseTableProps) {
         <tbody>
           {releases.map((release, i) => {
             const isExpanded = expanded === release.version;
+            const isLatestStable = release.version === latestStableVersion;
             return (
               <>
                 <tr
                   key={release.version}
                   className="row-animate cursor-pointer border-b transition-colors duration-150"
                   style={{
-                    borderColor: "var(--border)",
-                    backgroundColor: isExpanded ? "var(--bg-subtle)" : "transparent",
+                    borderColor: isLatestStable ? "var(--accent)" : "var(--border)",
+                    backgroundColor: isLatestStable
+                      ? "color-mix(in srgb, var(--accent) 6%, var(--bg))"
+                      : isExpanded ? "var(--bg-subtle)" : "transparent",
                     animationDelay: `${Math.min(i * 40, 400)}ms`,
                   }}
                   onClick={() => toggle(release.version)}
@@ -207,24 +211,38 @@ export function ReleaseTable({ releases }: ReleaseTableProps) {
                 >
                   {/* Version */}
                   <td className="px-6 py-4">
-                    <div className="flex flex-wrap gap-1.5 items-center">
-                      {/* Flutter pill */}
-                      <span
-                        className="mono inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold"
-                        style={{
-                          backgroundColor: "var(--accent-bg)",
-                          color: "var(--accent)",
-                          border: "1px solid var(--accent)",
-                        }}
-                      >
-                        <svg width="10" height="10" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
-                          <path d="M18.7 0L4 14.7l4.7 4.7L28.1 0H18.7zM18.7 13.3L9.4 22.6l4.7 4.7 4.7-4.7 9.3-9.3h-9.4z"/>
-                        </svg>
-                        {release.version}
-                      </span>
+                    <div className="flex flex-col gap-1.5">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        {/* Flutter pill */}
+                        <span
+                          className="mono inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold"
+                          style={{
+                            backgroundColor: "var(--accent-bg)",
+                            color: "var(--accent)",
+                            border: "1px solid var(--accent)",
+                          }}
+                        >
+                          <svg width="10" height="10" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+                            <path d="M18.7 0L4 14.7l4.7 4.7L28.1 0H18.7zM18.7 13.3L9.4 22.6l4.7 4.7 4.7-4.7 9.3-9.3h-9.4z"/>
+                          </svg>
+                          Flutter {release.version}
+                        </span>
+                        {/* Latest badge */}
+                        {isLatestStable && (
+                          <span
+                            className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide"
+                            style={{
+                              backgroundColor: "var(--accent)",
+                              color: "#fff",
+                            }}
+                          >
+                            Latest
+                          </span>
+                        )}
+                      </div>
                       {/* Dart pill */}
                       <span
-                        className="mono inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium"
+                        className="mono inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium w-fit"
                         style={{
                           backgroundColor: "color-mix(in srgb, #6366f1 15%, transparent)",
                           color: "#818cf8",
@@ -234,7 +252,7 @@ export function ReleaseTable({ releases }: ReleaseTableProps) {
                         <svg width="9" height="9" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
                           <path d="M7.2 0H25l6.8 6.8v18.4L25 32H7.2L0 25.2V6.8L7.2 0zm1.2 3L3 8.4v15.2L8.4 29H23.6L29 23.6V8.4L23.6 3H8.4z"/>
                         </svg>
-                        {release.dartVersion}
+                        Dart {release.dartVersion}
                       </span>
                     </div>
                   </td>
