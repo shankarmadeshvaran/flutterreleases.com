@@ -1,0 +1,14 @@
+{
+  "status": "ok",
+  "generated_at": "2026-05-25T12:28:45.804Z",
+  "counts": {},
+  "channels": {
+    "dev": {
+      "total": 7,
+      "verified": 0
+    }
+  },
+  "errors": [],
+  "feed_count": 7,
+  "count": 7
+}
