@@ -212,11 +212,6 @@ export function ReleaseTable({ releases }: ReleaseTableProps) {
                           border: "1px solid var(--accent)",
                         }}
                       >
-                        <svg width="10" height="10" viewBox="0 0 66 66" fill="currentColor" aria-hidden="true">
-                          <path d="M10 56L28.5 37.5L37.5 46.5L19 65L10 56Z"/>
-                          <path d="M10 10L46.5 46.5L37.5 55.5L1 19L10 10Z"/>
-                          <path d="M28.5 10H46.5L10 46.5V28.5L28.5 10Z"/>
-                        </svg>
                         Flutter {release.version}
                       </span>
                       {/* Dart pill — no icon, just label */}
