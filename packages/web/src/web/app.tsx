@@ -1,10 +1,15 @@
-  import { Route, Switch } from "wouter";                                                                                
-   import Index from "./pages/index";                                                                                     
-   import { Provider } from "./components/provider";                                                                      
-   import { AgentFeedback } from "@runablehq/website-runtime";                                                                            
-                                                                                                                          
-   function App() {                                                                                                       
-     return (                                                                                                             
+import { useEffect } from "react";
+import { Route, Switch } from "wouter";
+import Index from "./pages/index";
+import { Provider } from "./components/provider";
+import { AgentFeedback } from "@runablehq/website-runtime";
+
+function App() {
+  useEffect(() => {
+    document.title = "Flutter Releases | downloads, notes, channels";
+  }, []);
+
+  return (                                                                                                             
        <Provider>                                                                                                         
          <Switch>                                                                                                         
            <Route path="/" component={Index} />                                                                           
