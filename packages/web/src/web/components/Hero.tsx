@@ -26,9 +26,12 @@ export function Hero({ latestStable, latestBeta }: HeroProps) {
           {/* Latest release pills */}
           <div className="flex flex-wrap gap-2 mb-5">
             {latestStable && (
-              <div
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs"
-                style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-subtle)" }}
+              <a
+                href={latestStable.releaseNotes.full}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs transition-opacity hover:opacity-70"
+                style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-subtle)", textDecoration: "none" }}
               >
                 <span
                   className="w-2 h-2 rounded-full"
@@ -38,12 +41,15 @@ export function Hero({ latestStable, latestBeta }: HeroProps) {
                 <span className="font-semibold mono" style={{ color: "var(--text-primary)" }}>
                   {latestStable.version}
                 </span>
-              </div>
+              </a>
             )}
             {latestBeta && (
-              <div
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs"
-                style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-subtle)" }}
+              <a
+                href={latestBeta.releaseNotes.full}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs transition-opacity hover:opacity-70"
+                style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-subtle)", textDecoration: "none" }}
               >
                 <span
                   className="w-2 h-2 rounded-full"
@@ -53,7 +59,7 @@ export function Hero({ latestStable, latestBeta }: HeroProps) {
                 <span className="font-semibold mono" style={{ color: "var(--text-primary)" }}>
                   {latestBeta.version}
                 </span>
-              </div>
+              </a>
             )}
           </div>
 

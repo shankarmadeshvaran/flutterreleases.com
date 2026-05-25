@@ -81,7 +81,7 @@ export default function HomePage() {
 
         {!loading && !error && (
           <>
-            <ReleaseTable releases={filtered} latestStableVersion={latestStable?.version} />
+            <ReleaseTable releases={filtered} />
             <Pagination
               page={page}
               totalPages={totalPages}
