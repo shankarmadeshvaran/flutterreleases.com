@@ -24,8 +24,9 @@ Browse every Flutter release — version, Dart SDK, channel, downloads, and rele
 .github/
   workflows/
     deploy.yml           ← Builds + deploys to Cloudflare Pages on push to main
-    crawl-releases.yml   ← Daily cron: crawls Flutter releases API → releases.json
-    update-releases.yml  ← Regenerates feed.xml + sitemap.xml after data updates
+    crawl-releases.yml   ← Daily cron: crawls Flutter releases API → canonical releases.json
+    update-releases.yml  ← Regenerates feed.xml + sitemap.xml + status only
+    validate-release-data.yml ← Guardrail: fails on schema drift / suspiciously small data
 packages/
   web/
     src/web/
@@ -100,8 +101,9 @@ The workflow uses:
 
 | Workflow | Trigger | What it does |
 |---|---|---|
-| `crawl-releases.yml` | Daily 06:00 UTC | Hits Flutter's release API, writes `public/data/releases.json`, commits |
-| `update-releases.yml` | On push to `main` (data files) | Regenerates `feed.xml`, `sitemap.xml`, commits |
+| `crawl-releases.yml` | Daily 06:00 UTC | Hits Flutter SDK archive + GitHub metadata, writes canonical `packages/web/public/releases.json`, commits |
+| `update-releases.yml` | On push to data/scripts | Regenerates `feed.xml`, `sitemap.xml`, `generation_status.json` only |
+| `validate-release-data.yml` | On push to release data / schema files | Fails if `releases.json` drops schema or looks suspiciously small |
 | `deploy.yml` | On push to `main` | Builds Vite app, deploys to Cloudflare Pages |
 
 ---
@@ -113,6 +115,35 @@ The workflow uses:
 - **Expandable rows** — Click any row to expand: system requirements, all platform downloads, all release note links
 - **Dark mode** — Persisted via localStorage
 - **All links open in new tab** — Downloads, release notes, everything
+
+## Contributor Rules
+
+### Do
+- Keep `packages/web/public/releases.json` in the crawler schema only.
+- Update `useReleases.ts` if you touch the JSON shape.
+- Let `crawl-releases.yml` own release data.
+- Let `update-releases.yml` own feed/sitemap/status files only.
+- Use `git pull --rebase && git push` in workflows that push back to `main`.
+
+### Don’t
+- Don’t reintroduce `flutter_version`-only release objects.
+- Don’t let multiple workflows write the same release data file.
+- Don’t use `npm ci` in this repo root; Bun workspaces are the source of truth.
+- Don’t remove the schema guardrail workflow.
+- Don’t change the release JSON format without updating the frontend and docs together.
+
+### Release data contract
+Current canonical release objects must include:
+- `version`
+- `channel`
+- `release_type`
+- `released`
+- `dart_version`
+- `requires`
+- `platforms`
+- `release_notes`
+
+If any of those are missing, the UI or pipeline may break.
 
 ---
 

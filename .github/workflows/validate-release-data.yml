@@ -1,0 +1,50 @@
+name: Validate release data
+
+on:
+  push:
+    branches: ["main", "master"]
+    paths:
+      - 'packages/web/public/releases.json'
+      - '.github/workflows/validate-release-data.yml'
+      - 'packages/web/src/web/hooks/useReleases.ts'
+      - 'scripts/crawl-releases.js'
+      - 'scripts/generate-releases.js'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Validate releases.json schema and size
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          from pathlib import Path
+
+          p = Path('packages/web/public/releases.json')
+          data = json.loads(p.read_text())
+          items = data.get('items') if isinstance(data, dict) else data
+          if not isinstance(items, list) or not items:
+              raise SystemExit('releases.json has no items')
+
+          first = items[0]
+          if 'version' not in first:
+              raise SystemExit('releases.json is not using canonical crawler schema (missing version)')
+          if 'flutter_version' in first and 'version' not in first:
+              raise SystemExit('legacy flutter_version-only schema detected')
+          if len(items) < 50:
+              raise SystemExit(f'releases.json has suspiciously few items: {len(items)}')
+
+          required = ['channel', 'released', 'dart_version', 'requires', 'platforms', 'release_notes']
+          missing = [k for k in required if k not in first]
+          if missing:
+              raise SystemExit('missing keys: ' + ', '.join(missing))
+
+          print(f'ok: {len(items)} releases; schema looks canonical')
+          PY
