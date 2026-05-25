@@ -60,7 +60,7 @@ jobs:
           git add packages/web/public/releases.json packages/web/public/feed.xml packages/web/public/sitemap.xml packages/web/public/generation_status.json || true
           if ! git diff --staged --quiet; then
             git commit -m "chore(generator): update feed, sitemap and release data"
-            git push
+            git pull --rebase && git push
           else
             echo "No changes to commit"
           fi

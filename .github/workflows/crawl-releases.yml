@@ -40,7 +40,7 @@ jobs:
           git add packages/web/public/releases.json
           if ! git diff --staged --quiet; then
             git commit -m "chore(crawler): auto-update Flutter releases"
-            git push
+            git pull --rebase && git push
           else
             echo "No new releases found. Nothing to commit."
           fi
