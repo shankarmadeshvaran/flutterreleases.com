@@ -16,7 +16,7 @@
 //
 // Usage:
 //   node scripts/crawl-releases.js               # stable only (default)
-//   node scripts/crawl-releases.js --all-channels # stable + beta
+//   node scripts/crawl-releases.js --all-channels # stable + beta + main
 //   node scripts/crawl-releases.js --dry-run      # preview, no write
 //   GITHUB_TOKEN=xxx node scripts/crawl-releases.js
 
@@ -32,6 +32,7 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN || null;
 const DRY_RUN = process.argv.includes('--dry-run');
 const ALL_CHANNELS = process.argv.includes('--all-channels');
 const CHANNELS = ALL_CHANNELS ? ['stable', 'beta'] : ['stable'];
+const INCLUDE_MAIN = ALL_CHANNELS;
 
 const BASE_ARCHIVE_URL = 'https://storage.googleapis.com/flutter_infra_release/releases';
 const GITHUB_API = 'https://api.github.com';
@@ -319,6 +320,73 @@ async function fetchGithubRelease(version) {
   return data;
 }
 
+// ── Main channel (rolling HEAD, not in SDK archive) ────────────────────────────
+//
+// Flutter's "main" channel has no versioned SDK archive entries.
+// We synthesize a single entry from:
+//   - HEAD sha + commit date from the GitHub branches API
+//   - Dart SDK version from the DEPS file (cipd dart/dart-sdk version)
+// The "version" field is set to "main" so it is treated as a special entry.
+// This entry is always regenerated (not skipped if it already exists) so it
+// stays current with the rolling HEAD.
+
+async function fetchMainChannelEntry() {
+  console.log('  Fetching main branch HEAD...');
+
+  // 1. HEAD commit info
+  const branch = await fetchJson(`${GITHUB_API}/repos/flutter/flutter/branches/main`);
+  if (!branch?.commit?.sha) {
+    console.warn('  ⚠ Could not fetch main branch info');
+    return null;
+  }
+  const headSha = branch.commit.sha;
+  const shortShaValue = headSha.slice(0, 7);
+  const commitDate = (branch.commit.commit?.committer?.date || '').slice(0, 10) || null;
+
+  // 2. Dart version from DEPS file
+  let dartVersion = null;
+  const deps = await fetchJson(`${GITHUB_API}/repos/flutter/flutter/contents/DEPS`, { silent: true });
+  if (deps?.content) {
+    const content = Buffer.from(deps.content, 'base64').toString('utf8');
+    // Line looks like: 'package': 'dart/dart-sdk/${{platform}}', 'version': 'version:3.13.0-103.1.beta'
+    const m = content.match(/'dart\/dart-sdk\/\$\{\{platform\}\}'[^}]*'version':\s*'version:([^']+)'/);
+    if (m) {
+      // Raw looks like "3.13.0-103.1.beta" — keep as-is for accuracy
+      dartVersion = m[1].trim();
+    }
+  }
+
+  process.stdout.write(`  → main (HEAD ${shortShaValue}, Dart ${dartVersion || 'unknown'}) ✓\n`);
+
+  return {
+    version: 'main',
+    channel: 'main',
+    release_type: 'Development',
+    released: commitDate,
+    dart_version: dartVersion,
+    framework_revision: shortShaValue,
+    engine_revision: null,
+    git_tag: null,
+    build: shortShaValue,
+    requires: detectRequirements('3.99.0'), // use high version → latest requirements
+    platforms: {
+      macos_arm64: null,
+      macos_x64: null,
+      windows_x64: null,
+      linux_x64: null,
+    },
+    release_notes: {
+      base: 'https://github.com/flutter/flutter/commits/main',
+      framework: null, material: null, ios: null, android: null,
+      windows: null, linux: null, web: null, tools: null,
+    },
+    summary: `Rolling development channel. HEAD at commit ${shortShaValue} (${commitDate || 'unknown date'}).`,
+    ref_url: `https://github.com/flutter/flutter/commit/${headSha}`,
+    verified: true,
+    sources: ['GitHub flutter/flutter main branch', 'DEPS'],
+  };
+}
+
 // ── Core logic ────────────────────────────────────────────────────────────────
 
 async function run() {
@@ -399,6 +467,19 @@ async function run() {
       };
 
       newItems.push(entry);
+    }
+  }
+
+  // ── Main channel (always refresh — rolling HEAD) ──────────────────────────
+  if (INCLUDE_MAIN) {
+    console.log('📦 Channel: main (rolling HEAD)');
+    const mainEntry = await fetchMainChannelEntry();
+    if (mainEntry) {
+      // Always replace the existing main entry so it tracks current HEAD
+      // Remove stale main entry from existing items first
+      existing.items = (existing.items || []).filter(i => i.version !== 'main');
+      newItems.unshift(mainEntry); // main goes at the top
+      console.log('  ✓ main entry refreshed\n');
     }
   }
 

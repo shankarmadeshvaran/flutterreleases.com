@@ -31,7 +31,7 @@ jobs:
       - name: Run crawler
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/crawl-releases.js
+        run: node scripts/crawl-releases.js --all-channels
 
       - name: Commit updated releases.json
         run: |
