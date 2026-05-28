@@ -11,11 +11,20 @@ function normalizeRelease(raw: any): Release {
   const rn = raw.release_notes || {};
   const pl = raw.platforms || raw.download || {};
   const req = raw.requires || {};
+  const channel = (raw.channel || "stable") as Channel;
+
+  // For stable: use docs.flutter.dev release notes page as the full link.
+  // For beta/main/dev: docs pages belong to the stable release, not the pre-release.
+  //   Use the GitHub tag/commit link instead.
+  const fullNotesUrl =
+    channel === "stable"
+      ? (rn.base || rn.full || raw.ref_url || null)
+      : (raw.ref_url || rn.base || null);
 
   return {
     version: raw.version || raw.flutter_version || "—",
     dartVersion: raw.dart_version || raw.dart || "—",
-    channel: (raw.channel || "stable") as Channel,
+    channel,
     releaseType: raw.release_type || raw.releaseType || "Release",
     releasedAt: raw.released || raw.date || "",
     requires: {
@@ -32,7 +41,7 @@ function normalizeRelease(raw: any): Release {
       linuxX64: pl.linux_x64 || pl.linuxX64 || null,
     },
     releaseNotes: {
-      full: rn.base || rn.full || null,
+      full: fullNotesUrl,
       framework: rn.framework || null,
       material: rn.material || null,
       ios: rn.ios || null,

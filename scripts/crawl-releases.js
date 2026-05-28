@@ -439,8 +439,13 @@ async function run() {
       const ghRelease = await fetchGithubRelease(version);
       const summary = extractSummary(ghRelease?.body || null, version, releaseType);
 
-      // Verified release notes URLs (real HEAD check + anchor scrape)
-      const releaseNotes = await buildReleaseNotes(version, releaseType);
+      // Release notes: only stable has docs.flutter.dev pages.
+      // Beta/dev tags have no dedicated docs page — null them out so the UI
+      // falls back to ref_url (the GitHub tag link) instead.
+      const releaseNotes = channel === 'stable'
+        ? await buildReleaseNotes(version, releaseType)
+        : { base: null, framework: null, material: null, ios: null,
+            android: null, windows: null, linux: null, web: null, tools: null };
 
       // Verified GitHub ref URL (tries bare tag, then v-prefixed)
       const refUrl = await buildRefUrl(version);

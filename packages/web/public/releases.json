@@ -29,7 +29,7 @@
         "linux_x64": null
       },
       "release_notes": {
-        "base": "https://github.com/flutter/flutter/commits/main",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -113,14 +113,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.44.0-0.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.44.0-0.3.pre stable release.",
@@ -155,14 +155,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.44.0-0.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.44.0-0.2.pre stable release.",
@@ -197,14 +197,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.44.0-0.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.44.0-0.1.pre stable release.",
@@ -533,14 +533,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.41.0-0.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.41.0-0.3.pre stable release.",
@@ -575,14 +575,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.41.0-0.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.41.0-0.2.pre stable release.",
@@ -617,14 +617,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.41.0-0.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.41.0-0.1.pre stable release.",
@@ -659,14 +659,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.41.0-0.0.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.41.0-0.0.pre stable release.",
@@ -869,14 +869,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.38.0-0.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.38.0-0.2.pre stable release.",
@@ -911,14 +911,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.38.0-0.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.38.0-0.1.pre stable release.",
@@ -1205,14 +1205,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.35.0-0.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.35.0-0.3.pre stable release.",
@@ -1247,14 +1247,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.35.0-0.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.35.0-0.2.pre stable release.",
@@ -1289,14 +1289,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.35.0-0.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.35.0-0.1.pre stable release.",
@@ -1331,14 +1331,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.35.0-0.0.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.35.0-0.0.pre stable release.",
@@ -1541,14 +1541,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.32.0-0.5.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.32.0-0.5.pre stable release.",
@@ -1583,14 +1583,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.32.0-0.4.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.32.0-0.4.pre stable release.",
@@ -1625,14 +1625,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.32.0-0.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.32.0-0.3.pre stable release.",
@@ -1667,14 +1667,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.32.0-0.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.32.0-0.2.pre stable release.",
@@ -1709,14 +1709,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.32.0-0.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#windows",
-        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#linux",
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0#web",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.32.0-0.1.pre stable release.",
@@ -1835,8 +1835,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.29.0-0.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.29.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.29.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -1877,8 +1877,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.29.0-0.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.29.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.29.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -1961,14 +1961,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.27.0-0.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#android",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.27.0-0.2.pre stable release.",
@@ -2003,14 +2003,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.27.0-0.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#android",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.27.0-0.1.pre stable release.",
@@ -2129,14 +2129,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.24.0-0.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0#android",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.24.0-0.2.pre stable release.",
@@ -2171,14 +2171,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.24.0-0.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0#android",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.24.0-0.1.pre stable release.",
@@ -2255,14 +2255,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.22.0-0.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#windows",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.22.0-0.3.pre stable release.",
@@ -2297,14 +2297,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.22.0-0.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#windows",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.22.0-0.2.pre stable release.",
@@ -2339,14 +2339,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.22.0-0.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#android",
-        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#windows",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.22.0-0.1.pre stable release.",
@@ -2507,14 +2507,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.19.0-0.4.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#android",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.19.0-0.4.pre stable release.",
@@ -2549,14 +2549,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.19.0-0.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#android",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.19.0-0.3.pre stable release.",
@@ -2591,14 +2591,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.19.0-0.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#android",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.19.0-0.2.pre stable release.",
@@ -2633,14 +2633,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.19.0-0.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#framework",
-        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#material",
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#android",
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "The release of the Flutter 3.19 beta contains the changes noted below.",
@@ -2801,14 +2801,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.16.0-0.5.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#android",
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.16.0-0.5.pre stable release.",
@@ -2843,14 +2843,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.16.0-0.4.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#android",
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.16.0-0.4.pre stable release.",
@@ -2885,14 +2885,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.16.0-0.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#android",
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.16.0-0.3.pre stable release.",
@@ -2927,14 +2927,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.16.0-0.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#android",
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.16.0-0.2.pre stable release.",
@@ -2969,14 +2969,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.16.0-0.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#android",
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "The release of the Flutter 3.16 beta contains the changes noted below.",
@@ -3179,14 +3179,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.13.0-0.4.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#android",
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.13.0-0.4.pre stable release.",
@@ -3221,14 +3221,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.13.0-0.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#android",
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.13.0-0.3.pre stable release.",
@@ -3263,14 +3263,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.13.0-0.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#android",
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "Flutter 3.13.0-0.2.pre stable release.",
@@ -3305,14 +3305,14 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.13.0-0.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
-        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#ios",
-        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#android",
+        "ios": null,
+        "android": null,
         "windows": null,
         "linux": null,
-        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0#web",
+        "web": null,
         "tools": null
       },
       "summary": "The release of the Flutter 3.13 beta contains the changes noted below.",
@@ -3515,8 +3515,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.10.0-1.5.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -3557,8 +3557,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.10.0-1.4.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -3599,8 +3599,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.10.0-1.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -3641,8 +3641,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.10.0-1.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -3809,8 +3809,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.7.0-1.5.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -3851,8 +3851,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.7.0-1.4.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -3893,8 +3893,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.7.0-1.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -3935,8 +3935,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.7.0-1.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -3977,8 +3977,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.7.0-1.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -4187,8 +4187,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.3.0-0.5.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -4229,8 +4229,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.3.0-0.4.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -4271,8 +4271,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.3.0-0.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -4313,8 +4313,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.3.0-0.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -4355,8 +4355,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.3.0-0.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -4397,8 +4397,8 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.3.0-0.0.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
-        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0#framework",
+        "base": null,
+        "framework": null,
         "material": null,
         "ios": null,
         "android": null,
@@ -4817,7 +4817,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_2.10.0-0.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.10.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -4859,7 +4859,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_2.10.0-0.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.10.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -4901,7 +4901,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_2.10.0-0.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.10.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -4985,7 +4985,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_2.8.0-3.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.8.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -5027,7 +5027,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_2.8.0-3.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.8.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -5069,7 +5069,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_2.8.0-3.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.8.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -5237,7 +5237,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_2.5.0-5.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.5.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -5279,7 +5279,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_2.5.0-5.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.5.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -5321,7 +5321,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_2.5.0-5.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.5.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -5489,7 +5489,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_2.2.0-10.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.2.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -5531,7 +5531,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_2.2.0-10.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.2.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -5573,7 +5573,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_2.2.0-10.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.2.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -6161,7 +6161,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_1.22.0-12.4.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.22.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -6203,7 +6203,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_1.22.0-12.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.22.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -6245,7 +6245,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_1.22.0-12.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.22.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -6287,7 +6287,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_1.22.0-12.1.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.22.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -6413,7 +6413,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_1.20.0-7.4.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.20.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -6455,7 +6455,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_1.20.0-7.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.20.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -6497,7 +6497,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_1.20.0-7.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.20.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -6707,7 +6707,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_1.17.0-3.4.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.17.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -6749,7 +6749,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_1.17.0-3.3.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.17.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -6791,7 +6791,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_1.17.0-3.2.pre-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.17.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -6833,7 +6833,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_1.17.0-dev.3.1-beta.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.17.0",
+        "base": null,
         "framework": null,
         "material": null,
         "ios": null,
@@ -15952,7 +15952,18 @@
       ],
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.19.0-0.1.pre",
       "summary": "The release of the Flutter 3.19 beta contains the changes noted below.\r",
-      "verified": false
+      "verified": false,
+      "release_notes": {
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      }
     },
     {
       "flutter_version": "3.18.0-0.1.pre",
@@ -15983,7 +15994,18 @@
       ],
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.18.0-0.1.pre",
       "summary": "The release of the Flutter 3.18 beta contains the changes noted below.\r",
-      "verified": false
+      "verified": false,
+      "release_notes": {
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      }
     },
     {
       "flutter_version": "3.17.0-0.1.pre",
@@ -16014,7 +16036,18 @@
       ],
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.17.0-0.1.pre",
       "summary": "The release of the Flutter 3.17 beta contains the changes noted below.\r",
-      "verified": false
+      "verified": false,
+      "release_notes": {
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      }
     },
     {
       "flutter_version": "3.16.0-0.1.pre",
@@ -16045,7 +16078,18 @@
       ],
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.16.0-0.1.pre",
       "summary": "The release of the Flutter 3.16 beta contains the changes noted below.\r",
-      "verified": false
+      "verified": false,
+      "release_notes": {
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      }
     },
     {
       "flutter_version": "3.15.0-15.1.pre",
@@ -16076,7 +16120,18 @@
       ],
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.15.0-15.1.pre",
       "summary": "The release of the Flutter 3.15 beta contains the changes noted below.\r",
-      "verified": false
+      "verified": false,
+      "release_notes": {
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      }
     },
     {
       "flutter_version": "3.14.0-0.1.pre",
@@ -16107,7 +16162,18 @@
       ],
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.14.0-0.1.pre",
       "summary": "# Flutter 3.14 beta\r",
-      "verified": false
+      "verified": false,
+      "release_notes": {
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      }
     },
     {
       "flutter_version": "3.13.0-0.1.pre",
@@ -16138,7 +16204,18 @@
       ],
       "ref_url": "https://github.com/flutter/flutter/releases/tag/3.13.0-0.1.pre",
       "summary": "# Flutter 3.13 beta\r",
-      "verified": false
+      "verified": false,
+      "release_notes": {
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      }
     }
   ]
 }
