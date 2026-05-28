@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  deployments: write
 
 concurrency:
   group: crawl-releases
@@ -17,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -34,6 +37,7 @@ jobs:
         run: node scripts/crawl-releases.js --all-channels
 
       - name: Commit updated releases.json
+        id: commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -41,6 +45,51 @@ jobs:
           if ! git diff --staged --quiet; then
             git commit -m "chore(crawler): auto-update Flutter releases"
             git pull --rebase && git push
+            echo "changed=true" >> $GITHUB_OUTPUT
           else
             echo "No new releases found. Nothing to commit."
+            echo "changed=false" >> $GITHUB_OUTPUT
           fi
+
+  deploy:
+    needs: crawl
+    if: needs.crawl.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          ref: main
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Validate releases.json
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          from pathlib import Path
+          p = Path('packages/web/public/releases.json')
+          d = json.loads(p.read_text())
+          items = d.get('items', d) if isinstance(d, dict) else d
+          if len(items) < 50:
+              sys.exit(f'releases.json has only {len(items)} items — aborting deploy')
+          print(f'releases.json OK: {len(items)} items')
+          PY
+
+      - name: Build web
+        run: bun run build:web
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy packages/web/dist --project-name=flutterreleases --commit-dirty=true
