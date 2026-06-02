@@ -1,20 +1,20 @@
 {
   "meta": {
-    "generated_at": "2026-06-01T11:44:07.125Z",
+    "generated_at": "2026-06-02T10:44:19.167Z",
     "source": "auto-crawled",
-    "count": 386
+    "count": 387
   },
   "items": [
     {
       "version": "main",
       "channel": "main",
       "release_type": "Development",
-      "released": "2026-05-30",
+      "released": "2026-06-02",
       "dart_version": "3.13.0-103.1.beta",
-      "framework_revision": "6d7a865",
+      "framework_revision": "701665b",
       "engine_revision": null,
       "git_tag": null,
-      "build": "6d7a865",
+      "build": "701665b",
       "requires": {
         "macos": "macOS 13.5+",
         "xcode": "Xcode 15.1+",
@@ -39,12 +39,54 @@
         "web": null,
         "tools": null
       },
-      "summary": "Rolling development channel. HEAD at commit 6d7a865 (2026-05-30).",
-      "ref_url": "https://github.com/flutter/flutter/commit/6d7a86512e6e819c82cb7981aec9218a77cb2f35",
+      "summary": "Rolling development channel. HEAD at commit 701665b (2026-06-02).",
+      "ref_url": "https://github.com/flutter/flutter/commit/701665b9781869e52acd9b34917d7b563766372b",
       "verified": true,
       "sources": [
         "GitHub flutter/flutter main branch",
         "DEPS"
+      ]
+    },
+    {
+      "version": "3.44.1",
+      "channel": "stable",
+      "release_type": "Hotfix",
+      "released": "2026-06-01",
+      "dart_version": "3.12.1",
+      "framework_revision": "924134a",
+      "engine_revision": null,
+      "git_tag": "3.44.1",
+      "build": "924134a",
+      "requires": {
+        "macos": "macOS 13.5+",
+        "xcode": "Xcode 15.1+",
+        "windows": "Windows 10+",
+        "visual_studio": "Visual Studio 2022",
+        "linux": "bash, git, curl, unzip"
+      },
+      "platforms": {
+        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.44.1-stable.zip",
+        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_3.44.1-stable.zip",
+        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_3.44.1-stable.zip",
+        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.1-stable.tar.xz"
+      },
+      "release_notes": {
+        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      },
+      "summary": "Hotfix release with stability improvements for the 3.44 series.",
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.44.1",
+      "verified": true,
+      "sources": [
+        "Flutter SDK Archive",
+        "GitHub Tags"
       ]
     },
     {
