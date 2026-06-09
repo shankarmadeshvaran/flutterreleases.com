@@ -133,8 +133,10 @@ function buildRssXml(items, siteUrl, generatedAt){
     const guid = link;
     const title = `Flutter ${version} (${channel})`;
     const pub = toRfc822(released || new Date());
-    const summary = it.summary || `Details for Flutter ${version}.`;
+    const dartVersion = it.dart_version || it.dart_sdk_version || null;
+    const summary = it.summary || null;
     const descParts = [];
+    if (dartVersion) descParts.push(`<p><strong>Dart SDK:</strong> ${xmlEscape(dartVersion)}</p>`);
     if (summary) descParts.push(`<p>${xmlEscape(summary)}</p>`);
     if (released) descParts.push(`<p>Released: ${xmlEscape(released)}</p>`);
     const cdata = ['<![CDATA[', descParts.join('\n'), ']]>'].join('');
@@ -177,10 +179,16 @@ function buildSitemapXml(siteUrl, lastMod){
   lines.push('  </url>');
   // JSON API
   lines.push('  <url>');
-  lines.push(`    <loc>${xmlEscape(baseUrl + '/data/releases.json')}</loc>`);
+  lines.push(`    <loc>${xmlEscape(baseUrl + '/releases.json')}</loc>`);
   lines.push(`    <lastmod>${xmlEscape(lm)}</lastmod>`);
   lines.push('    <changefreq>daily</changefreq>');
   lines.push('    <priority>0.5</priority>');
+  lines.push('  </url>');
+  // llms.txt
+  lines.push('  <url>');
+  lines.push(`    <loc>${xmlEscape(baseUrl + '/llms.txt')}</loc>`);
+  lines.push('    <changefreq>monthly</changefreq>');
+  lines.push('    <priority>0.3</priority>');
   lines.push('  </url>');
   lines.push('');
   lines.push('</urlset>');
@@ -452,10 +460,10 @@ async function run(){
       process.exit(1);
     }
 
-    // Determine canonical output: prefer curated public/data/releases.json if present
+    // Determine canonical output: prefer releases.json owned by crawler if present
     let out = { meta: { generated_at: nowIso(), count: finalItems.length }, items: finalItems };
     try {
-      const dataFile = path.join(DATA_DIR, 'releases.json');
+      const dataFile = FINAL_PATH;
       if (fs.existsSync(dataFile)) {
         const rawTxt = fs.readFileSync(dataFile, 'utf8');
         const parsed = JSON.parse(rawTxt);
@@ -481,11 +489,11 @@ async function run(){
     // The generator must NOT overwrite it — doing so replaces crawler data with stale generated data.
     // Backup and overwrite of FINAL_PATH intentionally removed.
 
-    // also generate RSS feed, preferring public/data/releases.json if present (to mirror pages/index.js)
+    // also generate RSS feed from crawler-owned releases.json
     try{
       let itemsForFeed = finalItems;
       try{
-        const dataFile = path.join(DATA_DIR, 'releases.json');
+        const dataFile = FINAL_PATH;
         if (fs.existsSync(dataFile)){
           const rawTxt = fs.readFileSync(dataFile, 'utf8');
           const parsed = JSON.parse(rawTxt);
@@ -494,7 +502,13 @@ async function run(){
         }
       }catch(_inner){ /* ignore and fall back */ }
 
-      const rssXml = buildRssXml(itemsForFeed, SITE_URL, out.meta.generated_at);
+      // Filter to stable + beta only, sort newest-first, limit 50
+      const feedItems = itemsForFeed
+        .filter(r => r.channel === 'stable' || r.channel === 'beta')
+        .sort((a, b) => new Date(b.released || b.release_date || 0) - new Date(a.released || a.release_date || 0))
+        .slice(0, 50);
+
+      const rssXml = buildRssXml(feedItems, SITE_URL, out.meta.generated_at);
       safeWriteAtomic(FEED_PATH, rssXml);
 
       // and sitemap

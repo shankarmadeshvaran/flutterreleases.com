@@ -1,0 +1,76 @@
+# FlutterReleases.com
+
+> Browse every Flutter release — version, Dart SDK, channel, download links, and release notes — in one place. Updated daily.
+
+## What this site provides
+
+- Complete Flutter release history across stable, beta, dev, and main channels (380+ releases)
+- Dart SDK version paired with every Flutter version
+- Direct download links for macOS (arm64, x64), Linux (x64, arm64), and Windows (x64)
+- Release notes and breaking-change links for stable releases
+- Data updated daily via GitHub Actions from the official Flutter releases API
+
+## Machine-readable data
+
+- All releases (JSON): https://flutterreleases.com/releases.json
+- RSS feed (stable + beta, newest 50): https://flutterreleases.com/feed.xml
+- Sitemap: https://flutterreleases.com/sitemap.xml
+
+## JSON schema (per release item in releases.json)
+
+```json
+{
+  "version": "3.44.0",
+  "channel": "stable",
+  "release_type": "release",
+  "released": "2026-05-18",
+  "dart_version": "3.7.0",
+  "framework_revision": "abc123...",
+  "engine_revision": "def456...",
+  "git_tag": "3.44.0",
+  "requires": {
+    "xcode": "15",
+    "android_sdk": "34"
+  },
+  "platforms": {
+    "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/...",
+    "macos_x64": "https://storage.googleapis.com/flutter_infra_release/...",
+    "linux_x64": "https://storage.googleapis.com/flutter_infra_release/...",
+    "windows_x64": "https://storage.googleapis.com/flutter_infra_release/..."
+  },
+  "release_notes": {
+    "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
+    "summary": "...",
+    "highlights": [],
+    "breaking_changes": [],
+    "deprecations": []
+  },
+  "ref_url": "https://github.com/flutter/flutter/releases/tag/3.44.0",
+  "verified": true
+}
+```
+
+## Useful queries on releases.json
+
+To get the latest stable release:
+```js
+const data = await fetch('https://flutterreleases.com/releases.json').then(r => r.json());
+const items = Array.isArray(data) ? data : data.items;
+const latestStable = items.find(r => r.channel === 'stable');
+```
+
+To get all stable releases:
+```js
+const stable = items.filter(r => r.channel === 'stable');
+```
+
+To look up Dart SDK version for a Flutter version:
+```js
+const release = items.find(r => r.version === '3.44.0');
+console.log(release.dart_version); // "3.7.0"
+```
+
+## Source & contributing
+
+GitHub: https://github.com/shankarmadeshvaran/flutterreleases.com
+Live site: https://flutterreleases.com

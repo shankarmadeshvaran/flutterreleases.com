@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useReleases, useFilteredReleases } from "../hooks/useReleases";
 import { useDarkMode } from "../hooks/useDarkMode";
+import { useMeta } from "../hooks/useMeta";
 import { Header } from "../components/Header";
 import { Hero } from "../components/Hero";
 import { FilterBar } from "../components/FilterBar";
@@ -39,6 +40,19 @@ export default function HomePage() {
 
   const latestStable = releases.find((r) => r.channel === "stable");
   const latestBeta = releases.find((r) => r.channel === "beta");
+
+  const channelLabel =
+    channel === "all"
+      ? "All Channels"
+      : channel.charAt(0).toUpperCase() + channel.slice(1);
+  useMeta(
+    channel === "all"
+      ? "Flutter Releases | downloads, notes, channels"
+      : `Flutter ${channelLabel} Releases | flutterreleases.com`,
+    channel === "all"
+      ? "Browse every Flutter release — version, Dart SDK pairing, channel, direct download links and release notes. Updated daily."
+      : `Browse Flutter ${channel} releases with Dart SDK versions, download links, and release notes. Updated daily.`
+  );
 
   const today = new Date().toLocaleDateString("en-GB", {
     day: "2-digit",

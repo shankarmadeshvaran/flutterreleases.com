@@ -157,3 +157,68 @@ The `redesign` branch introduced a full rewrite from Next.js → Vite + React:
 - Removed "LATEST" badge from table rows — Hero pills serve that purpose
 - Fixed all table links to open in new tab (`target="_blank"`) with `stopPropagation()` so row expand doesn't fire
 - Added Cloudflare Pages deploy workflow (`deploy.yml`)
+
+---
+
+## Roadmap
+
+Contributions welcome — pick any item and open a PR.
+
+| Feature | Description | Difficulty |
+|---|---|---|
+| Per-release pages | `/release/3.x.x` — dedicated page with full notes, Dart pairing, all download links | Medium |
+| Flutter ↔ Dart compatibility matrix | Interactive table: which Flutter version ships which Dart SDK | Easy |
+| Version diff / upgrade path | Pick two versions, see what changed between them (breaking changes, new APIs) | Hard |
+| Main channel commit feed | Show last 50 commits on `main` inside the main channel entry | Medium |
+| Breaking changes aggregator | Parse `flutter/flutter` changelog for `[Breaking Change]` tags per version | Hard |
+| JSON-LD / schema.org | Add `SoftwareApplication` structured data markup for Google rich results | Easy |
+| Native app | iOS/Android app with push notifications on new stable releases | Medium |
+
+---
+
+## Contributing
+
+### Setup
+
+```sh
+git clone https://github.com/shankarmadeshvaran/flutterreleases.com.git
+cd flutterreleases.com
+bun install
+bun run dev          # starts Vite dev server at localhost:5173
+```
+
+Copy `.env.template` to `.env` and fill in `GITHUB_TOKEN` if you want to run the crawler locally (avoids GitHub API rate limits).
+
+### Running the crawler
+
+```sh
+node scripts/crawl-releases.js              # stable channel only
+node scripts/crawl-releases.js --all-channels  # stable + beta + dev + main
+```
+
+Writes to `packages/web/public/releases.json`.
+
+### Regenerating feed + sitemap
+
+```sh
+node scripts/generate-releases.js
+```
+
+Reads from `packages/web/public/releases.json`, outputs `feed.xml` and `sitemap.xml` in the same directory.
+
+### Release data schema
+
+Every item in `releases.json` must have:
+- `version` — e.g. `"3.44.0"`
+- `channel` — `"stable" | "beta" | "dev" | "main"`
+- `released` — ISO date string `"YYYY-MM-DD"`
+- `dart_version` — e.g. `"3.7.0"`
+- `platforms` — object of download URLs keyed by platform (`macos_arm64`, `linux_x64`, `windows_x64`, etc.)
+- `release_notes` — object with at minimum a `base` URL
+
+### Good first issues
+
+- Add `llms.txt` content improvements
+- Add JSON-LD `SoftwareApplication` markup to the homepage
+- Add a Flutter ↔ Dart compatibility matrix page
+- Improve the RSS feed description richness
