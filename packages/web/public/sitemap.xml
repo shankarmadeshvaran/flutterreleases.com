@@ -2,21 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://flutterreleases.com/</loc>
-    <lastmod>2026-05-28T09:39:41.821Z</lastmod>
+    <lastmod>2026-06-10T06:21:54.544Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://flutterreleases.com/feed.xml</loc>
-    <lastmod>2026-05-28T09:39:41.821Z</lastmod>
+    <lastmod>2026-06-10T06:21:54.544Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://flutterreleases.com/data/releases.json</loc>
-    <lastmod>2026-05-28T09:39:41.821Z</lastmod>
+    <loc>https://flutterreleases.com/releases.json</loc>
+    <lastmod>2026-06-10T06:21:54.544Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://flutterreleases.com/llms.txt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
   </url>
 
 </urlset>

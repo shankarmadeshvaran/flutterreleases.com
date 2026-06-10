@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "generated_at": "2026-05-28T09:39:41.823Z",
+  "generated_at": "2026-06-10T06:21:54.550Z",
   "counts": {},
   "channels": {
     "dev": {
@@ -9,6 +9,6 @@
     }
   },
   "errors": [],
-  "feed_count": 7,
-  "count": 7
+  "feed_count": 387,
+  "count": 387
 }
