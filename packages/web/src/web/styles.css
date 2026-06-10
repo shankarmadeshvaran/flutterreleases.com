@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap");
 
 :root {
   --bg: #fafafa;
@@ -8,7 +7,7 @@
   --border: #e4e4e7;
   --text-primary: #18181b;
   --text-secondary: #71717a;
-  --text-muted: #a1a1aa;
+  --text-muted: #71717a;
   --accent: #0ea5e9;
   --accent-hover: #0284c7;
   --accent-bg: #e0f2fe;

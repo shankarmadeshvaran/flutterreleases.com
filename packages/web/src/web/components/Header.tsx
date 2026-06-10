@@ -23,6 +23,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
               src="/lockup_flutter_horizontal_wht.svg"
               alt="Flutter"
               height={28}
+              width={120}
               style={{ height: 28, width: "auto" }}
             />
           ) : (
@@ -30,6 +31,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
               src="/lockup_flutter_horizontal.svg"
               alt="Flutter"
               height={28}
+              width={120}
               style={{ height: 28, width: "auto" }}
             />
           )}
@@ -115,6 +117,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
               color: "var(--text-secondary)",
               backgroundColor: "transparent",
             }}
+            aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
             title={dark ? "Switch to light mode" : "Switch to dark mode"}
           >
             {dark ? <Sun size={15} /> : <Moon size={15} />}

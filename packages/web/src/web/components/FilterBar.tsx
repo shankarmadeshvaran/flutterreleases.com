@@ -91,6 +91,7 @@ export function FilterBar({
             {search && (
               <button
                 onClick={() => onSearchChange("")}
+                aria-label="Clear search"
                 className="absolute right-2.5"
                 style={{ color: "var(--text-muted)" }}
               >
