@@ -1,28 +1,17 @@
-import { JSDOM } from "jsdom";
 import type { Plugin } from "vite";
 
 export default function runableAnalyticsPlugin(): Plugin {
 	return {
 		name: "runable-analytics-plugin",
 		enforce: "pre",
-		async transformIndexHtml(html) {
-			const dom = new JSDOM(html);
-			const doc = dom.window.document;
-			const head = doc.head;
-
+		transformIndexHtml(html) {
 			const websiteUrl = process.env.WEBSITE_URL ?? "";
 			const hostname = websiteUrl ? new URL(websiteUrl).hostname : "";
+			const devmode = hostname === "localhost" ? ` data-devmode="true"` : "";
 
-			// Runable script
-			const script = doc.createElement("script");
-			script.defer = true;
-			script.src = "./runable.js";
-			script.dataset.hostname = hostname;
-			script.dataset.url = "https://r.lilstts.com/events";
-			if (hostname === "localhost") script.dataset.devmode = "true";
-			head.appendChild(script);
+			const scriptTag = `<script defer src="./runable.js" data-hostname="${hostname}" data-url="https://r.lilstts.com/events"${devmode}></script>`;
 
-			return dom.serialize();
+			return html.replace("</head>", `  ${scriptTag}\n</head>`);
 		},
 	};
 }
