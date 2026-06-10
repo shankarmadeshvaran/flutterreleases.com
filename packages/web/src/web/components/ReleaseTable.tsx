@@ -132,6 +132,18 @@ function ExpandedRow({ release }: { release: Release }) {
             <ReleaseNoteLinks notes={release.releaseNotes} />
           </div>
         </div>
+        <div className="mt-4 pt-3" style={{ borderTop: "1px solid var(--border)" }}>
+          <a
+            href={`/release/${release.version}/`}
+            className="inline-flex items-center gap-1 text-xs transition-colors duration-150"
+            style={{ color: "var(--text-muted)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
+          >
+            <ExternalLink size={10} />
+            Full release page →
+          </a>
+        </div>
       </td>
     </tr>
   );
@@ -203,17 +215,24 @@ export function ReleaseTable({ releases }: ReleaseTableProps) {
                   {/* Version */}
                   <td className="px-6 py-4">
                     <div className="flex flex-col gap-1.5">
-                      {/* Flutter pill */}
-                      <span
-                        className="mono inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-semibold w-fit"
-                        style={{
-                          backgroundColor: "var(--accent-bg)",
-                          color: "var(--accent)",
-                          border: "1px solid var(--accent)",
-                        }}
+                      {/* Flutter pill — links to per-release page */}
+                      <a
+                        href={`/release/${release.version}/`}
+                        onClick={(e) => e.stopPropagation()}
+                        title={`Flutter ${release.version} release details`}
+                        className="w-fit"
                       >
-                        Flutter {release.version}
-                      </span>
+                        <span
+                          className="mono inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-semibold w-fit transition-opacity duration-150 hover:opacity-75"
+                          style={{
+                            backgroundColor: "var(--accent-bg)",
+                            color: "var(--accent)",
+                            border: "1px solid var(--accent)",
+                          }}
+                        >
+                          Flutter {release.version}
+                        </span>
+                      </a>
                       {/* Dart pill — no icon, just label */}
                       <span
                         className="mono inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium w-fit"
