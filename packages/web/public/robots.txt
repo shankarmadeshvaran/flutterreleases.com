@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
 Sitemap: https://flutterreleases.com/sitemap.xml
-LLMs-txt: https://flutterreleases.com/llms.txt
