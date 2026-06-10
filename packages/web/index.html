@@ -42,6 +42,29 @@
 			}
 		}
 		</script>
+		<!-- Dataset structured data for Google and LLM crawlers -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "Dataset",
+			"name": "Flutter Release History",
+			"description": "Complete Flutter SDK release history across stable, beta, dev, and main channels — with Dart SDK version pairings, download links, system requirements, and release notes.",
+			"url": "https://flutterreleases.com/releases.json",
+			"creator": {
+				"@type": "Person",
+				"name": "Shankar Madeshvaran",
+				"url": "https://amshankar.com"
+			},
+			"license": "https://github.com/shankarmadeshvaran/flutterreleases.com/blob/main/LICENSE",
+			"keywords": ["Flutter", "Dart", "SDK", "releases", "mobile", "iOS", "Android", "cross-platform"],
+			"distribution": {
+				"@type": "DataDownload",
+				"encodingFormat": "application/json",
+				"contentUrl": "https://flutterreleases.com/releases.json"
+			},
+			"updateFrequency": "Daily"
+		}
+		</script>
 	</head>
 	<body>
 		<div id="root"></div>

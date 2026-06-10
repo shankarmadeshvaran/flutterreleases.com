@@ -50,6 +50,11 @@ jobs:
       - name: Build web
         run: bun run build:web
 
+      - name: Generate per-release static pages + sitemap + llms-full.txt
+        run: node scripts/generate-release-pages.js
+        env:
+          SITE_URL: https://flutterreleases.com
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:

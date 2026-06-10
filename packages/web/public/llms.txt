@@ -1,4 +1,5 @@
 # FlutterReleases.com
+# Full dataset: https://flutterreleases.com/llms-full.txt
 
 > Browse every Flutter release — version, Dart SDK, channel, download links, and release notes — in one place. Updated daily.
 
