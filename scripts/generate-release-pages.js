@@ -246,12 +246,13 @@ function buildSitemapXml(items, generatedAt) {
   lines.push('    <priority>1.0</priority>');
   lines.push('  </url>');
 
-  // Feed, JSON, llms
+  // Feed, JSON, llms, links
   for (const [path_, freq, pri] of [
     ['/feed.xml', 'daily', '0.5'],
     ['/releases.json', 'daily', '0.6'],
     ['/llms.txt', 'monthly', '0.3'],
     ['/llms-full.txt', 'daily', '0.4'],
+    ['/links.html', 'daily', '0.4'],
   ]) {
     lines.push('  <url>');
     lines.push(`    <loc>${baseUrl}${path_}</loc>`);
@@ -280,6 +281,59 @@ function buildSitemapXml(items, generatedAt) {
 
   lines.push('</urlset>');
   return lines.join('\n');
+}
+
+// Build links.html — full crawlable index of all release pages (no JS required)
+function buildLinksHtml(items, generatedAt) {
+  const date = generatedAt ? new Date(generatedAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
+  const baseUrl = SITE_URL.replace(/\/$/, '');
+
+  const stable = items.filter(r => r.channel === 'stable');
+  const beta   = items.filter(r => r.channel === 'beta');
+  const dev    = items.filter(r => r.channel === 'dev');
+  const main_  = items.filter(r => r.channel === 'main');
+
+  function renderGroup(title, group) {
+    if (!group.length) return '';
+    const rows = group.map(r => {
+      const slug = encodeURIComponent(r.version);
+      const dart = r.dart_version ? ` (Dart ${htmlEscape(r.dart_version)})` : '';
+      const date_ = r.released ? ` — ${htmlEscape(r.released)}` : '';
+      return `    <li><a href="${baseUrl}/release/${slug}">${htmlEscape(r.version)}</a>${dart}${date_}</li>`;
+    }).join('\n');
+    return `  <section>\n    <h2>${title} (${group.length})</h2>\n    <ul>\n${rows}\n    </ul>\n  </section>\n`;
+  }
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Flutter Releases — Complete Index | FlutterReleases</title>
+  <meta name="description" content="Complete index of all Flutter SDK releases across stable, beta, dev, and main channels. ${items.length} releases total. Updated ${date}." />
+  <link rel="canonical" href="${baseUrl}/links.html" />
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; line-height: 1.6; }
+    a { color: #054D8E; }
+    h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.2rem; margin-top: 2rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.25rem; }
+    ul { list-style: none; padding: 0; columns: 2; }
+    li { padding: 0.15rem 0; font-size: 0.9rem; break-inside: avoid; }
+    .meta { color: #6b7280; font-size: 0.85rem; margin-bottom: 1.5rem; }
+    nav { margin-bottom: 1.5rem; font-size: 0.9rem; }
+    @media (max-width: 600px) { ul { columns: 1; } }
+  </style>
+</head>
+<body>
+  <nav><a href="${baseUrl}/">← Back to FlutterReleases</a></nav>
+  <h1>All Flutter Releases</h1>
+  <p class="meta">${items.length} total releases &mdash; Generated ${date} &mdash; <a href="${baseUrl}/releases.json">releases.json</a></p>
+${renderGroup('Stable', stable)}${renderGroup('Beta', beta)}${renderGroup('Dev', dev)}${renderGroup('Main', main_)}
+  <footer>
+    <p><a href="${baseUrl}/">FlutterReleases.com</a> &mdash; Updated daily &mdash; <a href="${baseUrl}/sitemap.xml">Sitemap</a> &mdash; <a href="${baseUrl}/feed.xml">RSS</a></p>
+  </footer>
+</body>
+</html>`;
 }
 
 // Build llms-full.txt — full stable release index for LLMs
@@ -388,6 +442,12 @@ async function run() {
   if (fs.existsSync(DIST_DIR)) safeWrite(path.join(DIST_DIR, 'llms-full.txt'), llmsFullTxt);
   safeWrite(path.join(PUBLIC_DIR, 'llms-full.txt'), llmsFullTxt);
   console.log(`Generated llms-full.txt (${items.filter(r => r.channel === 'stable').length} stable releases)`);
+
+  // Generate links.html — crawlable full release index in both dist and public
+  const linksHtml = buildLinksHtml(items, generatedAt);
+  if (fs.existsSync(DIST_DIR)) safeWrite(path.join(DIST_DIR, 'links.html'), linksHtml);
+  safeWrite(path.join(PUBLIC_DIR, 'links.html'), linksHtml);
+  console.log(`Generated links.html (${items.length} total releases)`);
 
   console.log('Done.');
 }
