@@ -1,18 +1,23 @@
-# web
+# @flutterreleases/web
 
-Unified server — serves both the Hono API under `/api` and the React frontend from a single Bun.serve process.
+React + Vite frontend for [flutterreleases.com](https://flutterreleases.com).
 
-## Run
+## Dev
 
-```bash
-bun run dev
+```sh
+bun run dev       # http://localhost:5173
 ```
 
-The server port is configured automatically.
+## Build
 
-## Typecheck and build
+```sh
+bun run build     # outputs to dist/
+```
 
-```bash
+## Typecheck
+
+```sh
 bun run typecheck
-bun run build
 ```
+
+See root [README](../../README.md) for full project docs.

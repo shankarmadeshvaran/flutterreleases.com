@@ -20,9 +20,37 @@
 		<meta name="twitter:image" content="https://flutterreleases.com/og-image.png" />
 		<!-- RSS autodiscovery -->
 		<link rel="alternate" type="application/rss+xml" title="Flutter Releases Feed" href="/feed.xml" />
+		<!-- Canonical -->
+		<link rel="canonical" href="https://flutterreleases.com/" />
+		<!-- JSON-LD structured data -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"name": "Flutter Releases",
+			"url": "https://flutterreleases.com",
+			"description": "Browse every Flutter release — version, Dart SDK pairing, channel, direct download links and release notes. Updated daily.",
+			"publisher": {
+				"@type": "Person",
+				"name": "Shankar Madeshvaran",
+				"url": "https://amshankar.com"
+			},
+			"potentialAction": {
+				"@type": "SearchAction",
+				"target": "https://flutterreleases.com/?q={search_term_string}",
+				"query-input": "required name=search_term_string"
+			}
+		}
+		</script>
 	</head>
 	<body>
 		<div id="root"></div>
+		<!-- Fallback for crawlers that don't execute JS -->
+		<noscript>
+			<h1>Flutter Releases</h1>
+			<p>Browse every Flutter SDK release — version, Dart SDK pairing, channel, download links and release notes. Updated daily across stable, beta, dev and main channels.</p>
+			<p>Visit <a href="https://flutterreleases.com">flutterreleases.com</a> with JavaScript enabled to explore all releases.</p>
+		</noscript>
 		<script type="module" src="/src/web/main.tsx"></script>
 	</body>
 </html>
