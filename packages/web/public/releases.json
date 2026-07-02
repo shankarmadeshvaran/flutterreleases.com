@@ -1,20 +1,20 @@
 {
   "meta": {
-    "generated_at": "2026-07-01T09:56:39.172Z",
+    "generated_at": "2026-07-02T09:19:11.112Z",
     "source": "auto-crawled",
-    "count": 392
+    "count": 393
   },
   "items": [
     {
       "version": "main",
       "channel": "main",
       "release_type": "Development",
-      "released": "2026-07-01",
+      "released": "2026-07-02",
       "dart_version": "3.13.0-103.1.beta",
-      "framework_revision": "b9707e4",
+      "framework_revision": "aadfc38",
       "engine_revision": null,
       "git_tag": null,
-      "build": "b9707e4",
+      "build": "aadfc38",
       "requires": {
         "macos": "macOS 13.5+",
         "xcode": "Xcode 15.1+",
@@ -39,12 +39,54 @@
         "web": null,
         "tools": null
       },
-      "summary": "Rolling development channel. HEAD at commit b9707e4 (2026-07-01).",
-      "ref_url": "https://github.com/flutter/flutter/commit/b9707e40d545df8805376ad7ddab31abfa4e3058",
+      "summary": "Rolling development channel. HEAD at commit aadfc38 (2026-07-02).",
+      "ref_url": "https://github.com/flutter/flutter/commit/aadfc384985debe5c4f6c05832a6a6127c505631",
       "verified": true,
       "sources": [
         "GitHub flutter/flutter main branch",
         "DEPS"
+      ]
+    },
+    {
+      "version": "3.46.0-0.3.pre",
+      "channel": "beta",
+      "release_type": "Release",
+      "released": "2026-07-01",
+      "dart_version": "3.13.0",
+      "framework_revision": "677d472",
+      "engine_revision": null,
+      "git_tag": "3.46.0-0.3.pre",
+      "build": "677d472",
+      "requires": {
+        "macos": "macOS 13.5+",
+        "xcode": "Xcode 15.1+",
+        "windows": "Windows 10+",
+        "visual_studio": "Visual Studio 2022",
+        "linux": "bash, git, curl, unzip"
+      },
+      "platforms": {
+        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/macos/flutter_macos_arm64_3.46.0-0.3.pre-beta.zip",
+        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/macos/flutter_macos_3.46.0-0.3.pre-beta.zip",
+        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/windows/flutter_windows_3.46.0-0.3.pre-beta.zip",
+        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.46.0-0.3.pre-beta.tar.xz"
+      },
+      "release_notes": {
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      },
+      "summary": "Flutter 3.46.0-0.3.pre stable release.",
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.46.0-0.3.pre",
+      "verified": true,
+      "sources": [
+        "Flutter SDK Archive",
+        "GitHub Tags"
       ]
     },
     {
