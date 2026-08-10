@@ -266,8 +266,20 @@ ${rows}
   <script type="application/ld+json">
     ${webPageLd}
   </script>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if ((saved && saved === 'dark') || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch {}
+    })();
+  </script>
   <style>
-    :root { color-scheme: light; --bg: #fafafa; --surface: #ffffff; --subtle: #f4f4f5; --border: #e4e4e7; --text: #18181b; --muted: #71717a; --accent: #0ea5e9; }
+    :root { color-scheme: light; --bg: #fafafa; --surface: #ffffff; --subtle: #f4f4f5; --border: #e4e4e7; --text: #18181b; --secondary: #71717a; --muted: #71717a; --accent: #0ea5e9; --accent-hover: #0284c7; --row-hover: #f9fafb; }
+    .dark { color-scheme: dark; --bg: #09090b; --surface: #111113; --subtle: #18181b; --border: #27272a; --text: #fafafa; --secondary: #a1a1aa; --muted: #52525b; --accent: #38bdf8; --accent-hover: #7dd3fc; --row-hover: #18181b; }
     body { margin: 0; font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
@@ -275,7 +287,14 @@ ${rows}
     header { border-bottom: 1px solid var(--border); }
     nav, main, footer > div { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
     nav { height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .brand { color: var(--text); }
+    nav .right { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
     nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
+    .theme-toggle { width: 2.25rem; height: 2.25rem; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--secondary); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .theme-toggle .sun { display: none; }
+    .dark .theme-toggle .sun { display: inline; }
+    .dark .theme-toggle .moon { display: none; }
     .hero { border-bottom: 1px solid var(--border); }
     .hero-inner { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; }
     h1 { font-size: 1.875rem; line-height: 1.2; margin: 0 0 0.5rem; }
@@ -285,6 +304,7 @@ ${rows}
     .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; font-weight: 700; margin: 0 0 0.75rem; }
     .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin-top: 1.5rem; }
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+    .card:hover { border-color: var(--accent); }
     dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1rem 0; }
     dt { color: var(--muted); font-size: 0.75rem; }
     dd { margin: 0; font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.875rem; }
@@ -295,20 +315,32 @@ ${rows}
     table { border-collapse: collapse; width: 100%; min-width: 640px; }
     th, td { text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
     th { color: var(--muted); background: var(--subtle); text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.75rem; }
+    tr:hover td { background: var(--row-hover); }
     footer { border-top: 1px solid var(--border); }
     footer > div { padding-top: 1.25rem; padding-bottom: 1.25rem; font-size: 0.8125rem; }
-    @media (max-width: 760px) { .cards { grid-template-columns: 1fr; } nav { align-items: flex-start; height: auto; padding-top: 1rem; padding-bottom: 1rem; flex-direction: column; } }
+    @media (max-width: 760px) { .cards { grid-template-columns: 1fr; } nav { align-items: flex-start; height: auto; padding-top: 1rem; padding-bottom: 1rem; flex-direction: column; } nav .right { align-items: flex-start; } }
   </style>
 </head>
 <body>
   <header>
     <nav>
-      <a href="${SITE_URL}/"><strong>Flutter Releases</strong></a>
-      <div class="links">
-        <a href="${SITE_URL}/">Home</a>
-        <a href="${SITE_URL}/links.html">All releases</a>
-        <a href="${SITE_URL}/releases.json">releases.json</a>
-        <a href="${SITE_URL}/feed.xml">RSS</a>
+      <a class="brand" href="${SITE_URL}/"><strong>Flutter Releases</strong></a>
+      <div class="right">
+        <div class="links">
+          <a href="${SITE_URL}/">Home</a>
+          <a href="${SITE_URL}/links.html">All releases</a>
+          <a href="${SITE_URL}/releases.json">releases.json</a>
+          <a href="${SITE_URL}/feed.xml">RSS</a>
+        </div>
+        <button class="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="moon" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3a6 6 0 0 0 9 7.5A9 9 0 1 1 12 3Z"></path>
+          </svg>
+          <svg class="sun" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+          </svg>
+        </button>
       </div>
     </nav>
   </header>
@@ -359,6 +391,19 @@ ${compatibilityRows}
       <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/sitemap.xml">Sitemap</a></p>
     </div>
   </footer>
+  <script>
+    (function () {
+      var button = document.querySelector('.theme-toggle');
+      if (!button) return;
+      button.addEventListener('click', function () {
+        var dark = !document.documentElement.classList.contains('dark');
+        document.documentElement.classList.toggle('dark', dark);
+        try {
+          localStorage.setItem('theme', dark ? 'dark' : 'light');
+        } catch {}
+      });
+    })();
+  </script>
 </body>
 </html>`;
 }
