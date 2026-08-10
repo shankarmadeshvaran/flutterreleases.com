@@ -67,6 +67,14 @@ export function Hero({ latestStable, latestBeta }: HeroProps) {
           <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs" style={{ color: "var(--text-muted)" }}>
             <span>Downloads hosted by Google</span>
             <span>·</span>
+            <a
+              href="/flutter-versions/"
+              className="transition-colors duration-150"
+              style={{ color: "var(--accent)" }}
+            >
+              Flutter version history
+            </a>
+            <span>·</span>
             <span>Not an official Google resource</span>
             <span>·</span>
             <span>Free for the Flutter community</span>

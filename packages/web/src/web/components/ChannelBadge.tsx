@@ -1,5 +1,3 @@
-import type { Channel } from "../types/release";
-
 const styles: Record<string, string> = {
   stable:
     "bg-[var(--stable-bg)] text-[var(--stable-text)]",

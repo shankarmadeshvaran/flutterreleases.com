@@ -5,6 +5,7 @@ packages/web/public/releases.last_good.json
 node_modules
 
 # output
+.next
 out
 dist
 dist-electron

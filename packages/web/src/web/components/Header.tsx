@@ -47,6 +47,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
         <nav className="hidden md:flex items-center gap-1">
           {[
             { label: "Releases", href: "/" },
+            { label: "Versions", href: "/flutter-versions/" },
             { label: "JSON API", href: "/releases.json", external: true },
             { label: "RSS", href: "/feed.xml", external: true },
             { label: "GitHub", href: "https://github.com/shankarmadeshvaran/flutterreleases.com", external: true },

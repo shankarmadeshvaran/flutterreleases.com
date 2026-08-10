@@ -51,6 +51,16 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
           </a>
           <span>·</span>
           <a
+            href="/flutter-versions/"
+            className="transition-colors duration-150"
+            style={{ color: "var(--text-muted)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
+          >
+            Versions
+          </a>
+          <span>·</span>
+          <a
             href="/releases.json"
             target="_blank"
             className="transition-colors duration-150"

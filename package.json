@@ -12,6 +12,7 @@
     "build:web": "cd packages/web && bunx vite build",
     "lint": "oxlint . --deny-warnings --no-error-on-unmatched-pattern",
     "lint:fix": "oxlint . --fix --deny-warnings --no-error-on-unmatched-pattern",
+    "test:flutter-versions": "node scripts/validate-flutter-versions-page.js",
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {

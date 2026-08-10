@@ -15,9 +15,13 @@ const PER_PAGE = 10;
 export default function HomePage() {
   const { releases, loading, error } = useReleases();
   const { dark, toggle } = useDarkMode();
+  const selectedVersion =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("v") ?? ""
+      : "";
 
   const [channel, setChannel] = useState<Channel | "all">("all");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(selectedVersion);
   const [page, setPage] = useState(1);
 
   const { filtered, total, totalPages } = useFilteredReleases(
@@ -95,7 +99,10 @@ export default function HomePage() {
 
         {!loading && !error && (
           <>
-            <ReleaseTable releases={filtered} />
+            <ReleaseTable
+              releases={filtered}
+              selectedVersion={selectedVersion || undefined}
+            />
             <Pagination
               page={page}
               totalPages={totalPages}

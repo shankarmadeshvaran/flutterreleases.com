@@ -29,15 +29,6 @@ function readReleasesJson() {
   return Array.isArray(parsed) ? parsed : (parsed.items || []);
 }
 
-function xmlEscape(s) {
-  if (!s) return '';
-  return String(s)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
 function htmlEscape(s) {
   if (!s) return '';
   return String(s)
@@ -148,6 +139,230 @@ function buildBreadcrumbLd(release, pageUrl) {
   }, null, '\t\t\t');
 }
 
+function semverGroup(version) {
+  const match = String(version || '').match(/^v?(\d+)\.(\d+)\./);
+  return match ? `${match[1]}.${match[2]}` : null;
+}
+
+function releaseUrl(release) {
+  return `${SITE_URL}/release/${encodeURIComponent(release.version)}`;
+}
+
+function latestByChannel(items, channel) {
+  return items.find(r => r.channel === channel && r.version);
+}
+
+function buildFlutterVersionsBreadcrumbLd(pageUrl) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Flutter Releases', item: SITE_URL + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Flutter Versions & Releases', item: pageUrl },
+    ],
+  }, null, '\t\t\t');
+}
+
+function buildFlutterVersionsWebPageLd(pageUrl) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Flutter Versions & Releases',
+    url: pageUrl,
+    description: 'See the latest Flutter stable, beta and dev versions, complete Flutter version history, Dart SDK compatibility and release details.',
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'Flutter Releases',
+      url: SITE_URL + '/',
+    },
+  }, null, '\t\t\t');
+}
+
+function buildLatestCardHtml(title, release) {
+  if (!release) {
+    return `<article class="card"><p class="eyebrow">${htmlEscape(title)}</p><p>Not available in releases.json.</p></article>`;
+  }
+
+  return `<article class="card">
+      <p class="eyebrow">${htmlEscape(title)}</p>
+      <h2><a href="${releaseUrl(release)}">Flutter ${htmlEscape(release.version)}</a></h2>
+      <dl>
+        <div><dt>Flutter version</dt><dd>${htmlEscape(release.version)}</dd></div>
+        <div><dt>Dart version</dt><dd>${htmlEscape(release.dart_version || 'N/A')}</dd></div>
+        <div><dt>Release date</dt><dd>${htmlEscape(release.released || 'Unknown')}</dd></div>
+        <div><dt>Channel</dt><dd>${htmlEscape(channelLabel(release.channel))}</dd></div>
+      </dl>
+      <p><a href="${releaseUrl(release)}">View release details →</a></p>
+    </article>`;
+}
+
+function buildFlutterVersionsPageHtml(items, generatedAt) {
+  const pageUrl = `${SITE_URL.replace(/\/$/, '')}/flutter-versions/`;
+  const latestStable = latestByChannel(items, 'stable');
+  const latestBeta = latestByChannel(items, 'beta');
+  const latestDev = latestByChannel(items, 'dev') || latestByChannel(items, 'main');
+  const versioned = items.filter(r => r.version && semverGroup(r.version));
+  const groups = new Map();
+  for (const release of versioned) {
+    const group = semverGroup(release.version);
+    const rows = groups.get(group) || [];
+    rows.push(release);
+    groups.set(group, rows);
+  }
+  const generatedDate = generatedAt ? new Date(generatedAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
+  const breadcrumbLd = buildFlutterVersionsBreadcrumbLd(pageUrl);
+  const webPageLd = buildFlutterVersionsWebPageLd(pageUrl);
+
+  function renderReleaseRow(release) {
+    return `<tr>
+          <td><a href="${releaseUrl(release)}">Flutter ${htmlEscape(release.version)}</a></td>
+          <td>${htmlEscape(release.dart_version || 'N/A')}</td>
+          <td>${htmlEscape(channelLabel(release.channel))}</td>
+          <td>${htmlEscape(release.released || 'Unknown')}</td>
+        </tr>`;
+  }
+
+  const historyHtml = Array.from(groups.entries()).map(([group, releases]) => {
+    const rows = releases.map(renderReleaseRow).join('\n');
+    return `<section>
+      <h3>Flutter ${htmlEscape(group)}.x</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Version</th><th>Dart version</th><th>Channel</th><th>Release date</th></tr>
+          </thead>
+          <tbody>
+${rows}
+          </tbody>
+        </table>
+      </div>
+    </section>`;
+  }).join('\n');
+
+  const compatibilityRows = versioned.map(renderReleaseRow).join('\n');
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flutter Versions &amp; Releases — Latest Stable Flutter SDK</title>
+  <meta name="description" content="See the latest Flutter stable, beta and dev versions, complete Flutter version history, Dart SDK compatibility and release details." />
+  <meta name="theme-color" content="#054D8E" />
+  <meta property="og:title" content="Flutter Versions &amp; Releases — Latest Stable Flutter SDK" />
+  <meta property="og:description" content="See the latest Flutter stable, beta and dev versions, complete Flutter version history, Dart SDK compatibility and release details." />
+  <meta property="og:url" content="${pageUrl}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="${SITE_URL}/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Flutter Versions &amp; Releases — Latest Stable Flutter SDK" />
+  <meta name="twitter:description" content="See the latest Flutter stable, beta and dev versions, complete Flutter version history, Dart SDK compatibility and release details." />
+  <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
+  <link rel="canonical" href="${pageUrl}" />
+  <link rel="alternate" type="application/rss+xml" title="Flutter Releases Feed" href="${SITE_URL}/feed.xml" />
+  <script type="application/ld+json">
+    ${breadcrumbLd}
+  </script>
+  <script type="application/ld+json">
+    ${webPageLd}
+  </script>
+  <style>
+    :root { color-scheme: light; --bg: #fafafa; --surface: #ffffff; --subtle: #f4f4f5; --border: #e4e4e7; --text: #18181b; --muted: #71717a; --accent: #0ea5e9; }
+    body { margin: 0; font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header, footer, .hero { background: var(--surface); border-color: var(--border); }
+    header { border-bottom: 1px solid var(--border); }
+    nav, main, footer > div { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    nav { height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
+    .hero { border-bottom: 1px solid var(--border); }
+    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    h1 { font-size: 1.875rem; line-height: 1.2; margin: 0 0 0.5rem; }
+    h2 { font-size: 1.125rem; margin: 0 0 0.75rem; }
+    h3 { font-size: 1rem; margin: 2rem 0 0.75rem; }
+    .intro { max-width: 44rem; color: var(--muted); margin: 0; }
+    .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; font-weight: 700; margin: 0 0 0.75rem; }
+    .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin-top: 1.5rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+    dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+    dt { color: var(--muted); font-size: 0.75rem; }
+    dd { margin: 0; font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.875rem; }
+    main { padding-top: 2rem; padding-bottom: 2rem; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+    .section-head p, footer p { color: var(--muted); margin: 0.25rem 0 0; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+    table { border-collapse: collapse; width: 100%; min-width: 640px; }
+    th, td { text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+    th { color: var(--muted); background: var(--subtle); text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.75rem; }
+    footer { border-top: 1px solid var(--border); }
+    footer > div { padding-top: 1.25rem; padding-bottom: 1.25rem; font-size: 0.8125rem; }
+    @media (max-width: 760px) { .cards { grid-template-columns: 1fr; } nav { align-items: flex-start; height: auto; padding-top: 1rem; padding-bottom: 1rem; flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="${SITE_URL}/"><strong>Flutter Releases</strong></a>
+      <div class="links">
+        <a href="${SITE_URL}/">Home</a>
+        <a href="${SITE_URL}/links.html">All releases</a>
+        <a href="${SITE_URL}/releases.json">releases.json</a>
+        <a href="${SITE_URL}/feed.xml">RSS</a>
+      </div>
+    </nav>
+  </header>
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Flutter version history</p>
+      <h1>Flutter Versions &amp; Releases</h1>
+      <p class="intro">See the latest Flutter stable, beta and dev versions, complete Flutter version history, Dart SDK compatibility and release details.</p>
+      <div class="cards">
+        ${buildLatestCardHtml('Latest Stable Flutter release', latestStable)}
+        ${buildLatestCardHtml('Latest Beta', latestBeta)}
+        ${buildLatestCardHtml('Latest Dev', latestDev)}
+      </div>
+    </div>
+  </section>
+  <main>
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>Flutter Version History</h2>
+          <p>Grouped by major and minor Flutter SDK version. Generated from releases.json on ${generatedDate}.</p>
+        </div>
+        <p>${versioned.length} versions</p>
+      </div>
+      ${historyHtml}
+    </section>
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>Flutter ↔ Dart compatibility</h2>
+          <p>Every Flutter version links to its existing release details page.</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Flutter version</th><th>Dart SDK</th><th>Channel</th><th>Release date</th></tr>
+          </thead>
+          <tbody>
+${compatibilityRows}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div>
+      <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/sitemap.xml">Sitemap</a></p>
+    </div>
+  </footer>
+</body>
+</html>`;
+}
+
 function buildPageHtml(release) {
   const version = release.version;
   const channel = release.channel;
@@ -201,7 +416,7 @@ function buildPageHtml(release) {
   <script>
     // Redirect to SPA root — the React app handles /release/:version routing
     if (typeof window !== 'undefined') {
-      var v = window.location.pathname.replace('/release/', '').replace(/\/$/, '');
+      var v = window.location.pathname.replace('/release/', '').replace(/[/]$/, '');
       window.location.replace('/?v=' + encodeURIComponent(v) + '#release');
     }
   </script>
@@ -210,6 +425,7 @@ function buildPageHtml(release) {
   <!-- Static content for crawlers (no JS required) -->
   <nav>
     <a href="${SITE_URL}/">← All Flutter Releases</a>
+    <a href="${SITE_URL}/flutter-versions/">Flutter versions</a>
   </nav>
   <main>
     <h1>Flutter ${htmlEscape(version)}</h1>
@@ -224,6 +440,7 @@ function buildPageHtml(release) {
     </section>
     ${requiresHtml ? `<section><h2>System Requirements</h2>${requiresHtml}</section>` : ''}
     ${refUrl ? `<p><a href="${refUrl}" target="_blank" rel="noopener">View on GitHub →</a></p>` : ''}
+    <p><a href="${SITE_URL}/flutter-versions/">Browse Flutter version history →</a></p>
     <p><a href="${SITE_URL}/">Browse all Flutter releases →</a></p>
   </main>
 </body>
@@ -248,6 +465,7 @@ function buildSitemapXml(items, generatedAt) {
 
   // Feed, JSON, llms, links
   for (const [path_, freq, pri] of [
+    ['/flutter-versions/', 'daily', '0.9'],
     ['/feed.xml', 'daily', '0.5'],
     ['/releases.json', 'daily', '0.6'],
     ['/llms.txt', 'monthly', '0.3'],
@@ -400,7 +618,7 @@ async function run() {
   if (DRY_RUN) {
     console.log('Dry-run: skipping file writes.');
     console.log(`Would generate ${toProcess.length} HTML pages`);
-    console.log(`Would update sitemap.xml with ${toProcess.length + 5} URLs`);
+    console.log(`Would update sitemap.xml with ${items.length + 6} URLs`);
     return;
   }
 
@@ -434,8 +652,16 @@ async function run() {
   if (fs.existsSync(DIST_DIR)) safeWrite(sitemapDist, sitemapXml);
   safeWrite(sitemapPublic, sitemapXml);
 
-  const urlCount = items.length + 5;
+  const urlCount = items.length + 6;
   console.log(`Updated sitemap.xml with ${urlCount} URLs`);
+
+  // Generate Flutter versions SEO page in dist only. It is a route page, so
+  // Cloudflare serves this static HTML while the SPA handles JS navigation.
+  const flutterVersionsHtml = buildFlutterVersionsPageHtml(items, generatedAt);
+  if (fs.existsSync(DIST_DIR)) {
+    safeWrite(path.join(DIST_DIR, 'flutter-versions', 'index.html'), flutterVersionsHtml);
+  }
+  console.log('Generated flutter-versions/index.html');
 
   // Generate llms-full.txt in both dist and public
   const llmsFullTxt = buildLlmsFullTxt(items, generatedAt);

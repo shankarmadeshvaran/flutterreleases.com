@@ -1,5 +1,5 @@
 import { ExternalLink, Download, ChevronDown, ChevronUp } from "lucide-react";
-import { useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import type { Release } from "../types/release";
 import { ChannelBadge, ReleaseTypeBadge } from "./ChannelBadge";
 
@@ -89,8 +89,15 @@ function ReleaseNoteLinks({ notes }: { notes: Release["releaseNotes"] }) {
 
 function ExpandedRow({ release }: { release: Release }) {
   return (
-    <tr style={{ backgroundColor: "var(--bg-subtle)" }}>
-      <td colSpan={7} className="px-6 py-4">
+    <tr
+      aria-label={`Flutter ${release.version} expanded release details`}
+      style={{ backgroundColor: "var(--bg-subtle)" }}
+    >
+      <td
+        aria-label={`Flutter ${release.version} requirements, downloads, and release notes`}
+        colSpan={7}
+        className="px-6 py-4"
+      >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <p className="text-xs font-medium mb-2" style={{ color: "var(--text-muted)" }}>
@@ -151,10 +158,22 @@ function ExpandedRow({ release }: { release: Release }) {
 
 interface ReleaseTableProps {
   releases: Release[];
+  selectedVersion?: string;
 }
 
-export function ReleaseTable({ releases }: ReleaseTableProps) {
-  const [expanded, setExpanded] = useState<string | null>(null);
+export function ReleaseTable({ releases, selectedVersion }: ReleaseTableProps) {
+  const [expanded, setExpanded] = useState<string | null>(selectedVersion ?? null);
+
+  useEffect(() => {
+    if (!selectedVersion) return;
+    setExpanded(selectedVersion);
+
+    window.requestAnimationFrame(() => {
+      document
+        .getElementById("release")
+        ?.scrollIntoView({ block: "center", behavior: "smooth" });
+    });
+  }, [selectedVersion]);
 
   const toggle = (version: string) =>
     setExpanded((prev) => (prev === version ? null : version));
@@ -186,16 +205,16 @@ export function ReleaseTable({ releases }: ReleaseTableProps) {
             <th className="text-left px-4 py-3 w-[120px]">Released</th>
             <th className="text-left px-4 py-3">Downloads</th>
             <th className="text-left px-4 py-3">Release Notes</th>
-            <th className="px-4 py-3 w-8" />
+            <th className="px-4 py-3 w-8" aria-label="Expand release details" />
           </tr>
         </thead>
         <tbody>
           {releases.map((release, i) => {
             const isExpanded = expanded === release.version;
             return (
-              <>
+              <Fragment key={`${release.version}-${release.channel}`}>
                 <tr
-                  key={release.version}
+                  id={release.version === selectedVersion ? "release" : undefined}
                   className="row-animate cursor-pointer border-b transition-colors duration-150"
                   style={{
                     borderColor: "var(--border)",
@@ -342,7 +361,7 @@ export function ReleaseTable({ releases }: ReleaseTableProps) {
                   </td>
                 </tr>
                 {isExpanded && <ExpandedRow key={`${release.version}-expanded`} release={release} />}
-              </>
+              </Fragment>
             );
           })}
         </tbody>
