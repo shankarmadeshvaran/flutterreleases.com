@@ -11,6 +11,11 @@ function ReleaseRedirect() {
       .replace(/^\/release\//, "")
       .replace(/\/$/, "");
 
+    if (!window.location.pathname.endsWith("/")) {
+      window.location.replace(`/release/${encodeURIComponent(version)}/`);
+      return;
+    }
+
     window.location.replace(`/?v=${encodeURIComponent(version)}#release`);
   }, []);
 

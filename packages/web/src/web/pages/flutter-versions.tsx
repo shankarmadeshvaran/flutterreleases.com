@@ -25,6 +25,10 @@ function semverGroup(version: string) {
   return match ? `${match[1]}.${match[2]}` : null;
 }
 
+function seriesId(series: string) {
+  return `flutter-${series.replace(/\./g, "-")}`;
+}
+
 function groupByMajorMinor(releases: Release[]) {
   const groups = new Map<string, Release[]>();
   for (const release of releases) {
@@ -129,8 +133,10 @@ export default function FlutterVersionsPage() {
   const latestStable = releases.find((r) => r.channel === "stable");
   const latestBeta = releases.find((r) => r.channel === "beta");
   const latestDev = releases.find((r) => r.channel === "dev") ?? releases.find((r) => r.channel === "main");
-  const versionGroups = groupByMajorMinor(releases);
-  const compatibilityRows = releases.filter((r) => semverGroup(r.version));
+  const stableReleases = releases.filter((r) => r.channel === "stable" && semverGroup(r.version));
+  const prereleaseRows = releases.filter((r) => r.channel !== "stable" && semverGroup(r.version));
+  const stableGroups = groupByMajorMinor(stableReleases);
+  const prereleaseGroups = groupByMajorMinor(prereleaseRows);
   const today = new Date().toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "short",
@@ -194,22 +200,22 @@ export default function FlutterVersionsPage() {
                 <div className="flex items-end justify-between gap-4 mb-4">
                   <div>
                     <h2 className="text-lg font-semibold" style={{ color: "var(--text-primary)" }}>
-                      Flutter Version History
+                      Stable Flutter Version History
                     </h2>
                     <p className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
-                      Grouped by major and minor Flutter SDK version.
+                      Stable Flutter SDK releases grouped by major and minor version.
                     </p>
                   </div>
                   <span className="text-xs whitespace-nowrap" style={{ color: "var(--text-muted)" }}>
-                    {compatibilityRows.length} versions
+                    {stableReleases.length} stable releases
                   </span>
                 </div>
 
                 <div className="space-y-6">
-                  {versionGroups.map(([group, groupReleases]) => (
-                    <div key={group}>
+                  {stableGroups.map(([group, groupReleases]) => (
+                    <div key={group} id={seriesId(group)}>
                       <h3 className="mono text-sm font-semibold mb-2" style={{ color: "var(--text-primary)" }}>
-                        Flutter {group}.x
+                        Flutter {group}
                       </h3>
                       <div className="overflow-x-auto border rounded-lg" style={{ borderColor: "var(--border)" }}>
                         <table className="w-full min-w-[640px] border-collapse">
@@ -239,7 +245,7 @@ export default function FlutterVersionsPage() {
                     Flutter ↔ Dart compatibility
                   </h2>
                   <p className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
-                    Generated from releases.json so every Flutter SDK links back to its release details.
+                    Stable Flutter versions with Dart SDK compatibility. Every version links to its release details.
                   </p>
                 </div>
                 <div className="overflow-x-auto border rounded-lg" style={{ borderColor: "var(--border)" }}>
@@ -253,11 +259,54 @@ export default function FlutterVersionsPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {compatibilityRows.map((release) => (
+                      {stableReleases.map((release) => (
                         <ReleaseRow key={`compat-${release.version}-${release.channel}`} release={release} />
                       ))}
                     </tbody>
                   </table>
+                </div>
+              </section>
+
+              <section>
+                <div className="flex items-end justify-between gap-4 mb-4">
+                  <div>
+                    <h2 className="text-lg font-semibold" style={{ color: "var(--text-primary)" }}>
+                      Beta and prerelease history
+                    </h2>
+                    <p className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
+                      Prerelease Flutter SDK versions remain available below the stable history.
+                    </p>
+                  </div>
+                  <span className="text-xs whitespace-nowrap" style={{ color: "var(--text-muted)" }}>
+                    {prereleaseRows.length} prereleases
+                  </span>
+                </div>
+
+                <div className="space-y-6">
+                  {prereleaseGroups.map(([group, groupReleases]) => (
+                    <div key={group}>
+                      <h3 className="mono text-sm font-semibold mb-2" style={{ color: "var(--text-primary)" }}>
+                        Flutter {group}
+                      </h3>
+                      <div className="overflow-x-auto border rounded-lg" style={{ borderColor: "var(--border)" }}>
+                        <table className="w-full min-w-[640px] border-collapse">
+                          <thead>
+                            <tr className="text-xs font-medium uppercase tracking-wider" style={{ color: "var(--text-muted)", backgroundColor: "var(--bg-subtle)" }}>
+                              <th className="text-left px-4 py-3">Version</th>
+                              <th className="text-left px-4 py-3">Dart version</th>
+                              <th className="text-left px-4 py-3">Channel</th>
+                              <th className="text-left px-4 py-3">Release date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {groupReleases.map((release) => (
+                              <ReleaseRow key={`pre-${group}-${release.version}-${release.channel}`} release={release} />
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </section>
             </div>

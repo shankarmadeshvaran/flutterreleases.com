@@ -39,6 +39,15 @@ function htmlEscape(s) {
     .replace(/'/g, '&#39;');
 }
 
+function xmlEscape(s) {
+  if (!s) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 function safeWrite(filePath, content) {
   const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -48,6 +57,10 @@ function safeWrite(filePath, content) {
 function channelLabel(channel) {
   const map = { stable: 'Stable', beta: 'Beta', dev: 'Dev', main: 'Main' };
   return map[channel] || channel;
+}
+
+function siteBaseUrl() {
+  return SITE_URL.replace(/\/$/, '');
 }
 
 function platformLabel(key) {
@@ -62,11 +75,18 @@ function platformLabel(key) {
 }
 
 function buildPageTitle(release) {
+  if (release.channel === 'stable') {
+    const dart = release.dart_version ? ` — Dart ${release.dart_version}` : '';
+    return `Flutter ${release.version} Release${dart}, Downloads & Release Notes`;
+  }
   const dart = release.dart_version ? ` — Dart ${release.dart_version}` : '';
   return `Flutter ${release.version}${dart} | FlutterReleases`;
 }
 
 function buildPageDescription(release) {
+  if (release.channel === 'stable') {
+    return `Flutter ${release.version} release details including Dart SDK version, release date, downloads, requirements and release notes.`;
+  }
   const ch = channelLabel(release.channel);
   const dart = release.dart_version ? ` Dart SDK ${release.dart_version}.` : '';
   const date = release.released ? ` Released ${release.released}.` : '';
@@ -128,12 +148,54 @@ function buildReleaseNotesHtml(release) {
   return `<a href="${htmlEscape(base)}" target="_blank" rel="noopener">View release notes →</a>`;
 }
 
+function buildStableIntroHtml(release) {
+  if (release.channel !== 'stable') return '';
+  const date = release.released ? ` published on ${htmlEscape(release.released)}` : '';
+  const dart = release.dart_version ? ` and includes Dart ${htmlEscape(release.dart_version)}` : '';
+  return `<p>Flutter ${htmlEscape(release.version)} is a stable Flutter SDK release${date}${dart}.</p>`;
+}
+
+function buildStableInternalLinksHtml(release, items) {
+  if (release.channel !== 'stable') return '';
+  const context = findStableContext(items, release);
+  const related = context.sameSeries.slice(0, 8);
+
+  const previousHtml = context.previous
+    ? `<li><strong>Previous stable:</strong> <a href="${releaseUrl(context.previous)}">Flutter ${htmlEscape(context.previous.version)}</a></li>`
+    : '';
+  const nextHtml = context.next
+    ? `<li><strong>Next stable:</strong> <a href="${releaseUrl(context.next)}">Flutter ${htmlEscape(context.next.version)}</a></li>`
+    : '';
+  const seriesHtml = context.series
+    ? `<li><a href="${seriesUrl(context.series)}">View all Flutter ${htmlEscape(context.series)} releases</a></li>`
+    : '';
+  const relatedHtml = related.length
+    ? `<section>
+      <h2>Related stable releases</h2>
+      <ul>
+        ${related.map(r => `<li><a href="${releaseUrl(r)}">Flutter ${htmlEscape(r.version)}</a>${r.dart_version ? ` — Dart ${htmlEscape(r.dart_version)}` : ''}${r.released ? ` — ${htmlEscape(r.released)}` : ''}</li>`).join('\n        ')}
+      </ul>
+    </section>`
+    : '';
+
+  return `<section>
+      <h2>Stable release navigation</h2>
+      <ul>
+        ${previousHtml}
+        ${nextHtml}
+        ${seriesHtml}
+        <li><a href="${siteBaseUrl()}/flutter-versions/">View all Flutter versions</a></li>
+      </ul>
+    </section>
+    ${relatedHtml}`;
+}
+
 function buildBreadcrumbLd(release, pageUrl) {
   return JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Flutter Releases', item: SITE_URL + '/' },
+      { '@type': 'ListItem', position: 1, name: 'Flutter Releases', item: siteBaseUrl() + '/' },
       { '@type': 'ListItem', position: 2, name: `Flutter ${release.version}`, item: pageUrl },
     ],
   }, null, '\t\t\t');
@@ -144,12 +206,70 @@ function semverGroup(version) {
   return match ? `${match[1]}.${match[2]}` : null;
 }
 
+function seriesId(series) {
+  return `flutter-${String(series).replace(/\./g, '-')}`;
+}
+
+function seriesUrl(series) {
+  return `${siteBaseUrl()}/flutter-versions/#${seriesId(series)}`;
+}
+
+function releasePath(release) {
+  return `/release/${encodeURIComponent(release.version)}/`;
+}
+
 function releaseUrl(release) {
-  return `${SITE_URL}/release/${encodeURIComponent(release.version)}`;
+  return `${siteBaseUrl()}${releasePath(release)}`;
+}
+
+function toRfc822(dateValue) {
+  try {
+    const dt = dateValue ? new Date(dateValue) : new Date();
+    const valid = Number.isNaN(dt.getTime()) ? new Date() : dt;
+    return valid.toUTCString();
+  } catch {
+    return new Date().toUTCString();
+  }
 }
 
 function latestByChannel(items, channel) {
   return items.find(r => r.channel === channel && r.version);
+}
+
+function stableReleases(items) {
+  return items.filter(r => r.channel === 'stable' && r.version);
+}
+
+function versionedReleases(items) {
+  return items.filter(r => r.version && semverGroup(r.version));
+}
+
+function groupReleasesBySeries(items) {
+  const groups = new Map();
+  for (const release of items) {
+    const group = semverGroup(release.version);
+    if (!group) continue;
+    const rows = groups.get(group) || [];
+    rows.push(release);
+    groups.set(group, rows);
+  }
+  return Array.from(groups.entries());
+}
+
+function findStableContext(items, release) {
+  const stable = stableReleases(items);
+  const index = stable.findIndex(r => r.version === release.version);
+  const series = semverGroup(release.version);
+  const sameSeries = series
+    ? stable.filter(r => semverGroup(r.version) === series)
+    : [];
+
+  return {
+    series,
+    previous: index >= 0 ? stable[index + 1] || null : null,
+    next: index > 0 ? stable[index - 1] || null : null,
+    sameSeries: sameSeries.filter(r => r.version !== release.version),
+  };
 }
 
 function buildFlutterVersionsBreadcrumbLd(pageUrl) {
@@ -157,7 +277,7 @@ function buildFlutterVersionsBreadcrumbLd(pageUrl) {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Flutter Releases', item: SITE_URL + '/' },
+      { '@type': 'ListItem', position: 1, name: 'Flutter Releases', item: siteBaseUrl() + '/' },
       { '@type': 'ListItem', position: 2, name: 'Flutter Versions & Releases', item: pageUrl },
     ],
   }, null, '\t\t\t');
@@ -197,18 +317,14 @@ function buildLatestCardHtml(title, release) {
 }
 
 function buildFlutterVersionsPageHtml(items, generatedAt) {
-  const pageUrl = `${SITE_URL.replace(/\/$/, '')}/flutter-versions/`;
+  const pageUrl = `${siteBaseUrl()}/flutter-versions/`;
   const latestStable = latestByChannel(items, 'stable');
   const latestBeta = latestByChannel(items, 'beta');
   const latestDev = latestByChannel(items, 'dev') || latestByChannel(items, 'main');
-  const versioned = items.filter(r => r.version && semverGroup(r.version));
-  const groups = new Map();
-  for (const release of versioned) {
-    const group = semverGroup(release.version);
-    const rows = groups.get(group) || [];
-    rows.push(release);
-    groups.set(group, rows);
-  }
+  const stable = stableReleases(items);
+  const prerelease = versionedReleases(items).filter(r => r.channel !== 'stable');
+  const stableGroups = groupReleasesBySeries(stable);
+  const prereleaseGroups = groupReleasesBySeries(prerelease);
   const generatedDate = generatedAt ? new Date(generatedAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
   const breadcrumbLd = buildFlutterVersionsBreadcrumbLd(pageUrl);
   const webPageLd = buildFlutterVersionsWebPageLd(pageUrl);
@@ -222,10 +338,10 @@ function buildFlutterVersionsPageHtml(items, generatedAt) {
         </tr>`;
   }
 
-  const historyHtml = Array.from(groups.entries()).map(([group, releases]) => {
+  function renderGroupTable(group, releases) {
     const rows = releases.map(renderReleaseRow).join('\n');
-    return `<section>
-      <h3>Flutter ${htmlEscape(group)}.x</h3>
+    return `<section id="${htmlEscape(seriesId(group))}">
+      <h3>Flutter ${htmlEscape(group)}</h3>
       <div class="table-wrap">
         <table>
           <thead>
@@ -237,9 +353,11 @@ ${rows}
         </table>
       </div>
     </section>`;
-  }).join('\n');
+  }
 
-  const compatibilityRows = versioned.map(renderReleaseRow).join('\n');
+  const stableHistoryHtml = stableGroups.map(([group, releases]) => renderGroupTable(group, releases)).join('\n');
+  const prereleaseHistoryHtml = prereleaseGroups.map(([group, releases]) => renderGroupTable(group, releases)).join('\n');
+  const compatibilityRows = stable.map(renderReleaseRow).join('\n');
 
   return `<!doctype html>
 <html lang="en">
@@ -360,18 +478,18 @@ ${rows}
     <section>
       <div class="section-head">
         <div>
-          <h2>Flutter Version History</h2>
-          <p>Grouped by major and minor Flutter SDK version. Generated from releases.json on ${generatedDate}.</p>
+          <h2>Stable Flutter Version History</h2>
+          <p>Stable Flutter SDK releases grouped by major and minor version. Generated from releases.json on ${generatedDate}.</p>
         </div>
-        <p>${versioned.length} versions</p>
+        <p>${stable.length} stable releases</p>
       </div>
-      ${historyHtml}
+      ${stableHistoryHtml}
     </section>
     <section>
       <div class="section-head">
         <div>
           <h2>Flutter ↔ Dart compatibility</h2>
-          <p>Every Flutter version links to its existing release details page.</p>
+          <p>Stable Flutter versions with Dart SDK compatibility. Every version links to its release details page.</p>
         </div>
       </div>
       <div class="table-wrap">
@@ -384,6 +502,16 @@ ${compatibilityRows}
           </tbody>
         </table>
       </div>
+    </section>
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>Beta and prerelease history</h2>
+          <p>Prerelease Flutter SDK versions remain crawlable, but stable releases are prioritized above.</p>
+        </div>
+        <p>${prerelease.length} prereleases</p>
+      </div>
+      ${prereleaseHistoryHtml}
     </section>
   </main>
   <footer>
@@ -408,11 +536,10 @@ ${compatibilityRows}
 </html>`;
 }
 
-function buildPageHtml(release) {
+function buildPageHtml(release, items = []) {
   const version = release.version;
   const channel = release.channel;
-  const slug = encodeURIComponent(version);
-  const pageUrl = `${SITE_URL}/release/${slug}`;
+  const pageUrl = releaseUrl(release);
   const title = buildPageTitle(release);
   const desc = buildPageDescription(release);
   const chLabel = channelLabel(channel);
@@ -421,6 +548,8 @@ function buildPageHtml(release) {
   const downloadsHtml = buildDownloadsHtml(release);
   const requiresHtml = buildRequiresHtml(release);
   const releaseNotesHtml = buildReleaseNotesHtml(release);
+  const stableIntroHtml = buildStableIntroHtml(release);
+  const stableInternalLinksHtml = buildStableInternalLinksHtml(release, items);
   const summary = release.summary ? htmlEscape(release.summary) : '';
   const dartDisplay = release.dart_version ? htmlEscape(release.dart_version) : 'N/A';
   const dateDisplay = release.released || 'Unknown';
@@ -474,6 +603,7 @@ function buildPageHtml(release) {
   </nav>
   <main>
     <h1>Flutter ${htmlEscape(version)}</h1>
+    ${stableIntroHtml}
     <p><strong>Channel:</strong> ${htmlEscape(chLabel)}${typeDisplay ? ` &mdash; ${typeDisplay}` : ''}</p>
     <p><strong>Released:</strong> ${htmlEscape(dateDisplay)}</p>
     <p><strong>Dart SDK:</strong> ${dartDisplay}</p>
@@ -484,6 +614,7 @@ function buildPageHtml(release) {
       ${downloadsHtml}
     </section>
     ${requiresHtml ? `<section><h2>System Requirements</h2>${requiresHtml}</section>` : ''}
+    ${stableInternalLinksHtml}
     ${refUrl ? `<p><a href="${refUrl}" target="_blank" rel="noopener">View on GitHub →</a></p>` : ''}
     <p><a href="${SITE_URL}/flutter-versions/">Browse Flutter version history →</a></p>
     <p><a href="${SITE_URL}/">Browse all Flutter releases →</a></p>
@@ -530,12 +661,11 @@ function buildSitemapXml(items, generatedAt) {
   const changeMap = { stable: 'monthly', beta: 'weekly', dev: 'weekly', main: 'daily' };
 
   for (const r of items) {
-    const slug = encodeURIComponent(r.version);
     const pri = priorityMap[r.channel] || '0.4';
     const freq = changeMap[r.channel] || 'monthly';
     const lastmod = r.released ? new Date(r.released).toISOString() : lm;
     lines.push('  <url>');
-    lines.push(`    <loc>${baseUrl}/release/${slug}</loc>`);
+    lines.push(`    <loc>${releaseUrl(r)}</loc>`);
     lines.push(`    <lastmod>${lastmod}</lastmod>`);
     lines.push(`    <changefreq>${freq}</changefreq>`);
     lines.push(`    <priority>${pri}</priority>`);
@@ -543,6 +673,51 @@ function buildSitemapXml(items, generatedAt) {
   }
 
   lines.push('</urlset>');
+  return lines.join('\n');
+}
+
+function buildRssXml(items, generatedAt) {
+  const baseUrl = siteBaseUrl();
+  const feedItems = items
+    .filter(r => r.channel === 'stable' || r.channel === 'beta')
+    .sort((a, b) => new Date(b.released || 0) - new Date(a.released || 0))
+    .slice(0, 50);
+  const pubDate = toRfc822(generatedAt || new Date());
+  const lines = [];
+
+  lines.push('<?xml version="1.0" encoding="UTF-8"?>');
+  lines.push('<?xml-stylesheet type="text/xsl" href="/feed.xsl"?>');
+  lines.push('<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">');
+  lines.push('<channel>');
+  lines.push(`  <atom:link href="${xmlEscape(baseUrl + '/feed.xml')}" rel="self" type="application/rss+xml" />`);
+  lines.push('  <title>FlutterReleases — Flutter &amp; Dart releases</title>');
+  lines.push(`  <link>${xmlEscape(baseUrl + '/')}</link>`);
+  lines.push('  <description>Browse the latest Flutter releases with matching Dart SDK versions, release notes, and direct download links — updated across stable, beta, and dev channels.</description>');
+  lines.push('  <language>en-US</language>');
+  lines.push(`  <pubDate>${xmlEscape(pubDate)}</pubDate>`);
+  lines.push('  <ttl>60</ttl>');
+
+  for (const release of feedItems) {
+    const title = `Flutter ${release.version} (${release.channel})`;
+    const pub = toRfc822(release.released || generatedAt || new Date());
+    const descParts = [];
+    if (release.dart_version) descParts.push(`<p><strong>Dart SDK:</strong> ${xmlEscape(release.dart_version)}</p>`);
+    if (release.summary) descParts.push(`<p>${xmlEscape(release.summary)}</p>`);
+    if (release.released) descParts.push(`<p>Released: ${xmlEscape(release.released)}</p>`);
+    const link = releaseUrl(release);
+
+    lines.push('  <item>');
+    lines.push(`    <title>${xmlEscape(title)}</title>`);
+    lines.push(`    <link>${xmlEscape(link)}</link>`);
+    lines.push(`    <guid isPermaLink="true">${xmlEscape(link)}</guid>`);
+    lines.push(`    <pubDate>${xmlEscape(pub)}</pubDate>`);
+    lines.push(`    <description><![CDATA[${descParts.join('\n')}]]></description>`);
+    lines.push('  </item>');
+    lines.push('');
+  }
+
+  lines.push('</channel>');
+  lines.push('</rss>');
   return lines.join('\n');
 }
 
@@ -559,10 +734,9 @@ function buildLinksHtml(items, generatedAt) {
   function renderGroup(title, group) {
     if (!group.length) return '';
     const rows = group.map(r => {
-      const slug = encodeURIComponent(r.version);
       const dart = r.dart_version ? ` (Dart ${htmlEscape(r.dart_version)})` : '';
       const date_ = r.released ? ` — ${htmlEscape(r.released)}` : '';
-      return `    <li><a href="${baseUrl}/release/${slug}">${htmlEscape(r.version)}</a>${dart}${date_}</li>`;
+      return `    <li><a href="${releaseUrl(r)}">${htmlEscape(r.version)}</a>${dart}${date_}</li>`;
     }).join('\n');
     return `  <section>\n    <h2>${title} (${group.length})</h2>\n    <ul>\n${rows}\n    </ul>\n  </section>\n`;
   }
@@ -677,7 +851,7 @@ async function run() {
     if (!release.version) { errors++; continue; }
     try {
       const slug = release.version; // use raw version as dir name
-      const html = buildPageHtml(release);
+      const html = buildPageHtml(release, items);
       const outPath = path.join(DIST_DIR, 'release', slug, 'index.html');
       safeWrite(outPath, html);
       generated++;
@@ -713,6 +887,12 @@ async function run() {
   if (fs.existsSync(DIST_DIR)) safeWrite(path.join(DIST_DIR, 'llms-full.txt'), llmsFullTxt);
   safeWrite(path.join(PUBLIC_DIR, 'llms-full.txt'), llmsFullTxt);
   console.log(`Generated llms-full.txt (${items.filter(r => r.channel === 'stable').length} stable releases)`);
+
+  // Generate RSS feed in both dist and public with canonical release URLs
+  const rssXml = buildRssXml(items, generatedAt);
+  if (fs.existsSync(DIST_DIR)) safeWrite(path.join(DIST_DIR, 'feed.xml'), rssXml);
+  safeWrite(path.join(PUBLIC_DIR, 'feed.xml'), rssXml);
+  console.log('Generated feed.xml with canonical release URLs');
 
   // Generate links.html — crawlable full release index in both dist and public
   const linksHtml = buildLinksHtml(items, generatedAt);

@@ -27,9 +27,7 @@ export function Hero({ latestStable, latestBeta }: HeroProps) {
           <div className="flex flex-wrap gap-2 mb-5">
             {latestStable && (
               <a
-                href={latestStable.releaseNotes.full}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/release/${latestStable.version}/`}
                 className="flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs transition-opacity hover:opacity-70"
                 style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-subtle)", textDecoration: "none" }}
               >
@@ -45,9 +43,7 @@ export function Hero({ latestStable, latestBeta }: HeroProps) {
             )}
             {latestBeta && (
               <a
-                href={latestBeta.releaseNotes.full}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/release/${latestBeta.version}/`}
                 className="flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs transition-opacity hover:opacity-70"
                 style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-subtle)", textDecoration: "none" }}
               >
@@ -72,7 +68,7 @@ export function Hero({ latestStable, latestBeta }: HeroProps) {
               className="transition-colors duration-150"
               style={{ color: "var(--accent)" }}
             >
-              Flutter version history
+              Flutter Versions
             </a>
             <span>·</span>
             <span>Not an official Google resource</span>

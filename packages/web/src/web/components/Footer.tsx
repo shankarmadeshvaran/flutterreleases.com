@@ -57,7 +57,7 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
             onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
           >
-            Versions
+            Flutter Versions
           </a>
           <span>·</span>
           <a

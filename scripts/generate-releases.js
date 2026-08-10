@@ -16,7 +16,6 @@ const OUT_DIR = path.join(process.cwd(), 'packages', 'web', 'public');
 const DATA_DIR = path.join(OUT_DIR, 'data');
 const GENERATED_PATH = path.join(OUT_DIR, 'releases.generated.json');
 const FINAL_PATH = path.join(OUT_DIR, 'releases.json');
-const LAST_GOOD = path.join(OUT_DIR, 'releases.last_good.json');
 const STATUS_PATH = path.join(OUT_DIR, 'generation_status.json');
 const FEED_PATH = path.join(OUT_DIR, 'feed.xml');
 const SITEMAP_PATH = path.join(OUT_DIR, 'sitemap.xml');
@@ -28,7 +27,6 @@ const CHANNELS = ['stable','beta','dev','main'];
 // CLI flags
 const ARGS = process.argv.slice(2);
 const DRY_RUN = ARGS.includes('--dry-run');
-const VALIDATE_ONLY = ARGS.includes('--validate-only');
 
 // helpers
 async function fetchJson(url, timeout = 10000) {
@@ -41,7 +39,7 @@ async function fetchJson(url, timeout = 10000) {
     clearTimeout(t);
     if (!res.ok) return null;
     return await res.json();
-  } catch (e) {
+  } catch {
     clearTimeout(t);
     return null;
   }
@@ -54,7 +52,7 @@ async function headOk(url, timeout = 5000) {
     const res = await fetch(url, { method: 'HEAD', signal: controller.signal });
     clearTimeout(t);
     return res.ok;
-  } catch (e) {
+  } catch {
     return false;
   }
 }
@@ -129,7 +127,7 @@ function buildRssXml(items, siteUrl, generatedAt){
     const version = it.flutter_version || it.version || '(unknown)';
     const channel = it.channel || 'stable';
     const released = it.released || null;
-    const link = it.ref_url || (version ? `https://github.com/flutter/flutter/releases/tag/${encodeURIComponent(version)}` : baseUrl);
+    const link = version ? `${baseUrl}/release/${encodeURIComponent(version)}/` : baseUrl;
     const guid = link;
     const title = `Flutter ${version} (${channel})`;
     const pub = toRfc822(released || new Date());
@@ -157,7 +155,7 @@ function buildRssXml(items, siteUrl, generatedAt){
   return lines.join('\n');
 }
 
-function buildSitemapXml(siteUrl, lastMod){
+function buildSitemapXml(siteUrl, lastMod, items = []){
   const baseUrl = siteUrl?.replace(/\/$/, '') || 'https://flutterreleases.com';
   const lm = (lastMod ? new Date(lastMod) : new Date()).toISOString();
   const lines = [];
@@ -169,6 +167,13 @@ function buildSitemapXml(siteUrl, lastMod){
   lines.push(`    <lastmod>${xmlEscape(lm)}</lastmod>`);
   lines.push('    <changefreq>daily</changefreq>');
   lines.push('    <priority>0.8</priority>');
+  lines.push('  </url>');
+  // Flutter versions hub
+  lines.push('  <url>');
+  lines.push(`    <loc>${xmlEscape(baseUrl + '/flutter-versions/')}</loc>`);
+  lines.push(`    <lastmod>${xmlEscape(lm)}</lastmod>`);
+  lines.push('    <changefreq>daily</changefreq>');
+  lines.push('    <priority>0.9</priority>');
   lines.push('  </url>');
   // Feed
   lines.push('  <url>');
@@ -190,6 +195,21 @@ function buildSitemapXml(siteUrl, lastMod){
   lines.push('    <changefreq>monthly</changefreq>');
   lines.push('    <priority>0.3</priority>');
   lines.push('  </url>');
+  const priorityMap = { stable: '0.8', beta: '0.6', dev: '0.4', main: '0.3' };
+  const changeMap = { stable: 'monthly', beta: 'weekly', dev: 'weekly', main: 'daily' };
+  for (const item of items) {
+    const version = item.version || item.flutter_version;
+    if (!version) continue;
+    const channel = item.channel || 'stable';
+    const released = item.released || item.release_date || lastMod;
+    const itemLastMod = released ? new Date(released).toISOString() : lm;
+    lines.push('  <url>');
+    lines.push(`    <loc>${xmlEscape(baseUrl + '/release/' + encodeURIComponent(version) + '/')}</loc>`);
+    lines.push(`    <lastmod>${xmlEscape(itemLastMod)}</lastmod>`);
+    lines.push(`    <changefreq>${changeMap[channel] || 'monthly'}</changefreq>`);
+    lines.push(`    <priority>${priorityMap[channel] || '0.4'}</priority>`);
+    lines.push('  </url>');
+  }
   lines.push('');
   lines.push('</urlset>');
   return lines.join('\n');
@@ -301,7 +321,7 @@ async function enrichItem(item, manifestEntry, channel){
         else item.platforms[normalizePlatformKey(name)] = item.platforms[normalizePlatformKey(name)] || url;
       }
     }
-  }catch(e){ /* ignore github transient errors */ }
+  }catch{ /* ignore github transient errors */ }
 
   // build notes array
   item.notes = buildNotesArray(item, manifestEntry, githubRelease);
@@ -472,7 +492,7 @@ async function run(){
           out = { meta: { generated_at: nowIso(), count: cand.length }, items: cand };
         }
       }
-    } catch (_) { /* ignore if invalid; fall back to generated */ }
+    } catch { /* ignore if invalid; fall back to generated */ }
     const outStr = JSON.stringify(out, null, 2);
 
     if(DRY_RUN){
@@ -500,7 +520,7 @@ async function run(){
           const cand = Array.isArray(parsed?.items) ? parsed.items : (Array.isArray(parsed) ? parsed : []);
           if (cand.length > 0) itemsForFeed = cand;
         }
-      }catch(_inner){ /* ignore and fall back */ }
+      }catch{ /* ignore and fall back */ }
 
       // Filter to stable + beta only, sort newest-first, limit 50
       const feedItems = itemsForFeed
@@ -512,7 +532,7 @@ async function run(){
       safeWriteAtomic(FEED_PATH, rssXml);
 
       // and sitemap
-      const smXml = buildSitemapXml(SITE_URL, out.meta.generated_at);
+      const smXml = buildSitemapXml(SITE_URL, out.meta.generated_at, itemsForFeed);
       safeWriteAtomic(SITEMAP_PATH, smXml);
 
       // record feed count in status for clarity
