@@ -88,6 +88,8 @@ function ReleaseNoteLinks({ notes }: { notes: Release["releaseNotes"] }) {
 }
 
 function ExpandedRow({ release }: { release: Release }) {
+  const fullNotesUrl = release.releaseNotes.full;
+
   return (
     <tr
       aria-label={`Flutter ${release.version} expanded release details`}
@@ -140,16 +142,20 @@ function ExpandedRow({ release }: { release: Release }) {
           </div>
         </div>
         <div className="mt-4 pt-3" style={{ borderTop: "1px solid var(--border)" }}>
-          <a
-            href={`/release/${release.version}/`}
-            className="inline-flex items-center gap-1 text-xs transition-colors duration-150"
-            style={{ color: "var(--text-muted)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
-          >
-            <ExternalLink size={10} />
-            Full release page →
-          </a>
+          {fullNotesUrl && (
+            <a
+              href={fullNotesUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-xs transition-colors duration-150"
+              style={{ color: "var(--accent)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent-hover)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--accent)")}
+            >
+              <ExternalLink size={10} />
+              Open release notes →
+            </a>
+          )}
         </div>
       </td>
     </tr>

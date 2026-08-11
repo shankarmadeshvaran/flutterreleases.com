@@ -16,7 +16,7 @@
 //
 // Usage:
 //   node scripts/crawl-releases.js               # stable only (default)
-//   node scripts/crawl-releases.js --all-channels # stable + beta + main
+//   node scripts/crawl-releases.js --all-channels # stable + beta + main; refreshes existing dev metadata
 //   node scripts/crawl-releases.js --dry-run      # preview, no write
 //   GITHUB_TOKEN=xxx node scripts/crawl-releases.js
 
@@ -31,16 +31,25 @@ const CURATED_PATH = path.join(ROOT, 'packages', 'web', 'public', 'releases.json
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || null;
 const DRY_RUN = process.argv.includes('--dry-run');
 const ALL_CHANNELS = process.argv.includes('--all-channels');
+const VERIFY_ALL_DOWNLOADS = process.argv.includes('--verify-downloads') || process.env.VERIFY_DOWNLOADS === '1';
+const VERIFY_RECENT_DOWNLOADS = process.env.VERIFY_RECENT_DOWNLOADS !== '0';
+const VERIFY_DOWNLOAD_LIMIT = Number.parseInt(process.env.VERIFY_DOWNLOAD_LIMIT || '20', 10);
 const CHANNELS = ALL_CHANNELS ? ['stable', 'beta'] : ['stable'];
+const REFRESH_ONLY_CHANNELS = ALL_CHANNELS ? ['dev'] : [];
 const INCLUDE_MAIN = ALL_CHANNELS;
 
 const BASE_ARCHIVE_URL = 'https://storage.googleapis.com/flutter_infra_release/releases';
 const GITHUB_API = 'https://api.github.com';
+const STABLE_CHANGELOG_URL = 'https://github.com/flutter/flutter/blob/stable/CHANGELOG.md';
+const RAW_STABLE_CHANGELOG_URL = 'https://raw.githubusercontent.com/flutter/flutter/stable/CHANGELOG.md';
 
 // Section anchors we attempt to verify on release notes pages
 const RELEASE_NOTE_ANCHORS = ['framework', 'material', 'ios', 'android', 'windows', 'linux', 'web', 'tools'];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
+
+const urlStatusCache = new Map();
+const textCache = new Map();
 
 async function fetchJson(url, { silent = false } = {}) {
   const headers = { 'User-Agent': 'FlutterReleasesCrawler/1.0 (+https://flutterreleases.com)' };
@@ -60,16 +69,61 @@ async function fetchJson(url, { silent = false } = {}) {
   }
 }
 
+async function fetchText(url, { silent = false } = {}) {
+  if (textCache.has(url)) return textCache.get(url);
+  const headers = { 'User-Agent': 'FlutterReleasesCrawler/1.0 (+https://flutterreleases.com)' };
+  if (GITHUB_TOKEN && url.startsWith(GITHUB_API)) {
+    headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
+  }
+  try {
+    const res = await fetch(url, { headers, redirect: 'follow' });
+    if (!res.ok) {
+      if (!silent) console.warn(`  ⚠ HTTP ${res.status} for ${url}`);
+      textCache.set(url, null);
+      return null;
+    }
+    const text = await res.text();
+    textCache.set(url, text);
+    return text;
+  } catch (e) {
+    if (!silent) console.warn(`  ⚠ fetch failed for ${url}: ${e.message}`);
+    textCache.set(url, null);
+    return null;
+  }
+}
+
 // HTTP HEAD check — returns true if URL responds 200
 async function urlExists(url) {
+  if (!url) return false;
+  const cacheKey = String(url).split('#')[0];
+  if (urlStatusCache.has(cacheKey)) return urlStatusCache.get(cacheKey);
+  const headers = { 'User-Agent': 'FlutterReleasesCrawler/1.0 (+https://flutterreleases.com)' };
+  if (GITHUB_TOKEN && cacheKey.startsWith(GITHUB_API)) {
+    headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
+  }
   try {
     const res = await fetch(url, {
       method: 'HEAD',
-      headers: { 'User-Agent': 'FlutterReleasesCrawler/1.0 (+https://flutterreleases.com)' },
+      headers,
       redirect: 'follow',
     });
-    return res.ok;
+    if (res.ok) {
+      urlStatusCache.set(cacheKey, true);
+      return true;
+    }
+  } catch { /* retry with GET below */ }
+
+  try {
+    const res = await fetch(cacheKey, {
+      method: 'GET',
+      headers: { ...headers, Range: 'bytes=0-0' },
+      redirect: 'follow',
+    });
+    const ok = res.ok || res.status === 206;
+    urlStatusCache.set(cacheKey, ok);
+    return ok;
   } catch {
+    urlStatusCache.set(cacheKey, false);
     return false;
   }
 }
@@ -121,6 +175,168 @@ function cleanDartVersion(raw) {
   return raw.split(' ')[0].trim();
 }
 
+function changelogAnchor(version) {
+  return String(version)
+    .replace(/^v/, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '');
+}
+
+function stableChangelogUrl(version) {
+  return `${STABLE_CHANGELOG_URL}#${changelogAnchor(version)}`;
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function changelogHasVersion(markdown, version) {
+  if (!markdown) return false;
+  const clean = String(version).replace(/^v/, '');
+  const legacy = String(version);
+  const pattern = new RegExp(`^#{2,4}\\s+(?:\\[)?(?:v)?(?:${escapeRegExp(clean)}|${escapeRegExp(legacy)})(?:\\])?(?:\\(|\\s|$)`, 'im');
+  return pattern.test(markdown);
+}
+
+async function resolveStableChangelogReleaseNotes(version) {
+  const url = stableChangelogUrl(version);
+  const changelog = await fetchText(RAW_STABLE_CHANGELOG_URL, { silent: true });
+  const verified = changelogHasVersion(changelog, version);
+  const baseOk = verified || await urlExists(STABLE_CHANGELOG_URL);
+  return {
+    release_notes: {
+      base: url,
+      framework: null,
+      material: null,
+      ios: null,
+      android: null,
+      windows: null,
+      linux: null,
+      web: null,
+      tools: null,
+    },
+    status: {
+      url,
+      ok: baseOk,
+      source: 'flutter-stable-changelog',
+      anchor_verified: verified,
+    },
+  };
+}
+
+function isStableFeatureRelease(version) {
+  const clean = String(version).replace(/^v/, '');
+  if (clean.includes('-') || clean.includes('+')) return false;
+  const parts = clean.split('.');
+  return parts.length >= 3 && Number.parseInt(parts[2], 10) === 0;
+}
+
+function setIfChanged(target, key, value) {
+  if (value === null || value === undefined || value === '') return false;
+  if (target[key] === value) return false;
+  target[key] = value;
+  return true;
+}
+
+async function verifyPlatformUrls(platforms) {
+  const status = {};
+  for (const [key, url] of Object.entries(platforms || {})) {
+    if (!url) {
+      status[key] = false;
+      continue;
+    }
+    status[key] = await urlExists(url);
+  }
+  return status;
+}
+
+function allAvailableDownloadsVerified(downloadStatus, platforms) {
+  const available = Object.entries(platforms || {}).filter(([, url]) => url);
+  return available.length > 0 && available.every(([key]) => downloadStatus[key] === true);
+}
+
+async function refreshFromArchive(item, info, channel, verifyDownloads = false) {
+  if (!item || !info) return false;
+
+  let changed = false;
+  const releaseDate = info.release_date ? info.release_date.split('T')[0] : null;
+  const dartVersion = cleanDartVersion(info.dart_sdk_version);
+  const frameworkRevision = shortSha(info.hash);
+
+  changed = setIfChanged(item, 'channel', channel) || changed;
+  changed = setIfChanged(item, 'released', releaseDate) || changed;
+  changed = setIfChanged(item, 'dart_version', dartVersion) || changed;
+  changed = setIfChanged(item, 'framework_revision', frameworkRevision) || changed;
+  changed = setIfChanged(item, 'git_tag', item.version) || changed;
+  changed = setIfChanged(item, 'build', frameworkRevision) || changed;
+
+  const requirements = detectRequirements(item.version);
+  if (JSON.stringify(item.requires || {}) !== JSON.stringify(requirements)) {
+    item.requires = requirements;
+    changed = true;
+  }
+
+  const platforms = {
+    ...item.platforms,
+    ...info.platforms,
+  };
+  if (JSON.stringify(item.platforms || {}) !== JSON.stringify(platforms)) {
+    item.platforms = platforms;
+    changed = true;
+  }
+
+  if (channel === 'stable') {
+    const releaseNotesResult = await buildReleaseNotes(item.version);
+    if (JSON.stringify(item.release_notes || {}) !== JSON.stringify(releaseNotesResult.release_notes)) {
+      item.release_notes = releaseNotesResult.release_notes;
+      changed = true;
+    }
+    if (JSON.stringify(item.link_status?.release_notes || {}) !== JSON.stringify(releaseNotesResult.status)) {
+      item.link_status = { ...item.link_status, release_notes: releaseNotesResult.status };
+      changed = true;
+    }
+  }
+
+  if (verifyDownloads) {
+    const downloadStatus = await verifyPlatformUrls(item.platforms);
+    if (JSON.stringify(item.link_status?.downloads || {}) !== JSON.stringify(downloadStatus)) {
+      item.link_status = { ...item.link_status, downloads: downloadStatus };
+      changed = true;
+    }
+  }
+
+  if (!Array.isArray(item.sources) || !item.sources.includes('Flutter SDK Archive')) {
+    item.sources = Array.from(new Set([...(item.sources || []), 'Flutter SDK Archive']));
+    changed = true;
+  }
+
+  const releaseNotesOk = item.link_status?.release_notes?.ok !== false;
+  const downloadsOk = !verifyDownloads || allAvailableDownloadsVerified(item.link_status?.downloads || {}, item.platforms);
+  const verified = releaseNotesOk && downloadsOk;
+  if (item.verified !== verified) {
+    item.verified = verified;
+    changed = true;
+  }
+
+  return changed;
+}
+
+function dateValue(value) {
+  if (!value) return 0;
+  const parsed = new Date(value);
+  const time = parsed.getTime();
+  return Number.isNaN(time) ? 0 : time;
+}
+
+function latestReleaseDateByChannel(items) {
+  const latest = new Map();
+  for (const item of items) {
+    const current = latest.get(item.channel) || 0;
+    latest.set(item.channel, Math.max(current, dateValue(item.released || item.release_date)));
+  }
+  return latest;
+}
+
 // Detect minimum requirements based on Flutter version
 function detectRequirements(version) {
   const clean = version.replace(/^v/, '');
@@ -152,59 +368,42 @@ function detectRequirements(version) {
 // Build and VERIFY release_notes URLs:
 //   - HEAD checks the base URL (set null if 404)
 //   - Fetches page HTML once and checks which section anchors actually exist
-async function buildReleaseNotes(version, releaseType) {
-  // For hotfixes, point to the parent .0 release notes page
+async function buildReleaseNotes(version) {
+  if (!isStableFeatureRelease(version)) {
+    return await resolveStableChangelogReleaseNotes(version);
+  }
+
   const clean = version.replace(/^v/, '');
   const parts = clean.split('.');
   const baseVersion = `${parts[0]}.${parts[1]}.0`;
   const baseUrl = `https://docs.flutter.dev/release/release-notes/release-notes-${baseVersion}`;
 
-  // HEAD check the base URL
   const baseExists = await urlExists(baseUrl);
 
   if (!baseExists) {
-    // No release notes page exists for this version
-    return {
-      base: null,
-      framework: null,
-      material: null,
-      ios: null,
-      android: null,
-      windows: null,
-      linux: null,
-      web: null,
-      tools: null,
-    };
+    return await resolveStableChangelogReleaseNotes(version);
   }
 
-  if (releaseType !== 'Release') {
-    // Hotfix: base only, no anchors (page is shared with .0)
-    return {
-      base: baseUrl,
-      framework: null,
-      material: null,
-      ios: null,
-      android: null,
-      windows: null,
-      linux: null,
-      web: null,
-      tools: null,
-    };
-  }
-
-  // Major release: verify which anchors actually exist on the page
   const existingAnchors = await verifyAnchors(baseUrl, RELEASE_NOTE_ANCHORS);
 
   return {
-    base: baseUrl,
-    framework: existingAnchors.has('framework') ? `${baseUrl}#framework` : null,
-    material: existingAnchors.has('material') ? `${baseUrl}#material` : null,
-    ios: existingAnchors.has('ios') ? `${baseUrl}#ios` : null,
-    android: existingAnchors.has('android') ? `${baseUrl}#android` : null,
-    windows: existingAnchors.has('windows') ? `${baseUrl}#windows` : null,
-    linux: existingAnchors.has('linux') ? `${baseUrl}#linux` : null,
-    web: existingAnchors.has('web') ? `${baseUrl}#web` : null,
-    tools: existingAnchors.has('tools') ? `${baseUrl}#tools` : null,
+    release_notes: {
+      base: baseUrl,
+      framework: existingAnchors.has('framework') ? `${baseUrl}#framework` : null,
+      material: existingAnchors.has('material') ? `${baseUrl}#material` : null,
+      ios: existingAnchors.has('ios') ? `${baseUrl}#ios` : null,
+      android: existingAnchors.has('android') ? `${baseUrl}#android` : null,
+      windows: existingAnchors.has('windows') ? `${baseUrl}#windows` : null,
+      linux: existingAnchors.has('linux') ? `${baseUrl}#linux` : null,
+      web: existingAnchors.has('web') ? `${baseUrl}#web` : null,
+      tools: existingAnchors.has('tools') ? `${baseUrl}#tools` : null,
+    },
+    status: {
+      url: baseUrl,
+      ok: true,
+      source: 'flutter-docs-release-notes',
+      anchor_verified: true,
+    },
   };
 }
 
@@ -393,19 +592,33 @@ async function run() {
   console.log('\n🕷  Flutter Releases Crawler');
   console.log('━'.repeat(50));
   if (DRY_RUN) console.log('  Mode: DRY RUN (no files will be written)\n');
+  if (VERIFY_ALL_DOWNLOADS) {
+    console.log('  Download verification: full archive audit\n');
+  } else if (VERIFY_RECENT_DOWNLOADS) {
+    console.log(`  Download verification: newest ${VERIFY_DOWNLOAD_LIMIT} releases per appendable channel\n`);
+  }
 
   if (!fs.existsSync(CURATED_PATH)) {
     console.error(`  ✗ Cannot find ${CURATED_PATH}`);
     process.exit(1);
   }
   const existing = JSON.parse(fs.readFileSync(CURATED_PATH, 'utf8'));
-  const existingVersions = new Set((existing.items || []).map(i => i.version));
-  console.log(`  Loaded existing releases: ${existingVersions.size} versions\n`);
+  existing.items = Array.isArray(existing.items) ? existing.items : [];
+  const releaseKey = (channel, version) => `${channel || 'stable'}::${version}`;
+  const existingByReleaseKey = new Map(existing.items.map(i => [releaseKey(i.channel, i.version), i]));
+  const latestByChannel = latestReleaseDateByChannel(existing.items);
+  console.log(`  Loaded existing releases: ${existing.items.length} entries\n`);
 
   const newItems = [];
+  let refreshedCount = 0;
 
-  for (const channel of CHANNELS) {
-    console.log(`📦 Channel: ${channel}`);
+  const channelRuns = [
+    ...CHANNELS.map(channel => ({ channel, allowNew: true })),
+    ...REFRESH_ONLY_CHANNELS.map(channel => ({ channel, allowNew: false })),
+  ];
+
+  for (const { channel, allowNew } of channelRuns) {
+    console.log(`📦 Channel: ${channel}${allowNew ? '' : ' (refresh existing only)'}`);
 
     const archiveMap = await fetchSDKArchive(channel);
     const archiveVersions = Object.keys(archiveMap);
@@ -414,8 +627,31 @@ async function run() {
       archiveMap[b].release_date.localeCompare(archiveMap[a].release_date)
     );
 
-    const newVersions = archiveVersions.filter(v => !existingVersions.has(v));
-    console.log(`  Found ${archiveVersions.length} total, ${newVersions.length} new\n`);
+    const newVersions = [];
+    let skippedHistorical = 0;
+    for (const [archiveIndex, version] of archiveVersions.entries()) {
+      const existingItem = existingByReleaseKey.get(releaseKey(channel, version));
+      if (!existingItem) {
+        const archiveDate = dateValue(archiveMap[version].release_date);
+        const latestKnownDate = latestByChannel.get(channel) || 0;
+        if (allowNew && archiveDate >= latestKnownDate) {
+          newVersions.push(version);
+        } else if (allowNew) {
+          skippedHistorical++;
+        }
+        continue;
+      }
+      const shouldVerifyDownloads = VERIFY_ALL_DOWNLOADS
+        || (VERIFY_RECENT_DOWNLOADS && allowNew && archiveIndex < VERIFY_DOWNLOAD_LIMIT);
+      if (await refreshFromArchive(existingItem, archiveMap[version], channel, shouldVerifyDownloads)) {
+        refreshedCount++;
+      }
+    }
+
+    console.log(`  Found ${archiveVersions.length} total, ${newVersions.length} new, ${refreshedCount} refreshed so far\n`);
+    if (skippedHistorical > 0) {
+      console.log(`  Skipped ${skippedHistorical} older missing archive entr${skippedHistorical === 1 ? 'y' : 'ies'} for ${channel}\n`);
+    }
 
     if (newVersions.length === 0) {
       console.log('  ✓ No new releases to add\n');
@@ -439,16 +675,16 @@ async function run() {
       const ghRelease = await fetchGithubRelease(version);
       const summary = extractSummary(ghRelease?.body || null, version, releaseType);
 
-      // Release notes: only stable has docs.flutter.dev pages.
-      // Beta/dev tags have no dedicated docs page — null them out so the UI
-      // falls back to ref_url (the GitHub tag link) instead.
-      const releaseNotes = channel === 'stable'
-        ? await buildReleaseNotes(version, releaseType)
-        : { base: null, framework: null, material: null, ios: null,
-            android: null, windows: null, linux: null, web: null, tools: null };
-
       // Verified GitHub ref URL (tries bare tag, then v-prefixed)
       const refUrl = await buildRefUrl(version);
+      const releaseNotesResult = channel === 'stable'
+        ? await buildReleaseNotes(version)
+        : {
+            release_notes: { base: null, framework: null, material: null, ios: null,
+              android: null, windows: null, linux: null, web: null, tools: null },
+            status: { url: refUrl, ok: Boolean(refUrl), source: 'github-release-tag', anchor_verified: false },
+          };
+      const downloadStatus = await verifyPlatformUrls(info.platforms);
 
       process.stdout.write(` ✓\n`);
 
@@ -464,10 +700,14 @@ async function run() {
         build: frameworkRevision,
         requires: detectRequirements(version),
         platforms: info.platforms,
-        release_notes: releaseNotes,
+        release_notes: releaseNotesResult.release_notes,
         summary,
         ref_url: refUrl,
-        verified: true,
+        verified: releaseNotesResult.status.ok && allAvailableDownloadsVerified(downloadStatus, info.platforms),
+        link_status: {
+          release_notes: releaseNotesResult.status,
+          downloads: downloadStatus,
+        },
         sources: ['Flutter SDK Archive', 'GitHub Tags'],
       };
 
@@ -488,20 +728,27 @@ async function run() {
     }
   }
 
-  if (newItems.length === 0) {
+  if (newItems.length === 0 && refreshedCount === 0) {
     console.log('✓ releases.json is already up to date. Nothing to do.\n');
     process.exit(0);
   }
 
-  console.log(`\n📝 Adding ${newItems.length} new release(s):`);
-  for (const item of newItems) {
-    console.log(`   + ${item.version} (${item.channel} / ${item.release_type}) — Dart ${item.dart_version}`);
+  if (newItems.length > 0) {
+    console.log(`\n📝 Adding ${newItems.length} new release(s):`);
+    for (const item of newItems) {
+      console.log(`   + ${item.version} (${item.channel} / ${item.release_type}) — Dart ${item.dart_version}`);
+    }
+  }
+  if (refreshedCount > 0) {
+    console.log(`\n🔄 Refreshed metadata for ${refreshedCount} existing release(s) from the SDK archive.`);
   }
 
   if (DRY_RUN) {
     console.log('\n[dry-run] Would write to:', CURATED_PATH);
-    console.log('[dry-run] New entries preview:');
-    console.log(JSON.stringify(newItems[0], null, 2));
+    if (newItems[0]) {
+      console.log('[dry-run] New entries preview:');
+      console.log(JSON.stringify(newItems[0], null, 2));
+    }
     process.exit(0);
   }
 
@@ -528,8 +775,10 @@ async function run() {
       `| | |`,
       `|---|---|`,
       `| New releases found | **${newItems.length}** |`,
+      `| Existing releases refreshed | **${refreshedCount}** |`,
       `| Total releases | **${updatedItems.length}** |`,
       `| Channels crawled | ${CHANNELS.join(', ')} |`,
+      `| Channels refreshed only | ${REFRESH_ONLY_CHANNELS.join(', ') || 'none'} |`,
       '',
       `### New Releases`,
       ...newItems.map(i => `- **Flutter ${i.version}** (${i.channel} / ${i.release_type}) — Dart ${i.dart_version} — Released ${i.released}`),

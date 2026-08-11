@@ -26,6 +26,24 @@ function stableReleases(items) {
   return items.filter(r => r.channel === 'stable' && r.version);
 }
 
+function changelogAnchor(version) {
+  return String(version)
+    .replace(/^v/, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '');
+}
+
+function stableChangelogUrl(version) {
+  return `https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#${changelogAnchor(version)}`;
+}
+
+function isStableFeatureRelease(version) {
+  const clean = String(version).replace(/^v/, '');
+  if (clean.includes('-') || clean.includes('+')) return false;
+  const parts = clean.split('.');
+  return parts.length >= 3 && Number.parseInt(parts[2], 10) === 0;
+}
+
 function assertIncludes(haystack, needle, label) {
   assert.ok(
     haystack.includes(needle),
@@ -45,11 +63,42 @@ const latestStable = latestByChannel(releases, 'stable');
 const latestBeta = latestByChannel(releases, 'beta');
 const latestDev = latestByChannel(releases, 'dev') || latestByChannel(releases, 'main');
 const stable = stableReleases(releases);
+const latestFeatureStable = stable.find(release => isStableFeatureRelease(release.version));
 
 assert.ok(latestStable, 'releases.json must include a stable release');
 assert.ok(latestBeta, 'releases.json must include a beta release');
 assert.ok(latestDev, 'releases.json must include a dev or main release');
 assert.ok(stable.length > 0, 'releases.json must include stable releases');
+assert.ok(latestFeatureStable, 'releases.json must include a stable .0 feature release');
+
+for (const release of stable) {
+  if (isStableFeatureRelease(release.version)) continue;
+  assert.equal(
+    release.release_notes?.base,
+    stableChangelogUrl(release.version),
+    `stable hotfix release notes should point to Flutter changelog for ${release.version}`
+  );
+}
+
+assert.match(
+  latestFeatureStable.release_notes?.base || '',
+  /^https:\/\/docs\.flutter\.dev\/release\/release-notes\/release-notes-/,
+  `stable feature release notes should point to Flutter docs for ${latestFeatureStable.version}`
+);
+assert.equal(
+  latestStable.link_status?.release_notes?.ok,
+  true,
+  `latest stable release notes should be verified for ${latestStable.version}`
+);
+const latestStableDownloads = Object.entries(latestStable.platforms || {}).filter(([, url]) => url);
+assert.ok(latestStableDownloads.length > 0, `latest stable should include download URLs for ${latestStable.version}`);
+for (const [platform] of latestStableDownloads) {
+  assert.equal(
+    latestStable.link_status?.downloads?.[platform],
+    true,
+    `latest stable ${platform} download should be verified for ${latestStable.version}`
+  );
+}
 
 assertIncludes(pageHtml, '<h1>Flutter Versions &amp; Releases</h1>', 'flutter versions page');
 assertIncludes(pageHtml, '<title>Flutter Versions &amp; Releases — Latest Stable Flutter SDK</title>', 'flutter versions page title');

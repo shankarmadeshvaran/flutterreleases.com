@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-08-11T07:13:29.785Z",
+    "generated_at": "2026-08-11T15:40:11.509Z",
     "source": "auto-crawled",
     "count": 402
   },
@@ -11,10 +11,10 @@
       "release_type": "Development",
       "released": "2026-08-11",
       "dart_version": "3.14.0-75.0.dev",
-      "framework_revision": "b5971ca",
+      "framework_revision": "2424070",
       "engine_revision": null,
       "git_tag": null,
-      "build": "b5971ca",
+      "build": "2424070",
       "requires": {
         "macos": "macOS 13.5+",
         "xcode": "Xcode 15.1+",
@@ -39,8 +39,8 @@
         "web": null,
         "tools": null
       },
-      "summary": "Rolling development channel. HEAD at commit b5971ca (2026-08-11).",
-      "ref_url": "https://github.com/flutter/flutter/commit/b5971cabf92bbc126be2a82bc87052af6aeae5a2",
+      "summary": "Rolling development channel. HEAD at commit 2424070 (2026-08-11).",
+      "ref_url": "https://github.com/flutter/flutter/commit/24240702e68311e265718541e01c3639f744bf11",
       "verified": true,
       "sources": [
         "GitHub flutter/flutter main branch",
@@ -71,7 +71,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.9-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3449",
         "framework": null,
         "material": null,
         "ios": null,
@@ -87,7 +87,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3449",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.47.0-0.4.pre",
@@ -129,7 +143,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.47.0-0.3.pre",
@@ -171,7 +193,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.47.0-0.2.pre",
@@ -213,7 +243,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.44.8",
@@ -239,7 +277,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.8-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3448",
         "framework": null,
         "material": null,
         "ios": null,
@@ -255,7 +293,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3448",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.44.7",
@@ -281,7 +333,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.7-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3447",
         "framework": null,
         "material": null,
         "ios": null,
@@ -297,7 +349,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3447",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.47.0-0.1.pre",
@@ -339,7 +405,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.44.6",
@@ -365,7 +439,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.6-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3446",
         "framework": null,
         "material": null,
         "ios": null,
@@ -381,7 +455,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3446",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.44.5",
@@ -407,7 +495,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3445",
         "framework": null,
         "material": null,
         "ios": null,
@@ -423,7 +511,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3445",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.46.0-0.3.pre",
@@ -465,7 +567,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.46.0-0.2.pre",
@@ -507,7 +617,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.44.4",
@@ -533,7 +651,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3444",
         "framework": null,
         "material": null,
         "ios": null,
@@ -549,7 +667,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3444",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.46.0-0.1.pre",
@@ -591,7 +723,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.44.3",
@@ -617,7 +757,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3443",
         "framework": null,
         "material": null,
         "ios": null,
@@ -633,7 +773,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3443",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.44.2",
@@ -659,7 +813,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3442",
         "framework": null,
         "material": null,
         "ios": null,
@@ -675,7 +829,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3442",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.44.1",
@@ -701,7 +869,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3441",
         "framework": null,
         "material": null,
         "ios": null,
@@ -717,7 +885,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3441",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.45.0-0.1.pre",
@@ -759,7 +941,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.44.0-0.3.pre",
@@ -801,7 +991,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.44.0-0.2.pre",
@@ -843,7 +1041,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.44.0-0.1.pre",
@@ -885,7 +1091,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.43.0-0.3.pre",
@@ -927,7 +1141,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.43.0-0.2.pre",
@@ -969,7 +1191,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.43.0-0.1.pre",
@@ -1011,7 +1241,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.42.0-0.4.pre",
@@ -1053,7 +1291,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.42.0-0.3.pre",
@@ -1095,7 +1341,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.42.0-0.1.pre",
@@ -1137,7 +1391,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.42.0-0.0.pre",
@@ -1179,7 +1441,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.41.0-0.3.pre",
@@ -1221,7 +1491,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.41.0-0.2.pre",
@@ -1263,7 +1541,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.41.0-0.1.pre",
@@ -3035,10 +3321,10 @@
       "release_type": "Release",
       "released": "2024-03-13",
       "dart_version": "3.4.0",
-      "framework_revision": "8707a75",
+      "framework_revision": "c398442",
       "engine_revision": null,
       "git_tag": "3.21.0-0.0.pre",
-      "build": "8707a75",
+      "build": "c398442",
       "requires": {
         "macos": "macOS 12+",
         "xcode": "Xcode 14.0+",
@@ -3413,10 +3699,10 @@
       "release_type": "Release",
       "released": "2023-11-29",
       "dart_version": "3.3.0",
-      "framework_revision": "0b591f2",
+      "framework_revision": "12b4727",
       "engine_revision": null,
       "git_tag": "3.17.0-0.0.pre",
-      "build": "0b591f2",
+      "build": "12b4727",
       "requires": {
         "macos": "macOS 12+",
         "xcode": "Xcode 14.0+",
@@ -4127,10 +4413,10 @@
       "release_type": "Release",
       "released": "2023-05-10",
       "dart_version": "3.1.0",
-      "framework_revision": "5965313",
+      "framework_revision": "74e4b09",
       "engine_revision": null,
       "git_tag": "3.11.0-0.0.pre",
-      "build": "5965313",
+      "build": "74e4b09",
       "requires": {
         "macos": "macOS 12+",
         "xcode": "Xcode 14.0+",
@@ -4379,10 +4665,10 @@
       "release_type": "Release",
       "released": "2023-03-16",
       "dart_version": "3.0.0",
-      "framework_revision": "f3d1400",
+      "framework_revision": "f732038",
       "engine_revision": null,
       "git_tag": "3.9.0-0.1.pre",
-      "build": "f3d1400",
+      "build": "f732038",
       "requires": {
         "macos": "macOS 12+",
         "xcode": "Xcode 15.0+",
@@ -9201,7 +9487,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.44.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.41.9",
@@ -9227,7 +9527,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.9-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3419",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9243,7 +9543,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3419",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.41.8",
@@ -9269,7 +9583,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.8-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3418",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9285,7 +9599,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3418",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.41.7",
@@ -9311,7 +9639,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.7-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3417",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9327,7 +9655,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3417",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.41.6",
@@ -9353,7 +9695,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.6-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3416",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9369,7 +9711,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3416",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.41.5",
@@ -9395,7 +9751,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3415",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9411,7 +9767,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3415",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.41.4",
@@ -9437,7 +9807,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3414",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9453,7 +9823,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3414",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.41.3",
@@ -9479,7 +9863,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3413",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9495,7 +9879,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3413",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.41.2",
@@ -9521,7 +9919,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3412",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9537,7 +9935,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3412",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.41.1",
@@ -9563,7 +9975,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3411",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9579,7 +9991,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3411",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.41.0",
@@ -9621,7 +10047,21 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.41.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      }
     },
     {
       "version": "3.38.10",
@@ -9647,7 +10087,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.38.10-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#33810",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9663,7 +10103,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#33810",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.38.9",
@@ -9689,7 +10137,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.38.9-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3389",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9705,7 +10153,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3389",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.38.8",
@@ -9731,7 +10187,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.38.8-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3388",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9747,7 +10203,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3388",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.38.7",
@@ -9773,7 +10237,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.38.7-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3387",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9789,7 +10253,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3387",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.38.6",
@@ -9815,7 +10287,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.38.6-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3386",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9831,7 +10303,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3386",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.38.5",
@@ -9857,7 +10337,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.38.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3385",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9873,7 +10353,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3385",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.38.4",
@@ -9899,7 +10387,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.38.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3384",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9915,7 +10403,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3384",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.38.3",
@@ -9941,7 +10437,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.38.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3383",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9957,7 +10453,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3383",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.38.2",
@@ -9983,7 +10487,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.38.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3382",
         "framework": null,
         "material": null,
         "ios": null,
@@ -9999,7 +10503,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3382",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.38.1",
@@ -10025,7 +10537,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.38.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3381",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10041,7 +10553,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3381",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.38.0",
@@ -10083,7 +10603,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.38.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.35.7",
@@ -10109,7 +10637,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.35.7-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3357",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10125,7 +10653,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3357",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.35.6",
@@ -10151,7 +10687,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.35.6-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3356",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10167,7 +10703,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3356",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.35.5",
@@ -10193,7 +10737,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.35.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3355",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10209,7 +10753,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3355",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.35.4",
@@ -10235,7 +10787,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.35.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3354",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10251,7 +10803,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3354",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.35.3",
@@ -10277,7 +10837,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.35.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3353",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10293,7 +10853,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3353",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.35.2",
@@ -10319,7 +10887,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.35.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3352",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10335,7 +10903,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3352",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.35.1",
@@ -10361,7 +10937,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.35.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3351",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10377,7 +10953,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3351",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.35.0",
@@ -10419,7 +11003,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.35.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.32.8",
@@ -10445,7 +11037,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.32.8-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3328",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10461,7 +11053,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3328",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.32.7",
@@ -10487,7 +11087,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.32.7-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3327",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10503,7 +11103,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3327",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.32.6",
@@ -10529,7 +11137,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.32.6-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3326",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10545,7 +11153,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3326",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.32.5",
@@ -10571,7 +11187,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.32.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3325",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10587,7 +11203,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3325",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.32.4",
@@ -10613,7 +11237,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.32.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3324",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10629,7 +11253,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3324",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.32.3",
@@ -10655,7 +11287,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.32.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3323",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10671,7 +11303,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3323",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.32.2",
@@ -10697,7 +11337,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.32.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3322",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10713,7 +11353,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3322",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.32.1",
@@ -10739,7 +11387,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.32.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3321",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10755,7 +11403,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3321",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.32.0",
@@ -10797,7 +11453,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.32.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.29.3",
@@ -10823,7 +11487,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.29.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.29.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3293",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10839,7 +11503,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3293",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.29.2",
@@ -10865,7 +11537,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.29.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.29.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3292",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10881,7 +11553,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3292",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.29.1",
@@ -10907,7 +11587,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.29.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.29.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3291",
         "framework": null,
         "material": null,
         "ios": null,
@@ -10923,7 +11603,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3291",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.29.0",
@@ -10965,7 +11653,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.29.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.27.4",
@@ -10991,7 +11687,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.27.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3274",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11007,7 +11703,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3274",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.27.3",
@@ -11033,7 +11737,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.27.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3273",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11049,7 +11753,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3273",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.27.2",
@@ -11075,7 +11787,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.27.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3272",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11091,7 +11803,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3272",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.27.1",
@@ -11117,7 +11837,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.27.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3271",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11133,7 +11853,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3271",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.27.0",
@@ -11175,7 +11903,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.27.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.24.5",
@@ -11201,7 +11937,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.24.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3245",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11217,7 +11953,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3245",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.24.4",
@@ -11243,7 +11987,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.24.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3244",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11259,7 +12003,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3244",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.24.3",
@@ -11285,7 +12037,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.24.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3243",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11301,7 +12053,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3243",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.24.2",
@@ -11327,7 +12087,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.24.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3242",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11343,7 +12103,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3242",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.24.1",
@@ -11369,7 +12137,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.24.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3241",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11385,7 +12153,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3241",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.24.0",
@@ -11427,7 +12203,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.24.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.22.3",
@@ -11453,7 +12237,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.22.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3223",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11469,7 +12253,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3223",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.22.2",
@@ -11495,7 +12287,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.22.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3222",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11511,7 +12303,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3222",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.22.1",
@@ -11537,7 +12337,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.22.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3221",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11553,7 +12353,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3221",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.22.0",
@@ -11595,7 +12403,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.22.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.19.6",
@@ -11621,7 +12437,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.19.6-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3196",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11637,7 +12453,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3196",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.19.5",
@@ -11663,7 +12487,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.19.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3195",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11679,7 +12503,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3195",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.19.4",
@@ -11705,7 +12537,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.19.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3194",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11721,7 +12553,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3194",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.19.3",
@@ -11747,7 +12587,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.19.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3193",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11763,7 +12603,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3193",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.19.2",
@@ -11789,7 +12637,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.19.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3192",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11805,7 +12653,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3192",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.19.1",
@@ -11831,7 +12687,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.19.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3191",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11847,7 +12703,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3191",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.19.0",
@@ -11889,7 +12753,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.19.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.16.9",
@@ -11915,7 +12787,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.9-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3169",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11931,7 +12803,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3169",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.16.8",
@@ -11957,7 +12837,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.8-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3168",
         "framework": null,
         "material": null,
         "ios": null,
@@ -11973,7 +12853,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3168",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.16.7",
@@ -11999,7 +12887,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.7-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3167",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12015,7 +12903,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3167",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.16.6",
@@ -12041,7 +12937,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.6-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3166",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12057,7 +12953,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3166",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.16.5",
@@ -12083,7 +12987,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3165",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12099,7 +13003,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3165",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.16.4",
@@ -12125,7 +13037,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3164",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12141,7 +13053,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3164",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.16.3",
@@ -12167,7 +13087,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3163",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12183,7 +13103,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3163",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.16.2",
@@ -12209,7 +13137,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3162",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12225,7 +13153,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3162",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.16.1",
@@ -12251,7 +13187,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3161",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12267,7 +13203,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3161",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.16.0",
@@ -12309,7 +13253,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.16.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.13.9",
@@ -12335,7 +13287,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.9-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3139",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12351,7 +13303,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3139",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.13.8",
@@ -12377,7 +13337,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.8-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3138",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12393,7 +13353,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3138",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.13.7",
@@ -12419,7 +13387,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.7-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3137",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12435,7 +13403,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3137",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.13.6",
@@ -12461,7 +13437,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.6-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3136",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12477,7 +13453,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3136",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.13.5",
@@ -12503,7 +13487,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3135",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12519,7 +13503,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3135",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.13.4",
@@ -12545,7 +13537,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3134",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12561,7 +13553,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3134",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.13.3",
@@ -12569,10 +13569,10 @@
       "release_type": "Hotfix",
       "released": "2023-09-13",
       "dart_version": "3.1.1",
-      "framework_revision": "2524052",
+      "framework_revision": "b0daa73",
       "engine_revision": null,
       "git_tag": "3.13.3",
-      "build": "2524052",
+      "build": "b0daa73",
       "requires": {
         "macos": "macOS 12+",
         "xcode": "Xcode 14.0+",
@@ -12587,7 +13587,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3133",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12603,7 +13603,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3133",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.13.2",
@@ -12629,7 +13637,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3132",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12645,7 +13653,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3132",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.13.1",
@@ -12671,7 +13687,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3131",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12687,7 +13703,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3131",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.13.0",
@@ -12729,7 +13753,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.13.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.10.6",
@@ -12755,7 +13787,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.10.6-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3106",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12771,7 +13803,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3106",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.10.5",
@@ -12797,7 +13837,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.10.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3105",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12813,7 +13853,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3105",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.10.4",
@@ -12839,7 +13887,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.10.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3104",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12855,7 +13903,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3104",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.10.3",
@@ -12881,7 +13937,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.10.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3103",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12897,7 +13953,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3103",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.10.2",
@@ -12923,7 +13987,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.10.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3102",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12939,7 +14003,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3102",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.10.1",
@@ -12965,7 +14037,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.10.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3101",
         "framework": null,
         "material": null,
         "ios": null,
@@ -12981,7 +14053,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3101",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.10.0",
@@ -13023,7 +14103,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.10.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.7.12",
@@ -13049,7 +14137,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.12-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3712",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13065,7 +14153,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3712",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.7.11",
@@ -13091,7 +14187,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.11-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3711",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13107,7 +14203,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3711",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.7.10",
@@ -13133,7 +14237,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.10-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3710",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13149,7 +14253,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3710",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.7.9",
@@ -13175,7 +14287,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.9-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#379",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13191,7 +14303,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#379",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.7.8",
@@ -13217,7 +14337,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.8-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#378",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13233,7 +14353,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#378",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.7.7",
@@ -13259,7 +14387,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.7-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#377",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13275,7 +14403,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#377",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.7.6",
@@ -13301,7 +14437,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.6-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#376",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13317,7 +14453,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#376",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.7.5",
@@ -13343,7 +14487,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#375",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13359,7 +14503,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#375",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.7.4",
@@ -13385,7 +14537,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#374",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13401,7 +14553,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#374",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.7.3",
@@ -13427,7 +14587,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#373",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13443,7 +14603,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#373",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.7.2",
@@ -13469,7 +14637,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#372",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13485,7 +14653,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#372",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.7.1",
@@ -13511,7 +14687,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#371",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13527,7 +14703,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#371",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.7.0",
@@ -13569,7 +14753,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.7.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.3.10",
@@ -13595,7 +14787,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.3.10-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3310",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13611,7 +14803,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3310",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.3.9",
@@ -13637,7 +14837,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.3.9-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#339",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13653,7 +14853,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#339",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.3.8",
@@ -13679,7 +14887,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.3.8-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#338",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13695,7 +14903,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#338",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.3.7",
@@ -13721,7 +14937,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.3.7-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#337",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13737,7 +14953,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#337",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.3.6",
@@ -13763,7 +14987,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.3.6-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#336",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13779,7 +15003,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#336",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.3.5",
@@ -13805,7 +15037,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.3.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#335",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13821,7 +15053,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#335",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.3.4",
@@ -13847,7 +15087,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.3.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#334",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13863,7 +15103,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#334",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.3.3",
@@ -13889,7 +15137,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.3.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#333",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13905,7 +15153,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#333",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.3.2",
@@ -13931,7 +15187,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.3.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#332",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13947,7 +15203,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#332",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.3.1",
@@ -13973,7 +15237,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.3.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#331",
         "framework": null,
         "material": null,
         "ios": null,
@@ -13989,7 +15253,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#331",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.3.0",
@@ -14031,7 +15303,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.3.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.0.5",
@@ -14057,7 +15337,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.0.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.0.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#305",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14073,7 +15353,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#305",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.0.4",
@@ -14099,7 +15387,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.0.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.0.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#304",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14115,7 +15403,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#304",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.0.3",
@@ -14141,7 +15437,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.0.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.0.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#303",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14157,7 +15453,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#303",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.0.2",
@@ -14183,7 +15487,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.0.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.0.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#302",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14199,7 +15503,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#302",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.0.1",
@@ -14225,7 +15537,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.0.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.0.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#301",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14241,7 +15553,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#301",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "3.0.0",
@@ -14283,7 +15603,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.0.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.10.5",
@@ -14309,7 +15637,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.10.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.10.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#2105",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14325,7 +15653,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#2105",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.10.4",
@@ -14351,7 +15687,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.10.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.10.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#2104",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14367,7 +15703,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#2104",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.10.3",
@@ -14393,7 +15737,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.10.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.10.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#2103",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14409,7 +15753,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#2103",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.10.2",
@@ -14435,7 +15787,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.10.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.10.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#2102",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14451,7 +15803,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#2102",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.10.1",
@@ -14477,7 +15837,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.10.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.10.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#2101",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14493,7 +15853,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#2101",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.10.0",
@@ -14535,7 +15903,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-2.10.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.8.1",
@@ -14561,7 +15937,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.8.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.8.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#281",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14577,7 +15953,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#281",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.8.0",
@@ -14619,7 +16003,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-2.8.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.5.3",
@@ -14645,7 +16037,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.5.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.5.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#253",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14661,7 +16053,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#253",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.5.2",
@@ -14687,7 +16087,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.5.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.5.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#252",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14703,7 +16103,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#252",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.5.1",
@@ -14729,7 +16137,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.5.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.5.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#251",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14745,7 +16153,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#251",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.5.0",
@@ -14787,7 +16203,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-2.5.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.2.3",
@@ -14813,7 +16237,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.2.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.2.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#223",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14829,7 +16253,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#223",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.2.2",
@@ -14855,7 +16287,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.2.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.2.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#222",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14871,7 +16303,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#222",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.2.1",
@@ -14897,7 +16337,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.2.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.2.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#221",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14913,7 +16353,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#221",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.2.0",
@@ -14955,7 +16403,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-2.2.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.0.6",
@@ -14981,7 +16437,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.0.6-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.0.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#206",
         "framework": null,
         "material": null,
         "ios": null,
@@ -14997,7 +16453,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#206",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.0.5",
@@ -15023,7 +16487,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.0.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.0.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#205",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15039,7 +16503,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#205",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.0.4",
@@ -15065,7 +16537,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.0.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.0.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#204",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15081,7 +16553,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#204",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.0.3",
@@ -15107,7 +16587,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.0.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.0.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#203",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15123,7 +16603,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#203",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.0.2",
@@ -15149,7 +16637,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.0.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.0.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#202",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15165,7 +16653,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#202",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.0.1",
@@ -15191,7 +16687,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_2.0.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-2.0.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#201",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15207,7 +16703,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#201",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "2.0.0",
@@ -15249,7 +16753,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-2.0.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.22.6",
@@ -15275,7 +16787,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.22.6-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.22.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1226",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15291,7 +16803,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1226",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.22.5",
@@ -15317,7 +16837,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.22.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.22.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1225",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15333,7 +16853,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1225",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.22.4",
@@ -15359,7 +16887,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.22.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.22.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1224",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15375,7 +16903,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1224",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.22.3",
@@ -15401,7 +16937,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.22.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.22.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1223",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15417,7 +16953,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1223",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.22.2",
@@ -15443,7 +16987,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.22.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.22.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1222",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15459,7 +17003,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1222",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.22.1",
@@ -15485,7 +17037,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.22.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.22.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1221",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15501,7 +17053,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1221",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.22.0",
@@ -15543,7 +17103,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-1.22.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.20.4",
@@ -15569,7 +17137,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.20.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.20.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1204",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15585,7 +17153,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1204",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.20.3",
@@ -15611,7 +17187,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.20.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.20.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1203",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15627,7 +17203,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1203",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.20.2",
@@ -15653,7 +17237,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.20.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.20.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1202",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15669,7 +17253,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1202",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.20.1",
@@ -15695,7 +17287,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.20.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.20.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1201",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15711,7 +17303,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1201",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.20.0",
@@ -15753,7 +17353,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-1.20.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.17.5",
@@ -15779,7 +17387,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.17.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.17.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1175",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15795,7 +17403,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1175",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.17.4",
@@ -15821,7 +17437,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.17.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.17.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1174",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15837,7 +17453,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1174",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.17.3",
@@ -15863,7 +17487,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.17.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.17.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1173",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15879,7 +17503,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1173",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.17.2",
@@ -15905,7 +17537,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.17.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.17.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1172",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15921,7 +17553,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1172",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.17.1",
@@ -15947,7 +17587,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_1.17.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": "https://docs.flutter.dev/release/release-notes/release-notes-1.17.0",
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1171",
         "framework": null,
         "material": null,
         "ios": null,
@@ -15963,7 +17603,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#1171",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "1.17.0",
@@ -16005,7 +17653,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-1.17.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        }
+      }
     },
     {
       "version": "v1.12.13+hotfix.9",
@@ -16031,7 +17687,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_v1.12.13+hotfix.9-stable.tar.xz"
       },
       "release_notes": {
-        "base": null,
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#11213hotfix9",
         "framework": null,
         "material": null,
         "ios": null,
@@ -16047,7 +17703,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#11213hotfix9",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": false
+        }
+      }
     },
     {
       "version": "v1.12.13+hotfix.8",
@@ -16073,7 +17737,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_v1.12.13+hotfix.8-stable.tar.xz"
       },
       "release_notes": {
-        "base": null,
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#11213hotfix8",
         "framework": null,
         "material": null,
         "ios": null,
@@ -16089,7 +17753,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#11213hotfix8",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": false
+        }
+      }
     },
     {
       "version": "v1.12.13+hotfix.7",
@@ -16115,7 +17787,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_v1.12.13+hotfix.7-stable.tar.xz"
       },
       "release_notes": {
-        "base": null,
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#11213hotfix7",
         "framework": null,
         "material": null,
         "ios": null,
@@ -16131,7 +17803,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#11213hotfix7",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": false
+        }
+      }
     },
     {
       "version": "v1.12.13+hotfix.5",
@@ -16157,7 +17837,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_v1.12.13+hotfix.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": null,
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#11213hotfix5",
         "framework": null,
         "material": null,
         "ios": null,
@@ -16173,7 +17853,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#11213hotfix5",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": false
+        }
+      }
     },
     {
       "version": "v1.9.1+hotfix.6",
@@ -16199,7 +17887,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_v1.9.1+hotfix.6-stable.tar.xz"
       },
       "release_notes": {
-        "base": null,
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#191hotfix6",
         "framework": null,
         "material": null,
         "ios": null,
@@ -16215,7 +17903,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#191hotfix6",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": false
+        }
+      }
     },
     {
       "version": "v1.9.1+hotfix.5",
@@ -16241,7 +17937,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_v1.9.1+hotfix.5-stable.tar.xz"
       },
       "release_notes": {
-        "base": null,
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#191hotfix5",
         "framework": null,
         "material": null,
         "ios": null,
@@ -16257,7 +17953,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#191hotfix5",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": false
+        }
+      }
     },
     {
       "version": "v1.9.1+hotfix.4",
@@ -16283,7 +17987,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_v1.9.1+hotfix.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": null,
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#191hotfix4",
         "framework": null,
         "material": null,
         "ios": null,
@@ -16299,7 +18003,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#191hotfix4",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": false
+        }
+      }
     },
     {
       "version": "v1.9.1+hotfix.2",
@@ -16325,7 +18037,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_v1.9.1+hotfix.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": null,
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#191hotfix2",
         "framework": null,
         "material": null,
         "ios": null,
@@ -16341,7 +18053,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#191hotfix2",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": false
+        }
+      }
     },
     {
       "version": "v1.7.8+hotfix.4",
@@ -16367,7 +18087,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_v1.7.8+hotfix.4-stable.tar.xz"
       },
       "release_notes": {
-        "base": null,
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#178hotfix4",
         "framework": null,
         "material": null,
         "ios": null,
@@ -16383,7 +18103,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#178hotfix4",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": false
+        }
+      }
     },
     {
       "version": "v1.7.8+hotfix.3",
@@ -16409,7 +18137,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_v1.7.8+hotfix.3-stable.tar.xz"
       },
       "release_notes": {
-        "base": null,
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#178hotfix3",
         "framework": null,
         "material": null,
         "ios": null,
@@ -16425,7 +18153,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#178hotfix3",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": false
+        }
+      }
     },
     {
       "version": "v1.7.8+hotfix.2",
@@ -16451,7 +18187,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_v1.7.8+hotfix.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": null,
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#178hotfix2",
         "framework": null,
         "material": null,
         "ios": null,
@@ -16467,7 +18203,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#178hotfix2",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": false
+        }
+      }
     },
     {
       "version": "v1.5.4-hotfix.2",
@@ -16493,7 +18237,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_v1.5.4-hotfix.2-stable.tar.xz"
       },
       "release_notes": {
-        "base": null,
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#154hotfix2",
         "framework": null,
         "material": null,
         "ios": null,
@@ -16509,7 +18253,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#154hotfix2",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": false
+        }
+      }
     },
     {
       "version": "v1.2.1",
@@ -16535,7 +18287,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_v1.2.1-stable.tar.xz"
       },
       "release_notes": {
-        "base": null,
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#121",
         "framework": null,
         "material": null,
         "ios": null,
@@ -16551,7 +18303,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#121",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": false
+        }
+      }
     },
     {
       "version": "v1.0.0",
@@ -16577,7 +18337,7 @@
         "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_v1.0.0-stable.tar.xz"
       },
       "release_notes": {
-        "base": null,
+        "base": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#100",
         "framework": null,
         "material": null,
         "ios": null,
@@ -16593,7 +18353,15 @@
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
-      ]
+      ],
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#100",
+          "ok": true,
+          "source": "flutter-stable-changelog",
+          "anchor_verified": false
+        }
+      }
     },
     {
       "flutter_version": "3.19.0-0.1.pre",

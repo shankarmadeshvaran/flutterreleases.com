@@ -23,6 +23,7 @@ const SITEMAP_PATH = path.join(OUT_DIR, 'sitemap.xml');
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || null;
 const SITE_URL = process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://flutterreleases.com';
 const CHANNELS = ['stable','beta','dev','main'];
+const STABLE_CHANGELOG_URL = 'https://github.com/flutter/flutter/blob/stable/CHANGELOG.md';
 
 // CLI flags
 const ARGS = process.argv.slice(2);
@@ -63,6 +64,18 @@ function safeWriteAtomic(dst, data) {
   fs.renameSync(tmp, dst);
 }
 
+function readCanonicalReleaseItems() {
+  if (!fs.existsSync(FINAL_PATH)) return [];
+  try {
+    const rawTxt = fs.readFileSync(FINAL_PATH, 'utf8');
+    const parsed = JSON.parse(rawTxt);
+    const items = Array.isArray(parsed?.items) ? parsed.items : (Array.isArray(parsed) ? parsed : []);
+    return items.filter(item => item && (item.version || item.flutter_version));
+  } catch {
+    return [];
+  }
+}
+
 function nowIso(){ return new Date().toISOString(); }
 
 function normalizePlatformKey(k){
@@ -78,6 +91,24 @@ function pushNote(notes, type, title, url){
 function docsAnchorFromVersion(version){
   if(!version) return '';
   return version.replace(/\./g,'-').replace(/\s+/g,'-').toLowerCase();
+}
+
+function changelogAnchor(version) {
+  return String(version)
+    .replace(/^v/, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '');
+}
+
+function stableChangelogUrl(version) {
+  return `${STABLE_CHANGELOG_URL}#${changelogAnchor(version)}`;
+}
+
+function isStableFeatureRelease(version) {
+  const clean = String(version).replace(/^v/, '');
+  if (clean.includes('-') || clean.includes('+')) return false;
+  const parts = clean.split('.');
+  return parts.length >= 3 && Number.parseInt(parts[2], 10) === 0;
 }
 
 // --- RSS helpers ---
@@ -323,6 +354,10 @@ async function enrichItem(item, manifestEntry, channel){
     }
   }catch{ /* ignore github transient errors */ }
 
+  if (channel === 'stable' && !isStableFeatureRelease(item.flutter_version)) {
+    item.notes_url = stableChangelogUrl(item.flutter_version);
+  }
+
   // build notes array
   item.notes = buildNotesArray(item, manifestEntry, githubRelease);
   if(!item.notes_url){
@@ -457,7 +492,7 @@ async function run(){
     }
 
     // enrich all candidates (manifestEntry lookup per-channel)
-    const finalItems = [];
+    let finalItems = [];
     for(const [key,v] of Object.entries(candidatesMap)){
       const [channel, version] = key.split('::');
       const manifestEntry = findManifestEntry(manifests[channel], version) || null;
@@ -472,25 +507,26 @@ async function run(){
 
     // sanity checks
     if(finalItems.length === 0){
-      status.status = 'error'; status.errors.push('No items generated');
-      // write status and keep last good
-      safeWriteAtomic(STATUS_PATH, JSON.stringify(status, null, 2));
-      console.error('Generation failed: no items');
-      if(DRY_RUN) return;
-      process.exit(1);
+      const canonicalItems = readCanonicalReleaseItems();
+      if (canonicalItems.length === 0) {
+        status.status = 'error'; status.errors.push('No items generated and canonical releases.json is empty');
+        safeWriteAtomic(STATUS_PATH, JSON.stringify(status, null, 2));
+        console.error('Generation failed: no items');
+        if(DRY_RUN) return;
+        process.exit(1);
+      }
+
+      finalItems = canonicalItems;
+      status.errors.push('Manifest discovery returned no items; reused canonical releases.json');
+      console.warn(`Manifest discovery returned no items; reusing ${canonicalItems.length} canonical releases.`);
     }
 
     // Determine canonical output: prefer releases.json owned by crawler if present
     let out = { meta: { generated_at: nowIso(), count: finalItems.length }, items: finalItems };
     try {
-      const dataFile = FINAL_PATH;
-      if (fs.existsSync(dataFile)) {
-        const rawTxt = fs.readFileSync(dataFile, 'utf8');
-        const parsed = JSON.parse(rawTxt);
-        const cand = Array.isArray(parsed?.items) ? parsed.items : (Array.isArray(parsed) ? parsed : []);
-        if (cand.length > 0) {
-          out = { meta: { generated_at: nowIso(), count: cand.length }, items: cand };
-        }
+      const cand = readCanonicalReleaseItems();
+      if (cand.length > 0) {
+        out = { meta: { generated_at: nowIso(), count: cand.length }, items: cand };
       }
     } catch { /* ignore if invalid; fall back to generated */ }
     const outStr = JSON.stringify(out, null, 2);
@@ -513,13 +549,8 @@ async function run(){
     try{
       let itemsForFeed = finalItems;
       try{
-        const dataFile = FINAL_PATH;
-        if (fs.existsSync(dataFile)){
-          const rawTxt = fs.readFileSync(dataFile, 'utf8');
-          const parsed = JSON.parse(rawTxt);
-          const cand = Array.isArray(parsed?.items) ? parsed.items : (Array.isArray(parsed) ? parsed : []);
-          if (cand.length > 0) itemsForFeed = cand;
-        }
+        const cand = readCanonicalReleaseItems();
+        if (cand.length > 0) itemsForFeed = cand;
       }catch{ /* ignore and fall back */ }
 
       // Filter to stable + beta only, sort newest-first, limit 50

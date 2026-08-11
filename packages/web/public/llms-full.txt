@@ -2,7 +2,7 @@
 
 > Complete list of all Flutter stable releases with Dart SDK versions, dates, and download links.
 > Source: https://flutterreleases.com/releases.json
-> Updated: 2026-08-10
+> Updated: 2026-08-11
 > Total stable releases: 186
 
 ## Stable Releases

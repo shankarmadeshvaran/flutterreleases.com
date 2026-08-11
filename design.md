@@ -3,6 +3,8 @@
 ## Identity
 Clean, minimal, developer-first release tracker. Feels like a polished tool, not a marketing site.
 
+The product promise is accuracy: official Flutter SDK archive data, verified download links, and release notes routed to the correct source. The UI should feel trustworthy and operational, not promotional.
+
 ## Typography
 - Font: DM Sans (Google Fonts) — clean, modern, highly legible at small sizes
 - Display: DM Sans 700 for version numbers and headings
@@ -18,9 +20,11 @@ Clean, minimal, developer-first release tracker. Feels like a polished tool, not
 - `--border`: #E4E4E7
 - `--text-primary`: #18181B
 - `--text-secondary`: #71717A
-- `--text-muted`: #A1A1AA
+- `--text-muted`: #71717A
 - `--accent`: #0EA5E9  (Flutter-sky — lighter than current blue, fresher)
 - `--accent-hover`: #0284C7
+- `--accent-bg`: #E0F2FE
+- `--row-hover`: #F9FAFB
 
 ### Dark Mode
 - `--bg`: #09090B
@@ -32,6 +36,8 @@ Clean, minimal, developer-first release tracker. Feels like a polished tool, not
 - `--text-muted`: #52525B
 - `--accent`: #38BDF8
 - `--accent-hover`: #7DD3FC
+- `--accent-bg`: #0C4A6E
+- `--row-hover`: #18181B
 
 ### Channel Badge Colors
 - stable: green — bg #DCFCE7, text #166534 / dark: bg #14532D, text #86EFAC
@@ -46,9 +52,9 @@ Clean, minimal, developer-first release tracker. Feels like a polished tool, not
 
 ## Layout
 - Max container width: 1200px, centered, px-6
-- Top nav: sticky, height 56px, subtle border-bottom
-- Hero section: compact, max 640px centered, text-center — subtitle + trust cues
-- Filter bar: channel tabs + search in a single row
+- Top nav: sticky, height 56px, subtle border-bottom, translucent surface with light blur
+- Filter bar: sticky below the nav, channel tabs left and search/count right on desktop; stacked on mobile
+- Hero section: compact, left-aligned, max 2xl text block inside the 1200px container — subtitle + trust cues
 - Table: full-width, dense but breathable, alternating hover, no vertical dividers between cells
 - Sticky table header
 - Footer: minimal, one-line
@@ -65,8 +71,20 @@ Clean, minimal, developer-first release tracker. Feels like a polished tool, not
 - Version badge: monospace font, larger weight
 - Download buttons: small outlined chips grouped together
 - Release notes links: text links, small
-- Pagination: minimal prev/next + page numbers
+- Pagination: minimal icon prev/next + page numbers, fixed 32px square buttons
 - Dark mode toggle: icon-only in header
+- Header brand: Flutter lockup asset plus "Releases" text on larger screens
+- Donate/contact actions: quiet header links; never compete with release data
+- Trust cues: small muted text links under the hero, including "Downloads hosted by Google", "Flutter Versions", and unofficial-resource disclaimer
+
+## Data Presentation
+- Downloads and release-note links must remain visible as normal links, not hidden behind client-only interaction.
+- Verified crawler data should be reflected through reliable link targets first; avoid adding noisy verification badges unless the UI is explicitly expanded for diagnostics.
+- Major stable releases link to official Flutter docs release notes.
+- Stable hotfix/patch releases link to the Flutter stable changelog version anchor.
+- Beta/dev/main releases should not imply stable docs release notes; use GitHub tag, release, or commit links.
+- If a download link is missing, show a quiet dash and keep the row layout stable.
+- If a direct download link fails, keep the existing quiet fallback copy pointing users to Flutter's official archive.
 
 ## Motion
 - Page load: fade-in stagger on table rows (CSS, 0.1s delay per row, max 500ms)
@@ -79,3 +97,6 @@ Clean, minimal, developer-first release tracker. Feels like a polished tool, not
 - No gradient backgrounds on hero
 - No decorative illustrations
 - No Inter or Space Grotesk
+- No marketing-style hero layout or oversized CTA section
+- No unverified release-note shortcuts
+- No badges or alerts that make the table harder to scan

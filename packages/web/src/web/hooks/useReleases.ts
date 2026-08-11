@@ -1,6 +1,26 @@
 import { useState, useEffect, useMemo } from "react";
 import type { Release, Channel } from "../types/release";
 
+const STABLE_CHANGELOG_URL = "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md";
+
+function changelogAnchor(version: string) {
+  return version
+    .replace(/^v/, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "");
+}
+
+function stableChangelogUrl(version: string) {
+  return `${STABLE_CHANGELOG_URL}#${changelogAnchor(version)}`;
+}
+
+function isStableFeatureRelease(version: string) {
+  const clean = version.replace(/^v/, "");
+  if (clean.includes("-") || clean.includes("+")) return false;
+  const parts = clean.split(".");
+  return parts.length >= 3 && Number.parseInt(parts[2], 10) === 0;
+}
+
 // Normalize raw JSON from releases.json (GitHub Actions crawler output)
 // Raw fields: version, channel, release_type, released, dart_version,
 //             requires{macos,xcode,windows,visual_studio,linux},
@@ -12,17 +32,19 @@ function normalizeRelease(raw: any): Release {
   const pl = raw.platforms || raw.download || {};
   const req = raw.requires || {};
   const channel = (raw.channel || "stable") as Channel;
+  const version = raw.version || raw.flutter_version || "—";
 
-  // For stable: use docs.flutter.dev release notes page as the full link.
-  // For beta/main/dev: docs pages belong to the stable release, not the pre-release.
-  //   Use the GitHub tag/commit link instead.
+  // Stable hotfix/patch notes live in Flutter's stable CHANGELOG.md.
+  // Stable .0 releases use docs.flutter.dev. Beta/main/dev use GitHub refs.
   const fullNotesUrl =
     channel === "stable"
-      ? (rn.base || rn.full || raw.ref_url || null)
+      ? (isStableFeatureRelease(version)
+          ? (rn.base || rn.full || raw.ref_url || null)
+          : stableChangelogUrl(version))
       : (raw.ref_url || rn.base || null);
 
   return {
-    version: raw.version || raw.flutter_version || "—",
+    version,
     dartVersion: raw.dart_version || raw.dart || "—",
     channel,
     releaseType: raw.release_type || raw.releaseType || "Release",

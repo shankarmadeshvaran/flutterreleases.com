@@ -109,7 +109,7 @@ export default function HomePage() {
               onPageChange={setPage}
             />
             <div
-              className="px-6 pb-4 text-xs"
+              className="px-6 pt-4 pb-4 text-xs"
               style={{ color: "var(--text-muted)" }}
             >
               If a direct download link doesn't work, check Flutter's{" "}
