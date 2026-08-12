@@ -425,6 +425,8 @@ function buildVersionCheckerPageHtml(items, generatedAt, appAssetTags = '') {
   <title>Flutter &amp; Dart Version Compatibility Checker | FlutterReleases</title>
   <meta name="description" content="Check which Dart SDK version ships with any Flutter release and find Flutter versions compatible with a specific Dart version." />
   <meta name="theme-color" content="#054D8E" />
+  <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
+  <meta name="yandex-verification" content="2b9226ee6947f0c0" />
   <meta property="og:title" content="Flutter &amp; Dart Version Compatibility Checker | FlutterReleases" />
   <meta property="og:description" content="Check which Dart SDK version ships with any Flutter release and find Flutter versions compatible with a specific Dart version." />
   <meta property="og:url" content="${pageUrl}" />
@@ -655,6 +657,8 @@ ${rows}
   <title>Flutter Versions &amp; Releases — Latest Stable Flutter SDK</title>
   <meta name="description" content="See the latest Flutter stable, beta and dev versions, complete Flutter version history, Dart SDK compatibility and release details." />
   <meta name="theme-color" content="#054D8E" />
+  <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
+  <meta name="yandex-verification" content="2b9226ee6947f0c0" />
   <meta property="og:title" content="Flutter Versions &amp; Releases — Latest Stable Flutter SDK" />
   <meta property="og:description" content="See the latest Flutter stable, beta and dev versions, complete Flutter version history, Dart SDK compatibility and release details." />
   <meta property="og:url" content="${pageUrl}" />
@@ -852,6 +856,8 @@ function buildPageHtml(release, items = []) {
   <title>${htmlEscape(title)}</title>
   <meta name="description" content="${htmlEscape(desc)}" />
   <meta name="theme-color" content="#054D8E" />
+  <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
+  <meta name="yandex-verification" content="2b9226ee6947f0c0" />
   <!-- Open Graph -->
   <meta property="og:title" content="${htmlEscape(`Flutter ${version} — ${chLabel} | FlutterReleases`)}" />
   <meta property="og:description" content="${htmlEscape(desc)}" />
@@ -1037,6 +1043,8 @@ function buildLinksHtml(items, generatedAt) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>All Flutter Releases — Complete Index | FlutterReleases</title>
   <meta name="description" content="Complete index of all Flutter SDK releases across stable, beta, dev, and main channels. ${items.length} releases total. Updated ${date}." />
+  <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
+  <meta name="yandex-verification" content="2b9226ee6947f0c0" />
   <link rel="canonical" href="${baseUrl}/links.html" />
   <style>
     body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; line-height: 1.6; }
