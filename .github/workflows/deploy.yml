@@ -58,8 +58,10 @@ jobs:
           SITE_URL: https://flutterreleases.com
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: npm
+          wranglerVersion: "4"
           command: pages deploy packages/web/dist --project-name=flutterreleases --commit-dirty=true
