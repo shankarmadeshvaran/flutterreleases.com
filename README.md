@@ -4,6 +4,14 @@ Browse every Flutter release — version, Dart SDK, channel, downloads, and rele
 
 **Live site:** [flutterreleases.com](https://flutterreleases.com)
 
+## Public URLs
+
+| Page / Tool | URL | What it is for |
+|---|---|---|
+| Flutter Releases | [flutterreleases.com](https://flutterreleases.com) | Browse the latest Flutter releases, Dart SDK versions, channels, downloads, and release notes |
+| Flutter Versions | [flutterreleases.com/flutter-versions/](https://flutterreleases.com/flutter-versions/) | SEO-friendly Flutter version history, latest stable/beta/dev, and Flutter ↔ Dart compatibility |
+| Flutter Version Compatibility Checker | [flutterreleases.com/tools/flutter-version-checker/](https://flutterreleases.com/tools/flutter-version-checker/) | Check which Dart SDK ships with a Flutter version, or which Flutter releases include a Dart version |
+
 ---
 
 ## Stack
@@ -13,7 +21,7 @@ Browse every Flutter release — version, Dart SDK, channel, downloads, and rele
 | Frontend | React 19 + Vite 7 + Tailwind CSS v4 |
 | Routing | Wouter |
 | Build | Bun + Turborepo monorepo |
-| Deploy | Cloudflare Pages (via GitHub Actions) |
+| Deploy | Cloudflare Pages via GitHub Actions and `npx wrangler@4` |
 | Data pipeline | Node.js scripts + GitHub Actions (daily cron) |
 
 ---
@@ -187,7 +195,7 @@ The homepage links to `/flutter-versions/` through normal anchor links in the na
 
 ## Deploy
 
-Push to `main` → `deploy.yml` builds, runs the generator, and deploys automatically.
+Push to `main` → `deploy.yml` builds, runs the generator, and deploys automatically with `npx --yes wrangler@4 pages deploy`.
 
 Because every push to `main` can trigger deployment and release-data workflows, run the deploy-safe checks before committing or pushing:
 
