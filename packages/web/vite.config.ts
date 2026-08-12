@@ -9,9 +9,10 @@ const root = path.resolve(__dirname, "../..");
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, root, '');
 	Object.assign(process.env, env);
+	const gaMeasurementId = env.VITE_GA_MEASUREMENT_ID || process.env.VITE_GA_MEASUREMENT_ID;
 
 	return {
-		plugins: [react(), googleAnalyticsPlugin(env.VITE_GA_MEASUREMENT_ID), tailwind()],
+		plugins: [react(), googleAnalyticsPlugin(gaMeasurementId), tailwind()],
 		resolve: {
 			alias: {
 				"@": path.resolve(__dirname, "./src/web"),
