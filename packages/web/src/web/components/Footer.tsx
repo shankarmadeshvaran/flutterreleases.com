@@ -1,6 +1,6 @@
 import { trackEvent } from "../lib/analytics";
 
-export function Footer({ updatedAt }: { updatedAt?: string }) {
+export function Footer() {
   const trackFooterLink = (
     label: string,
     href: string,
@@ -42,11 +42,6 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
             </a>
             {" "}— Not an official Google website. A free resource for the Flutter community.
           </p>
-          {updatedAt && (
-            <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
-              Last updated: {updatedAt}
-            </p>
-          )}
         </div>
 
         <div className="flex items-center gap-x-4 gap-y-2 text-xs flex-wrap lg:justify-end" style={{ color: "var(--text-muted)" }}>

@@ -152,12 +152,6 @@ export default function FlutterVersionsPage() {
   const prereleaseRows = releases.filter((r) => r.channel !== "stable" && semverGroup(r.version));
   const stableGroups = groupByMajorMinor(stableReleases);
   const prereleaseGroups = groupByMajorMinor(prereleaseRows);
-  const today = new Date().toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-
   return (
     <div
       className="min-h-screen flex flex-col"
@@ -336,7 +330,7 @@ export default function FlutterVersionsPage() {
         </div>
       </main>
 
-      <Footer updatedAt={today} />
+      <Footer />
     </div>
   );
 }

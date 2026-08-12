@@ -82,12 +82,6 @@ export default function HomePage() {
       : `Browse Flutter ${channel} releases with Dart SDK versions, download links, and release notes. Updated daily.`
   );
 
-  const today = new Date().toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-
   return (
     <div
       className="min-h-screen flex flex-col"
@@ -147,7 +141,7 @@ export default function HomePage() {
         )}
       </main>
 
-      <Footer updatedAt={today} />
+      <Footer />
     </div>
   );
 }

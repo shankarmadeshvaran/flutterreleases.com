@@ -316,12 +316,6 @@ export default function FlutterVersionCheckerPage() {
   );
   const stableRows = sortedReleases.filter((release) => release.channel === "stable");
   const prereleaseRows = sortedReleases.filter((release) => release.channel !== "stable");
-  const today = new Date().toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-
   useEffect(() => {
     trackView("/tools/flutter-version-checker/", {
       page_title: "Flutter & Dart Version Compatibility Checker",
@@ -592,7 +586,7 @@ export default function FlutterVersionCheckerPage() {
           )}
         </div>
       </main>
-      <Footer updatedAt={today} />
+      <Footer />
     </div>
   );
 }
