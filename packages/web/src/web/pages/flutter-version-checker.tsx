@@ -157,6 +157,22 @@ function ReleaseSummary({ release }: { release: Release }) {
   );
 }
 
+function CheckerEmptyState({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="rounded-md border p-3"
+      style={{
+        borderColor: "var(--border)",
+        backgroundColor: "var(--bg-subtle)",
+      }}
+    >
+      <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+        {children}
+      </p>
+    </div>
+  );
+}
+
 function ReleaseResults({
   dartVersion,
   releases,
@@ -411,18 +427,26 @@ export default function FlutterVersionCheckerPage() {
                 className="rounded-lg border p-4 md:p-5"
                 style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-surface)" }}
               >
-                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                  <div>
+                <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                  <div className="min-w-0 max-w-3xl">
                     <h2 className="text-lg font-semibold" style={{ color: "var(--text-primary)" }}>
                       Check Flutter and Dart versions
                     </h2>
-                    <p className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
+                    <p className="text-sm mt-1 leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                       Stable releases are shown first by default. Switch to All or prerelease
                       channels when you need beta, dev, or main builds.
                     </p>
                   </div>
                   {latestStable && (
-                    <a href={releaseHref(latestStable)} className="text-sm whitespace-nowrap" style={{ color: "var(--accent)" }}>
+                    <a
+                      href={releaseHref(latestStable)}
+                      className="inline-flex w-fit shrink-0 rounded-md border px-2.5 py-1 text-xs font-medium transition-colors duration-150"
+                      style={{
+                        borderColor: "var(--border)",
+                        backgroundColor: "var(--bg-subtle)",
+                        color: "var(--accent)",
+                      }}
+                    >
                       Latest stable: Flutter {latestStable.version}
                     </a>
                   )}
@@ -456,7 +480,7 @@ export default function FlutterVersionCheckerPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-6 mt-5">
+                <div className="grid grid-cols-1 lg:grid-cols-[minmax(320px,520px)_minmax(0,1fr)] gap-6 mt-5">
                   <div className="space-y-4">
                     <div>
                       <FieldLabel htmlFor="flutter-version-input">Flutter version</FieldLabel>
@@ -528,10 +552,10 @@ export default function FlutterVersionCheckerPage() {
                       selectedFlutterRelease ? (
                         <ReleaseSummary release={selectedFlutterRelease} />
                       ) : (
-                        <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+                        <CheckerEmptyState>
                           Select a Flutter release to see its bundled Dart SDK, channel,
                           release date, release type, and release details link.
-                        </p>
+                        </CheckerEmptyState>
                       )
                     ) : (
                       <ReleaseResults dartVersion={dartQuery} releases={dartMatches} />
