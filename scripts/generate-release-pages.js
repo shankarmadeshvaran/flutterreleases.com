@@ -502,8 +502,7 @@ function buildVersionCheckerPageHtml(items, generatedAt, appAssetTags = '') {
       <div class="links">
         <a href="${SITE_URL}/">Releases</a>
         <a href="${SITE_URL}/flutter-versions/">Flutter Versions</a>
-        <a href="${SITE_URL}/releases.json">JSON API</a>
-        <a href="${SITE_URL}/feed.xml">RSS</a>
+        <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
       </div>
     </nav>
   </header>
@@ -736,8 +735,7 @@ ${rows}
         <div class="links">
           <a href="${SITE_URL}/">Home</a>
           <a href="${SITE_URL}/links.html">All releases</a>
-          <a href="${SITE_URL}/releases.json">releases.json</a>
-          <a href="${SITE_URL}/feed.xml">RSS</a>
+          <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
         </div>
         <button class="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">
           <svg class="moon" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -806,7 +804,7 @@ ${compatibilityRows}
   </main>
   <footer>
     <div>
-      <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/sitemap.xml">Sitemap</a></p>
+        <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/sitemap.xml">Sitemap</a></p>
     </div>
   </footer>
   <script>

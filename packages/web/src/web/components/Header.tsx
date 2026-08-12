@@ -59,8 +59,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
           {[
             { label: "Releases", href: "/" },
             { label: "Flutter Versions", href: "/flutter-versions/" },
-            { label: "JSON API", href: "/releases.json", external: true },
-            { label: "RSS", href: "/feed.xml", external: true },
+            { label: "Compatibility Tool", href: "/tools/flutter-version-checker/" },
             { label: "GitHub", href: "https://github.com/shankarmadeshvaran/flutterreleases.com", external: true },
           ].map((item) => (
             <a

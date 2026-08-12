@@ -86,9 +86,8 @@ export function Hero({ latestStable, latestBeta, loading = false }: HeroProps) {
           </div>
 
           {/* Trust cues */}
-          <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs" style={{ color: "var(--text-muted)" }}>
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs" style={{ color: "var(--text-muted)" }}>
             <span>Downloads hosted by Google</span>
-            <span>·</span>
             <a
               href="/flutter-versions/"
               onClick={() => trackEvent("Navigation Click", {
@@ -101,7 +100,6 @@ export function Hero({ latestStable, latestBeta, loading = false }: HeroProps) {
             >
               Flutter Versions
             </a>
-            <span>·</span>
             <a
               href="/tools/flutter-version-checker/"
               onClick={() => trackEvent("Navigation Click", {
@@ -114,9 +112,7 @@ export function Hero({ latestStable, latestBeta, loading = false }: HeroProps) {
             >
               Compatibility Checker
             </a>
-            <span>·</span>
             <span>Not an official Google resource</span>
-            <span>·</span>
             <span>Free for the Flutter community</span>
           </div>
         </div>
