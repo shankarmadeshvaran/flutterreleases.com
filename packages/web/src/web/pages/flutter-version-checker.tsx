@@ -76,10 +76,11 @@ function TextInput({
       type="text"
       value={value}
       onChange={(event) => onChange(event.target.value)}
+      onInput={(event) => onChange(event.currentTarget.value)}
       placeholder={placeholder}
       aria-label={placeholder}
       list={list}
-      className="w-full rounded-md border px-3 py-2 text-sm outline-none transition-colors duration-150"
+      className="w-full rounded-md border px-3 py-1.5 text-sm outline-none transition-colors duration-150"
       style={{
         backgroundColor: "var(--bg-surface)",
         borderColor: "var(--border)",
@@ -157,22 +158,6 @@ function ReleaseSummary({ release }: { release: Release }) {
   );
 }
 
-function CheckerEmptyState({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      className="rounded-md border p-3"
-      style={{
-        borderColor: "var(--border)",
-        backgroundColor: "var(--bg-subtle)",
-      }}
-    >
-      <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
-        {children}
-      </p>
-    </div>
-  );
-}
-
 function ReleaseResults({
   dartVersion,
   releases,
@@ -243,24 +228,47 @@ function ReleaseResults({
 function CompatibilityResult({
   flutterVersion,
   dartVersion,
-  releases,
+  result,
 }: {
   flutterVersion: string;
   dartVersion: string;
-  releases: Release[];
+  result: ReturnType<typeof checkFlutterDartCompatibility>;
 }) {
-  if (!flutterVersion.trim() || !dartVersion.trim()) return null;
+  const tone = result.compatible
+    ? {
+        borderColor: "var(--stable-text)",
+        backgroundColor: "var(--stable-bg)",
+        color: "var(--stable-text)",
+        label: "Compatible",
+      }
+    : {
+        borderColor: "var(--hotfix-text)",
+        backgroundColor: "var(--hotfix-bg)",
+        color: "var(--hotfix-text)",
+        label: "Not compatible",
+      };
 
-  const result = checkFlutterDartCompatibility(releases, flutterVersion, dartVersion);
   return (
     <section
-      className="rounded-lg border p-4"
-      style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-surface)" }}
+      className="rounded-lg border p-4 transition-all duration-300 animate-in fade-in zoom-in-95"
+      style={{
+        borderColor: tone.borderColor,
+        backgroundColor: "var(--bg-surface)",
+        boxShadow: `0 0 0 1px ${tone.borderColor}`,
+      }}
       aria-live="polite"
     >
-      <h2 className="text-lg font-semibold" style={{ color: "var(--text-primary)" }}>
-        Compatibility result
-      </h2>
+      <div className="flex flex-wrap items-center gap-2">
+        <span
+          className="rounded-full px-2.5 py-1 text-xs font-semibold"
+          style={{ backgroundColor: tone.backgroundColor, color: tone.color }}
+        >
+          {tone.label}
+        </span>
+        <h2 className="text-lg font-semibold" style={{ color: "var(--text-primary)" }}>
+          Compatibility result
+        </h2>
+      </div>
       <p className="text-sm mt-2" style={{ color: "var(--text-secondary)" }}>
         {result.compatible
           ? `Compatible: Flutter ${flutterVersion} ships with Dart ${dartVersion}.`
@@ -332,6 +340,26 @@ export default function FlutterVersionCheckerPage() {
   );
   const stableRows = sortedReleases.filter((release) => release.channel === "stable");
   const prereleaseRows = sortedReleases.filter((release) => release.channel !== "stable");
+  const trimmedFlutterQuery = flutterQuery.trim();
+  const trimmedDartQuery = dartQuery.trim();
+  const compatibilityResult = useMemo(() => {
+    if (!trimmedFlutterQuery || !trimmedDartQuery) return undefined;
+    return checkFlutterDartCompatibility(releases, trimmedFlutterQuery, trimmedDartQuery);
+  }, [releases, trimmedDartQuery, trimmedFlutterQuery]);
+  const compatibilityResultKey = compatibilityResult
+    ? [
+        trimmedFlutterQuery,
+        trimmedDartQuery,
+        compatibilityResult.bundledDartVersion || "none",
+        compatibilityResult.compatible ? "yes" : "no",
+        compatibilityResult.dartReleases.length,
+      ].join(":")
+    : "";
+  const hasCompatibilityInput = Boolean(compatibilityResult);
+  const hasLookupResult =
+    mode === "flutter-to-dart" ? Boolean(selectedFlutterRelease) : Boolean(dartQuery.trim());
+  const showResultPanel = hasLookupResult || hasCompatibilityInput;
+
   useEffect(() => {
     trackView("/tools/flutter-version-checker/", {
       page_title: "Flutter & Dart Version Compatibility Checker",
@@ -372,21 +400,19 @@ export default function FlutterVersionCheckerPage() {
   }, [dartMatches, dartQuery, mode]);
 
   useEffect(() => {
-    if (!flutterQuery.trim() || !dartQuery.trim()) return;
-    const result = checkFlutterDartCompatibility(releases, flutterQuery, dartQuery);
-    if (!result.flutterRelease) return;
-    const key = `${flutterQuery}:${dartQuery}:${result.compatible}`;
+    if (!compatibilityResult?.flutterRelease) return;
+    const key = compatibilityResultKey;
     if (trackedCompatibility.current === key) return;
     trackedCompatibility.current = key;
     trackEvent("Version Checker Compatibility Check", {
-      flutter_version: flutterQuery,
-      dart_version: dartQuery,
-      bundled_dart_version: result.bundledDartVersion,
-      compatible: result.compatible,
-      matching_flutter_count: result.dartReleases.length,
-      channel: result.flutterRelease.channel,
+      flutter_version: trimmedFlutterQuery,
+      dart_version: trimmedDartQuery,
+      bundled_dart_version: compatibilityResult.bundledDartVersion,
+      compatible: compatibilityResult.compatible,
+      matching_flutter_count: compatibilityResult.dartReleases.length,
+      channel: compatibilityResult.flutterRelease.channel,
     });
-  }, [dartQuery, flutterQuery, releases]);
+  }, [compatibilityResult, compatibilityResultKey, trimmedDartQuery, trimmedFlutterQuery]);
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg)" }}>
@@ -467,7 +493,7 @@ export default function FlutterVersionCheckerPage() {
                           setMode(item.value);
                           trackEvent("Version Checker Mode Changed", { mode: item.value });
                         }}
-                        className="rounded-md px-3 py-1.5 text-sm font-medium transition-colors duration-150"
+                        className="rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors duration-150"
                         style={
                           mode === item.value
                             ? { backgroundColor: "var(--accent)", color: "#fff" }
@@ -480,9 +506,15 @@ export default function FlutterVersionCheckerPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-[minmax(320px,520px)_minmax(0,1fr)] gap-6 mt-5">
-                  <div className="space-y-4">
-                    <div>
+                <div
+                  className={
+                    showResultPanel
+                      ? "grid grid-cols-1 lg:grid-cols-[minmax(280px,420px)_minmax(0,1fr)] gap-6 mt-5"
+                      : "grid grid-cols-1 gap-6 mt-5 max-w-[420px]"
+                  }
+                >
+                  <div className="space-y-5">
+                    <div className="max-w-[420px]">
                       <FieldLabel htmlFor="flutter-version-input">Flutter version</FieldLabel>
                       <TextInput
                         id="flutter-version-input"
@@ -500,7 +532,7 @@ export default function FlutterVersionCheckerPage() {
                       </datalist>
                     </div>
 
-                    <div>
+                    <div className="pt-1">
                       <p className="text-xs font-medium mb-2" style={{ color: "var(--text-muted)" }}>
                         Channel filter
                       </p>
@@ -528,7 +560,7 @@ export default function FlutterVersionCheckerPage() {
                       </div>
                     </div>
 
-                    <div>
+                    <div className="max-w-[420px]">
                       <FieldLabel htmlFor="dart-version-input">Dart SDK version</FieldLabel>
                       <TextInput
                         id="dart-version-input"
@@ -547,25 +579,28 @@ export default function FlutterVersionCheckerPage() {
                     </div>
                   </div>
 
-                  <div className="space-y-4">
-                    {mode === "flutter-to-dart" ? (
-                      selectedFlutterRelease ? (
-                        <ReleaseSummary release={selectedFlutterRelease} />
+                  {showResultPanel && (
+                    <div className="space-y-4">
+                      {mode === "flutter-to-dart" ? (
+                        selectedFlutterRelease && (
+                          <ReleaseSummary
+                            key={`${selectedFlutterRelease.version}:${selectedFlutterRelease.channel}`}
+                            release={selectedFlutterRelease}
+                          />
+                        )
                       ) : (
-                        <CheckerEmptyState>
-                          Select a Flutter release to see its bundled Dart SDK, channel,
-                          release date, release type, and release details link.
-                        </CheckerEmptyState>
-                      )
-                    ) : (
-                      <ReleaseResults dartVersion={dartQuery} releases={dartMatches} />
-                    )}
-                    <CompatibilityResult
-                      flutterVersion={flutterQuery}
-                      dartVersion={dartQuery}
-                      releases={releases}
-                    />
-                  </div>
+                        <ReleaseResults dartVersion={dartQuery} releases={dartMatches} />
+                      )}
+                      {compatibilityResult && (
+                        <CompatibilityResult
+                          key={compatibilityResultKey}
+                          flutterVersion={trimmedFlutterQuery}
+                          dartVersion={trimmedDartQuery}
+                          result={compatibilityResult}
+                        />
+                      )}
+                    </div>
+                  )}
                 </div>
               </section>
 
