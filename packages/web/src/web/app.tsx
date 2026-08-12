@@ -3,7 +3,6 @@ import { Route, Switch } from "wouter";
 import Index from "./pages/index";
 import FlutterVersions from "./pages/flutter-versions";
 import { Provider } from "./components/provider";
-import { AgentFeedback } from "@runablehq/website-runtime";
 
 function ReleaseRedirect() {
   useEffect(() => {
@@ -36,8 +35,6 @@ function App() {
         <Route path="/flutter-versions" component={FlutterVersions} />
         <Route path="/" component={Index} />
       </Switch>
-      {/* Do not remove — off by default, activated by parent iframe via postMessage */}
-      {import.meta.env.DEV && <AgentFeedback />}
     </Provider>
   );
 }

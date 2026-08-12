@@ -1,4 +1,5 @@
 import { Moon, Sun, Heart } from "lucide-react";
+import { trackEvent } from "../lib/analytics";
 
 interface HeaderProps {
   dark: boolean;
@@ -17,7 +18,17 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
     >
       <div className="max-w-[1200px] mx-auto px-6 h-14 flex items-center justify-between">
         {/* Flutter brand logo — light/dark variants from official assets */}
-        <a href="/" className="flex items-center no-underline">
+        <a
+          href="/"
+          className="flex items-center no-underline"
+          onClick={() =>
+            trackEvent("Navigation Click", {
+              label: "Brand",
+              href: "/",
+              location: "header",
+            })
+          }
+        >
           {dark ? (
             <img
               src="/lockup_flutter_horizontal_wht.svg"
@@ -57,6 +68,14 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
               href={item.href}
               target={item.external ? "_blank" : undefined}
               rel={item.external ? "noopener noreferrer" : undefined}
+              onClick={() =>
+                trackEvent("Navigation Click", {
+                  label: item.label,
+                  href: item.href,
+                  external: Boolean(item.external),
+                  location: "header",
+                })
+              }
               className="px-3 py-1.5 rounded-md text-sm transition-colors duration-150"
               style={{ color: "var(--text-secondary)" }}
               onMouseEnter={(e) =>
@@ -74,6 +93,13 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
             href="https://x.com/devinmaking"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() =>
+              trackEvent("Outbound Click", {
+                label: "Contact",
+                href: "https://x.com/devinmaking",
+                location: "header",
+              })
+            }
             className="px-3 py-1.5 rounded-md text-sm transition-colors duration-150 inline-flex items-center gap-1.5"
             style={{ color: "var(--text-secondary)" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
@@ -92,6 +118,13 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
             href="https://buymeacoffee.com/shankarmadeshvaran"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() =>
+              trackEvent("Outbound Click", {
+                label: "Donate",
+                href: "https://buymeacoffee.com/shankarmadeshvaran",
+                location: "header",
+              })
+            }
             className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium border transition-colors duration-150"
             style={{
               borderColor: "var(--border)",
@@ -111,7 +144,10 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
             Donate
           </a>
           <button
-            onClick={onToggleDark}
+            onClick={() => {
+              trackEvent("Theme Toggle", { next_theme: dark ? "light" : "dark" });
+              onToggleDark();
+            }}
             className="w-9 h-9 flex items-center justify-center rounded-md border transition-colors duration-150"
             style={{
               borderColor: "var(--border)",

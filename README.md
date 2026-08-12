@@ -45,7 +45,7 @@ packages/
     vite.config.ts
     vite/
       plugins/
-        runable-analytics-plugin.ts  ← Injects analytics script tag at build time
+        google-analytics-plugin.ts   ← Injects GA4 script when VITE_GA_MEASUREMENT_ID is set
     src/web/
       main.tsx
       app.tsx
@@ -66,6 +66,7 @@ packages/
         useMeta.ts
         use-desktop.ts
       lib/
+        analytics.ts            ← Safe wrapper around the injected GA4 runtime
         api.ts
         utils.ts
       types/
@@ -110,6 +111,8 @@ node scripts/generate-release-pages.js   # Post-build: generate per-release page
 ## Data Pipeline
 
 Crawler-specific rules and validation steps live in [docs/crawler.md](docs/crawler.md). Read that guide before changing release discovery, release-note URLs, download verification, or generated release data.
+
+Analytics events and community research notes live in [docs/analytics-and-community-research.md](docs/analytics-and-community-research.md). Read that guide before adding product analytics, new tracked properties, or community-research driven roadmap items.
 
 | Step | Trigger | What it does |
 |---|---|---|
@@ -182,6 +185,14 @@ Push to `main` → `deploy.yml` builds, runs the generator, and deploys automati
 | `CLOUDFLARE_API_TOKEN` | Cloudflare → My Profile → API Tokens → Create Token (Pages:Edit) |
 | `CLOUDFLARE_ACCOUNT_ID` | Cloudflare → Workers & Pages overview → right sidebar |
 | `SITE_URL` | Set to `https://flutterreleases.com` (used by generator for sitemap URLs) |
+
+### Optional Analytics Env
+
+| Variable | Purpose |
+|---|---|
+| `VITE_GA_MEASUREMENT_ID` | GA4 web stream measurement ID such as `G-XXXXXXXXXX`; when omitted, no analytics script is injected |
+
+GA4 custom events are documented in [docs/analytics-and-community-research.md](docs/analytics-and-community-research.md). Register useful event parameters such as `version`, `channel`, `platform`, `location`, `label`, `href`, and `result_count` as custom dimensions in GA4 if you want to use them in reports and explorations.
 
 ### Cloudflare Pages project (one-time setup)
 

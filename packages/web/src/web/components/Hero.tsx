@@ -1,4 +1,5 @@
 import type { Release } from "../types/release";
+import { trackEvent } from "../lib/analytics";
 
 interface HeroProps {
   latestStable: Release | undefined;
@@ -28,6 +29,10 @@ export function Hero({ latestStable, latestBeta }: HeroProps) {
             {latestStable && (
               <a
                 href={`/release/${latestStable.version}/`}
+                onClick={() => trackEvent("Hero Latest Click", {
+                  version: latestStable.version,
+                  channel: latestStable.channel,
+                })}
                 className="flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs transition-opacity hover:opacity-70"
                 style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-subtle)", textDecoration: "none" }}
               >
@@ -44,6 +49,10 @@ export function Hero({ latestStable, latestBeta }: HeroProps) {
             {latestBeta && (
               <a
                 href={`/release/${latestBeta.version}/`}
+                onClick={() => trackEvent("Hero Latest Click", {
+                  version: latestBeta.version,
+                  channel: latestBeta.channel,
+                })}
                 className="flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs transition-opacity hover:opacity-70"
                 style={{ borderColor: "var(--border)", backgroundColor: "var(--bg-subtle)", textDecoration: "none" }}
               >
@@ -65,6 +74,11 @@ export function Hero({ latestStable, latestBeta }: HeroProps) {
             <span>·</span>
             <a
               href="/flutter-versions/"
+              onClick={() => trackEvent("Navigation Click", {
+                label: "Flutter Versions",
+                href: "/flutter-versions/",
+                location: "hero_trust_cue",
+              })}
               className="transition-colors duration-150"
               style={{ color: "var(--accent)" }}
             >

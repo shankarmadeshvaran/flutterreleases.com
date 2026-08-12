@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useReleases, useFilteredReleases } from "../hooks/useReleases";
 import { useDarkMode } from "../hooks/useDarkMode";
 import { useMeta } from "../hooks/useMeta";
@@ -9,6 +9,7 @@ import { ReleaseTable } from "../components/ReleaseTable";
 import { Pagination } from "../components/Pagination";
 import { Footer } from "../components/Footer";
 import type { Channel } from "../types/release";
+import { trackEvent, trackView } from "../lib/analytics";
 
 const PER_PAGE = 10;
 
@@ -33,6 +34,7 @@ export default function HomePage() {
   );
 
   const handleChannelChange = (c: Channel | "all") => {
+    trackEvent("Filter Changed", { channel: c });
     setChannel(c);
     setPage(1);
   };
@@ -44,6 +46,28 @@ export default function HomePage() {
 
   const latestStable = releases.find((r) => r.channel === "stable");
   const latestBeta = releases.find((r) => r.channel === "beta");
+
+  useEffect(() => {
+    if (!selectedVersion) return;
+    trackView(`/release/${selectedVersion}/`, {
+      source: "spa_query",
+      version: selectedVersion,
+    });
+    trackEvent("Release Deep Link Viewed", { version: selectedVersion });
+  }, [selectedVersion]);
+
+  useEffect(() => {
+    const query = search.trim();
+    if (!query) return;
+    const timer = window.setTimeout(() => {
+      trackEvent("Release Search", {
+        query: query.slice(0, 80),
+        length: query.length,
+        result_count: total,
+      });
+    }, 700);
+    return () => window.clearTimeout(timer);
+  }, [search, total]);
 
   const channelLabel =
     channel === "all"
@@ -117,6 +141,7 @@ export default function HomePage() {
                 href="https://docs.flutter.dev/release/archive"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent("Official Archive Click", { location: "home_table_fallback" })}
                 style={{ color: "var(--accent)" }}
               >
                 official release archive

@@ -1,8 +1,8 @@
 {
-    "id": "website",
-    "name": "Runable",
-    "description": "A template for building a React application with Vite, Hono, and Cloudflare Workers",
-    "url": "https://example.com",
-    "hostname": "xyz.runable.site",
+    "id": "flutterreleases",
+    "name": "FlutterReleases",
+    "description": "Flutter SDK release history, Dart SDK compatibility, downloads, and release notes.",
+    "url": "https://flutterreleases.com",
+    "hostname": "flutterreleases.com",
     "port": 8080
 }

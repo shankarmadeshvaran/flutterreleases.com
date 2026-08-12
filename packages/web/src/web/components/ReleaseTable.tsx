@@ -2,6 +2,7 @@ import { ExternalLink, Download, ChevronDown, ChevronUp } from "lucide-react";
 import { Fragment, useEffect, useState } from "react";
 import type { Release } from "../types/release";
 import { ChannelBadge, ReleaseTypeBadge } from "./ChannelBadge";
+import { trackEvent } from "../lib/analytics";
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString("en-GB", {
@@ -11,7 +12,8 @@ function formatDate(dateStr: string) {
   });
 }
 
-function DownloadChips({ downloads }: { downloads: Release["downloads"] }) {
+function DownloadChips({ release }: { release: Release }) {
+  const downloads = release.downloads;
   const items: { label: string; url: string | null }[] = [
     { label: "macOS arm64", url: downloads.macosArm64 },
     { label: "macOS x64", url: downloads.macosX64 },
@@ -28,7 +30,15 @@ function DownloadChips({ downloads }: { downloads: Release["downloads"] }) {
           href={item.url!}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            e.stopPropagation();
+            trackEvent("Download Click", {
+              version: release.version,
+              channel: release.channel,
+              platform: item.label,
+              location: "expanded_row",
+            });
+          }}
           className="inline-flex items-center gap-1 px-2 py-0.5 rounded border text-xs transition-colors duration-150"
           style={{
             borderColor: "var(--border)",
@@ -52,7 +62,8 @@ function DownloadChips({ downloads }: { downloads: Release["downloads"] }) {
   );
 }
 
-function ReleaseNoteLinks({ notes }: { notes: Release["releaseNotes"] }) {
+function ReleaseNoteLinks({ release, location }: { release: Release; location: string }) {
+  const notes = release.releaseNotes;
   const items: { label: string; url: string | null }[] = [
     { label: "Full Notes", url: notes.full },
     { label: "Framework", url: notes.framework },
@@ -73,7 +84,15 @@ function ReleaseNoteLinks({ notes }: { notes: Release["releaseNotes"] }) {
           href={item.url!}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            e.stopPropagation();
+            trackEvent("Release Notes Click", {
+              version: release.version,
+              channel: release.channel,
+              type: item.label,
+              location,
+            });
+          }}
           className="inline-flex items-center gap-1 text-xs transition-colors duration-150"
           style={{ color: "var(--accent)" }}
           onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent-hover)")}
@@ -132,13 +151,13 @@ function ExpandedRow({ release }: { release: Release }) {
             <p className="text-xs font-medium mb-2" style={{ color: "var(--text-muted)" }}>
               Downloads
             </p>
-            <DownloadChips downloads={release.downloads} />
+            <DownloadChips release={release} />
           </div>
           <div>
             <p className="text-xs font-medium mb-2" style={{ color: "var(--text-muted)" }}>
               Release Notes
             </p>
-            <ReleaseNoteLinks notes={release.releaseNotes} />
+            <ReleaseNoteLinks release={release} location="expanded_row" />
           </div>
         </div>
         <div className="mt-4 pt-3" style={{ borderTop: "1px solid var(--border)" }}>
@@ -147,6 +166,12 @@ function ExpandedRow({ release }: { release: Release }) {
               href={fullNotesUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("Release Notes Click", {
+                version: release.version,
+                channel: release.channel,
+                type: "Open release notes",
+                location: "expanded_row_footer",
+              })}
               className="inline-flex items-center gap-1 text-xs transition-colors duration-150"
               style={{ color: "var(--accent)" }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent-hover)")}
@@ -182,7 +207,11 @@ export function ReleaseTable({ releases, selectedVersion }: ReleaseTableProps) {
   }, [selectedVersion]);
 
   const toggle = (version: string) =>
-    setExpanded((prev) => (prev === version ? null : version));
+    setExpanded((prev) => {
+      const next = prev === version ? null : version;
+      trackEvent(next ? "Release Expanded" : "Release Collapsed", { version });
+      return next;
+    });
 
   if (releases.length === 0) {
     return (
@@ -243,7 +272,14 @@ export function ReleaseTable({ releases, selectedVersion }: ReleaseTableProps) {
                       {/* Flutter pill — links to per-release page */}
                       <a
                         href={`/release/${release.version}/`}
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          trackEvent("Release Page Click", {
+                            version: release.version,
+                            channel: release.channel,
+                            location: "version_pill",
+                          });
+                        }}
                         title={`Flutter ${release.version} release details`}
                         className="w-fit"
                       >
@@ -295,7 +331,15 @@ export function ReleaseTable({ releases, selectedVersion }: ReleaseTableProps) {
                           href={release.downloads.macosArm64}
                           target="_blank"
                           rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            trackEvent("Download Click", {
+                              version: release.version,
+                              channel: release.channel,
+                              platform: "macOS arm64",
+                              location: "table_row",
+                            });
+                          }}
                           className="inline-flex items-center gap-1 px-2 py-0.5 rounded border text-xs transition-colors duration-150"
                           style={{ borderColor: "var(--border)", color: "var(--text-secondary)" }}
                           onMouseEnter={(e) => { e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.color = "var(--accent)"; }}
@@ -309,7 +353,15 @@ export function ReleaseTable({ releases, selectedVersion }: ReleaseTableProps) {
                           href={release.downloads.windowsX64}
                           target="_blank"
                           rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            trackEvent("Download Click", {
+                              version: release.version,
+                              channel: release.channel,
+                              platform: "Windows x64",
+                              location: "table_row",
+                            });
+                          }}
                           className="inline-flex items-center gap-1 px-2 py-0.5 rounded border text-xs transition-colors duration-150"
                           style={{ borderColor: "var(--border)", color: "var(--text-secondary)" }}
                           onMouseEnter={(e) => { e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.color = "var(--accent)"; }}
@@ -323,7 +375,15 @@ export function ReleaseTable({ releases, selectedVersion }: ReleaseTableProps) {
                           href={release.downloads.linuxX64}
                           target="_blank"
                           rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            trackEvent("Download Click", {
+                              version: release.version,
+                              channel: release.channel,
+                              platform: "Linux x64",
+                              location: "table_row",
+                            });
+                          }}
                           className="inline-flex items-center gap-1 px-2 py-0.5 rounded border text-xs transition-colors duration-150"
                           style={{ borderColor: "var(--border)", color: "var(--text-secondary)" }}
                           onMouseEnter={(e) => { e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.color = "var(--accent)"; }}
@@ -345,7 +405,15 @@ export function ReleaseTable({ releases, selectedVersion }: ReleaseTableProps) {
                         href={release.releaseNotes.full}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          trackEvent("Release Notes Click", {
+                            version: release.version,
+                            channel: release.channel,
+                            type: "Full Notes",
+                            location: "table_row",
+                          });
+                        }}
                         className="inline-flex items-center gap-1 text-xs transition-colors duration-150"
                         style={{ color: "var(--accent)" }}
                         onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent-hover)")}

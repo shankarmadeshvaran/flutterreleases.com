@@ -1,4 +1,5 @@
 import { Search, X } from "lucide-react";
+import { trackEvent } from "../lib/analytics";
 import type { Channel } from "../types/release";
 
 const CHANNELS: { label: string; value: Channel | "all" }[] = [
@@ -74,6 +75,7 @@ export function FilterBar({
               type="text"
               value={search}
               onChange={(e) => onSearchChange(e.target.value)}
+              aria-label="Search Flutter releases"
               placeholder="Search version, dart, channel…"
               className="w-full pl-8 pr-8 py-1.5 rounded-md text-sm border outline-none transition-colors duration-150"
               style={{
@@ -90,12 +92,20 @@ export function FilterBar({
             />
             {search && (
               <button
-                onClick={() => onSearchChange("")}
+                type="button"
+                onClick={() => {
+                  trackEvent("Search Cleared", {
+                    query_length: search.trim().length,
+                    result_count: total,
+                  });
+                  onSearchChange("");
+                }}
                 aria-label="Clear search"
                 className="absolute right-2.5"
                 style={{ color: "var(--text-muted)" }}
               >
                 <X size={13} />
+                <span className="sr-only">Clear search</span>
               </button>
             )}
           </div>

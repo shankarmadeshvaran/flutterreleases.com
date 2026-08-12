@@ -5,6 +5,7 @@ import { ChannelBadge } from "../components/ChannelBadge";
 import { useDarkMode } from "../hooks/useDarkMode";
 import { useMeta } from "../hooks/useMeta";
 import { useReleases } from "../hooks/useReleases";
+import { trackEvent } from "../lib/analytics";
 import type { Release } from "../types/release";
 
 const TITLE = "Flutter Versions & Releases — Latest Stable Flutter SDK";
@@ -70,6 +71,13 @@ function LatestReleaseCard({
         backgroundColor: "var(--bg-surface)",
         textDecoration: "none",
       }}
+      onClick={() =>
+        trackEvent("Versions Hub Latest Click", {
+          label: title,
+          version: release.version,
+          channel: release.channel,
+        })
+      }
       onMouseEnter={(e) => (e.currentTarget.style.borderColor = "var(--accent)")}
       onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--border)")}
     >
@@ -105,6 +113,13 @@ function ReleaseRow({ release }: { release: Release }) {
       <td className="px-4 py-3">
         <a
           href={`/release/${release.version}/`}
+          onClick={() =>
+            trackEvent("Versions Hub Release Click", {
+              version: release.version,
+              channel: release.channel,
+              series: semverGroup(release.version) ?? "unknown",
+            })
+          }
           className="mono text-sm font-medium transition-colors duration-150"
           style={{ color: "var(--accent)" }}
         >

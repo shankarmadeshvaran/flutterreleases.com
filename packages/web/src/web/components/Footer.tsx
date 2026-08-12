@@ -1,4 +1,19 @@
+import { trackEvent } from "../lib/analytics";
+
 export function Footer({ updatedAt }: { updatedAt?: string }) {
+  const trackFooterLink = (
+    label: string,
+    href: string,
+    external = false,
+  ) => {
+    trackEvent(external ? "Outbound Click" : "Navigation Click", {
+      label,
+      href,
+      external,
+      location: "footer",
+    });
+  };
+
   return (
     <footer
       className="border-t mt-auto"
@@ -15,6 +30,9 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
               href="https://x.com/devinmaking"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                trackFooterLink("Creator X Profile", "https://x.com/devinmaking", true)
+              }
               className="transition-colors duration-150"
               style={{ color: "var(--accent)" }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent-hover)")}
@@ -37,6 +55,9 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
             href="https://x.com/devinmaking"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() =>
+              trackFooterLink("X Profile", "https://x.com/devinmaking", true)
+            }
             className="flex items-center gap-1 transition-colors duration-150"
             style={{ color: "var(--text-muted)" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
@@ -52,6 +73,7 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
           <span>·</span>
           <a
             href="/flutter-versions/"
+            onClick={() => trackFooterLink("Flutter Versions", "/flutter-versions/")}
             className="transition-colors duration-150"
             style={{ color: "var(--text-muted)" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
@@ -63,6 +85,7 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
           <a
             href="/releases.json"
             target="_blank"
+            onClick={() => trackFooterLink("JSON API", "/releases.json")}
             className="transition-colors duration-150"
             style={{ color: "var(--text-muted)" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
@@ -74,6 +97,7 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
           <a
             href="/feed.xml"
             target="_blank"
+            onClick={() => trackFooterLink("RSS", "/feed.xml")}
             className="transition-colors duration-150"
             style={{ color: "var(--text-muted)" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
@@ -86,6 +110,13 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
             href="https://github.com/shankarmadeshvaran/flutterreleases.com"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() =>
+              trackFooterLink(
+                "GitHub",
+                "https://github.com/shankarmadeshvaran/flutterreleases.com",
+                true,
+              )
+            }
             className="transition-colors duration-150"
             style={{ color: "var(--text-muted)" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
@@ -98,6 +129,13 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
             href="https://buymeacoffee.com/shankarmadeshvaran"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() =>
+              trackFooterLink(
+                "Donate",
+                "https://buymeacoffee.com/shankarmadeshvaran",
+                true,
+              )
+            }
             className="transition-colors duration-150"
             style={{ color: "var(--text-muted)" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
