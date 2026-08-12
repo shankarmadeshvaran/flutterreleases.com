@@ -22,8 +22,8 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
         backgroundColor: "var(--bg-surface)",
       }}
     >
-      <div className="max-w-[1200px] mx-auto px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div>
+      <div className="max-w-[1200px] mx-auto px-6 py-5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div className="max-w-2xl">
           <p className="text-xs" style={{ color: "var(--text-muted)" }}>
             Made with ❤️ by{" "}
             <a
@@ -49,7 +49,7 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
           )}
         </div>
 
-        <div className="flex items-center gap-3 text-xs flex-wrap" style={{ color: "var(--text-muted)" }}>
+        <div className="flex items-center gap-x-4 gap-y-2 text-xs flex-wrap lg:justify-end" style={{ color: "var(--text-muted)" }}>
           {/* Twitter/X */}
           <a
             href="https://x.com/devinmaking"
@@ -70,7 +70,6 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
             </svg>
             @devinmaking
           </a>
-          <span>·</span>
           <a
             href="/flutter-versions/"
             onClick={() => trackFooterLink("Flutter Versions", "/flutter-versions/")}
@@ -81,7 +80,6 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
           >
             Flutter Versions
           </a>
-          <span>·</span>
           <a
             href="/tools/flutter-version-checker/"
             onClick={() =>
@@ -97,7 +95,6 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
           >
             Compatibility Checker
           </a>
-          <span>·</span>
           <a
             href="/releases.json"
             target="_blank"
@@ -109,7 +106,6 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
           >
             JSON API
           </a>
-          <span>·</span>
           <a
             href="/feed.xml"
             target="_blank"
@@ -121,7 +117,6 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
           >
             RSS
           </a>
-          <span>·</span>
           <a
             href="https://github.com/shankarmadeshvaran/flutterreleases.com"
             target="_blank"
@@ -140,7 +135,6 @@ export function Footer({ updatedAt }: { updatedAt?: string }) {
           >
             GitHub
           </a>
-          <span>·</span>
           <a
             href="https://buymeacoffee.com/shankarmadeshvaran"
             target="_blank"
