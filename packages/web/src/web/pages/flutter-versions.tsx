@@ -180,6 +180,13 @@ export default function FlutterVersionsPage() {
             <p className="text-sm leading-relaxed max-w-2xl" style={{ color: "var(--text-secondary)" }}>
               See the latest Flutter stable, beta and dev versions, complete Flutter version history, Dart SDK compatibility and release details.
             </p>
+            <p className="text-sm mt-3" style={{ color: "var(--text-secondary)" }}>
+              Need to map Flutter to Dart? Use the{" "}
+              <a href="/tools/flutter-version-checker/" style={{ color: "var(--accent)" }}>
+                Flutter &amp; Dart Version Compatibility Checker
+              </a>
+              .
+            </p>
 
             {!loading && !error && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-6">

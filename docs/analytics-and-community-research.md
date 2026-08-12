@@ -40,6 +40,18 @@ If the variable is missing, the site still builds and runs without analytics.
 | `release_deep_link_viewed` | SPA deep links such as `/?v=3.44.9#release` |
 | `official_archive_click` | Fallback clicks to Flutter's official SDK archive |
 | `theme_toggle` | Dark/light preference changes |
+| `version_checker_viewed` | Visits to `/tools/flutter-version-checker/` |
+| `version_checker_mode_changed` | Switches between Flutter → Dart and Dart → Flutter modes |
+| `version_checker_channel_filter` | Channel filter usage in the checker |
+| `version_checker_flutter_lookup` | Successful Flutter version selection and bundled Dart result |
+| `version_checker_dart_lookup` | Successful Dart version lookup and matching Flutter result counts |
+| `version_checker_compatibility_check` | Exact Flutter/Dart compatibility checks and compatible/incompatible outcomes |
+
+For the Flutter & Dart Version Compatibility Checker, register useful GA4 custom
+dimensions/metrics for `mode`, `flutter_version`, `dart_version`,
+`bundled_dart_version`, `channel`, `release_type`, `compatible`,
+`result_count`, `stable_count`, `beta_count`, `prerelease_count`, and
+`matching_flutter_count`.
 
 Do not send secrets, email addresses, tokens, or raw stack traces in analytics
 properties. Search query tracking is intentionally capped to 80 characters.
@@ -76,8 +88,8 @@ answer with the existing `releases.json` data.
 - Reuse `trackEvent` and `trackView`; do not call `window.gtag` directly from UI components.
 - Keep events tied to product intent: navigation, search, filters, downloads,
   release notes, theme, and deep links.
-- Use stable property names: `version`, `channel`, `platform`, `location`,
-  `label`, `href`, and `result_count`.
+- Use stable property names: `version`, `flutter_version`, `dart_version`,
+  `channel`, `platform`, `location`, `label`, `href`, and `result_count`.
 - Keep crawler and release data as the source of truth. Analytics should observe
   behavior, not create or modify release facts.
 - Verify `bun run typecheck`, `bun run lint`, and `bun run build:web` after UI

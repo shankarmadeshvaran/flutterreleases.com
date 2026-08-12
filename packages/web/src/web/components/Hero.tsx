@@ -102,6 +102,19 @@ export function Hero({ latestStable, latestBeta, loading = false }: HeroProps) {
               Flutter Versions
             </a>
             <span>·</span>
+            <a
+              href="/tools/flutter-version-checker/"
+              onClick={() => trackEvent("Navigation Click", {
+                label: "Flutter Dart Compatibility Checker",
+                href: "/tools/flutter-version-checker/",
+                location: "hero_trust_cue",
+              })}
+              className="transition-colors duration-150"
+              style={{ color: "var(--accent)" }}
+            >
+              Compatibility Checker
+            </a>
+            <span>·</span>
             <span>Not an official Google resource</span>
             <span>·</span>
             <span>Free for the Flutter community</span>

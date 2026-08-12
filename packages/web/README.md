@@ -35,6 +35,7 @@ bunx oxlint . --deny-warnings --no-error-on-unmatched-pattern
 bun run build:web
 SITE_URL=https://flutterreleases.com node scripts/generate-release-pages.js
 SITE_URL=https://flutterreleases.com node scripts/validate-flutter-versions-page.js
+SITE_URL=https://flutterreleases.com node scripts/validate-flutter-version-checker.js
 ```
 
 See root [README](../../README.md) for full project docs.

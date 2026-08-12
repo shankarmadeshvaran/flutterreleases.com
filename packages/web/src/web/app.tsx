@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Route, Switch } from "wouter";
 import Index from "./pages/index";
 import FlutterVersions from "./pages/flutter-versions";
+import FlutterVersionChecker from "./pages/flutter-version-checker";
 import { Provider } from "./components/provider";
 
 function ReleaseRedirect() {
@@ -31,6 +32,8 @@ function App() {
       <Switch>
         <Route path="/release/:version/" component={ReleaseRedirect} />
         <Route path="/release/:version" component={ReleaseRedirect} />
+        <Route path="/tools/flutter-version-checker/" component={FlutterVersionChecker} />
+        <Route path="/tools/flutter-version-checker" component={FlutterVersionChecker} />
         <Route path="/flutter-versions/" component={FlutterVersions} />
         <Route path="/flutter-versions" component={FlutterVersions} />
         <Route path="/" component={Index} />

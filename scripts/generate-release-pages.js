@@ -54,6 +54,20 @@ function safeWrite(filePath, content) {
   fs.writeFileSync(filePath, content, 'utf8');
 }
 
+function buildAppAssetTags() {
+  const indexPath = path.join(DIST_DIR, 'index.html');
+  if (!fs.existsSync(indexPath)) return '';
+  const html = fs.readFileSync(indexPath, 'utf8');
+  const tags = [];
+  for (const match of html.matchAll(/<script\b[^>]*type="module"[^>]*><\/script>/g)) {
+    tags.push(match[0]);
+  }
+  for (const match of html.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*>/g)) {
+    tags.push(match[0]);
+  }
+  return tags.join('\n  ');
+}
+
 function channelLabel(channel) {
   const map = { stable: 'Stable', beta: 'Beta', dev: 'Dev', main: 'Main' };
   return map[channel] || channel;
@@ -298,6 +312,68 @@ function buildFlutterVersionsWebPageLd(pageUrl) {
   }, null, '\t\t\t');
 }
 
+function buildVersionCheckerBreadcrumbLd(pageUrl) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Flutter Releases', item: siteBaseUrl() + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Flutter Versions & Releases', item: siteBaseUrl() + '/flutter-versions/' },
+      { '@type': 'ListItem', position: 3, name: 'Flutter & Dart Version Compatibility Checker', item: pageUrl },
+    ],
+  }, null, '\t\t\t');
+}
+
+function buildVersionCheckerWebPageLd(pageUrl) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Flutter & Dart Version Compatibility Checker',
+    url: pageUrl,
+    description: 'Check which Dart SDK version ships with any Flutter release and find Flutter versions compatible with a specific Dart version.',
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'Flutter Releases',
+      url: SITE_URL + '/',
+    },
+  }, null, '\t\t\t');
+}
+
+const COMPAT_CHANNEL_ORDER = { stable: 0, beta: 1, dev: 2, main: 3 };
+
+function releaseTime(release) {
+  const time = release.released ? new Date(release.released).getTime() : 0;
+  return Number.isNaN(time) ? 0 : time;
+}
+
+function sortReleasesForCompatibility(items) {
+  return [...items].sort((a, b) => {
+    const channelDelta = (COMPAT_CHANNEL_ORDER[a.channel] ?? 4) - (COMPAT_CHANNEL_ORDER[b.channel] ?? 4);
+    if (channelDelta !== 0) return channelDelta;
+    return releaseTime(b) - releaseTime(a);
+  });
+}
+
+function getDartVersionForFlutter(items, flutterVersion) {
+  return items.find(r => r.version === flutterVersion);
+}
+
+function getFlutterVersionsForDart(items, dartVersion) {
+  return sortReleasesForCompatibility(items.filter(r => r.dart_version === dartVersion));
+}
+
+function checkFlutterDartCompatibility(items, flutterVersion, dartVersion) {
+  const flutterRelease = getDartVersionForFlutter(items, flutterVersion);
+  const dartReleases = getFlutterVersionsForDart(items, dartVersion);
+  const bundledDartVersion = flutterRelease?.dart_version;
+  return {
+    compatible: Boolean(flutterRelease && dartVersion && bundledDartVersion === dartVersion),
+    flutterRelease,
+    bundledDartVersion,
+    dartReleases,
+  };
+}
+
 function buildLatestCardHtml(title, release) {
   if (!release) {
     return `<article class="card"><p class="eyebrow">${htmlEscape(title)}</p><p>Not available in releases.json.</p></article>`;
@@ -314,6 +390,219 @@ function buildLatestCardHtml(title, release) {
       </dl>
       <p><a href="${releaseUrl(release)}">View release details →</a></p>
     </article>`;
+}
+
+function buildCompatibilityRowsHtml(items) {
+  return items.map(release => `<tr>
+          <td><a href="${releaseUrl(release)}">Flutter ${htmlEscape(release.version)}</a></td>
+          <td>${htmlEscape(release.dart_version || 'Unavailable')}</td>
+          <td>${htmlEscape(channelLabel(release.channel))}</td>
+          <td>${htmlEscape(release.released || 'Unknown')}</td>
+        </tr>`).join('\n');
+}
+
+function buildVersionCheckerPageHtml(items, generatedAt, appAssetTags = '') {
+  const pageUrl = `${siteBaseUrl()}/tools/flutter-version-checker/`;
+  const sorted = sortReleasesForCompatibility(items.filter(r => r.version));
+  const stable = sorted.filter(r => r.channel === 'stable');
+  const prerelease = sorted.filter(r => r.channel !== 'stable');
+  const latestStable = stable[0];
+  const exampleRelease = latestStable || sorted[0];
+  const exampleDart = exampleRelease?.dart_version || '';
+  const matchingFlutter = exampleDart ? getFlutterVersionsForDart(items, exampleDart) : [];
+  const compatibility = exampleRelease && exampleDart
+    ? checkFlutterDartCompatibility(items, exampleRelease.version, exampleDart)
+    : null;
+  const generatedDate = generatedAt ? new Date(generatedAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
+  const breadcrumbLd = buildVersionCheckerBreadcrumbLd(pageUrl);
+  const webPageLd = buildVersionCheckerWebPageLd(pageUrl);
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flutter &amp; Dart Version Compatibility Checker | FlutterReleases</title>
+  <meta name="description" content="Check which Dart SDK version ships with any Flutter release and find Flutter versions compatible with a specific Dart version." />
+  <meta name="theme-color" content="#054D8E" />
+  <meta property="og:title" content="Flutter &amp; Dart Version Compatibility Checker | FlutterReleases" />
+  <meta property="og:description" content="Check which Dart SDK version ships with any Flutter release and find Flutter versions compatible with a specific Dart version." />
+  <meta property="og:url" content="${pageUrl}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="${SITE_URL}/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Flutter &amp; Dart Version Compatibility Checker | FlutterReleases" />
+  <meta name="twitter:description" content="Check which Dart SDK version ships with any Flutter release and find Flutter versions compatible with a specific Dart version." />
+  <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
+  <link rel="canonical" href="${pageUrl}" />
+  <link rel="alternate" type="application/rss+xml" title="Flutter Releases Feed" href="${SITE_URL}/feed.xml" />
+  ${appAssetTags}
+  <script type="application/ld+json">
+    ${breadcrumbLd}
+  </script>
+  <script type="application/ld+json">
+    ${webPageLd}
+  </script>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if ((saved && saved === 'dark') || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch {}
+    })();
+  </script>
+  <style>
+    :root { color-scheme: light; --bg: #fafafa; --surface: #ffffff; --subtle: #f4f4f5; --border: #e4e4e7; --text: #18181b; --secondary: #71717a; --muted: #71717a; --accent: #0ea5e9; --accent-hover: #0284c7; --row-hover: #f9fafb; }
+    .dark { color-scheme: dark; --bg: #09090b; --surface: #111113; --subtle: #18181b; --border: #27272a; --text: #fafafa; --secondary: #a1a1aa; --muted: #52525b; --accent: #38bdf8; --accent-hover: #7dd3fc; --row-hover: #18181b; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header, footer, .hero { background: var(--surface); border-color: var(--border); }
+    header { border-bottom: 1px solid var(--border); }
+    nav, main, footer > div { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    nav { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .brand { color: var(--text); }
+    nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
+    .hero { border-bottom: 1px solid var(--border); }
+    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    h1 { font-size: 1.875rem; line-height: 1.2; margin: 0 0 0.5rem; }
+    h2 { font-size: 1.125rem; margin: 0 0 0.75rem; }
+    h3 { font-size: 1rem; margin: 2rem 0 0.75rem; }
+    .intro { max-width: 44rem; color: var(--secondary); margin: 0; }
+    .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; font-weight: 700; margin: 0 0 0.75rem; }
+    main { padding-top: 2rem; padding-bottom: 2rem; }
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 2rem; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .muted { color: var(--secondary); }
+    .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, ui-monospace, monospace; }
+    .badge { display: inline-flex; align-items: center; border-radius: 999px; background: var(--subtle); color: var(--secondary); padding: 0.125rem 0.5rem; font-size: 0.75rem; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+    .section-head p, footer p { color: var(--muted); margin: 0.25rem 0 0; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); margin-bottom: 2rem; }
+    table { border-collapse: collapse; width: 100%; min-width: 640px; }
+    th, td { text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+    th { color: var(--muted); background: var(--subtle); text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.75rem; }
+    tr:hover td { background: var(--row-hover); }
+    .js #static-seo { display: none; }
+    footer { border-top: 1px solid var(--border); }
+    footer > div { padding-top: 1.25rem; padding-bottom: 1.25rem; font-size: 0.8125rem; }
+    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } nav { align-items: flex-start; padding-top: 1rem; padding-bottom: 1rem; flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <script>document.documentElement.classList.add('js');</script>
+  <div id="root"></div>
+  <div id="static-seo">
+  <header>
+    <nav>
+      <a class="brand" href="${SITE_URL}/"><strong>Flutter Releases</strong></a>
+      <div class="links">
+        <a href="${SITE_URL}/">Releases</a>
+        <a href="${SITE_URL}/flutter-versions/">Flutter Versions</a>
+        <a href="${SITE_URL}/releases.json">JSON API</a>
+        <a href="${SITE_URL}/feed.xml">RSS</a>
+      </div>
+    </nav>
+  </header>
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Flutter Dart Compatibility</p>
+      <h1>Flutter &amp; Dart Version Compatibility Checker</h1>
+      <p class="intro">Flutter releases bundle a specific Dart SDK. This tool maps Flutter versions to Dart versions and Dart versions back to Flutter releases using the FlutterReleases dataset.</p>
+    </div>
+  </section>
+  <main>
+    <section class="panel">
+      <h2>Flutter to Dart lookup</h2>
+      ${exampleRelease ? `<div class="grid">
+        <div>
+          <p class="muted">Example Flutter release</p>
+          <p class="mono"><a href="${releaseUrl(exampleRelease)}">Flutter ${htmlEscape(exampleRelease.version)}</a></p>
+        </div>
+        <div>
+          <p class="muted">Bundled Dart SDK</p>
+          <p class="mono">${htmlEscape(exampleRelease.dart_version || 'Unavailable')}</p>
+        </div>
+        <div>
+          <p class="muted">Channel</p>
+          <p><span class="badge">${htmlEscape(channelLabel(exampleRelease.channel))}</span></p>
+        </div>
+        <div>
+          <p class="muted">Released</p>
+          <p>${htmlEscape(exampleRelease.released || 'Unknown')}</p>
+        </div>
+      </div>` : '<p class="muted">No Flutter release data is available.</p>'}
+    </section>
+    <section class="panel">
+      <h2>Dart to Flutter lookup</h2>
+      ${exampleDart ? `<p class="muted">Dart ${htmlEscape(exampleDart)} is bundled with ${matchingFlutter.length} Flutter release${matchingFlutter.length === 1 ? '' : 's'} in the current dataset.</p>
+      <ul>
+        ${matchingFlutter.slice(0, 8).map(release => `<li><a href="${releaseUrl(release)}">Flutter ${htmlEscape(release.version)}</a> <span class="badge">${htmlEscape(channelLabel(release.channel))}</span></li>`).join('\n        ')}
+      </ul>` : '<p class="muted">No Dart SDK data is available.</p>'}
+    </section>
+    <section class="panel">
+      <h2>Compatibility result example</h2>
+      <p>${compatibility?.compatible ? `Compatible: Flutter ${htmlEscape(exampleRelease.version)} ships with Dart ${htmlEscape(exampleDart)}.` : 'Compatibility is determined by the Dart SDK bundled with each Flutter release.'}</p>
+      <p class="muted">Flutter releases ship with a specific Dart SDK. This page does not imply arbitrary Dart SDK versions can be swapped into a Flutter installation.</p>
+    </section>
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>Stable Flutter and Dart Compatibility</h2>
+          <p>Stable Flutter releases appear first in source order and visual order. Generated from releases.json on ${generatedDate}.</p>
+        </div>
+        <p>${stable.length} stable releases</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Flutter</th><th>Dart</th><th>Channel</th><th>Released</th></tr>
+          </thead>
+          <tbody>
+${buildCompatibilityRowsHtml(stable)}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>Beta and Prerelease Flutter Versions</h2>
+          <p>Non-stable releases are included for developers tracing beta, dev, main, or prerelease Dart SDK adoption.</p>
+        </div>
+        <p>${prerelease.length} non-stable releases</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Flutter</th><th>Dart</th><th>Channel</th><th>Released</th></tr>
+          </thead>
+          <tbody>
+${buildCompatibilityRowsHtml(prerelease)}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>Related Flutter version resources</h2>
+      <ul>
+        <li><a href="${SITE_URL}/flutter-versions/">All Flutter versions</a></li>
+        ${latestStable ? `<li><a href="${releaseUrl(latestStable)}">Flutter ${htmlEscape(latestStable.version)} release</a></li>` : ''}
+        <li><a href="${SITE_URL}/releases.json">Flutter release JSON dataset</a></li>
+      </ul>
+    </section>
+  </main>
+  <footer>
+    <div>
+      <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a></p>
+    </div>
+  </footer>
+  </div>
+</body>
+</html>`;
 }
 
 function buildFlutterVersionsPageHtml(items, generatedAt) {
@@ -398,7 +687,7 @@ ${rows}
   <style>
     :root { color-scheme: light; --bg: #fafafa; --surface: #ffffff; --subtle: #f4f4f5; --border: #e4e4e7; --text: #18181b; --secondary: #71717a; --muted: #71717a; --accent: #0ea5e9; --accent-hover: #0284c7; --row-hover: #f9fafb; }
     .dark { color-scheme: dark; --bg: #09090b; --surface: #111113; --subtle: #18181b; --border: #27272a; --text: #fafafa; --secondary: #a1a1aa; --muted: #52525b; --accent: #38bdf8; --accent-hover: #7dd3fc; --row-hover: #18181b; }
-    body { margin: 0; font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
     header, footer, .hero { background: var(--surface); border-color: var(--border); }
@@ -425,7 +714,7 @@ ${rows}
     .card:hover { border-color: var(--accent); }
     dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 1rem 0; }
     dt { color: var(--muted); font-size: 0.75rem; }
-    dd { margin: 0; font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.875rem; }
+    dd { margin: 0; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, ui-monospace, monospace; font-size: 0.875rem; }
     main { padding-top: 2rem; padding-bottom: 2rem; }
     .section-head { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
     .section-head p, footer p { color: var(--muted); margin: 0.25rem 0 0; }
@@ -467,6 +756,7 @@ ${rows}
       <p class="eyebrow">Flutter version history</p>
       <h1>Flutter Versions &amp; Releases</h1>
       <p class="intro">See the latest Flutter stable, beta and dev versions, complete Flutter version history, Dart SDK compatibility and release details.</p>
+      <p class="intro" style="margin-top: 0.75rem;">Need to map Flutter to Dart? Use the <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter &amp; Dart Version Compatibility Checker</a>.</p>
       <div class="cards">
         ${buildLatestCardHtml('Latest Stable Flutter release', latestStable)}
         ${buildLatestCardHtml('Latest Beta', latestBeta)}
@@ -642,6 +932,7 @@ function buildSitemapXml(items, generatedAt) {
   // Feed, JSON, llms, links
   for (const [path_, freq, pri] of [
     ['/flutter-versions/', 'daily', '0.9'],
+    ['/tools/flutter-version-checker/', 'daily', '0.8'],
     ['/feed.xml', 'daily', '0.5'],
     ['/releases.json', 'daily', '0.6'],
     ['/llms.txt', 'monthly', '0.3'],
@@ -837,7 +1128,7 @@ async function run() {
   if (DRY_RUN) {
     console.log('Dry-run: skipping file writes.');
     console.log(`Would generate ${toProcess.length} HTML pages`);
-    console.log(`Would update sitemap.xml with ${items.length + 6} URLs`);
+    console.log(`Would update sitemap.xml with ${items.length + 7} URLs`);
     return;
   }
 
@@ -871,7 +1162,7 @@ async function run() {
   if (fs.existsSync(DIST_DIR)) safeWrite(sitemapDist, sitemapXml);
   safeWrite(sitemapPublic, sitemapXml);
 
-  const urlCount = items.length + 6;
+  const urlCount = items.length + 7;
   console.log(`Updated sitemap.xml with ${urlCount} URLs`);
 
   // Generate Flutter versions SEO page in dist only. It is a route page, so
@@ -881,6 +1172,12 @@ async function run() {
     safeWrite(path.join(DIST_DIR, 'flutter-versions', 'index.html'), flutterVersionsHtml);
   }
   console.log('Generated flutter-versions/index.html');
+
+  const versionCheckerHtml = buildVersionCheckerPageHtml(items, generatedAt, buildAppAssetTags());
+  if (fs.existsSync(DIST_DIR)) {
+    safeWrite(path.join(DIST_DIR, 'tools', 'flutter-version-checker', 'index.html'), versionCheckerHtml);
+  }
+  console.log('Generated tools/flutter-version-checker/index.html');
 
   // Generate llms-full.txt in both dist and public
   const llmsFullTxt = buildLlmsFullTxt(items, generatedAt);
