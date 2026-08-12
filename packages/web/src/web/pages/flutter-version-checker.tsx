@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ExternalLink } from "lucide-react";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import { ChannelBadge, ReleaseTypeBadge } from "../components/ChannelBadge";
+import { ChannelBadge } from "../components/ChannelBadge";
 import { useDarkMode } from "../hooks/useDarkMode";
 import { useMeta } from "../hooks/useMeta";
 import { useReleases } from "../hooks/useReleases";
@@ -80,7 +79,7 @@ function TextInput({
       placeholder={placeholder}
       aria-label={placeholder}
       list={list}
-      className="w-full rounded-md border px-3 py-1.5 text-sm outline-none transition-colors duration-150"
+      className="w-full rounded-md border px-3 py-2 text-sm outline-none transition-colors duration-150"
       style={{
         backgroundColor: "var(--bg-surface)",
         borderColor: "var(--border)",
@@ -89,72 +88,6 @@ function TextInput({
       onFocus={(event) => (event.currentTarget.style.borderColor = "var(--accent)")}
       onBlur={(event) => (event.currentTarget.style.borderColor = "var(--border)")}
     />
-  );
-}
-
-function ReleaseSummary({ release }: { release: Release }) {
-  return (
-    <article
-      className="rounded-lg border p-4"
-      style={{
-        borderColor: "var(--border)",
-        backgroundColor: "var(--bg-surface)",
-      }}
-    >
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <h2 className="mono text-xl font-semibold" style={{ color: "var(--text-primary)" }}>
-            Flutter {release.version}
-          </h2>
-          <p className="mono text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
-            Dart SDK: {release.dartVersion || "Unavailable"}
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <ChannelBadge channel={release.channel} />
-          {release.releaseType && <ReleaseTypeBadge type={release.releaseType} />}
-        </div>
-      </div>
-      <dl className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
-        <div>
-          <dt className="text-xs" style={{ color: "var(--text-muted)" }}>
-            Channel
-          </dt>
-          <dd className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
-            {release.channel}
-          </dd>
-        </div>
-        <div>
-          <dt className="text-xs" style={{ color: "var(--text-muted)" }}>
-            Released
-          </dt>
-          <dd className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
-            {formatDate(release.releasedAt)}
-          </dd>
-        </div>
-        <div>
-          <dt className="text-xs" style={{ color: "var(--text-muted)" }}>
-            Release type
-          </dt>
-          <dd className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
-            {release.releaseType || "Release"}
-          </dd>
-        </div>
-      </dl>
-      <a
-        href={releaseHref(release)}
-        className="inline-flex items-center gap-1 mt-4 text-sm transition-colors duration-150"
-        style={{ color: "var(--accent)" }}
-        onClick={() =>
-          trackEvent("Version Checker Release Click", {
-            version: release.version,
-            channel: release.channel,
-          })
-        }
-      >
-        View Flutter {release.version} release <ExternalLink size={13} />
-      </a>
-    </article>
   );
 }
 
@@ -274,6 +207,60 @@ function CompatibilityResult({
           ? `Compatible: Flutter ${flutterVersion} ships with Dart ${dartVersion}.`
           : `Not the Dart SDK bundled with this Flutter release.`}
       </p>
+      {result.flutterRelease && (
+        <dl className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+          <div>
+            <dt className="text-xs" style={{ color: "var(--text-muted)" }}>
+              Flutter release
+            </dt>
+            <dd className="mono text-sm mt-1" style={{ color: "var(--text-primary)" }}>
+              {result.flutterRelease.version}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs" style={{ color: "var(--text-muted)" }}>
+              Bundled Dart
+            </dt>
+            <dd className="mono text-sm mt-1" style={{ color: "var(--text-primary)" }}>
+              {result.bundledDartVersion || "Unavailable"}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs" style={{ color: "var(--text-muted)" }}>
+              Entered Dart
+            </dt>
+            <dd className="mono text-sm mt-1" style={{ color: "var(--text-primary)" }}>
+              {dartVersion}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs" style={{ color: "var(--text-muted)" }}>
+              Channel
+            </dt>
+            <dd className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
+              <ChannelBadge channel={result.flutterRelease.channel} />
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs" style={{ color: "var(--text-muted)" }}>
+              Released
+            </dt>
+            <dd className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
+              {formatDate(result.flutterRelease.releasedAt)}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs" style={{ color: "var(--text-muted)" }}>
+              Release details
+            </dt>
+            <dd className="text-sm mt-1">
+              <a href={releaseHref(result.flutterRelease)} style={{ color: "var(--accent)" }}>
+                View release
+              </a>
+            </dd>
+          </div>
+        </dl>
+      )}
       {!result.compatible && (
         <div className="text-sm mt-3 space-y-2" style={{ color: "var(--text-secondary)" }}>
           <p>
@@ -314,6 +301,7 @@ export default function FlutterVersionCheckerPage() {
   const trackedFlutterLookup = useRef<string | null>(null);
   const trackedDartLookup = useRef<string | null>(null);
   const trackedCompatibility = useRef<string | null>(null);
+  const initializedDefault = useRef(false);
 
   useMeta(TITLE, DESCRIPTION, "https://flutterreleases.com/tools/flutter-version-checker/");
 
@@ -355,10 +343,8 @@ export default function FlutterVersionCheckerPage() {
         compatibilityResult.dartReleases.length,
       ].join(":")
     : "";
-  const hasCompatibilityInput = Boolean(compatibilityResult);
-  const hasLookupResult =
-    mode === "flutter-to-dart" ? Boolean(selectedFlutterRelease) : Boolean(dartQuery.trim());
-  const showResultPanel = hasLookupResult || hasCompatibilityInput;
+  const showResultPanel =
+    mode === "flutter-to-dart" ? Boolean(compatibilityResult) : Boolean(trimmedDartQuery);
 
   useEffect(() => {
     trackView("/tools/flutter-version-checker/", {
@@ -369,6 +355,13 @@ export default function FlutterVersionCheckerPage() {
       default_channel: "stable",
     });
   }, []);
+
+  useEffect(() => {
+    if (initializedDefault.current || !latestStable) return;
+    initializedDefault.current = true;
+    setFlutterQuery(latestStable.version);
+    setDartQuery(latestStable.dartVersion || "");
+  }, [latestStable]);
 
   useEffect(() => {
     if (!selectedFlutterRelease) return;
@@ -509,64 +502,70 @@ export default function FlutterVersionCheckerPage() {
                 <div
                   className={
                     showResultPanel
-                      ? "grid grid-cols-1 lg:grid-cols-[minmax(280px,420px)_minmax(0,1fr)] gap-6 mt-5"
-                      : "grid grid-cols-1 gap-6 mt-5 max-w-[420px]"
+                      ? "grid grid-cols-1 lg:grid-cols-[minmax(320px,520px)_minmax(0,1fr)] gap-6 mt-5"
+                      : "grid grid-cols-1 gap-6 mt-5 max-w-[520px]"
                   }
                 >
                   <div className="space-y-5">
-                    <div className="max-w-[420px]">
-                      <FieldLabel htmlFor="flutter-version-input">Flutter version</FieldLabel>
-                      <TextInput
-                        id="flutter-version-input"
-                        value={flutterQuery}
-                        onChange={setFlutterQuery}
-                        placeholder="Search or select Flutter version"
-                        list="flutter-version-options"
-                      />
-                      <datalist id="flutter-version-options">
-                        {flutterOptions.map((release) => (
-                          <option key={`${release.version}-${release.channel}`} value={release.version}>
-                            Flutter {release.version} · Dart {release.dartVersion} · {release.channel}
-                          </option>
-                        ))}
-                      </datalist>
-                    </div>
+                    {mode === "flutter-to-dart" && (
+                      <>
+                        <div>
+                          <FieldLabel htmlFor="flutter-version-input">Flutter version</FieldLabel>
+                          <TextInput
+                            id="flutter-version-input"
+                            value={flutterQuery}
+                            onChange={setFlutterQuery}
+                            placeholder="Select Flutter version"
+                            list="flutter-version-options"
+                          />
+                          <datalist id="flutter-version-options">
+                            {flutterOptions.map((release) => (
+                              <option key={`${release.version}-${release.channel}`} value={release.version}>
+                                Flutter {release.version} · Dart {release.dartVersion} · {release.channel}
+                              </option>
+                            ))}
+                          </datalist>
+                        </div>
 
-                    <div className="pt-1">
-                      <p className="text-xs font-medium mb-2" style={{ color: "var(--text-muted)" }}>
-                        Channel filter
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {CHANNEL_FILTERS.map((item) => (
-                          <button
-                            key={item.value}
-                            type="button"
-                            onClick={() => {
-                              setChannel(item.value);
-                              trackEvent("Version Checker Channel Filter", {
-                                channel: item.value,
-                              });
-                            }}
-                            className="rounded-md border px-3 py-1.5 text-xs font-medium transition-colors duration-150"
-                            style={
-                              channel === item.value
-                                ? { borderColor: "var(--accent)", backgroundColor: "var(--accent)", color: "#fff" }
-                                : { borderColor: "var(--border)", backgroundColor: "transparent", color: "var(--text-secondary)" }
-                            }
-                          >
-                            {item.label}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
+                        <div className="pt-1">
+                          <p className="text-xs font-medium mb-2" style={{ color: "var(--text-muted)" }}>
+                            Channel filter
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {CHANNEL_FILTERS.map((item) => (
+                              <button
+                                key={item.value}
+                                type="button"
+                                onClick={() => {
+                                  setChannel(item.value);
+                                  trackEvent("Version Checker Channel Filter", {
+                                    channel: item.value,
+                                  });
+                                }}
+                                className="rounded-md border px-3 py-1.5 text-xs font-medium transition-colors duration-150"
+                                style={
+                                  channel === item.value
+                                    ? { borderColor: "var(--accent)", backgroundColor: "var(--accent)", color: "#fff" }
+                                    : { borderColor: "var(--border)", backgroundColor: "transparent", color: "var(--text-secondary)" }
+                                }
+                              >
+                                {item.label}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </>
+                    )}
 
-                    <div className="max-w-[420px]">
-                      <FieldLabel htmlFor="dart-version-input">Dart SDK version</FieldLabel>
+                    <div>
+                      <FieldLabel htmlFor="dart-version-input">
+                        {mode === "flutter-to-dart" ? "Dart SDK version to compare" : "Dart SDK version"}
+                      </FieldLabel>
                       <TextInput
                         id="dart-version-input"
                         value={dartQuery}
                         onChange={setDartQuery}
-                        placeholder="Search or select Dart version"
+                        placeholder="Select Dart version"
                         list="dart-version-options"
                       />
                       <datalist id="dart-version-options">
@@ -581,17 +580,10 @@ export default function FlutterVersionCheckerPage() {
 
                   {showResultPanel && (
                     <div className="space-y-4">
-                      {mode === "flutter-to-dart" ? (
-                        selectedFlutterRelease && (
-                          <ReleaseSummary
-                            key={`${selectedFlutterRelease.version}:${selectedFlutterRelease.channel}`}
-                            release={selectedFlutterRelease}
-                          />
-                        )
-                      ) : (
+                      {mode === "dart-to-flutter" && (
                         <ReleaseResults dartVersion={dartQuery} releases={dartMatches} />
                       )}
-                      {compatibilityResult && (
+                      {mode === "flutter-to-dart" && compatibilityResult && (
                         <CompatibilityResult
                           key={compatibilityResultKey}
                           flutterVersion={trimmedFlutterQuery}
