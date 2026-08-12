@@ -31,6 +31,7 @@ export function Pagination({ page, totalPages, onPageChange }: PaginationProps) 
       <button
         onClick={() => onPageChange(page - 1)}
         disabled={page === 1}
+        aria-label="Previous page"
         className={`${btnBase}`}
         style={{
           borderColor: "var(--border)",
@@ -55,6 +56,8 @@ export function Pagination({ page, totalPages, onPageChange }: PaginationProps) 
           <button
             key={p}
             onClick={() => onPageChange(p as number)}
+            aria-label={`Go to page ${p}`}
+            aria-current={p === page ? "page" : undefined}
             className={`${btnBase}`}
             style={
               p === page
@@ -80,6 +83,7 @@ export function Pagination({ page, totalPages, onPageChange }: PaginationProps) 
       <button
         onClick={() => onPageChange(page + 1)}
         disabled={page === totalPages}
+        aria-label="Next page"
         className={`${btnBase}`}
         style={{
           borderColor: "var(--border)",

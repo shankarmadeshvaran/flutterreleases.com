@@ -4,9 +4,24 @@ import { trackEvent } from "../lib/analytics";
 interface HeroProps {
   latestStable: Release | undefined;
   latestBeta: Release | undefined;
+  loading?: boolean;
 }
 
-export function Hero({ latestStable, latestBeta }: HeroProps) {
+function LoadingPill({ width }: { width: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="inline-flex h-[30px] rounded-full border"
+      style={{
+        width,
+        borderColor: "var(--border)",
+        backgroundColor: "var(--bg-subtle)",
+      }}
+    />
+  );
+}
+
+export function Hero({ latestStable, latestBeta, loading = false }: HeroProps) {
   return (
     <div
       className="border-b"
@@ -25,7 +40,9 @@ export function Hero({ latestStable, latestBeta }: HeroProps) {
           </p>
 
           {/* Latest release pills */}
-          <div className="flex flex-wrap gap-2 mb-5">
+          <div className="flex min-h-[30px] flex-wrap gap-2 mb-5">
+            {loading && !latestStable && <LoadingPill width="142px" />}
+            {loading && !latestBeta && <LoadingPill width="172px" />}
             {latestStable && (
               <a
                 href={`/release/${latestStable.version}/`}

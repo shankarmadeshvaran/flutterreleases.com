@@ -192,6 +192,78 @@ interface ReleaseTableProps {
   selectedVersion?: string;
 }
 
+function SkeletonText({ width }: { width: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="block h-3 rounded-full"
+      style={{ width, backgroundColor: "var(--bg-subtle)" }}
+    />
+  );
+}
+
+export function ReleaseTableSkeleton() {
+  return (
+    <div className="overflow-x-auto" aria-hidden="true">
+      <table className="w-full min-w-[800px] border-collapse">
+        <thead>
+          <tr
+            className="text-xs font-medium uppercase tracking-wider"
+            style={{
+              color: "var(--text-muted)",
+              borderBottom: "1px solid var(--border)",
+            }}
+          >
+            <th className="text-left px-6 py-3 w-[220px]">Flutter / Dart</th>
+            <th className="text-left px-4 py-3 w-[90px]">Channel</th>
+            <th className="text-left px-4 py-3 w-[100px]">Type</th>
+            <th className="text-left px-4 py-3 w-[120px]">Released</th>
+            <th className="text-left px-4 py-3">Downloads</th>
+            <th className="text-left px-4 py-3">Release Notes</th>
+            <th className="px-4 py-3 w-8" aria-hidden="true" />
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from({ length: 6 }, (_, i) => (
+            <tr
+              key={i}
+              className="border-b"
+              style={{ borderColor: "var(--border)" }}
+            >
+              <td className="px-6 py-5">
+                <div className="space-y-2">
+                  <SkeletonText width="112px" />
+                  <SkeletonText width="72px" />
+                </div>
+              </td>
+              <td className="px-4 py-5">
+                <SkeletonText width="52px" />
+              </td>
+              <td className="px-4 py-5">
+                <SkeletonText width="58px" />
+              </td>
+              <td className="px-4 py-5">
+                <SkeletonText width="86px" />
+              </td>
+              <td className="px-4 py-5">
+                <div className="flex gap-2">
+                  <SkeletonText width="72px" />
+                  <SkeletonText width="64px" />
+                  <SkeletonText width="70px" />
+                </div>
+              </td>
+              <td className="px-4 py-5">
+                <SkeletonText width="72px" />
+              </td>
+              <td className="px-4 py-5" aria-hidden="true" />
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export function ReleaseTable({ releases, selectedVersion }: ReleaseTableProps) {
   const [expanded, setExpanded] = useState<string | null>(selectedVersion ?? null);
 

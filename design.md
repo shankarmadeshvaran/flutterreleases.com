@@ -6,10 +6,10 @@ Clean, minimal, developer-first release tracker. Feels like a polished tool, not
 The product promise is accuracy: official Flutter SDK archive data, verified download links, and release notes routed to the correct source. The UI should feel trustworthy and operational, not promotional.
 
 ## Typography
-- Font: DM Sans (Google Fonts) — clean, modern, highly legible at small sizes
-- Display: DM Sans 700 for version numbers and headings
-- Body: DM Sans 400 at 14px
-- Code/version numbers: DM Mono for monospaced version strings
+- Font: system UI stack — fast, native, highly legible at small sizes, and avoids render-blocking font requests
+- Display: system UI 700 for version numbers and headings
+- Body: system UI 400 at 14px
+- Code/version numbers: native monospace stack for version strings
 
 ## Colors (CSS Variables)
 
@@ -72,6 +72,7 @@ The product promise is accuracy: official Flutter SDK archive data, verified dow
 - Download buttons: small outlined chips grouped together
 - Release notes links: text links, small
 - Pagination: minimal icon prev/next + page numbers, fixed 32px square buttons
+- Pagination icon buttons must have accessible names such as "Previous page" and "Next page"
 - Dark mode toggle: icon-only in header
 - Header brand: Flutter lockup asset plus "Releases" text on larger screens
 - Donate/contact actions: quiet header links; never compete with release data
@@ -84,6 +85,7 @@ The product promise is accuracy: official Flutter SDK archive data, verified dow
 - Stable hotfix/patch releases link to the Flutter stable changelog version anchor.
 - Beta/dev/main releases should not imply stable docs release notes; use GitHub tag, release, or commit links.
 - If a download link is missing, show a quiet dash and keep the row layout stable.
+- Loading states should reserve the same rough footprint as loaded content, especially on mobile, to avoid layout shift.
 - If a direct download link fails, keep the existing quiet fallback copy pointing users to Flutter's official archive.
 
 ## Motion
@@ -96,7 +98,7 @@ The product promise is accuracy: official Flutter SDK archive data, verified dow
 - No rounded card grids
 - No gradient backgrounds on hero
 - No decorative illustrations
-- No Inter or Space Grotesk
+- No third-party runtime font loading unless the performance tradeoff is explicitly accepted
 - No marketing-style hero layout or oversized CTA section
 - No unverified release-note shortcuts
 - No badges or alerts that make the table harder to scan

@@ -5,7 +5,7 @@ import { useMeta } from "../hooks/useMeta";
 import { Header } from "../components/Header";
 import { Hero } from "../components/Hero";
 import { FilterBar } from "../components/FilterBar";
-import { ReleaseTable } from "../components/ReleaseTable";
+import { ReleaseTable, ReleaseTableSkeleton } from "../components/ReleaseTable";
 import { Pagination } from "../components/Pagination";
 import { Footer } from "../components/Footer";
 import type { Channel } from "../types/release";
@@ -94,7 +94,7 @@ export default function HomePage() {
       style={{ backgroundColor: "var(--bg)" }}
     >
       <Header dark={dark} onToggleDark={toggle} />
-      <Hero latestStable={latestStable} latestBeta={latestBeta} />
+      <Hero latestStable={latestStable} latestBeta={latestBeta} loading={loading} />
       <FilterBar
         channel={channel}
         search={search}
@@ -105,12 +105,7 @@ export default function HomePage() {
 
       <main className="flex-1 max-w-[1200px] w-full mx-auto px-0">
         {loading && (
-          <div className="flex items-center justify-center py-24">
-            <div
-              className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
-              style={{ borderColor: "var(--border)", borderTopColor: "var(--accent)" }}
-            />
-          </div>
+          <ReleaseTableSkeleton />
         )}
 
         {error && (

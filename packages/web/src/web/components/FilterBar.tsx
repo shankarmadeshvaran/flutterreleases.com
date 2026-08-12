@@ -109,7 +109,10 @@ export function FilterBar({
               </button>
             )}
           </div>
-          <span className="text-xs whitespace-nowrap" style={{ color: "var(--text-muted)" }}>
+          <span
+            className="min-w-[4.75rem] text-xs whitespace-nowrap"
+            style={{ color: "var(--text-muted)" }}
+          >
             {total} release{total !== 1 ? "s" : ""}
           </span>
         </div>
