@@ -427,6 +427,12 @@ function buildVersionCheckerPageHtml(items, generatedAt, appAssetTags = '') {
   <meta name="theme-color" content="#054D8E" />
   <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
   <meta name="yandex-verification" content="2b9226ee6947f0c0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
   <meta property="og:title" content="Flutter &amp; Dart Version Compatibility Checker | FlutterReleases" />
   <meta property="og:description" content="Check which Dart SDK version ships with any Flutter release and find Flutter versions compatible with a specific Dart version." />
   <meta property="og:url" content="${pageUrl}" />
@@ -659,6 +665,12 @@ ${rows}
   <meta name="theme-color" content="#054D8E" />
   <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
   <meta name="yandex-verification" content="2b9226ee6947f0c0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
   <meta property="og:title" content="Flutter Versions &amp; Releases — Latest Stable Flutter SDK" />
   <meta property="og:description" content="See the latest Flutter stable, beta and dev versions, complete Flutter version history, Dart SDK compatibility and release details." />
   <meta property="og:url" content="${pageUrl}" />
@@ -858,6 +870,12 @@ function buildPageHtml(release, items = []) {
   <meta name="theme-color" content="#054D8E" />
   <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
   <meta name="yandex-verification" content="2b9226ee6947f0c0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
   <!-- Open Graph -->
   <meta property="og:title" content="${htmlEscape(`Flutter ${version} — ${chLabel} | FlutterReleases`)}" />
   <meta property="og:description" content="${htmlEscape(desc)}" />
@@ -1045,6 +1063,12 @@ function buildLinksHtml(items, generatedAt) {
   <meta name="description" content="Complete index of all Flutter SDK releases across stable, beta, dev, and main channels. ${items.length} releases total. Updated ${date}." />
   <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
   <meta name="yandex-verification" content="2b9226ee6947f0c0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
   <link rel="canonical" href="${baseUrl}/links.html" />
   <style>
     body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; line-height: 1.6; }
