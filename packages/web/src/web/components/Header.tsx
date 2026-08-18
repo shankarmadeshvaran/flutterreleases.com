@@ -16,7 +16,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
         backdropFilter: "blur(8px)",
       }}
     >
-      <div className="max-w-[1200px] mx-auto px-6 h-14 flex items-center justify-between">
+      <div className="max-w-[1200px] mx-auto px-6 py-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-2 md:h-14 md:flex-nowrap md:py-0">
         {/* Flutter brand logo — light/dark variants from official assets */}
         <a
           href="/"
@@ -55,11 +55,12 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
         </a>
 
         {/* Nav */}
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="order-3 flex w-full items-center gap-1 overflow-x-auto md:order-none md:w-auto md:overflow-visible">
           {[
             { label: "Releases", href: "/" },
             { label: "Flutter Versions", href: "/flutter-versions/" },
             { label: "Compatibility Tool", href: "/tools/flutter-version-checker/" },
+            { label: "Blog", href: "/blog/" },
             { label: "GitHub", href: "https://github.com/shankarmadeshvaran/flutterreleases.com", external: true },
           ].map((item) => (
             <a
@@ -75,7 +76,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
                   location: "header",
                 })
               }
-              className="px-3 py-1.5 rounded-md text-sm transition-colors duration-150"
+              className="shrink-0 px-3 py-1.5 rounded-md text-sm transition-colors duration-150"
               style={{ color: "var(--text-secondary)" }}
               onMouseEnter={(e) =>
                 (e.currentTarget.style.color = "var(--text-primary)")
@@ -87,28 +88,6 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
               {item.label}
             </a>
           ))}
-          {/* Contact — opens X profile */}
-          <a
-            href="https://x.com/devinmaking"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() =>
-              trackEvent("Outbound Click", {
-                label: "Contact",
-                href: "https://x.com/devinmaking",
-                location: "header",
-              })
-            }
-            className="px-3 py-1.5 rounded-md text-sm transition-colors duration-150 inline-flex items-center gap-1.5"
-            style={{ color: "var(--text-secondary)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.26 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-            Contact
-          </a>
         </nav>
 
         {/* Actions */}

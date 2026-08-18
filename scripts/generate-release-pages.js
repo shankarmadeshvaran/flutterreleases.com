@@ -18,6 +18,8 @@ const STABLE_ONLY = ARGS.includes('--stable-only');
 const SITE_URL = process.env.SITE_URL || 'https://flutterreleases.com';
 const DIST_DIR = path.join(process.cwd(), 'packages', 'web', 'dist');
 const PUBLIC_DIR = path.join(process.cwd(), 'packages', 'web', 'public');
+const BLOG_POSTS_PATH = path.join(process.cwd(), 'packages', 'web', 'src', 'web', 'data', 'blog-posts.json');
+const BLOG_CONTENT_DIR = path.join(process.cwd(), 'packages', 'web', 'src', 'web', 'content', 'blog');
 
 // Read from dist first (post-build), fall back to public (pre-build / dev)
 function readReleasesJson() {
@@ -27,6 +29,21 @@ function readReleasesJson() {
   const raw = fs.readFileSync(src, 'utf8');
   const parsed = JSON.parse(raw);
   return Array.isArray(parsed) ? parsed : (parsed.items || []);
+}
+
+function readBlogPosts() {
+  const raw = fs.readFileSync(BLOG_POSTS_PATH, 'utf8');
+  return JSON.parse(raw);
+}
+
+function readBlogArticles() {
+  if (!fs.existsSync(BLOG_CONTENT_DIR)) return [];
+  return fs.readdirSync(BLOG_CONTENT_DIR)
+    .filter(file => file.endsWith('.md'))
+    .map(file => {
+      const raw = fs.readFileSync(path.join(BLOG_CONTENT_DIR, file), 'utf8');
+      return parseBlogMarkdown(raw, file);
+    });
 }
 
 function htmlEscape(s) {
@@ -46,6 +63,241 @@ function xmlEscape(s) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+function slugifyHeading(text) {
+  return String(text)
+    .toLowerCase()
+    .replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g, 'and')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+function parseFrontMatterValue(value) {
+  const trimmed = String(value || '').trim();
+  if ((trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
+    return trimmed.slice(1, -1);
+  }
+  return trimmed;
+}
+
+function parseBlogMarkdown(raw, fileName) {
+  const match = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  const meta = {};
+  let body = raw;
+  if (match) {
+    body = match[2];
+    const lines = match[1].split('\n');
+    let currentArrayKey = null;
+    for (const line of lines) {
+      const arrayItem = line.match(/^\s+-\s+(.*)$/);
+      if (arrayItem && currentArrayKey) {
+        meta[currentArrayKey].push(parseFrontMatterValue(arrayItem[1]));
+        continue;
+      }
+      const kv = line.match(/^([A-Za-z0-9_-]+):\s*(.*)$/);
+      if (!kv) continue;
+      currentArrayKey = null;
+      const key = kv[1];
+      const value = kv[2];
+      if (value === '') {
+        meta[key] = [];
+        currentArrayKey = key;
+      } else {
+        meta[key] = parseFrontMatterValue(value);
+      }
+    }
+  }
+  const fallbackSlug = `/blog/${fileName.replace(/\.md$/, '')}/`;
+  return {
+    meta: {
+      ...meta,
+      slug: meta.slug || fallbackSlug,
+      tags: Array.isArray(meta.tags) ? meta.tags : [],
+      secondary_keywords: Array.isArray(meta.secondary_keywords) ? meta.secondary_keywords : [],
+    },
+    body,
+  };
+}
+
+function renderInlineMarkdown(text) {
+  let out = htmlEscape(text);
+  out = out.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  out = out.replace(/`([^`]+)`/g, '<code>$1</code>');
+  out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  out = out.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  out = out.replace(/(?<!href=")(https?:\/\/[^\s<"]+)/g, url => {
+    const cleanUrl = url.replace(/[).,]+$/, '');
+    const suffix = url.slice(cleanUrl.length);
+    return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>${htmlEscape(suffix)}`;
+  });
+  return out;
+}
+
+function highlightCode(code, lang) {
+  const escaped = htmlEscape(code);
+  if (lang === 'bash') {
+    return escaped.replace(/\b(flutter|pod)\b/g, '<span class="code-command">$1</span>');
+  }
+  if (lang === 'ruby') {
+    return escaped
+      .replace(/\b(do|end)\b/g, '<span class="code-keyword">$1</span>')
+      .replace(/\|([^|]+)\|/g, '<span class="code-var">|$1|</span>');
+  }
+  return escaped;
+}
+
+const migrationCallouts = [
+  {
+    test: text => /CocoaPods trunk will become read-only on December 2, 2026/i.test(text),
+    text: 'CocoaPods becomes read-only on December 2, 2026.',
+  },
+  {
+    test: text => /new Firebase releases will no longer be published through CocoaPods after October 2026/i.test(text),
+    text: 'Firebase stops publishing new CocoaPods releases in October 2026.',
+  },
+  {
+    test: text => /Starting with \*\*Flutter 3\.44\.0\*\*, Swift Package Manager becomes the default dependency manager/i.test(text),
+    text: 'Flutter 3.44 introduces Swift Package Manager by default.',
+  },
+  {
+    test: text => /Do not start by deleting the `Podfile`/i.test(text),
+    text: "Don't delete the Podfile immediately.",
+  },
+];
+
+function renderMigrationCallouts(paragraph) {
+  return migrationCallouts
+    .filter(callout => callout.test(paragraph))
+    .map(callout => `<aside class="callout"><strong>Migration note</strong><p>${htmlEscape(callout.text)}</p></aside>`)
+    .join('\n');
+}
+
+function renderBlogArticleMarkdown(body) {
+  const lines = body.replace(/\r\n/g, '\n').split('\n');
+  const html = [];
+  const toc = [];
+  let paragraph = [];
+  let list = null;
+  let code = null;
+  let codeIndex = 0;
+
+  function flushParagraph() {
+    if (!paragraph.length) return;
+    const text = paragraph.join(' ');
+    const callouts = renderMigrationCallouts(text);
+    html.push(`${callouts}${callouts ? '\n' : ''}<p>${renderInlineMarkdown(text)}</p>`);
+    paragraph = [];
+  }
+
+  function flushList() {
+    if (!list) return;
+    const tag = list.ordered ? 'ol' : 'ul';
+    html.push(`<${tag}${list.checklist ? ' class="checklist"' : ''}>${list.items.join('')}</${tag}>`);
+    list = null;
+  }
+
+  function flushCode() {
+    if (!code) return;
+    const id = `code-${++codeIndex}`;
+    const language = code.lang || 'text';
+    html.push(`<div class="code-block">
+      <div class="code-toolbar"><span>${htmlEscape(language)}</span><button type="button" data-copy-code="${id}">Copy</button></div>
+      <pre><code id="${id}" class="language-${htmlEscape(language)}">${highlightCode(code.lines.join('\n'), language)}</code></pre>
+    </div>`);
+    code = null;
+  }
+
+  for (const line of lines) {
+    const fence = line.match(/^```([A-Za-z0-9_-]*)\s*$/);
+    if (fence) {
+      if (code) {
+        flushCode();
+      } else {
+        flushParagraph();
+        flushList();
+        code = { lang: fence[1] || 'text', lines: [] };
+      }
+      continue;
+    }
+
+    if (code) {
+      code.lines.push(line);
+      continue;
+    }
+
+    if (/^\s*$/.test(line)) {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+
+    if (/^---\s*$/.test(line)) {
+      flushParagraph();
+      flushList();
+      html.push('<hr />');
+      continue;
+    }
+
+    const heading = line.match(/^(#{1,4})\s+(.+)$/);
+    if (heading) {
+      flushParagraph();
+      flushList();
+      const level = heading[1].length;
+      const rawText = heading[2].trim();
+      const id = slugifyHeading(rawText);
+      toc.push({ id, level, text: rawText.replace(/\*\*/g, '').replace(/`/g, '') });
+      html.push(`<h${level} id="${id}"><a class="heading-anchor" href="#${id}" aria-label="Link to ${htmlEscape(rawText)}">#</a>${renderInlineMarkdown(rawText)}</h${level}>`);
+      continue;
+    }
+
+    const checklistItem = line.match(/^- \[ \]\s+(.+)$/);
+    if (checklistItem) {
+      flushParagraph();
+      if (!list || list.ordered || !list.checklist) {
+        flushList();
+        list = { ordered: false, checklist: true, items: [] };
+      }
+      list.items.push(`<li><label><input type="checkbox" /> <span>${renderInlineMarkdown(checklistItem[1])}</span></label></li>`);
+      continue;
+    }
+
+    const bullet = line.match(/^-\s+(.+)$/);
+    if (bullet) {
+      flushParagraph();
+      if (!list || list.ordered || list.checklist) {
+        flushList();
+        list = { ordered: false, checklist: false, items: [] };
+      }
+      const itemText = bullet[1];
+      const callouts = renderMigrationCallouts(itemText);
+      if (callouts) html.push(callouts);
+      list.items.push(`<li>${renderInlineMarkdown(itemText)}</li>`);
+      continue;
+    }
+
+    const numbered = line.match(/^\d+\.\s+(.+)$/);
+    if (numbered) {
+      flushParagraph();
+      if (!list || !list.ordered) {
+        flushList();
+        list = { ordered: true, checklist: false, items: [] };
+      }
+      list.items.push(`<li>${renderInlineMarkdown(numbered[1])}</li>`);
+      continue;
+    }
+
+    paragraph.push(line.trim());
+  }
+
+  flushParagraph();
+  flushList();
+  flushCode();
+
+  return { html: html.join('\n'), toc };
 }
 
 function safeWrite(filePath, content) {
@@ -337,6 +589,398 @@ function buildVersionCheckerWebPageLd(pageUrl) {
       url: SITE_URL + '/',
     },
   }, null, '\t\t\t');
+}
+
+function buildBlogBreadcrumbLd(pageUrl) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Flutter Releases', item: siteBaseUrl() + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: pageUrl },
+    ],
+  }, null, '\t\t\t');
+}
+
+function buildBlogWebPageLd(pageUrl) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'Flutter Releases Blog',
+    url: pageUrl,
+    description: 'Read Flutter release guides for latest Flutter versions, Dart SDK compatibility, release notes, SDK downloads, and version history.',
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'Flutter Releases',
+      url: SITE_URL + '/',
+    },
+  }, null, '\t\t\t');
+}
+
+function buildBlogCardHtml(post) {
+  return `<article class="blog-card">
+      <a href="${htmlEscape(post.href)}">
+        <img src="${htmlEscape(post.image)}" alt="" width="720" height="405" loading="lazy" />
+        <span>${htmlEscape(post.category)}</span>
+        <h2>${htmlEscape(post.title)}</h2>
+        <p>${htmlEscape(post.description)}</p>
+        <strong>Open resource →</strong>
+      </a>
+    </article>`;
+}
+
+function buildBlogPageHtml(posts, appAssetTags = '') {
+  const pageUrl = `${siteBaseUrl()}/blog/`;
+  const title = 'Flutter Releases Blog | Flutter Versions, Dart Compatibility & SDK Guides';
+  const desc = 'Read Flutter release guides for latest Flutter versions, Dart SDK compatibility, release notes, SDK downloads, and version history.';
+  const breadcrumbLd = buildBlogBreadcrumbLd(pageUrl);
+  const webPageLd = buildBlogWebPageLd(pageUrl);
+  const postsHtml = posts.length > 0
+    ? posts.map(buildBlogCardHtml).join('\n        ')
+    : `<section class="empty-state">
+        <h2>Articles are coming soon</h2>
+        <p>Add your article metadata and links to publish posts in this grid.</p>
+      </section>`;
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${htmlEscape(title)}</title>
+  <meta name="description" content="${htmlEscape(desc)}" />
+  <meta name="theme-color" content="#054D8E" />
+  <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
+  <meta name="yandex-verification" content="2b9226ee6947f0c0" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta property="og:title" content="${htmlEscape(title)}" />
+  <meta property="og:description" content="${htmlEscape(desc)}" />
+  <meta property="og:url" content="${pageUrl}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="${SITE_URL}/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${htmlEscape(title)}" />
+  <meta name="twitter:description" content="${htmlEscape(desc)}" />
+  <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
+  <link rel="canonical" href="${pageUrl}" />
+  <link rel="alternate" type="application/rss+xml" title="Flutter Releases Feed" href="${SITE_URL}/feed.xml" />
+  ${appAssetTags}
+  <script type="application/ld+json">
+    ${breadcrumbLd}
+  </script>
+  <script type="application/ld+json">
+    ${webPageLd}
+  </script>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if ((saved && saved === 'dark') || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch {}
+    })();
+  </script>
+  <style>
+    :root { color-scheme: light; --bg: #fafafa; --surface: #ffffff; --subtle: #f4f4f5; --border: #e4e4e7; --text: #18181b; --secondary: #71717a; --muted: #71717a; --accent: #0ea5e9; --row-hover: #f9fafb; }
+    .dark { color-scheme: dark; --bg: #09090b; --surface: #111113; --subtle: #18181b; --border: #27272a; --text: #fafafa; --secondary: #a1a1aa; --muted: #52525b; --accent: #38bdf8; --row-hover: #18181b; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header, footer, .hero { background: var(--surface); border-color: var(--border); }
+    header { border-bottom: 1px solid var(--border); }
+    nav, main, footer > div { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    nav { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
+    .brand { color: var(--text); }
+    .hero { border-bottom: 1px solid var(--border); }
+    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; font-weight: 700; margin: 0 0 0.75rem; }
+    h1 { font-size: 1.875rem; line-height: 1.2; margin: 0 0 0.5rem; }
+    .intro { max-width: 44rem; color: var(--secondary); margin: 0; }
+    main { padding-top: 2rem; padding-bottom: 2rem; }
+    .blog-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    .blog-card { overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+    .blog-card:hover { border-color: var(--accent); }
+    .blog-card a { display: block; color: inherit; }
+    .blog-card img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 1px solid var(--border); background: var(--subtle); }
+    .blog-card span { display: block; margin: 1rem 1rem 0.5rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; font-weight: 700; }
+    .blog-card h2 { margin: 0 1rem 0.5rem; color: var(--text); font-size: 1rem; line-height: 1.35; }
+    .blog-card p { margin: 0 1rem 1rem; color: var(--secondary); font-size: 0.875rem; }
+    .blog-card strong { display: inline-block; margin: 0 1rem 1rem; color: var(--accent); font-size: 0.875rem; }
+    .empty-state { grid-column: 1 / -1; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 1.5rem; }
+    .empty-state h2 { margin: 0 0 0.5rem; font-size: 1.125rem; color: var(--text); }
+    .empty-state p { margin: 0; max-width: 42rem; color: var(--secondary); font-size: 0.875rem; }
+    .js #static-seo { display: none; }
+    footer { border-top: 1px solid var(--border); }
+    footer > div { padding-top: 1.25rem; padding-bottom: 1.25rem; font-size: 0.8125rem; }
+    @media (max-width: 860px) { .blog-grid { grid-template-columns: 1fr; } nav { align-items: flex-start; padding-top: 1rem; padding-bottom: 1rem; flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <script>document.documentElement.classList.add('js');</script>
+  <div id="root"></div>
+  <div id="static-seo">
+    <header>
+      <nav>
+        <a class="brand" href="${SITE_URL}/"><strong>Flutter Releases</strong></a>
+        <div class="links">
+          <a href="${SITE_URL}/">Releases</a>
+          <a href="${SITE_URL}/flutter-versions/">Flutter Versions</a>
+          <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
+          <a href="${SITE_URL}/blog/">Blog</a>
+        </div>
+      </nav>
+    </header>
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">Flutter Releases Blog</p>
+        <h1>Flutter release guides</h1>
+        <p class="intro">${htmlEscape(desc)}</p>
+      </div>
+    </section>
+    <main>
+      <section class="blog-grid">
+        ${postsHtml}
+      </section>
+    </main>
+    <footer>
+      <div>
+        <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a></p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>`;
+}
+
+function buildBlogArticleBreadcrumbLd(article, pageUrl) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Flutter Releases', item: siteBaseUrl() + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: siteBaseUrl() + '/blog/' },
+      { '@type': 'ListItem', position: 3, name: article.meta.title, item: pageUrl },
+    ],
+  }, null, '\t\t\t');
+}
+
+function buildBlogArticleLd(article, pageUrl, generatedAt) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.meta.title,
+    description: article.meta.meta_description || article.meta.subtitle || '',
+    url: pageUrl,
+    mainEntityOfPage: pageUrl,
+    image: `${siteBaseUrl()}/blog/flutter-cocoapods-to-swift-package-manager-migration.svg`,
+    datePublished: generatedAt,
+    dateModified: generatedAt,
+    author: {
+      '@type': 'Person',
+      name: 'Shankar Madeshvaran',
+      url: 'https://amshankar.com',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Flutter Releases',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteBaseUrl()}/android-chrome-512x512.png`,
+      },
+    },
+    keywords: [
+      article.meta.primary_keyword,
+      ...(article.meta.secondary_keywords || []),
+      ...(article.meta.tags || []),
+    ].filter(Boolean),
+  }, null, '\t\t\t');
+}
+
+function buildTocHtml(toc) {
+  const items = toc
+    .filter(item => item.level > 1 && item.level < 4)
+    .map(item => `<li class="toc-level-${item.level}"><a href="#${htmlEscape(item.id)}">${htmlEscape(item.text)}</a></li>`)
+    .join('\n');
+  return `<nav class="toc" aria-label="Table of contents">
+      <h2>Table of contents</h2>
+      <ol>
+${items}
+      </ol>
+    </nav>`;
+}
+
+function buildBlogArticlePageHtml(article, generatedAt) {
+  const pageUrl = `${siteBaseUrl()}${article.meta.slug}`;
+  const title = article.meta.meta_title || article.meta.title;
+  const desc = article.meta.meta_description || article.meta.subtitle || '';
+  const body = article.body.replace(new RegExp(`^\\s*#\\s+${article.meta.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\\n+`), '');
+  const rendered = renderBlogArticleMarkdown(body);
+  const breadcrumbLd = buildBlogArticleBreadcrumbLd(article, pageUrl);
+  const articleLd = buildBlogArticleLd(article, pageUrl, generatedAt);
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${htmlEscape(title)}</title>
+  <meta name="description" content="${htmlEscape(desc)}" />
+  <meta name="theme-color" content="#054D8E" />
+  <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
+  <meta name="yandex-verification" content="2b9226ee6947f0c0" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta property="og:title" content="${htmlEscape(title)}" />
+  <meta property="og:description" content="${htmlEscape(desc)}" />
+  <meta property="og:url" content="${pageUrl}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="${SITE_URL}/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${htmlEscape(title)}" />
+  <meta name="twitter:description" content="${htmlEscape(desc)}" />
+  <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
+  <link rel="canonical" href="${pageUrl}" />
+  <link rel="alternate" type="application/rss+xml" title="Flutter Releases Feed" href="${SITE_URL}/feed.xml" />
+  <script type="application/ld+json">
+    ${breadcrumbLd}
+  </script>
+  <script type="application/ld+json">
+    ${articleLd}
+  </script>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if ((saved && saved === 'dark') || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch {}
+    })();
+  </script>
+  <style>
+    :root { color-scheme: light; --bg: #fafafa; --surface: #ffffff; --subtle: #f4f4f5; --border: #e4e4e7; --text: #18181b; --secondary: #52525b; --muted: #71717a; --accent: #0ea5e9; --accent-hover: #0284c7; --code-bg: #0b1220; --code-text: #e5e7eb; --callout-bg: #e0f2fe; --callout-border: #0ea5e9; --callout-text: #0c4a6e; }
+    .dark { color-scheme: dark; --bg: #09090b; --surface: #111113; --subtle: #18181b; --border: #27272a; --text: #fafafa; --secondary: #a1a1aa; --muted: #71717a; --accent: #38bdf8; --accent-hover: #7dd3fc; --code-bg: #020617; --code-text: #e5e7eb; --callout-bg: #082f49; --callout-border: #38bdf8; --callout-text: #bae6fd; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    header, footer, .article-hero { background: var(--surface); border-color: var(--border); }
+    header { border-bottom: 1px solid var(--border); }
+    nav, footer > div, .article-hero > div, main { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    nav { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
+    .brand { color: var(--text); }
+    .article-hero { border-bottom: 1px solid var(--border); }
+    .article-hero > div { padding-top: 2.75rem; padding-bottom: 2.75rem; }
+    .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; font-weight: 700; margin: 0 0 0.75rem; }
+    h1 { max-width: 820px; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.05; margin: 0 0 1rem; letter-spacing: -0.02em; }
+    .subtitle { max-width: 760px; color: var(--secondary); margin: 0 0 1rem; font-size: 1rem; }
+    .meta { display: flex; flex-wrap: wrap; gap: 0.75rem; color: var(--muted); font-size: 0.875rem; }
+    main { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 760px); gap: 3rem; padding-top: 2rem; padding-bottom: 3rem; align-items: start; }
+    .toc { position: sticky; top: 5rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 1rem; }
+    .toc h2 { font-size: 0.875rem; margin: 0 0 0.75rem; color: var(--text); }
+    .toc ol { list-style: none; margin: 0; padding: 0; }
+    .toc li { margin: 0.45rem 0; font-size: 0.8125rem; line-height: 1.35; }
+    .toc-level-3 { padding-left: 0.75rem; }
+    article { min-width: 0; }
+    article h2, article h3, article h4 { line-height: 1.25; margin: 2rem 0 0.75rem; letter-spacing: -0.01em; }
+    article h2 { font-size: 1.55rem; }
+    article h3 { font-size: 1.2rem; }
+    article h4 { font-size: 1rem; }
+    .heading-anchor { float: left; width: 1.25rem; margin-left: -1.25rem; opacity: 0; color: var(--accent); }
+    h2:hover .heading-anchor, h3:hover .heading-anchor, h4:hover .heading-anchor { opacity: 1; }
+    article p, article li { color: var(--secondary); }
+    article p { margin: 0 0 1rem; }
+    article ul, article ol { padding-left: 1.25rem; margin: 0 0 1.25rem; }
+    article code:not(pre code) { border: 1px solid var(--border); border-radius: 5px; background: var(--subtle); padding: 0.1rem 0.3rem; font-size: 0.9em; color: var(--text); }
+    hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
+    .callout { border: 1px solid var(--callout-border); border-left-width: 4px; border-radius: 8px; background: var(--callout-bg); color: var(--callout-text); padding: 1rem; margin: 1.25rem 0; }
+    .callout strong { display: block; margin-bottom: 0.25rem; color: var(--callout-text); }
+    .callout p { margin: 0; color: var(--callout-text); }
+    .code-block { overflow: hidden; border: 1px solid var(--border); border-radius: 8px; margin: 1rem 0 1.5rem; background: var(--code-bg); }
+    .code-toolbar { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.12); padding: 0.5rem 0.75rem; color: #94a3b8; font-size: 0.75rem; }
+    .code-toolbar button { border: 1px solid rgba(255,255,255,0.18); border-radius: 6px; background: rgba(255,255,255,0.06); color: #e5e7eb; cursor: pointer; font-size: 0.75rem; padding: 0.25rem 0.55rem; }
+    pre { overflow-x: auto; margin: 0; padding: 1rem; color: var(--code-text); }
+    pre code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, ui-monospace, monospace; font-size: 0.875rem; }
+    .code-command { color: #7dd3fc; font-weight: 700; }
+    .code-keyword { color: #c084fc; font-weight: 700; }
+    .code-var { color: #facc15; }
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li { margin: 0.5rem 0; }
+    .checklist label { display: flex; align-items: flex-start; gap: 0.55rem; }
+    .checklist input { margin-top: 0.35rem; accent-color: var(--accent); }
+    footer { border-top: 1px solid var(--border); }
+    footer > div { padding-top: 1.25rem; padding-bottom: 1.25rem; color: var(--muted); font-size: 0.8125rem; }
+    @media (max-width: 900px) { main { display: block; } .toc { position: static; margin-bottom: 2rem; } nav { align-items: flex-start; padding-top: 1rem; padding-bottom: 1rem; flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a class="brand" href="${SITE_URL}/"><strong>Flutter Releases</strong></a>
+      <div class="links">
+        <a href="${SITE_URL}/">Releases</a>
+        <a href="${SITE_URL}/flutter-versions/">Flutter Versions</a>
+        <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
+        <a href="${SITE_URL}/blog/">Blog</a>
+      </div>
+    </nav>
+  </header>
+  <section class="article-hero">
+    <div>
+      <p class="eyebrow">${htmlEscape(article.meta.primary_keyword || 'Flutter iOS migration')}</p>
+      <h1>${htmlEscape(article.meta.title)}</h1>
+      <p class="subtitle">${htmlEscape(article.meta.subtitle || '')}</p>
+      <div class="meta">
+        ${article.meta.reading_time ? `<span>${htmlEscape(article.meta.reading_time)} read</span>` : ''}
+        <span>FlutterReleases Blog</span>
+      </div>
+    </div>
+  </section>
+  <main>
+    ${buildTocHtml(rendered.toc)}
+    <article>
+${rendered.html}
+    </article>
+  </main>
+  <footer>
+    <div>
+      <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/blog/">Blog</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a></p>
+    </div>
+  </footer>
+  <script>
+    for (const button of document.querySelectorAll('[data-copy-code]')) {
+      button.addEventListener('click', async () => {
+        const target = document.getElementById(button.getAttribute('data-copy-code'));
+        if (!target) return;
+        try {
+          await navigator.clipboard.writeText(target.textContent || '');
+          button.textContent = 'Copied';
+          window.setTimeout(() => { button.textContent = 'Copy'; }, 1400);
+        } catch {
+          button.textContent = 'Copy failed';
+          window.setTimeout(() => { button.textContent = 'Copy'; }, 1400);
+        }
+      });
+    }
+  </script>
+</body>
+</html>`;
 }
 
 const COMPAT_CHANNEL_ORDER = { stable: 0, beta: 1, dev: 2, main: 3 };
@@ -939,7 +1583,7 @@ function buildPageHtml(release, items = []) {
 }
 
 // Build sitemap with per-release URLs
-function buildSitemapXml(items, generatedAt) {
+function buildSitemapXml(items, generatedAt, blogPosts = []) {
   const baseUrl = SITE_URL.replace(/\/$/, '');
   const lm = (generatedAt ? new Date(generatedAt) : new Date()).toISOString();
   const lines = [];
@@ -958,6 +1602,7 @@ function buildSitemapXml(items, generatedAt) {
   for (const [path_, freq, pri] of [
     ['/flutter-versions/', 'daily', '0.9'],
     ['/tools/flutter-version-checker/', 'daily', '0.8'],
+    ['/blog/', 'weekly', '0.7'],
     ['/feed.xml', 'daily', '0.5'],
     ['/releases.json', 'daily', '0.6'],
     ['/llms.txt', 'monthly', '0.3'],
@@ -969,6 +1614,16 @@ function buildSitemapXml(items, generatedAt) {
     if (freq === 'daily') lines.push(`    <lastmod>${lm}</lastmod>`);
     lines.push(`    <changefreq>${freq}</changefreq>`);
     lines.push(`    <priority>${pri}</priority>`);
+    lines.push('  </url>');
+  }
+
+  for (const post of blogPosts) {
+    if (!post.href || !post.href.startsWith('/blog/')) continue;
+    lines.push('  <url>');
+    lines.push(`    <loc>${baseUrl}${post.href}</loc>`);
+    lines.push(`    <lastmod>${lm}</lastmod>`);
+    lines.push('    <changefreq>monthly</changefreq>');
+    lines.push('    <priority>0.6</priority>');
     lines.push('  </url>');
   }
 
@@ -1146,6 +1801,8 @@ function buildLlmsFullTxt(items, generatedAt) {
 async function run() {
   console.log('Reading releases.json...');
   let items;
+  const blogPosts = readBlogPosts();
+  const blogArticles = readBlogArticles();
   try {
     items = readReleasesJson();
   } catch (e) {
@@ -1162,7 +1819,7 @@ async function run() {
   if (DRY_RUN) {
     console.log('Dry-run: skipping file writes.');
     console.log(`Would generate ${toProcess.length} HTML pages`);
-    console.log(`Would update sitemap.xml with ${items.length + 7} URLs`);
+    console.log(`Would update sitemap.xml with ${items.filter(r => r.version).length + 8 + blogPosts.length} URLs`);
     return;
   }
 
@@ -1189,14 +1846,14 @@ async function run() {
 
   // Update sitemap.xml in both dist and public
   const generatedAt = new Date().toISOString();
-  const sitemapXml = buildSitemapXml(items, generatedAt);
+  const sitemapXml = buildSitemapXml(items, generatedAt, blogPosts);
 
   const sitemapDist = path.join(DIST_DIR, 'sitemap.xml');
   const sitemapPublic = path.join(PUBLIC_DIR, 'sitemap.xml');
   if (fs.existsSync(DIST_DIR)) safeWrite(sitemapDist, sitemapXml);
   safeWrite(sitemapPublic, sitemapXml);
 
-  const urlCount = items.length + 7;
+  const urlCount = items.filter(r => r.version).length + 8 + blogPosts.length;
   console.log(`Updated sitemap.xml with ${urlCount} URLs`);
 
   // Generate Flutter versions SEO page in dist only. It is a route page, so
@@ -1212,6 +1869,24 @@ async function run() {
     safeWrite(path.join(DIST_DIR, 'tools', 'flutter-version-checker', 'index.html'), versionCheckerHtml);
   }
   console.log('Generated tools/flutter-version-checker/index.html');
+
+  const blogHtml = buildBlogPageHtml(blogPosts, buildAppAssetTags());
+  if (fs.existsSync(DIST_DIR)) {
+    safeWrite(path.join(DIST_DIR, 'blog', 'index.html'), blogHtml);
+  }
+  console.log('Generated blog/index.html');
+
+  let generatedBlogArticles = 0;
+  for (const article of blogArticles) {
+    const slug = String(article.meta.slug || '').replace(/^\/+|\/+$/g, '');
+    if (!slug) continue;
+    const articleHtml = buildBlogArticlePageHtml(article, generatedAt);
+    if (fs.existsSync(DIST_DIR)) {
+      safeWrite(path.join(DIST_DIR, slug, 'index.html'), articleHtml);
+      generatedBlogArticles++;
+    }
+  }
+  console.log(`Generated ${generatedBlogArticles} blog article pages`);
 
   // Generate llms-full.txt in both dist and public
   const llmsFullTxt = buildLlmsFullTxt(items, generatedAt);

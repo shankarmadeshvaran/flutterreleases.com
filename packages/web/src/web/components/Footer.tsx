@@ -1,5 +1,34 @@
 import { trackEvent } from "../lib/analytics";
 
+const footerGroups = [
+  {
+    title: "Product",
+    links: [
+      { label: "Releases", href: "/" },
+      { label: "Flutter Versions", href: "/flutter-versions/" },
+      { label: "Compatibility Checker", href: "/tools/flutter-version-checker/" },
+      { label: "Blog", href: "/blog/" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { label: "JSON API", href: "/releases.json", external: true },
+      { label: "RSS Feed", href: "/feed.xml", external: true },
+      { label: "Sitemap", href: "/sitemap.xml", external: true },
+      { label: "Official Flutter Archive", href: "https://docs.flutter.dev/release/archive", external: true },
+    ],
+  },
+  {
+    title: "Community",
+    links: [
+      { label: "GitHub", href: "https://github.com/shankarmadeshvaran/flutterreleases.com", external: true },
+      { label: "X Contact", href: "https://x.com/devinmaking", external: true },
+      { label: "Donate", href: "https://buymeacoffee.com/shankarmadeshvaran", external: true },
+    ],
+  },
+];
+
 export function Footer() {
   const trackFooterLink = (
     label: string,
@@ -22,132 +51,58 @@ export function Footer() {
         backgroundColor: "var(--bg-surface)",
       }}
     >
-      <div className="max-w-[1200px] mx-auto px-6 py-5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-        <div className="max-w-2xl">
-          <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-            Made with ❤️ by{" "}
+      <div className="max-w-[1200px] mx-auto px-6 py-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+          <div className="md:col-span-1">
             <a
-              href="https://x.com/devinmaking"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() =>
-                trackFooterLink("Creator X Profile", "https://x.com/devinmaking", true)
-              }
-              className="transition-colors duration-150"
-              style={{ color: "var(--accent)" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent-hover)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--accent)")}
+              href="/"
+              onClick={() => trackFooterLink("Footer Brand", "/")}
+              className="inline-flex items-center text-sm font-semibold no-underline transition-colors duration-150"
+              style={{ color: "var(--text-primary)" }}
             >
-              @devinmaking
+              Flutter Releases
             </a>
-            {" "}— Not an official Google website. A free resource for the Flutter community.
-          </p>
+            <p className="mt-3 max-w-xs text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+              Flutter SDK versions, Dart compatibility, downloads, and release notes in one place.
+            </p>
+            <p className="mt-3 text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
+              Not an official Google website. Built for the Flutter community.
+            </p>
+          </div>
+
+          {footerGroups.map((group) => (
+            <div key={group.title}>
+              <h2 className="mb-3 text-sm font-semibold" style={{ color: "var(--accent)" }}>
+                {group.title}
+              </h2>
+              <ul className="m-0 list-none space-y-2 p-0">
+                {group.links.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      target={link.external ? "_blank" : undefined}
+                      rel={link.external ? "noopener noreferrer" : undefined}
+                      onClick={() => trackFooterLink(link.label, link.href, Boolean(link.external))}
+                      className="text-sm transition-colors duration-150"
+                      style={{ color: "var(--text-secondary)" }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        <div className="flex items-center gap-x-4 gap-y-2 text-xs flex-wrap lg:justify-end" style={{ color: "var(--text-muted)" }}>
-          {/* Twitter/X */}
-          <a
-            href="https://x.com/devinmaking"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() =>
-              trackFooterLink("X Profile", "https://x.com/devinmaking", true)
-            }
-            className="flex items-center gap-1 transition-colors duration-150"
-            style={{ color: "var(--text-muted)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
-            title="Follow on X (Twitter) for updates and issues"
-          >
-            {/* X logo */}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.26 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-            @devinmaking
-          </a>
-          <a
-            href="/flutter-versions/"
-            onClick={() => trackFooterLink("Flutter Versions", "/flutter-versions/")}
-            className="transition-colors duration-150"
-            style={{ color: "var(--text-muted)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
-          >
-            Flutter Versions
-          </a>
-          <a
-            href="/tools/flutter-version-checker/"
-            onClick={() =>
-              trackFooterLink(
-                "Flutter Dart Compatibility Checker",
-                "/tools/flutter-version-checker/",
-              )
-            }
-            className="transition-colors duration-150"
-            style={{ color: "var(--text-muted)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
-          >
-            Compatibility Checker
-          </a>
-          <a
-            href="/releases.json"
-            target="_blank"
-            onClick={() => trackFooterLink("JSON API", "/releases.json")}
-            className="transition-colors duration-150"
-            style={{ color: "var(--text-muted)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
-          >
-            JSON API
-          </a>
-          <a
-            href="/feed.xml"
-            target="_blank"
-            onClick={() => trackFooterLink("RSS", "/feed.xml")}
-            className="transition-colors duration-150"
-            style={{ color: "var(--text-muted)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
-          >
-            RSS
-          </a>
-          <a
-            href="https://github.com/shankarmadeshvaran/flutterreleases.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() =>
-              trackFooterLink(
-                "GitHub",
-                "https://github.com/shankarmadeshvaran/flutterreleases.com",
-                true,
-              )
-            }
-            className="transition-colors duration-150"
-            style={{ color: "var(--text-muted)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
-          >
-            GitHub
-          </a>
-          <a
-            href="https://buymeacoffee.com/shankarmadeshvaran"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() =>
-              trackFooterLink(
-                "Donate",
-                "https://buymeacoffee.com/shankarmadeshvaran",
-                true,
-              )
-            }
-            className="transition-colors duration-150"
-            style={{ color: "var(--text-muted)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
-          >
-            ☕ Donate
-          </a>
+        <div
+          className="mt-8 flex flex-col gap-2 border-t pt-5 text-xs sm:flex-row sm:items-center sm:justify-between"
+          style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}
+        >
+          <p>Made by Shankar Madeshvaran.</p>
+          <p>Updated automatically from Flutter release data.</p>
         </div>
       </div>
     </footer>

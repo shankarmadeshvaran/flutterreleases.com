@@ -112,6 +112,18 @@ export function Hero({ latestStable, latestBeta, loading = false }: HeroProps) {
             >
               Compatibility Checker
             </a>
+            <a
+              href="/blog/"
+              onClick={() => trackEvent("Navigation Click", {
+                label: "Blog",
+                href: "/blog/",
+                location: "hero_trust_cue",
+              })}
+              className="transition-colors duration-150"
+              style={{ color: "var(--accent)" }}
+            >
+              Blog
+            </a>
             <span>Not an official Google resource</span>
             <span>Free for the Flutter community</span>
           </div>

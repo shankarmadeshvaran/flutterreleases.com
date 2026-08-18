@@ -1,0 +1,10 @@
+[
+  {
+    "title": "Flutter CocoaPods to Swift Package Manager Migration Guide",
+    "description": "Learn how to migrate an existing Flutter iOS application from CocoaPods to Swift Package Manager using Flutter 3.44.",
+    "image": "/blog/flutter-cocoapods-to-swift-package-manager-migration.svg",
+    "href": "/blog/flutter-cocoapods-to-swift-package-manager-migration/",
+    "category": "iOS Migration",
+    "readingTime": "12 min"
+  }
+]

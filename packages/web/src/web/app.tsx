@@ -3,6 +3,7 @@ import { Route, Switch } from "wouter";
 import Index from "./pages/index";
 import FlutterVersions from "./pages/flutter-versions";
 import FlutterVersionChecker from "./pages/flutter-version-checker";
+import BlogPage from "./pages/blog";
 import { Provider } from "./components/provider";
 
 function ReleaseRedirect() {
@@ -34,6 +35,8 @@ function App() {
         <Route path="/release/:version" component={ReleaseRedirect} />
         <Route path="/tools/flutter-version-checker/" component={FlutterVersionChecker} />
         <Route path="/tools/flutter-version-checker" component={FlutterVersionChecker} />
+        <Route path="/blog/" component={BlogPage} />
+        <Route path="/blog" component={BlogPage} />
         <Route path="/flutter-versions/" component={FlutterVersions} />
         <Route path="/flutter-versions" component={FlutterVersions} />
         <Route path="/" component={Index} />
