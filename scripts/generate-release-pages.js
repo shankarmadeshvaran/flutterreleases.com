@@ -696,9 +696,9 @@ function buildBlogPageHtml(posts, appAssetTags = '') {
     a:hover { text-decoration: underline; }
     header, footer, .hero { background: var(--surface); border-color: var(--border); }
     header { border-bottom: 1px solid var(--border); }
-    nav, main, footer > div { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-    nav { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-    nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
+    .site-nav, main, footer > div { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    .site-nav { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .site-nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
     .brand { color: var(--text); }
     .hero { border-bottom: 1px solid var(--border); }
     .hero-inner { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; }
@@ -721,7 +721,7 @@ function buildBlogPageHtml(posts, appAssetTags = '') {
     .js #static-seo { display: none; }
     footer { border-top: 1px solid var(--border); }
     footer > div { padding-top: 1.25rem; padding-bottom: 1.25rem; font-size: 0.8125rem; }
-    @media (max-width: 860px) { .blog-grid { grid-template-columns: 1fr; } nav { align-items: flex-start; padding-top: 1rem; padding-bottom: 1rem; flex-direction: column; } }
+    @media (max-width: 860px) { .blog-grid { grid-template-columns: 1fr; } .site-nav { align-items: flex-start; padding-top: 1rem; padding-bottom: 1rem; flex-direction: column; } }
   </style>
 </head>
 <body>
@@ -729,7 +729,7 @@ function buildBlogPageHtml(posts, appAssetTags = '') {
   <div id="root"></div>
   <div id="static-seo">
     <header>
-      <nav>
+      <nav class="site-nav">
         <a class="brand" href="${SITE_URL}/"><strong>Flutter Releases</strong></a>
         <div class="links">
           <a href="${SITE_URL}/">Releases</a>
@@ -881,9 +881,9 @@ function buildBlogArticlePageHtml(article, generatedAt) {
     a:hover { color: var(--accent-hover); text-decoration: underline; }
     header, footer, .article-hero { background: var(--surface); border-color: var(--border); }
     header { border-bottom: 1px solid var(--border); }
-    nav, footer > div, .article-hero > div, main { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-    nav { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-    nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
+    .site-nav, footer > div, .article-hero > div, main { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    .site-nav { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .site-nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
     .brand { color: var(--text); }
     .article-hero { border-bottom: 1px solid var(--border); }
     .article-hero > div { padding-top: 2.75rem; padding-bottom: 2.75rem; }
@@ -892,7 +892,7 @@ function buildBlogArticlePageHtml(article, generatedAt) {
     .subtitle { max-width: 760px; color: var(--secondary); margin: 0 0 1rem; font-size: 1rem; }
     .meta { display: flex; flex-wrap: wrap; gap: 0.75rem; color: var(--muted); font-size: 0.875rem; }
     main { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 760px); gap: 3rem; padding-top: 2rem; padding-bottom: 3rem; align-items: start; }
-    .toc { position: sticky; top: 5rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 1rem; }
+    .toc { position: sticky; top: 5rem; display: block; max-height: calc(100vh - 7rem); overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 1rem; }
     .toc h2 { font-size: 0.875rem; margin: 0 0 0.75rem; color: var(--text); }
     .toc ol { list-style: none; margin: 0; padding: 0; }
     .toc li { margin: 0.45rem 0; font-size: 0.8125rem; line-height: 1.35; }
@@ -926,12 +926,12 @@ function buildBlogArticlePageHtml(article, generatedAt) {
     .checklist input { margin-top: 0.35rem; accent-color: var(--accent); }
     footer { border-top: 1px solid var(--border); }
     footer > div { padding-top: 1.25rem; padding-bottom: 1.25rem; color: var(--muted); font-size: 0.8125rem; }
-    @media (max-width: 900px) { main { display: block; } .toc { position: static; margin-bottom: 2rem; } nav { align-items: flex-start; padding-top: 1rem; padding-bottom: 1rem; flex-direction: column; } }
+    @media (max-width: 900px) { main { display: block; } .toc { position: static; max-height: none; margin-bottom: 2rem; } .site-nav { align-items: flex-start; padding-top: 1rem; padding-bottom: 1rem; flex-direction: column; } }
   </style>
 </head>
 <body>
   <header>
-    <nav>
+    <nav class="site-nav">
       <a class="brand" href="${SITE_URL}/"><strong>Flutter Releases</strong></a>
       <div class="links">
         <a href="${SITE_URL}/">Releases</a>
@@ -948,7 +948,6 @@ function buildBlogArticlePageHtml(article, generatedAt) {
       <p class="subtitle">${htmlEscape(article.meta.subtitle || '')}</p>
       <div class="meta">
         ${article.meta.reading_time ? `<span>${htmlEscape(article.meta.reading_time)} read</span>` : ''}
-        <span>FlutterReleases Blog</span>
       </div>
     </div>
   </section>
