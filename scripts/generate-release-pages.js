@@ -427,6 +427,7 @@ function buildVersionCheckerPageHtml(items, generatedAt, appAssetTags = '') {
   <meta name="theme-color" content="#054D8E" />
   <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
   <meta name="yandex-verification" content="2b9226ee6947f0c0" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -665,6 +666,7 @@ ${rows}
   <meta name="theme-color" content="#054D8E" />
   <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
   <meta name="yandex-verification" content="2b9226ee6947f0c0" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -870,6 +872,7 @@ function buildPageHtml(release, items = []) {
   <meta name="theme-color" content="#054D8E" />
   <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
   <meta name="yandex-verification" content="2b9226ee6947f0c0" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -973,7 +976,7 @@ function buildSitemapXml(items, generatedAt) {
   const priorityMap = { stable: '0.8', beta: '0.6', dev: '0.4', main: '0.3' };
   const changeMap = { stable: 'monthly', beta: 'weekly', dev: 'weekly', main: 'daily' };
 
-  for (const r of items) {
+  for (const r of items.filter(r => r.version)) {
     const pri = priorityMap[r.channel] || '0.4';
     const freq = changeMap[r.channel] || 'monthly';
     const lastmod = r.released ? new Date(r.released).toISOString() : lm;
@@ -1063,6 +1066,7 @@ function buildLinksHtml(items, generatedAt) {
   <meta name="description" content="Complete index of all Flutter SDK releases across stable, beta, dev, and main channels. ${items.length} releases total. Updated ${date}." />
   <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
   <meta name="yandex-verification" content="2b9226ee6947f0c0" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />

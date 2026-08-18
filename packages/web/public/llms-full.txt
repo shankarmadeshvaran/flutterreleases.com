@@ -2,13 +2,14 @@
 
 > Complete list of all Flutter stable releases with Dart SDK versions, dates, and download links.
 > Source: https://flutterreleases.com/releases.json
-> Updated: 2026-08-11
-> Total stable releases: 186
+> Updated: 2026-08-18
+> Total stable releases: 187
 
 ## Stable Releases
 
 | Version | Dart SDK | Released | Type | macOS arm64 | Windows | Linux |
 |---------|----------|----------|------|------------|---------|-------|
+| 3.47.0 | 3.13.0 | 2026-08-12 | Release | https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.47.0-stable.zip | https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_3.47.0-stable.zip | https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.47.0-stable.tar.xz |
 | 3.44.9 | 3.12.2 | 2026-08-06 | Hotfix | https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.44.9-stable.zip | https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_3.44.9-stable.zip | https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.9-stable.tar.xz |
 | 3.44.8 | 3.12.2 | 2026-07-23 | Hotfix | https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.44.8-stable.zip | https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_3.44.8-stable.zip | https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.8-stable.tar.xz |
 | 3.44.7 | 3.12.2 | 2026-07-20 | Hotfix | https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.44.7-stable.zip | https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_3.44.7-stable.zip | https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.7-stable.tar.xz |
