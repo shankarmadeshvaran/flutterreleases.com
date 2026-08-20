@@ -169,6 +169,10 @@ assertIncludes(
   `<link rel="canonical" href="${SITE_URL}/release/${encodeURIComponent(latestStable.version)}/" />`,
   `release canonical for ${latestStable.version}`
 );
+assert.ok(
+  !releaseHtml.includes('window.location.replace'),
+  `release page must not client-side redirect for ${latestStable.version}`
+);
 assertIncludes(
   releaseHtml,
   `Flutter ${latestStable.version} Release — Dart ${latestStable.dart_version}, Downloads &amp; Release Notes`,

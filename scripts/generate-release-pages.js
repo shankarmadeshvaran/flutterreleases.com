@@ -1544,14 +1544,6 @@ function buildPageHtml(release, items = []) {
   <script type="application/ld+json">
     ${breadcrumbLd}
   </script>
-  <!-- Redirect to main SPA for interactive experience -->
-  <script>
-    // Redirect to SPA root — the React app handles /release/:version routing
-    if (typeof window !== 'undefined') {
-      var v = window.location.pathname.replace('/release/', '').replace(/[/]$/, '');
-      window.location.replace('/?v=' + encodeURIComponent(v) + '#release');
-    }
-  </script>
 </head>
 <body>
   <!-- Static content for crawlers (no JS required) -->
