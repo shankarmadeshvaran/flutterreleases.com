@@ -101,7 +101,22 @@ export function Footer() {
           className="mt-8 flex flex-col gap-2 border-t pt-5 text-xs sm:flex-row sm:items-center sm:justify-between"
           style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}
         >
-          <p>Made by Shankar Madeshvaran.</p>
+          <p>
+            Made by{" "}
+            <a
+              href="https://x.com/devinmaking"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackFooterLink("Footer Author", "https://x.com/devinmaking", true)}
+              className="transition-colors duration-150"
+              style={{ color: "var(--text-secondary)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
+            >
+              Shankar Madeshvaran
+            </a>
+            .
+          </p>
           <p>Updated automatically from Flutter release data.</p>
         </div>
       </div>
