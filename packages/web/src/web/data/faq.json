@@ -1,0 +1,82 @@
+[
+  {
+    "question": "Is FlutterReleases an official Flutter or Google website?",
+    "answer": "No. FlutterReleases is an independent community resource for finding Flutter SDK releases, Dart SDK compatibility, downloads, and release notes. Official downloads remain available in Flutter's release archive.",
+    "links": [
+      {
+        "label": "Flutter release archive",
+        "href": "https://docs.flutter.dev/release/archive"
+      }
+    ]
+  },
+  {
+    "question": "Where does the release data come from?",
+    "answer": "Release data is generated from releases.json, which is updated by the crawler from Flutter release sources, SDK archive data, and release-note references. Pages are generated from that same data instead of manually maintained release tables."
+  },
+  {
+    "question": "How often is FlutterReleases updated?",
+    "answer": "The release crawler runs automatically through GitHub Actions. When release data changes, generated files such as release pages, the Flutter versions hub, feed, sitemap, links page, and compatibility data are refreshed from releases.json."
+  },
+  {
+    "question": "How do I find the latest stable Flutter version?",
+    "answer": "The homepage and Flutter Versions page both show the latest stable Flutter SDK from the current release data.",
+    "links": [
+      {
+        "label": "Flutter Versions",
+        "href": "/flutter-versions/"
+      }
+    ]
+  },
+  {
+    "question": "How do I check which Dart SDK version ships with a Flutter version?",
+    "answer": "Use the Flutter and Dart compatibility checker. It reads the same release dataset and shows the Dart SDK bundled with each Flutter release, including stable, beta, dev, and prerelease channels.",
+    "links": [
+      {
+        "label": "Flutter Dart compatibility checker",
+        "href": "/tools/flutter-version-checker/"
+      }
+    ]
+  },
+  {
+    "question": "Can one Dart SDK version map to multiple Flutter releases?",
+    "answer": "Yes. Flutter patch releases and prerelease builds can bundle the same Dart SDK version. The compatibility checker lists every matching Flutter release and keeps stable results first."
+  },
+  {
+    "question": "Why do release URLs use trailing slashes?",
+    "answer": "Trailing-slash release URLs are the canonical form, for example /release/3.44.9/. Non-trailing release URLs redirect to the canonical URL so search engines see one indexable page per release."
+  },
+  {
+    "question": "What should I do if a download link does not work?",
+    "answer": "Check Flutter's official release archive. FlutterReleases links to download artifacts when they are present in release data, but the official archive is the source to verify unavailable or moved downloads.",
+    "links": [
+      {
+        "label": "Official Flutter release archive",
+        "href": "https://docs.flutter.dev/release/archive"
+      }
+    ]
+  },
+  {
+    "question": "Can I use releases.json directly?",
+    "answer": "Yes. releases.json is public and can be used when you need structured Flutter release data for scripts, dashboards, or internal tooling.",
+    "links": [
+      {
+        "label": "releases.json",
+        "href": "/releases.json"
+      }
+    ]
+  },
+  {
+    "question": "How can I report incorrect release information?",
+    "answer": "Open an issue in the GitHub repository or contact Shankar on X with the Flutter version and the field that looks wrong.",
+    "links": [
+      {
+        "label": "GitHub repository",
+        "href": "https://github.com/shankarmadeshvaran/flutterreleases.com"
+      },
+      {
+        "label": "Shankar on X",
+        "href": "https://x.com/devinmaking"
+      }
+    ]
+  }
+]

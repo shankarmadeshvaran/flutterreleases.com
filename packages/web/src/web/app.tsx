@@ -4,6 +4,8 @@ import Index from "./pages/index";
 import FlutterVersions from "./pages/flutter-versions";
 import FlutterVersionChecker from "./pages/flutter-version-checker";
 import BlogPage from "./pages/blog";
+import FaqPage from "./pages/faq";
+import ChangelogPage from "./pages/changelog";
 import { Provider } from "./components/provider";
 
 function ReleaseRedirect() {
@@ -37,6 +39,10 @@ function App() {
         <Route path="/tools/flutter-version-checker" component={FlutterVersionChecker} />
         <Route path="/blog/" component={BlogPage} />
         <Route path="/blog" component={BlogPage} />
+        <Route path="/faq/" component={FaqPage} />
+        <Route path="/faq" component={FaqPage} />
+        <Route path="/changelog/" component={ChangelogPage} />
+        <Route path="/changelog" component={ChangelogPage} />
         <Route path="/flutter-versions/" component={FlutterVersions} />
         <Route path="/flutter-versions" component={FlutterVersions} />
         <Route path="/" component={Index} />

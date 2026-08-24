@@ -98,7 +98,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
             rel="noopener noreferrer"
             onClick={() =>
               trackEvent("Outbound Click", {
-                label: "Donate",
+                label: "Support",
                 href: "https://buymeacoffee.com/shankarmadeshvaran",
                 location: "header",
               })
@@ -119,7 +119,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
             }}
           >
             <Heart size={13} />
-            Donate
+            Support
           </a>
           <button
             onClick={() => {

@@ -19,6 +19,8 @@ const SITE_URL = process.env.SITE_URL || 'https://flutterreleases.com';
 const DIST_DIR = path.join(process.cwd(), 'packages', 'web', 'dist');
 const PUBLIC_DIR = path.join(process.cwd(), 'packages', 'web', 'public');
 const BLOG_POSTS_PATH = path.join(process.cwd(), 'packages', 'web', 'src', 'web', 'data', 'blog-posts.json');
+const FAQ_PATH = path.join(process.cwd(), 'packages', 'web', 'src', 'web', 'data', 'faq.json');
+const CHANGELOG_PATH = path.join(process.cwd(), 'packages', 'web', 'src', 'web', 'data', 'changelog.json');
 const BLOG_CONTENT_DIR = path.join(process.cwd(), 'packages', 'web', 'src', 'web', 'content', 'blog');
 
 // Read from dist first (post-build), fall back to public (pre-build / dev)
@@ -33,6 +35,16 @@ function readReleasesJson() {
 
 function readBlogPosts() {
   const raw = fs.readFileSync(BLOG_POSTS_PATH, 'utf8');
+  return JSON.parse(raw);
+}
+
+function readFaqItems() {
+  const raw = fs.readFileSync(FAQ_PATH, 'utf8');
+  return JSON.parse(raw);
+}
+
+function readChangelogItems() {
+  const raw = fs.readFileSync(CHANGELOG_PATH, 'utf8');
   return JSON.parse(raw);
 }
 
@@ -327,6 +339,15 @@ function channelLabel(channel) {
 
 function siteBaseUrl() {
   return SITE_URL.replace(/\/$/, '');
+}
+
+function formatChangelogDate(value) {
+  if (!value) return '';
+  return new Date(`${value}T00:00:00Z`).toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
 }
 
 function platformLabel(key) {
@@ -750,6 +771,304 @@ function buildBlogPageHtml(posts, appAssetTags = '') {
       <section class="blog-grid">
         ${postsHtml}
       </section>
+    </main>
+    <footer>
+      <div>
+        <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a></p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>`;
+}
+
+function buildFaqBreadcrumbLd(pageUrl) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Flutter Releases', item: siteBaseUrl() + '/' },
+      { '@type': 'ListItem', position: 2, name: 'FAQ', item: pageUrl },
+    ],
+  }, null, '\t\t\t');
+}
+
+function buildFaqPageLd(pageUrl, items) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    name: 'FlutterReleases FAQ',
+    url: pageUrl,
+    mainEntity: items.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  }, null, '\t\t\t');
+}
+
+function buildFaqLinkHtml(link) {
+  const href = String(link.href || '');
+  const external = /^https?:\/\//.test(href);
+  return `<a href="${htmlEscape(external ? href : `${siteBaseUrl()}${href}`)}"${external ? ' target="_blank" rel="noopener noreferrer"' : ''}>${htmlEscape(link.label)}</a>`;
+}
+
+function buildFaqItemHtml(item) {
+  const links = Array.isArray(item.links) && item.links.length
+    ? `<div class="resource-links">${item.links.map(buildFaqLinkHtml).join('')}</div>`
+    : '';
+  return `<article class="info-card">
+      <h2>${htmlEscape(item.question)}</h2>
+      <p>${htmlEscape(item.answer)}</p>
+      ${links}
+    </article>`;
+}
+
+function buildFaqPageHtml(items, appAssetTags = '') {
+  const pageUrl = `${siteBaseUrl()}/faq/`;
+  const title = 'FlutterReleases FAQ | Flutter Versions, Dart Compatibility & Downloads';
+  const desc = 'Answers about Flutter release data, latest stable versions, Dart SDK compatibility, downloads, release notes, and how FlutterReleases updates automatically.';
+  const breadcrumbLd = buildFaqBreadcrumbLd(pageUrl);
+  const faqLd = buildFaqPageLd(pageUrl, items);
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${htmlEscape(title)}</title>
+  <meta name="description" content="${htmlEscape(desc)}" />
+  <meta name="theme-color" content="#054D8E" />
+  <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
+  <meta name="yandex-verification" content="2b9226ee6947f0c0" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta property="og:title" content="${htmlEscape(title)}" />
+  <meta property="og:description" content="${htmlEscape(desc)}" />
+  <meta property="og:url" content="${pageUrl}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="${SITE_URL}/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${htmlEscape(title)}" />
+  <meta name="twitter:description" content="${htmlEscape(desc)}" />
+  <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
+  <link rel="canonical" href="${pageUrl}" />
+  <link rel="alternate" type="application/rss+xml" title="Flutter Releases Feed" href="${SITE_URL}/feed.xml" />
+  ${appAssetTags}
+  <script type="application/ld+json">
+    ${breadcrumbLd}
+  </script>
+  <script type="application/ld+json">
+    ${faqLd}
+  </script>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if ((saved && saved === 'dark') || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch {}
+    })();
+  </script>
+  <style>
+    :root { color-scheme: light; --bg: #fafafa; --surface: #ffffff; --subtle: #f4f4f5; --border: #e4e4e7; --text: #18181b; --secondary: #71717a; --muted: #71717a; --accent: #0ea5e9; }
+    .dark { color-scheme: dark; --bg: #09090b; --surface: #111113; --subtle: #18181b; --border: #27272a; --text: #fafafa; --secondary: #a1a1aa; --muted: #52525b; --accent: #38bdf8; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header, footer, .hero { background: var(--surface); border-color: var(--border); }
+    header { border-bottom: 1px solid var(--border); }
+    .site-nav, main, footer > div { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    .site-nav { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .site-nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
+    .brand { color: var(--text); }
+    .hero { border-bottom: 1px solid var(--border); }
+    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; font-weight: 700; margin: 0 0 0.75rem; }
+    h1 { font-size: 1.875rem; line-height: 1.2; margin: 0 0 0.5rem; }
+    .intro { max-width: 44rem; color: var(--secondary); margin: 0; }
+    main { padding-top: 2rem; padding-bottom: 2rem; }
+    .faq-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .info-card { border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 1.25rem; }
+    .info-card h2 { margin: 0; font-size: 1rem; line-height: 1.4; color: var(--text); }
+    .info-card p { margin: 0.75rem 0 0; color: var(--secondary); font-size: 0.875rem; }
+    .resource-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; font-size: 0.875rem; font-weight: 600; }
+    .js #static-seo { display: none; }
+    footer { border-top: 1px solid var(--border); }
+    footer > div { padding-top: 1.25rem; padding-bottom: 1.25rem; font-size: 0.8125rem; }
+    @media (max-width: 860px) { .faq-grid { grid-template-columns: 1fr; } .site-nav { align-items: flex-start; padding-top: 1rem; padding-bottom: 1rem; flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <script>document.documentElement.classList.add('js');</script>
+  <div id="root"></div>
+  <div id="static-seo">
+    <header>
+      <nav class="site-nav">
+        <a class="brand" href="${SITE_URL}/"><strong>Flutter Releases</strong></a>
+        <div class="links">
+          <a href="${SITE_URL}/">Releases</a>
+          <a href="${SITE_URL}/flutter-versions/">Flutter Versions</a>
+          <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
+          <a href="${SITE_URL}/blog/">Blog</a>
+          <a href="${SITE_URL}/faq/">FAQ</a>
+        </div>
+      </nav>
+    </header>
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">Help</p>
+        <h1>FlutterReleases FAQ</h1>
+        <p class="intro">${htmlEscape(desc)}</p>
+      </div>
+    </section>
+    <main>
+      <section class="faq-grid">
+        ${items.map(buildFaqItemHtml).join('\n        ')}
+      </section>
+    </main>
+    <footer>
+      <div>
+        <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a></p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>`;
+}
+
+function buildChangelogBreadcrumbLd(pageUrl) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Flutter Releases', item: siteBaseUrl() + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Changelog', item: pageUrl },
+    ],
+  }, null, '\t\t\t');
+}
+
+function buildChangelogItemHtml(item) {
+  return `<li class="info-card">
+      <time datetime="${htmlEscape(item.date)}">${htmlEscape(formatChangelogDate(item.date))}</time>
+      <h2>${htmlEscape(item.title)}</h2>
+      <p>${htmlEscape(item.summary)}</p>
+    </li>`;
+}
+
+function buildChangelogPageHtml(items, appAssetTags = '') {
+  const pageUrl = `${siteBaseUrl()}/changelog/`;
+  const title = 'FlutterReleases Changelog';
+  const desc = 'Site updates for FlutterReleases.com.';
+  const breadcrumbLd = buildChangelogBreadcrumbLd(pageUrl);
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${htmlEscape(title)}</title>
+  <meta name="description" content="${htmlEscape(desc)}" />
+  <meta name="theme-color" content="#054D8E" />
+  <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
+  <meta name="yandex-verification" content="2b9226ee6947f0c0" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta property="og:title" content="${htmlEscape(title)}" />
+  <meta property="og:description" content="${htmlEscape(desc)}" />
+  <meta property="og:url" content="${pageUrl}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="${SITE_URL}/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${htmlEscape(title)}" />
+  <meta name="twitter:description" content="${htmlEscape(desc)}" />
+  <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
+  <link rel="canonical" href="${pageUrl}" />
+  ${appAssetTags}
+  <script type="application/ld+json">
+    ${breadcrumbLd}
+  </script>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if ((saved && saved === 'dark') || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch {}
+    })();
+  </script>
+  <style>
+    :root { color-scheme: light; --bg: #fafafa; --surface: #ffffff; --subtle: #f4f4f5; --border: #e4e4e7; --text: #18181b; --secondary: #71717a; --muted: #71717a; --accent: #0ea5e9; }
+    .dark { color-scheme: dark; --bg: #09090b; --surface: #111113; --subtle: #18181b; --border: #27272a; --text: #fafafa; --secondary: #a1a1aa; --muted: #52525b; --accent: #38bdf8; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header, footer, .hero { background: var(--surface); border-color: var(--border); }
+    header { border-bottom: 1px solid var(--border); }
+    .site-nav, main, footer > div { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    .site-nav { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .site-nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
+    .brand { color: var(--text); }
+    .hero { border-bottom: 1px solid var(--border); }
+    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; font-weight: 700; margin: 0 0 0.75rem; }
+    h1 { font-size: 1.875rem; line-height: 1.2; margin: 0 0 0.5rem; }
+    .intro { max-width: 44rem; color: var(--secondary); margin: 0; }
+    main { max-width: 900px; padding-top: 2rem; padding-bottom: 2rem; }
+    ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+    .info-card { border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 1.25rem; }
+    .info-card time { color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; font-weight: 700; }
+    .info-card h2 { margin: 0.5rem 0 0; font-size: 1rem; line-height: 1.4; color: var(--text); }
+    .info-card p { margin: 0.5rem 0 0; color: var(--secondary); font-size: 0.875rem; }
+    .js #static-seo { display: none; }
+    footer { border-top: 1px solid var(--border); }
+    footer > div { padding-top: 1.25rem; padding-bottom: 1.25rem; font-size: 0.8125rem; }
+    @media (max-width: 860px) { .site-nav { align-items: flex-start; padding-top: 1rem; padding-bottom: 1rem; flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <script>document.documentElement.classList.add('js');</script>
+  <div id="root"></div>
+  <div id="static-seo">
+    <header>
+      <nav class="site-nav">
+        <a class="brand" href="${SITE_URL}/"><strong>Flutter Releases</strong></a>
+        <div class="links">
+          <a href="${SITE_URL}/">Releases</a>
+          <a href="${SITE_URL}/flutter-versions/">Flutter Versions</a>
+          <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
+          <a href="${SITE_URL}/blog/">Blog</a>
+        </div>
+      </nav>
+    </header>
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">Site updates</p>
+        <h1>FlutterReleases changelog</h1>
+        <p class="intro">${htmlEscape(desc)}</p>
+      </div>
+    </section>
+    <main>
+      <ol>
+        ${items.map(buildChangelogItemHtml).join('\n        ')}
+      </ol>
     </main>
     <footer>
       <div>
@@ -1594,6 +1913,7 @@ function buildSitemapXml(items, generatedAt, blogPosts = []) {
     ['/flutter-versions/', 'daily', '0.9'],
     ['/tools/flutter-version-checker/', 'daily', '0.8'],
     ['/blog/', 'weekly', '0.7'],
+    ['/faq/', 'monthly', '0.5'],
     ['/feed.xml', 'daily', '0.5'],
     ['/releases.json', 'daily', '0.6'],
     ['/llms.txt', 'monthly', '0.3'],
@@ -1794,6 +2114,8 @@ async function run() {
   let items;
   const blogPosts = readBlogPosts();
   const blogArticles = readBlogArticles();
+  const faqItems = readFaqItems();
+  const changelogItems = readChangelogItems();
   try {
     items = readReleasesJson();
   } catch (e) {
@@ -1810,7 +2132,7 @@ async function run() {
   if (DRY_RUN) {
     console.log('Dry-run: skipping file writes.');
     console.log(`Would generate ${toProcess.length} HTML pages`);
-    console.log(`Would update sitemap.xml with ${items.filter(r => r.version).length + 8 + blogPosts.length} URLs`);
+    console.log(`Would update sitemap.xml with ${items.filter(r => r.version).length + 9 + blogPosts.length} URLs`);
     return;
   }
 
@@ -1844,7 +2166,7 @@ async function run() {
   if (fs.existsSync(DIST_DIR)) safeWrite(sitemapDist, sitemapXml);
   safeWrite(sitemapPublic, sitemapXml);
 
-  const urlCount = items.filter(r => r.version).length + 8 + blogPosts.length;
+  const urlCount = items.filter(r => r.version).length + 9 + blogPosts.length;
   console.log(`Updated sitemap.xml with ${urlCount} URLs`);
 
   // Generate Flutter versions SEO page in dist only. It is a route page, so
@@ -1866,6 +2188,18 @@ async function run() {
     safeWrite(path.join(DIST_DIR, 'blog', 'index.html'), blogHtml);
   }
   console.log('Generated blog/index.html');
+
+  const faqHtml = buildFaqPageHtml(faqItems, buildAppAssetTags());
+  if (fs.existsSync(DIST_DIR)) {
+    safeWrite(path.join(DIST_DIR, 'faq', 'index.html'), faqHtml);
+  }
+  console.log('Generated faq/index.html');
+
+  const changelogHtml = buildChangelogPageHtml(changelogItems, buildAppAssetTags());
+  if (fs.existsSync(DIST_DIR)) {
+    safeWrite(path.join(DIST_DIR, 'changelog', 'index.html'), changelogHtml);
+  }
+  console.log('Generated changelog/index.html');
 
   let generatedBlogArticles = 0;
   for (const article of blogArticles) {

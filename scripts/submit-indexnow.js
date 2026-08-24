@@ -64,6 +64,7 @@ function collectIndexNowUrls() {
     canonicalUrl('/flutter-versions/'),
     canonicalUrl('/tools/flutter-version-checker/'),
     canonicalUrl('/blog/'),
+    canonicalUrl('/faq/'),
   ]);
 
   for (const post of Array.isArray(blogPosts) ? blogPosts : []) {

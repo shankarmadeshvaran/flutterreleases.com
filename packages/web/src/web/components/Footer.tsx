@@ -15,6 +15,7 @@ const footerGroups = [
     links: [
       { label: "JSON API", href: "/releases.json", external: true },
       { label: "RSS Feed", href: "/feed.xml", external: true },
+      { label: "FAQ", href: "/faq/" },
       { label: "Sitemap", href: "/sitemap.xml", external: true },
       { label: "Official Flutter Archive", href: "https://docs.flutter.dev/release/archive", external: true },
     ],
@@ -24,7 +25,7 @@ const footerGroups = [
     links: [
       { label: "GitHub", href: "https://github.com/shankarmadeshvaran/flutterreleases.com", external: true },
       { label: "X Contact", href: "https://x.com/devinmaking", external: true },
-      { label: "Donate", href: "https://buymeacoffee.com/shankarmadeshvaran", external: true },
+      { label: "Support", href: "https://buymeacoffee.com/shankarmadeshvaran", external: true },
     ],
   },
 ];

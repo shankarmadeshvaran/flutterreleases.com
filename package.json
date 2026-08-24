@@ -13,6 +13,7 @@
     "lint": "oxlint . --deny-warnings --no-error-on-unmatched-pattern",
     "lint:fix": "oxlint . --fix --deny-warnings --no-error-on-unmatched-pattern",
     "submit:indexnow": "node scripts/submit-indexnow.js",
+    "test:site-pages": "node scripts/validate-site-pages.js",
     "test:flutter-versions": "node scripts/validate-flutter-versions-page.js",
     "test:flutter-version-checker": "node scripts/validate-flutter-version-checker.js",
     "typecheck": "turbo typecheck"

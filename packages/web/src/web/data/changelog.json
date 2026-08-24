@@ -1,0 +1,27 @@
+[
+  {
+    "date": "2026-08-24",
+    "title": "FAQ and site changelog",
+    "summary": "Added a public FAQ page for common FlutterReleases questions and a direct site changelog route for tracking product updates."
+  },
+  {
+    "date": "2026-08-21",
+    "title": "IndexNow and crawler visibility improvements",
+    "summary": "Added IndexNow support for high-value URLs and improved source-level homepage semantics for search crawlers."
+  },
+  {
+    "date": "2026-08-18",
+    "title": "FlutterReleases Blog",
+    "summary": "Added the blog section and published the Flutter CocoaPods to Swift Package Manager migration article."
+  },
+  {
+    "date": "2026-08-12",
+    "title": "Flutter and Dart compatibility checker",
+    "summary": "Added the compatibility checker for finding the Dart SDK bundled with Flutter releases and the Flutter releases that match a Dart SDK version."
+  },
+  {
+    "date": "2026-08-10",
+    "title": "Flutter versions hub",
+    "summary": "Added the statically generated Flutter Versions page with latest stable, beta, dev, version history, and Dart compatibility data."
+  }
+]
