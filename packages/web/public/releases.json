@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-09-10T11:19:11.347Z",
+    "generated_at": "2026-09-11T11:20:36.545Z",
     "source": "auto-crawled",
     "count": 410
   },
@@ -9,12 +9,12 @@
       "version": "main",
       "channel": "main",
       "release_type": "Development",
-      "released": "2026-09-10",
+      "released": "2026-09-11",
       "dart_version": "3.14.0-75.0.dev",
-      "framework_revision": "f1ac3fe",
+      "framework_revision": "d600800",
       "engine_revision": null,
       "git_tag": null,
-      "build": "f1ac3fe",
+      "build": "d600800",
       "requires": {
         "macos": "macOS 13.5+",
         "xcode": "Xcode 15.1+",
@@ -39,8 +39,8 @@
         "web": null,
         "tools": null
       },
-      "summary": "Rolling development channel. HEAD at commit f1ac3fe (2026-09-10).",
-      "ref_url": "https://github.com/flutter/flutter/commit/f1ac3fe4b34cbece23031cc78b864614aa5b5a43",
+      "summary": "Rolling development channel. HEAD at commit d600800 (2026-09-11).",
+      "ref_url": "https://github.com/flutter/flutter/commit/d6008001d12fa02e68822990c15ee8ce508c1cb7",
       "verified": true,
       "sources": [
         "GitHub flutter/flutter main branch",
