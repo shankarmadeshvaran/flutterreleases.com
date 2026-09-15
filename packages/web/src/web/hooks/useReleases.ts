@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import type { Release, Channel } from "../types/release";
 
 const STABLE_CHANGELOG_URL = "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md";
+const OFFICIAL_FLUTTER_ARCHIVE_URL = "https://docs.flutter.dev/release/archive";
 
 function changelogAnchor(version: string) {
   return version
@@ -12,6 +13,28 @@ function changelogAnchor(version: string) {
 
 function stableChangelogUrl(version: string) {
   return `${STABLE_CHANGELOG_URL}#${changelogAnchor(version)}`;
+}
+
+function sourceLinks(raw: any, fullNotesUrl: string | null) {
+  const sources = Array.isArray(raw.sources) ? raw.sources : [];
+  const platforms = raw.platforms || raw.download || {};
+  const links: { label: string; url: string }[] = [];
+  const seen = new Set<string>();
+  const add = (label: string, url?: string | null) => {
+    if (!url || seen.has(url)) return;
+    links.push({ label, url });
+    seen.add(url);
+  };
+
+  if (sources.includes("Flutter SDK Archive") || Object.values(platforms).some(Boolean)) {
+    add("Flutter SDK Archive", OFFICIAL_FLUTTER_ARCHIVE_URL);
+  }
+  add("Flutter release notes", fullNotesUrl);
+  add(raw.version === "main" ? "Flutter main branch commit" : "Flutter GitHub tag", raw.ref_url);
+  if (sources.includes("DEPS") && raw.version === "main") {
+    add("Flutter DEPS file", "https://github.com/flutter/flutter/blob/main/DEPS");
+  }
+  return links;
 }
 
 function isStableFeatureRelease(version: string) {
@@ -72,6 +95,7 @@ function normalizeRelease(raw: any): Release {
       linux: rn.linux || null,
       web: rn.web || null,
     },
+    sources: sourceLinks(raw, fullNotesUrl),
   };
 }
 

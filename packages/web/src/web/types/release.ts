@@ -29,4 +29,8 @@ export interface Release {
     linux: string | null;
     web: string | null;
   };
+  sources: {
+    label: string;
+    url: string;
+  }[];
 }

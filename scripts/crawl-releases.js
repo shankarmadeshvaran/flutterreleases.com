@@ -5,14 +5,15 @@
 // Data sources (in priority order):
 //   1. Google Flutter SDK Archive  — canonical versions, download URLs, Dart version, commit hash
 //   2. GitHub flutter/flutter tags — framework_revision (7-char short sha)
-//   3. GitHub flutter/flutter releases — release body for summary extraction
+//   3. GitHub flutter/flutter releases/tags — source references and release dates
 //   4. docs.flutter.dev — release notes URLs (verified with real HEAD requests)
 //
 // URL Verification:
 //   - release_notes.base: HEAD checked — set to null if 404
 //   - release_notes section anchors: only set for anchors confirmed to exist in page HTML
 //   - ref_url: HEAD checked — falls back to v-prefixed tag if plain version 404s
-//   - platforms download URLs: sourced directly from Google's SDK archive (trusted, not re-checked)
+//   - platforms download URLs: sourced directly from Google's SDK archive
+//   - source_urls: additive provenance links for generated HTML/Markdown/LLM output
 //
 // Usage:
 //   node scripts/crawl-releases.js               # stable only (default)
@@ -23,6 +24,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { sourceUrlsObject } from './release-data-utils.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -203,7 +205,7 @@ async function resolveStableChangelogReleaseNotes(version) {
   const changelog = await fetchText(RAW_STABLE_CHANGELOG_URL, { silent: true });
   const verified = changelogHasVersion(changelog, version);
   const baseOk = verified || await urlExists(STABLE_CHANGELOG_URL);
-  return {
+  const entry = {
     release_notes: {
       base: url,
       framework: null,
@@ -222,6 +224,7 @@ async function resolveStableChangelogReleaseNotes(version) {
       anchor_verified: verified,
     },
   };
+  return entry;
 }
 
 function isStableFeatureRelease(version) {
@@ -270,9 +273,8 @@ async function refreshFromArchive(item, info, channel, verifyDownloads = false) 
   changed = setIfChanged(item, 'git_tag', item.version) || changed;
   changed = setIfChanged(item, 'build', frameworkRevision) || changed;
 
-  const requirements = detectRequirements(item.version);
-  if (JSON.stringify(item.requires || {}) !== JSON.stringify(requirements)) {
-    item.requires = requirements;
+  if (item.requires && Object.keys(item.requires).length > 0) {
+    item.requires = {};
     changed = true;
   }
 
@@ -310,6 +312,12 @@ async function refreshFromArchive(item, info, channel, verifyDownloads = false) 
     changed = true;
   }
 
+  const sourceUrls = sourceUrlsObject(item);
+  if (JSON.stringify(item.source_urls || {}) !== JSON.stringify(sourceUrls)) {
+    item.source_urls = sourceUrls;
+    changed = true;
+  }
+
   const releaseNotesOk = item.link_status?.release_notes?.ok !== false;
   const downloadsOk = !verifyDownloads || allAvailableDownloadsVerified(item.link_status?.downloads || {}, item.platforms);
   const verified = releaseNotesOk && downloadsOk;
@@ -335,34 +343,6 @@ function latestReleaseDateByChannel(items) {
     latest.set(item.channel, Math.max(current, dateValue(item.released || item.release_date)));
   }
   return latest;
-}
-
-// Detect minimum requirements based on Flutter version
-function detectRequirements(version) {
-  const clean = version.replace(/^v/, '');
-  const [major, minor] = clean.split('.').map(Number);
-
-  let macos = 'macOS 12+';
-  let xcode = 'Xcode 15.0+';
-
-  if (major > 3 || (major === 3 && minor >= 29)) {
-    macos = 'macOS 13.5+';
-    xcode = 'Xcode 15.1+';
-  } else if (major === 3 && minor >= 10) {
-    macos = 'macOS 12+';
-    xcode = 'Xcode 14.0+';
-  } else if (major < 3) {
-    macos = 'macOS 10.14+';
-    xcode = 'Xcode 12.0+';
-  }
-
-  return {
-    macos,
-    xcode,
-    windows: 'Windows 10+',
-    visual_studio: 'Visual Studio 2022',
-    linux: 'bash, git, curl, unzip',
-  };
 }
 
 // Build and VERIFY release_notes URLs:
@@ -418,39 +398,6 @@ async function buildRefUrl(version) {
   if (await urlExists(withV)) return withV;
 
   return null;
-}
-
-// Extract a clean one-line summary from GitHub release body
-function extractSummary(body, version, releaseType) {
-  if (!body) {
-    return releaseType === 'Hotfix'
-      ? `Hotfix release with stability improvements for the ${version.replace(/^v/, '').split('.').slice(0, 2).join('.')} series.`
-      : `Flutter ${version} stable release.`;
-  }
-
-  const lines = body
-    .split('\n')
-    .map(l => l.trim())
-    .filter(l =>
-      l.length > 20 &&
-      !l.startsWith('#') &&
-      !l.startsWith('*') &&
-      !l.startsWith('-') &&
-      !l.startsWith('>') &&
-      !l.startsWith('!') &&
-      !l.startsWith('[') &&
-      !l.startsWith('http')
-    );
-
-  if (lines.length > 0) {
-    let summary = lines[0].replace(/\*\*/g, '').replace(/`/g, '').trim();
-    if (summary.length > 120) summary = summary.slice(0, 117) + '...';
-    return summary;
-  }
-
-  return releaseType === 'Hotfix'
-    ? `Hotfix release with stability improvements for the ${version.replace(/^v/, '').split('.').slice(0, 2).join('.')} series.`
-    : `Flutter ${version} stable release.`;
 }
 
 // ── Main data fetching ────────────────────────────────────────────────────────
@@ -511,12 +458,12 @@ async function fetchGithubTag(version) {
   return shortSha(data.object.sha);
 }
 
-async function fetchGithubRelease(version) {
-  const data = await fetchJson(
-    `${GITHUB_API}/repos/flutter/flutter/releases/tags/${encodeURIComponent(version)}`,
-    { silent: true }
-  );
-  return data;
+function normalizeFactsForOutput(item) {
+  const next = { ...item };
+  next.requires = {};
+  delete next.summary;
+  next.source_urls = sourceUrlsObject(next);
+  return next;
 }
 
 // ── Main channel (rolling HEAD, not in SDK archive) ────────────────────────────
@@ -557,7 +504,7 @@ async function fetchMainChannelEntry() {
 
   process.stdout.write(`  → main (HEAD ${shortShaValue}, Dart ${dartVersion || 'unknown'}) ✓\n`);
 
-  return {
+  const entry = {
     version: 'main',
     channel: 'main',
     release_type: 'Development',
@@ -567,7 +514,7 @@ async function fetchMainChannelEntry() {
     engine_revision: null,
     git_tag: null,
     build: shortShaValue,
-    requires: detectRequirements('3.99.0'), // use high version → latest requirements
+    requires: {},
     platforms: {
       macos_arm64: null,
       macos_x64: null,
@@ -579,11 +526,13 @@ async function fetchMainChannelEntry() {
       framework: null, material: null, ios: null, android: null,
       windows: null, linux: null, web: null, tools: null,
     },
-    summary: `Rolling development channel. HEAD at commit ${shortShaValue} (${commitDate || 'unknown date'}).`,
     ref_url: `https://github.com/flutter/flutter/commit/${headSha}`,
     verified: true,
     sources: ['GitHub flutter/flutter main branch', 'DEPS'],
+    source_urls: {},
   };
+  entry.source_urls = sourceUrlsObject(entry);
+  return entry;
 }
 
 // ── Core logic ────────────────────────────────────────────────────────────────
@@ -671,10 +620,6 @@ async function run() {
       const tagSha = await fetchGithubTag(version);
       if (tagSha) frameworkRevision = tagSha;
 
-      // summary from GitHub release body
-      const ghRelease = await fetchGithubRelease(version);
-      const summary = extractSummary(ghRelease?.body || null, version, releaseType);
-
       // Verified GitHub ref URL (tries bare tag, then v-prefixed)
       const refUrl = await buildRefUrl(version);
       const releaseNotesResult = channel === 'stable'
@@ -698,10 +643,9 @@ async function run() {
         engine_revision: null,
         git_tag: version,
         build: frameworkRevision,
-        requires: detectRequirements(version),
+        requires: {},
         platforms: info.platforms,
         release_notes: releaseNotesResult.release_notes,
-        summary,
         ref_url: refUrl,
         verified: releaseNotesResult.status.ok && allAvailableDownloadsVerified(downloadStatus, info.platforms),
         link_status: {
@@ -710,6 +654,7 @@ async function run() {
         },
         sources: ['Flutter SDK Archive', 'GitHub Tags'],
       };
+      entry.source_urls = sourceUrlsObject(entry);
 
       newItems.push(entry);
     }
@@ -728,7 +673,11 @@ async function run() {
     }
   }
 
-  if (newItems.length === 0 && refreshedCount === 0) {
+  const staleFactCount = (existing.items || []).filter(item =>
+    item.summary || (item.requires && Object.keys(item.requires).length > 0) || !item.source_urls
+  ).length;
+
+  if (newItems.length === 0 && refreshedCount === 0 && staleFactCount === 0) {
     console.log('✓ releases.json is already up to date. Nothing to do.\n');
     process.exit(0);
   }
@@ -742,6 +691,9 @@ async function run() {
   if (refreshedCount > 0) {
     console.log(`\n🔄 Refreshed metadata for ${refreshedCount} existing release(s) from the SDK archive.`);
   }
+  if (staleFactCount > 0) {
+    console.log(`\n🧹 Cleaning unsupported generated facts on ${staleFactCount} existing release record(s).`);
+  }
 
   if (DRY_RUN) {
     console.log('\n[dry-run] Would write to:', CURATED_PATH);
@@ -753,7 +705,7 @@ async function run() {
   }
 
   // Prepend new items (newest first) and write back
-  const updatedItems = [...newItems, ...(existing.items || [])];
+  const updatedItems = [...newItems, ...(existing.items || [])].map(normalizeFactsForOutput);
 
   const output = {
     meta: {

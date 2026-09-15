@@ -20,6 +20,8 @@ Use these sources in this order:
 
 Do not add manually curated release records when the data exists in `releases.json` or can be derived from official sources.
 
+Do not use third-party websites as authoritative release facts. They may be useful for debugging, but published data must come from Flutter/Dart official sources or mechanically derived fields from those sources.
+
 ## URL Rules
 
 - Release page URLs are canonical with trailing slashes: `/release/<version>/`.
@@ -56,6 +58,36 @@ node scripts/crawl-releases.js --all-channels --verify-downloads
 
 Avoid making the daily crawler perform an unbounded full historical download audit unless there is a strong reason.
 
+## Provenance Rules
+
+Each release should include additive `source_urls` when the corresponding source exists:
+
+- `sdk_archive` for the official Flutter SDK archive.
+- `release_notes` for verified Flutter docs release notes, stable changelog anchors, or GitHub release/tag pages.
+- `github` for GitHub tag, release, commit, or DEPS references.
+
+Only store source URLs that actually exist in the record or can be derived from an authoritative source. Do not guess release-note pages or GitHub tags when verification failed.
+
+Generated HTML, Markdown, RSS, LLM files, and compatibility pages must read from `releases.json` or shared selectors. Do not maintain separate release facts for a new representation.
+
+## Unknown Data Policy
+
+Use these states when adding release facts:
+
+- `verified`: explicitly supported by an authoritative upstream source.
+- `derived`: mechanically derived from authoritative structured data.
+- `unknown`: not available with enough confidence.
+
+Unknown data must remain missing or empty. Do not fabricate:
+
+- release summaries
+- system requirements
+- minimum iOS/macOS/Xcode versions
+- breaking-change summaries
+- compatibility claims beyond the bundled Dart SDK mapping
+
+The current crawler keeps `requires` as `{}` unless requirements are verified from an authoritative upstream source. Generated pages should omit empty sections instead of printing repeated "Unknown" values.
+
 ## Data Contract
 
 The UI depends on these existing fields:
@@ -68,6 +100,7 @@ The UI depends on these existing fields:
 - `requires`
 - `platforms`
 - `release_notes`
+- `source_urls`
 - `ref_url`
 
 Optional verification metadata belongs in `link_status`.
@@ -87,6 +120,7 @@ After crawler-related changes, run:
 node --check scripts/crawl-releases.js
 node --check scripts/generate-releases.js
 node --check scripts/validate-flutter-versions-page.js
+node --check scripts/validate-release-consistency.js
 ```
 
 ```sh
@@ -105,6 +139,7 @@ Then regenerate static output:
 bun run build:web
 SITE_URL=https://flutterreleases.com node scripts/generate-release-pages.js
 SITE_URL=https://flutterreleases.com node scripts/validate-flutter-versions-page.js
+SITE_URL=https://flutterreleases.com node scripts/validate-release-consistency.js
 ```
 
 Spot-check representative releases:
@@ -114,10 +149,13 @@ Spot-check representative releases:
 - Latest stable download URLs are present and verified.
 - A beta release does not point to stable docs release notes.
 - Generated `/release/<version>/index.html` contains the expected release-note and download links.
+- Generated `/release/<version>.md` contains the same Flutter, Dart, channel, release date, sources, and related-release values as the HTML page.
+- Generated release pages show a Sources section when source data exists.
 
 ## Do Not
 
 - Do not manually hardcode fake release data.
+- Do not publish generated prose as release facts.
 - Do not overwrite crawler-owned `releases.json` from a secondary generator.
 - Do not add old missing beta/dev history unless the product intentionally wants that backfill.
 - Do not weaken schema validation or static crawlability checks.

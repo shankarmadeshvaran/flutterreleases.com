@@ -106,6 +106,40 @@ function ReleaseNoteLinks({ release, location }: { release: Release; location: s
   );
 }
 
+function SourceLinks({ release }: { release: Release }) {
+  if (!release.sources.length) {
+    return <span style={{ color: "var(--text-muted)" }} className="text-xs">—</span>;
+  }
+  return (
+    <div className="flex flex-wrap gap-1">
+      {release.sources.map((source) => (
+        <a
+          key={source.url}
+          href={source.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => {
+            e.stopPropagation();
+            trackEvent("Source Click", {
+              version: release.version,
+              channel: release.channel,
+              source: source.label,
+              location: "expanded_row",
+            });
+          }}
+          className="inline-flex items-center gap-1 text-xs transition-colors duration-150"
+          style={{ color: "var(--accent)" }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent-hover)")}
+          onMouseLeave={(e) => (e.currentTarget.style.color = "var(--accent)")}
+        >
+          <ExternalLink size={10} />
+          {source.label}
+        </a>
+      ))}
+    </div>
+  );
+}
+
 function ExpandedRow({ release }: { release: Release }) {
   const fullNotesUrl = release.releaseNotes.full;
 
@@ -115,37 +149,16 @@ function ExpandedRow({ release }: { release: Release }) {
       style={{ backgroundColor: "var(--bg-subtle)" }}
     >
       <td
-        aria-label={`Flutter ${release.version} requirements, downloads, and release notes`}
+        aria-label={`Flutter ${release.version} sources, downloads, and release notes`}
         colSpan={7}
         className="px-6 py-4"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <p className="text-xs font-medium mb-2" style={{ color: "var(--text-muted)" }}>
-              Requirements
+              Sources
             </p>
-            <div className="space-y-1 text-xs" style={{ color: "var(--text-secondary)" }}>
-              {(release.requires.macos || release.requires.xcode) && (
-                <div>
-                  <span className="font-medium">macOS</span>
-                  {" — "}
-                  {[release.requires.macos, release.requires.xcode].filter(Boolean).join(", ")}
-                </div>
-              )}
-              {(release.requires.windows || release.requires.visual_studio) && (
-                <div>
-                  <span className="font-medium">Windows</span>
-                  {" — "}
-                  {[release.requires.windows, release.requires.visual_studio].filter(Boolean).join(", ")}
-                </div>
-              )}
-              {release.requires.linux && (
-                <div><span className="font-medium">Linux</span> — {release.requires.linux}</div>
-              )}
-              {!release.requires.macos && !release.requires.windows && !release.requires.linux && (
-                <span style={{ color: "var(--text-muted)" }}>—</span>
-              )}
-            </div>
+            <SourceLinks release={release} />
           </div>
           <div>
             <p className="text-xs font-medium mb-2" style={{ color: "var(--text-muted)" }}>

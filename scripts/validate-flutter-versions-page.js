@@ -180,7 +180,7 @@ assertIncludes(
 );
 assertIncludes(
   releaseHtml,
-  `Flutter ${latestStable.version} release details including Dart SDK version, release date, downloads, requirements and release notes.`,
+  `Flutter ${latestStable.version} release details including Dart SDK version, release date, downloads, official sources and release notes.`,
   `stable release meta description for ${latestStable.version}`
 );
 assertIncludes(
@@ -194,6 +194,28 @@ if (previousStable) {
     `Previous stable:</strong> <a href="${SITE_URL}/release/${encodeURIComponent(previousStable.version)}/">Flutter ${previousStable.version}</a>`,
     `previous stable link for ${latestStable.version}`
   );
+}
+assertIncludes(
+  releaseHtml,
+  `<link rel="alternate" type="text/markdown" href="${SITE_URL}/release/${encodeURIComponent(latestStable.version)}.md" />`,
+  `Markdown alternate for ${latestStable.version}`
+);
+assertIncludes(releaseHtml, '<h2>Sources</h2>', `sources section for ${latestStable.version}`);
+assertIncludes(releaseHtml, 'Flutter SDK Archive', `source link for ${latestStable.version}`);
+
+const releaseMarkdown = fs.readFileSync(
+  path.join(ROOT, 'packages', 'web', 'dist', 'release', `${latestStable.version}.md`),
+  'utf8'
+);
+assertIncludes(releaseMarkdown, `# Flutter ${latestStable.version}`, 'release Markdown H1');
+assertIncludes(releaseMarkdown, `- Dart: ${latestStable.dart_version}`, 'release Markdown Dart version');
+assertIncludes(releaseMarkdown, `HTML: ${SITE_URL}/release/${encodeURIComponent(latestStable.version)}/`, 'release Markdown HTML link');
+
+assertIncludes(homeHtml, `Latest stable: Flutter ${latestStable.version}`, 'homepage generated noscript latest stable');
+assert.ok(!homeHtml.includes('Flutter 3.44.1</a> — 2026-06-01'), 'homepage fallback should not contain stale hardcoded release rows');
+
+for (const helperPath of ['/feed.xml', '/releases.json', '/llms.txt', '/llms-full.txt', '/links.html']) {
+  assert.ok(!sitemapXml.includes(`<loc>${SITE_URL}${helperPath}</loc>`), `sitemap should not include machine/helper URL ${helperPath}`);
 }
 
 console.log('flutter-versions page validation passed');

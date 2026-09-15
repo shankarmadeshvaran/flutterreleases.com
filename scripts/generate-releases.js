@@ -9,6 +9,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { sourceUrlsObject } from './release-data-utils.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -163,10 +164,8 @@ function buildRssXml(items, siteUrl, generatedAt){
     const title = `Flutter ${version} (${channel})`;
     const pub = toRfc822(released || new Date());
     const dartVersion = it.dart_version || it.dart_sdk_version || null;
-    const summary = it.summary || null;
     const descParts = [];
     if (dartVersion) descParts.push(`<p><strong>Dart SDK:</strong> ${xmlEscape(dartVersion)}</p>`);
-    if (summary) descParts.push(`<p>${xmlEscape(summary)}</p>`);
     if (released) descParts.push(`<p>Released: ${xmlEscape(released)}</p>`);
     const cdata = ['<![CDATA[', descParts.join('\n'), ']]>'].join('');
 
@@ -206,26 +205,18 @@ function buildSitemapXml(siteUrl, lastMod, items = []){
   lines.push('    <changefreq>daily</changefreq>');
   lines.push('    <priority>0.9</priority>');
   lines.push('  </url>');
-  // Feed
-  lines.push('  <url>');
-  lines.push(`    <loc>${xmlEscape(baseUrl + '/feed.xml')}</loc>`);
-  lines.push(`    <lastmod>${xmlEscape(lm)}</lastmod>`);
-  lines.push('    <changefreq>daily</changefreq>');
-  lines.push('    <priority>0.5</priority>');
-  lines.push('  </url>');
-  // JSON API
-  lines.push('  <url>');
-  lines.push(`    <loc>${xmlEscape(baseUrl + '/releases.json')}</loc>`);
-  lines.push(`    <lastmod>${xmlEscape(lm)}</lastmod>`);
-  lines.push('    <changefreq>daily</changefreq>');
-  lines.push('    <priority>0.5</priority>');
-  lines.push('  </url>');
-  // llms.txt
-  lines.push('  <url>');
-  lines.push(`    <loc>${xmlEscape(baseUrl + '/llms.txt')}</loc>`);
-  lines.push('    <changefreq>monthly</changefreq>');
-  lines.push('    <priority>0.3</priority>');
-  lines.push('  </url>');
+  for (const [path_, freq, pri] of [
+    ['/tools/flutter-version-checker/', 'daily', '0.8'],
+    ['/blog/', 'weekly', '0.7'],
+    ['/faq/', 'monthly', '0.5'],
+  ]) {
+    lines.push('  <url>');
+    lines.push(`    <loc>${xmlEscape(baseUrl + path_)}</loc>`);
+    if (freq === 'daily') lines.push(`    <lastmod>${xmlEscape(lm)}</lastmod>`);
+    lines.push(`    <changefreq>${freq}</changefreq>`);
+    lines.push(`    <priority>${pri}</priority>`);
+    lines.push('  </url>');
+  }
   const priorityMap = { stable: '0.8', beta: '0.6', dev: '0.4', main: '0.3' };
   const changeMap = { stable: 'monthly', beta: 'weekly', dev: 'weekly', main: 'daily' };
   for (const item of items) {
@@ -311,7 +302,7 @@ function normalizeItemBase(version, channel){
     notes_url: null,
     notes: [],
     ref_url: null,
-    summary: null,
+    source_urls: {},
     verified: false
   };
 }
@@ -338,7 +329,6 @@ async function enrichItem(item, manifestEntry, channel){
     githubRelease = await fetchGithubReleaseByTag(tag);
     if(githubRelease && githubRelease.html_url){
       item.notes_url = item.notes_url || githubRelease.html_url;
-      if(!item.summary && githubRelease.body) item.summary = (githubRelease.body||'').split('\n')[0];
       if(!item.released && githubRelease.published_at) item.released = githubRelease.published_at.split('T')[0];
       // assets -> platforms
       for(const a of (githubRelease.assets || [])){
@@ -375,6 +365,8 @@ async function enrichItem(item, manifestEntry, channel){
     else if (githubRelease && (githubRelease.assets || []).length) item.verified = true;
   }
 
+  item.source_urls = sourceUrlsObject({ ...item, version: item.version || item.flutter_version });
+
   return item;
 }
 
@@ -407,7 +399,6 @@ function mergeCandidate(map, key, candidate){
   existing.notes = Array.isArray(existing.notes)? existing.notes : [];
   existing.notes.push(...(candidate.notes||[]));
   existing.platforms = Object.assign({}, existing.platforms||{}, candidate.platforms||{});
-  existing.summary = existing.summary || candidate.summary;
   existing.notes_url = existing.notes_url || candidate.notes_url;
   existing.ref_url = existing.ref_url || candidate.ref_url;
   existing.dart_version = existing.dart_version || candidate.dart_version;
@@ -472,7 +463,6 @@ async function run(){
       const key = `${channel}::${tag}`;
       const item = normalizeItemBase(tag, channel);
       item.released = gr.published_at ? gr.published_at.split('T')[0] : null;
-      item.summary = gr.body ? (gr.body||'').split('\n')[0] : null;
       item.notes_url = gr.html_url || null;
       item.ref_url = gr.html_url || `https://github.com/flutter/flutter/releases/tag/${tag}`;
       // assets map
@@ -502,6 +492,10 @@ async function run(){
       const enriched = await enrichItem(base, manifestEntry, channel);
       // final sanity: ensure flutter_version present
       if(!enriched.flutter_version) continue;
+      enriched.version = enriched.version || enriched.flutter_version;
+      delete enriched.summary;
+      enriched.requires = {};
+      enriched.source_urls = sourceUrlsObject(enriched);
       finalItems.push(enriched);
     }
 

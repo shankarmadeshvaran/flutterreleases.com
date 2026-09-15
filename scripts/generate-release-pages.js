@@ -8,6 +8,17 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import {
+  getLatestBeta,
+  getLatestDev,
+  getLatestStable,
+  getStableReleaseContext,
+  markdownEscape,
+  normalizeSiteUrl,
+  releaseMarkdownUrl,
+  sourceLinksForRelease,
+  sourceUrlsObject,
+} from './release-data-utils.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -31,6 +42,18 @@ function readReleasesJson() {
   const raw = fs.readFileSync(src, 'utf8');
   const parsed = JSON.parse(raw);
   return Array.isArray(parsed) ? parsed : (parsed.items || []);
+}
+
+function addDerivedSourceUrls(items) {
+  return items.map(item => {
+    const next = { ...item };
+    if (!next.version && next.flutter_version) next.version = next.flutter_version;
+    next.source_urls = {
+      ...next.source_urls,
+      ...sourceUrlsObject(next),
+    };
+    return next;
+  });
 }
 
 function readBlogPosts() {
@@ -338,7 +361,7 @@ function channelLabel(channel) {
 }
 
 function siteBaseUrl() {
-  return SITE_URL.replace(/\/$/, '');
+  return normalizeSiteUrl(SITE_URL);
 }
 
 function formatChangelogDate(value) {
@@ -372,7 +395,7 @@ function buildPageTitle(release) {
 
 function buildPageDescription(release) {
   if (release.channel === 'stable') {
-    return `Flutter ${release.version} release details including Dart SDK version, release date, downloads, requirements and release notes.`;
+    return `Flutter ${release.version} release details including Dart SDK version, release date, downloads, official sources and release notes.`;
   }
   const ch = channelLabel(release.channel);
   const dart = release.dart_version ? ` Dart SDK ${release.dart_version}.` : '';
@@ -413,19 +436,8 @@ function buildDownloadsHtml(release) {
   return `<ul>\n          ${rows}\n        </ul>`;
 }
 
-function buildRequiresHtml(release) {
-  const req = release.requires || {};
-  const entries = Object.entries(req).filter(([, v]) => v);
-  if (!entries.length) return '';
-  const labelMap = {
-    macos: 'macOS', xcode: 'Xcode', windows: 'Windows',
-    visual_studio: 'Visual Studio', linux: 'Linux', android_sdk: 'Android SDK',
-  };
-  const rows = entries.map(([k, v]) => {
-    const label = htmlEscape(labelMap[k] || k);
-    return `<li><strong>${label}:</strong> ${htmlEscape(v)}</li>`;
-  }).join('\n          ');
-  return `<ul>\n          ${rows}\n        </ul>`;
+function buildRequiresHtml(_release) {
+  return '';
 }
 
 function buildReleaseNotesHtml(release) {
@@ -433,6 +445,17 @@ function buildReleaseNotesHtml(release) {
   const base = rn.base || release.ref_url;
   if (!base) return '';
   return `<a href="${htmlEscape(base)}" target="_blank" rel="noopener">View release notes →</a>`;
+}
+
+function buildSourcesHtml(release) {
+  const sources = sourceLinksForRelease(release);
+  if (!sources.length) return '';
+  return `<section>
+      <h2>Sources</h2>
+      <ul>
+        ${sources.map(source => `<li><a href="${htmlEscape(source.url)}" target="_blank" rel="noopener noreferrer">${htmlEscape(source.label)}</a></li>`).join('\n        ')}
+      </ul>
+    </section>`;
 }
 
 function buildStableIntroHtml(release) {
@@ -472,6 +495,7 @@ function buildStableInternalLinksHtml(release, items) {
         ${nextHtml}
         ${seriesHtml}
         <li><a href="${siteBaseUrl()}/flutter-versions/">View all Flutter versions</a></li>
+        <li><a href="${siteBaseUrl()}/tools/flutter-version-checker/">Check Flutter and Dart compatibility</a></li>
       </ul>
     </section>
     ${relatedHtml}`;
@@ -544,19 +568,7 @@ function groupReleasesBySeries(items) {
 }
 
 function findStableContext(items, release) {
-  const stable = stableReleases(items);
-  const index = stable.findIndex(r => r.version === release.version);
-  const series = semverGroup(release.version);
-  const sameSeries = series
-    ? stable.filter(r => semverGroup(r.version) === series)
-    : [];
-
-  return {
-    series,
-    previous: index >= 0 ? stable[index + 1] || null : null,
-    next: index > 0 ? stable[index - 1] || null : null,
-    sameSeries: sameSeries.filter(r => r.version !== release.version),
-  };
+  return getStableReleaseContext(items, release);
 }
 
 function buildFlutterVersionsBreadcrumbLd(pageUrl) {
@@ -861,6 +873,7 @@ function buildFaqPageHtml(items, appAssetTags = '') {
   <meta name="twitter:description" content="${htmlEscape(desc)}" />
   <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
   <link rel="canonical" href="${pageUrl}" />
+  <link rel="alternate" type="text/markdown" href="${SITE_URL}/faq.md" />
   <link rel="alternate" type="application/rss+xml" title="Flutter Releases Feed" href="${SITE_URL}/feed.xml" />
   ${appAssetTags}
   <script type="application/ld+json">
@@ -1173,6 +1186,7 @@ function buildBlogArticlePageHtml(article, generatedAt) {
   <meta name="twitter:description" content="${htmlEscape(desc)}" />
   <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
   <link rel="canonical" href="${pageUrl}" />
+  <link rel="alternate" type="text/markdown" href="${siteBaseUrl()}${String(article.meta.slug || '').replace(/\/$/, '')}.md" />
   <link rel="alternate" type="application/rss+xml" title="Flutter Releases Feed" href="${SITE_URL}/feed.xml" />
   <script type="application/ld+json">
     ${breadcrumbLd}
@@ -1406,6 +1420,7 @@ function buildVersionCheckerPageHtml(items, generatedAt, appAssetTags = '') {
   <meta name="twitter:description" content="Check which Dart SDK version ships with any Flutter release and find Flutter versions compatible with a specific Dart version." />
   <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
   <link rel="canonical" href="${pageUrl}" />
+  <link rel="alternate" type="text/markdown" href="${SITE_URL}/flutter-dart-compatibility.md" />
   <link rel="alternate" type="application/rss+xml" title="Flutter Releases Feed" href="${SITE_URL}/feed.xml" />
   ${appAssetTags}
   <script type="application/ld+json">
@@ -1645,6 +1660,7 @@ ${rows}
   <meta name="twitter:description" content="See the latest Flutter stable, beta and dev versions, complete Flutter version history, Dart SDK compatibility and release details." />
   <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
   <link rel="canonical" href="${pageUrl}" />
+  <link rel="alternate" type="text/markdown" href="${SITE_URL}/flutter-versions.md" />
   <link rel="alternate" type="application/rss+xml" title="Flutter Releases Feed" href="${SITE_URL}/feed.xml" />
   <script type="application/ld+json">
     ${breadcrumbLd}
@@ -1816,9 +1832,9 @@ function buildPageHtml(release, items = []) {
   const downloadsHtml = buildDownloadsHtml(release);
   const requiresHtml = buildRequiresHtml(release);
   const releaseNotesHtml = buildReleaseNotesHtml(release);
+  const sourcesHtml = buildSourcesHtml(release);
   const stableIntroHtml = buildStableIntroHtml(release);
   const stableInternalLinksHtml = buildStableInternalLinksHtml(release, items);
-  const summary = release.summary ? htmlEscape(release.summary) : '';
   const dartDisplay = release.dart_version ? htmlEscape(release.dart_version) : 'N/A';
   const dateDisplay = release.released || 'Unknown';
   const typeDisplay = release.release_type ? htmlEscape(release.release_type) : '';
@@ -1854,6 +1870,7 @@ function buildPageHtml(release, items = []) {
   <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
   <!-- Canonical -->
   <link rel="canonical" href="${htmlEscape(pageUrl)}" />
+  <link rel="alternate" type="text/markdown" href="${htmlEscape(releaseMarkdownUrl(release, SITE_URL))}" />
   <!-- RSS autodiscovery -->
   <link rel="alternate" type="application/rss+xml" title="Flutter Releases Feed" href="${SITE_URL}/feed.xml" />
   <!-- JSON-LD -->
@@ -1876,7 +1893,6 @@ function buildPageHtml(release, items = []) {
     <p><strong>Channel:</strong> ${htmlEscape(chLabel)}${typeDisplay ? ` &mdash; ${typeDisplay}` : ''}</p>
     <p><strong>Released:</strong> ${htmlEscape(dateDisplay)}</p>
     <p><strong>Dart SDK:</strong> ${dartDisplay}</p>
-    ${summary ? `<p>${summary}</p>` : ''}
     ${releaseNotesHtml ? `<section><h2>Release Notes</h2><p>${releaseNotesHtml}</p></section>` : ''}
     <section>
       <h2>Downloads</h2>
@@ -1884,12 +1900,213 @@ function buildPageHtml(release, items = []) {
     </section>
     ${requiresHtml ? `<section><h2>System Requirements</h2>${requiresHtml}</section>` : ''}
     ${stableInternalLinksHtml}
+    ${sourcesHtml}
     ${refUrl ? `<p><a href="${refUrl}" target="_blank" rel="noopener">View on GitHub →</a></p>` : ''}
     <p><a href="${SITE_URL}/flutter-versions/">Browse Flutter version history →</a></p>
     <p><a href="${SITE_URL}/">Browse all Flutter releases →</a></p>
   </main>
 </body>
 </html>`;
+}
+
+function markdownLink(label, url) {
+  return `[${markdownEscape(label)}](${url})`;
+}
+
+function buildDownloadsMarkdown(release) {
+  const entries = Object.entries(release.platforms || {}).filter(([, url]) => url);
+  if (!entries.length) return [];
+  return [
+    '## Downloads',
+    '',
+    ...entries.map(([key, url]) => `- ${markdownLink(platformLabel(key), url)}`),
+    '',
+  ];
+}
+
+function buildReleaseNotesMarkdown(release) {
+  const base = release.release_notes?.base || release.ref_url;
+  if (!base) return [];
+  return [
+    '## Release Notes',
+    '',
+    `- ${markdownLink('Release notes', base)}`,
+    '',
+  ];
+}
+
+function buildSourcesMarkdown(release) {
+  const sources = sourceLinksForRelease(release);
+  if (!sources.length) return [];
+  return [
+    '## Sources',
+    '',
+    ...sources.map(source => `- ${markdownLink(source.label, source.url)}`),
+    '',
+  ];
+}
+
+function buildRelatedMarkdown(release, items) {
+  const context = getStableReleaseContext(items, release);
+  const lines = [];
+  if (context.previous) lines.push(`- Previous: ${markdownLink(`Flutter ${context.previous.version}`, releaseUrl(context.previous))}`);
+  if (context.next) lines.push(`- Next: ${markdownLink(`Flutter ${context.next.version}`, releaseUrl(context.next))}`);
+  if (context.series) lines.push(`- Series: ${markdownLink(`Flutter ${context.series}`, seriesUrl(context.series))}`);
+  lines.push(`- Flutter versions: ${markdownLink('All Flutter versions', `${siteBaseUrl()}/flutter-versions/`)}`);
+  lines.push(`- Compatibility checker: ${markdownLink('Flutter and Dart compatibility checker', `${siteBaseUrl()}/tools/flutter-version-checker/`)}`);
+
+  return [
+    '## Related Releases',
+    '',
+    ...lines,
+    '',
+  ];
+}
+
+function buildReleaseMarkdown(release, items = []) {
+  const lines = [];
+  lines.push(`# Flutter ${markdownEscape(release.version)}`);
+  lines.push('');
+  const introParts = [`Flutter ${release.version} is a ${release.channel} Flutter SDK release`];
+  if (release.released) introParts.push(`published on ${release.released}`);
+  if (release.dart_version) introParts.push(`and bundles Dart ${release.dart_version}`);
+  lines.push(`${introParts.join(' ')}.`);
+  lines.push('');
+  lines.push('## Release Information');
+  lines.push('');
+  lines.push(`- Flutter: ${markdownEscape(release.version)}`);
+  if (release.dart_version) lines.push(`- Dart: ${markdownEscape(release.dart_version)}`);
+  if (release.channel) lines.push(`- Channel: ${markdownEscape(release.channel)}`);
+  if (release.release_type) lines.push(`- Type: ${markdownEscape(release.release_type)}`);
+  if (release.released) lines.push(`- Released: ${markdownEscape(release.released)}`);
+  lines.push('');
+  lines.push(...buildDownloadsMarkdown(release));
+  lines.push(...buildReleaseNotesMarkdown(release));
+  lines.push(...buildSourcesMarkdown(release));
+  lines.push(...buildRelatedMarkdown(release, items));
+  lines.push(`HTML: ${releaseUrl(release)}`);
+  return lines.join('\n').replace(/\n{3,}/g, '\n\n');
+}
+
+function buildHomeMarkdown(items) {
+  const latestStable = getLatestStable(items);
+  const latestBeta = getLatestBeta(items);
+  const latestDev = getLatestDev(items);
+  const lines = [
+    '# FlutterReleases',
+    '',
+    'Independent Flutter SDK release reference containing Flutter versions, bundled Dart versions, release dates, downloads, compatibility information, and official source links.',
+    '',
+    '## Current Releases',
+    '',
+  ];
+  if (latestStable) lines.push(`- Latest stable: ${markdownLink(`Flutter ${latestStable.version}`, releaseUrl(latestStable))}${latestStable.dart_version ? ` — Dart ${latestStable.dart_version}` : ''}`);
+  if (latestBeta) lines.push(`- Latest beta: ${markdownLink(`Flutter ${latestBeta.version}`, releaseUrl(latestBeta))}${latestBeta.dart_version ? ` — Dart ${latestBeta.dart_version}` : ''}`);
+  if (latestDev) lines.push(`- Latest dev/main: ${markdownLink(`Flutter ${latestDev.version}`, releaseUrl(latestDev))}${latestDev.dart_version ? ` — Dart ${latestDev.dart_version}` : ''}`);
+  lines.push('', '## Core', '');
+  lines.push(`- ${markdownLink('Flutter Versions', `${siteBaseUrl()}/flutter-versions/`)}`);
+  lines.push(`- ${markdownLink('Flutter/Dart Compatibility Checker', `${siteBaseUrl()}/tools/flutter-version-checker/`)}`);
+  lines.push(`- ${markdownLink('Complete Release Dataset', `${siteBaseUrl()}/releases.json`)}`);
+  lines.push(`- ${markdownLink('FAQ', `${siteBaseUrl()}/faq/`)}`);
+  lines.push('', `Full LLM reference: ${siteBaseUrl()}/llms-full.txt`);
+  return lines.join('\n');
+}
+
+function buildFlutterVersionsMarkdown(items) {
+  const stable = stableReleases(items);
+  const latestStable = getLatestStable(items);
+  const latestBeta = getLatestBeta(items);
+  const latestDev = getLatestDev(items);
+  const lines = ['# Flutter Versions & Releases', ''];
+  if (latestStable) lines.push(`- Latest stable: ${markdownLink(`Flutter ${latestStable.version}`, releaseUrl(latestStable))}${latestStable.dart_version ? ` — Dart ${latestStable.dart_version}` : ''}`);
+  if (latestBeta) lines.push(`- Latest beta: ${markdownLink(`Flutter ${latestBeta.version}`, releaseUrl(latestBeta))}${latestBeta.dart_version ? ` — Dart ${latestBeta.dart_version}` : ''}`);
+  if (latestDev) lines.push(`- Latest dev/main: ${markdownLink(`Flutter ${latestDev.version}`, releaseUrl(latestDev))}${latestDev.dart_version ? ` — Dart ${latestDev.dart_version}` : ''}`);
+  lines.push('', '## Stable Release History', '', '| Flutter | Dart | Released |', '|---|---|---|');
+  for (const r of stable) {
+    lines.push(`| ${markdownLink(`Flutter ${r.version}`, releaseUrl(r))} | ${markdownEscape(r.dart_version || '')} | ${markdownEscape(r.released || '')} |`);
+  }
+  return lines.join('\n');
+}
+
+function buildCompatibilityMarkdown(items) {
+  const stable = stableReleases(items);
+  const lines = [
+    '# Flutter and Dart Compatibility',
+    '',
+    'Flutter releases bundle a specific Dart SDK. Use this mapping to find which Dart SDK ships with a Flutter release.',
+    '',
+    '| Flutter | Dart | Channel | Released |',
+    '|---|---|---|---|',
+  ];
+  for (const r of stable) {
+    lines.push(`| ${markdownLink(`Flutter ${r.version}`, releaseUrl(r))} | ${markdownEscape(r.dart_version || '')} | ${markdownEscape(r.channel || '')} | ${markdownEscape(r.released || '')} |`);
+  }
+  return lines.join('\n');
+}
+
+function buildFaqMarkdown(items) {
+  const lines = ['# FlutterReleases FAQ', ''];
+  for (const item of items) {
+    lines.push(`## ${markdownEscape(item.question)}`, '', markdownEscape(item.answer), '');
+    if (Array.isArray(item.links) && item.links.length) {
+      for (const link of item.links) {
+        const href = /^https?:\/\//.test(link.href) ? link.href : `${siteBaseUrl()}${link.href}`;
+        lines.push(`- ${markdownLink(link.label, href)}`);
+      }
+      lines.push('');
+    }
+  }
+  return lines.join('\n').trimEnd() + '\n';
+}
+
+function buildBlogArticleMarkdownOutput(article) {
+  const lines = [`# ${markdownEscape(article.meta.title || 'FlutterReleases Blog')}`, ''];
+  if (article.meta.subtitle) lines.push(markdownEscape(article.meta.subtitle), '');
+  lines.push(article.body.trim(), '');
+  lines.push(`HTML: ${siteBaseUrl()}${article.meta.slug}`);
+  return lines.join('\n');
+}
+
+function buildHomepageStaticHtml(items) {
+  const latestStable = getLatestStable(items);
+  const latestBeta = getLatestBeta(items);
+  const stable = stableReleases(items).slice(0, 10);
+  return `<div id="static-homepage-seo">
+      <h1>Flutter Releases</h1>
+      <p>Browse every Flutter SDK release — version, Dart SDK pairing, channel, download links and release notes. Updated from the canonical release dataset.</p>
+      <h2>Current Flutter Releases</h2>
+      <ul>
+        ${latestStable ? `<li><a href="${releasePath(latestStable)}">Latest stable: Flutter ${htmlEscape(latestStable.version)}</a>${latestStable.dart_version ? ` — Dart ${htmlEscape(latestStable.dart_version)}` : ''}${latestStable.released ? ` — ${htmlEscape(latestStable.released)}` : ''}</li>` : ''}
+        ${latestBeta ? `<li><a href="${releasePath(latestBeta)}">Latest beta: Flutter ${htmlEscape(latestBeta.version)}</a>${latestBeta.dart_version ? ` — Dart ${htmlEscape(latestBeta.dart_version)}` : ''}${latestBeta.released ? ` — ${htmlEscape(latestBeta.released)}` : ''}</li>` : ''}
+      </ul>
+      <h2>Latest Stable Releases</h2>
+      <ul>
+        ${stable.map(release => `<li><a href="${releasePath(release)}">Flutter ${htmlEscape(release.version)}</a>${release.dart_version ? ` — Dart ${htmlEscape(release.dart_version)}` : ''}${release.released ? ` — ${htmlEscape(release.released)}` : ''}</li>`).join('\n        ')}
+      </ul>
+      <p><a href="/flutter-versions/">Flutter Versions</a></p>
+      <p><a href="/tools/flutter-version-checker/">Flutter Dart Compatibility Checker</a></p>
+      <p><a href="/faq/">FlutterReleases FAQ</a></p>
+      <p><a href="/blog/">Flutter Releases Blog</a></p>
+      <p><a href="/links.html">Browse all Flutter releases →</a></p>
+    </div>`;
+}
+
+function updateHomepageHtml(items) {
+  if (!fs.existsSync(DIST_DIR)) return;
+  const indexPath = path.join(DIST_DIR, 'index.html');
+  if (!fs.existsSync(indexPath)) return;
+  let html = fs.readFileSync(indexPath, 'utf8');
+  const alternate = '<link rel="alternate" type="text/markdown" href="https://flutterreleases.com/index.md" />';
+  if (!html.includes('type="text/markdown" href="https://flutterreleases.com/index.md"')) {
+    html = html.replace('<!-- RSS autodiscovery -->', `${alternate}\n\t\t<!-- RSS autodiscovery -->`);
+  }
+  const staticHtml = buildHomepageStaticHtml(items);
+  if (html.includes('id="static-homepage-seo"')) {
+    html = html.replace(/<div id="static-homepage-seo">[\s\S]*?<\/div>/, staticHtml);
+  } else {
+    html = html.replace(/<noscript>[\s\S]*?<\/noscript>/, staticHtml);
+  }
+  safeWrite(indexPath, html);
 }
 
 // Build sitemap with per-release URLs
@@ -1908,17 +2125,12 @@ function buildSitemapXml(items, generatedAt, blogPosts = []) {
   lines.push('    <priority>1.0</priority>');
   lines.push('  </url>');
 
-  // Feed, JSON, llms, links
+  // Canonical indexable HTML pages
   for (const [path_, freq, pri] of [
     ['/flutter-versions/', 'daily', '0.9'],
     ['/tools/flutter-version-checker/', 'daily', '0.8'],
     ['/blog/', 'weekly', '0.7'],
     ['/faq/', 'monthly', '0.5'],
-    ['/feed.xml', 'daily', '0.5'],
-    ['/releases.json', 'daily', '0.6'],
-    ['/llms.txt', 'monthly', '0.3'],
-    ['/llms-full.txt', 'daily', '0.4'],
-    ['/links.html', 'daily', '0.4'],
   ]) {
     lines.push('  <url>');
     lines.push(`    <loc>${baseUrl}${path_}</loc>`);
@@ -1984,7 +2196,6 @@ function buildRssXml(items, generatedAt) {
     const pub = toRfc822(release.released || generatedAt || new Date());
     const descParts = [];
     if (release.dart_version) descParts.push(`<p><strong>Dart SDK:</strong> ${xmlEscape(release.dart_version)}</p>`);
-    if (release.summary) descParts.push(`<p>${xmlEscape(release.summary)}</p>`);
     if (release.released) descParts.push(`<p>Released: ${xmlEscape(release.released)}</p>`);
     const link = releaseUrl(release);
 
@@ -2064,47 +2275,102 @@ ${renderGroup('Stable', stable)}${renderGroup('Beta', beta)}${renderGroup('Dev',
 </html>`;
 }
 
-// Build llms-full.txt — full stable release index for LLMs
+function buildLlmsTxt(items) {
+  const latestStable = getLatestStable(items);
+  const latestBeta = getLatestBeta(items);
+  const lines = [];
+  lines.push('# FlutterReleases');
+  lines.push('');
+  lines.push('> Independent Flutter SDK release reference containing Flutter versions, bundled Dart versions, release dates, downloads, compatibility information, and official source links.');
+  lines.push('');
+  lines.push('## Core');
+  lines.push('');
+  lines.push(`- Flutter Versions: ${SITE_URL}/flutter-versions/`);
+  lines.push(`- Flutter/Dart Compatibility Checker: ${SITE_URL}/tools/flutter-version-checker/`);
+  lines.push(`- Complete Release Dataset: ${SITE_URL}/releases.json`);
+  lines.push(`- FAQ: ${SITE_URL}/faq/`);
+  lines.push('');
+  lines.push('## Current Releases');
+  lines.push('');
+  if (latestStable) {
+    lines.push(`- Latest Stable Flutter ${latestStable.version}${latestStable.dart_version ? ` (Dart ${latestStable.dart_version})` : ''}: ${SITE_URL}/release/${encodeURIComponent(latestStable.version)}/`);
+    lines.push(`- Latest Stable Flutter Markdown: ${SITE_URL}/release/${encodeURIComponent(latestStable.version)}.md`);
+  }
+  if (latestBeta) {
+    lines.push(`- Latest Beta Flutter ${latestBeta.version}${latestBeta.dart_version ? ` (Dart ${latestBeta.dart_version})` : ''}: ${SITE_URL}/release/${encodeURIComponent(latestBeta.version)}/`);
+  }
+  lines.push('');
+  lines.push('## Content');
+  lines.push('');
+  lines.push(`- Blog: ${SITE_URL}/blog/`);
+  lines.push(`- Full LLM Reference: ${SITE_URL}/llms-full.txt`);
+  return lines.join('\n') + '\n';
+}
+
+// Build llms-full.txt — compact knowledge reference for LLMs
 function buildLlmsFullTxt(items, generatedAt) {
   const stable = items.filter(r => r.channel === 'stable');
+  const latestStable = getLatestStable(items);
+  const latestBeta = getLatestBeta(items);
+  const latestDev = getLatestDev(items);
   const date = generatedAt ? new Date(generatedAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
 
   const lines = [];
-  lines.push('# FlutterReleases.com — Full stable release index');
+  lines.push('# FlutterReleases');
   lines.push('');
-  lines.push('> Complete list of all Flutter stable releases with Dart SDK versions, dates, and download links.');
-  lines.push(`> Source: ${SITE_URL}/releases.json`);
-  lines.push(`> Updated: ${date}`);
-  lines.push(`> Total stable releases: ${stable.length}`);
+  lines.push(`Updated: ${date}`);
   lines.push('');
-  lines.push('## Stable Releases');
+  lines.push('## About');
   lines.push('');
-  lines.push('| Version | Dart SDK | Released | Type | macOS arm64 | Windows | Linux |');
-  lines.push('|---------|----------|----------|------|------------|---------|-------|');
+  lines.push('FlutterReleases is an independent Flutter SDK release reference generated from the canonical release dataset. It exposes Flutter versions, bundled Dart versions, release dates, downloads, release notes, and official source links.');
+  lines.push('');
+  lines.push('## Current Flutter Releases');
+  lines.push('');
+  if (latestStable) lines.push(`- Latest stable: Flutter ${latestStable.version}${latestStable.dart_version ? ` — Dart ${latestStable.dart_version}` : ''} — ${SITE_URL}/release/${encodeURIComponent(latestStable.version)}/`);
+  if (latestBeta) lines.push(`- Latest beta: Flutter ${latestBeta.version}${latestBeta.dart_version ? ` — Dart ${latestBeta.dart_version}` : ''} — ${SITE_URL}/release/${encodeURIComponent(latestBeta.version)}/`);
+  if (latestDev) lines.push(`- Latest dev/main: Flutter ${latestDev.version}${latestDev.dart_version ? ` — Dart ${latestDev.dart_version}` : ''} — ${SITE_URL}/release/${encodeURIComponent(latestDev.version)}/`);
+  lines.push('');
+  lines.push('## Flutter and Dart Compatibility');
+  lines.push('');
+  lines.push('Each Flutter release bundles a specific Dart SDK. Use the compatibility checker and dataset for exact Flutter → Dart and Dart → Flutter lookups.');
+  lines.push(`- Compatibility checker: ${SITE_URL}/tools/flutter-version-checker/`);
+  lines.push(`- Markdown: ${SITE_URL}/flutter-dart-compatibility.md`);
+  lines.push('');
+  lines.push('## Available Data');
+  lines.push('');
+  lines.push(`- Complete JSON dataset: ${SITE_URL}/releases.json`);
+  lines.push(`- Flutter version history: ${SITE_URL}/flutter-versions/`);
+  lines.push(`- Flutter version history Markdown: ${SITE_URL}/flutter-versions.md`);
+  lines.push('');
+  lines.push('## Release Pages');
+  lines.push('');
+  lines.push('- HTML: /release/{version}/');
+  lines.push('- Markdown: /release/{version}.md');
+  lines.push('');
+  lines.push('## Stable Release History');
+  lines.push('');
+  lines.push('| Version | Dart SDK | Released | Type | HTML | Markdown |');
+  lines.push('|---|---|---|---|---|---|');
 
   for (const r of stable) {
     const v = r.version || '';
     const dart = r.dart_version || 'N/A';
     const date_ = r.released || 'N/A';
     const type = r.release_type || 'Release';
-    const mac = r.platforms?.macos_arm64 || '—';
-    const win = r.platforms?.windows_x64 || '—';
-    const linux = r.platforms?.linux_x64 || '—';
-    lines.push(`| ${v} | ${dart} | ${date_} | ${type} | ${mac} | ${win} | ${linux} |`);
+    lines.push(`| ${v} | ${dart} | ${date_} | ${type} | ${SITE_URL}/release/${encodeURIComponent(v)}/ | ${SITE_URL}/release/${encodeURIComponent(v)}.md |`);
   }
 
   lines.push('');
-  lines.push('## Data access');
+  lines.push('## Documentation');
   lines.push('');
-  lines.push(`- JSON (all channels): ${SITE_URL}/releases.json`);
-  lines.push(`- RSS (stable + beta): ${SITE_URL}/feed.xml`);
-  lines.push(`- Sitemap: ${SITE_URL}/sitemap.xml`);
-  lines.push(`- Schema docs: ${SITE_URL}/llms.txt`);
+  lines.push(`- FAQ: ${SITE_URL}/faq/`);
+  lines.push(`- FAQ Markdown: ${SITE_URL}/faq.md`);
+  lines.push(`- Blog: ${SITE_URL}/blog/`);
+  lines.push(`- RSS: ${SITE_URL}/feed.xml`);
   lines.push('');
-  lines.push('## Source');
+  lines.push('## Data Provenance');
   lines.push('');
-  lines.push('GitHub: https://github.com/shankarmadeshvaran/flutterreleases.com');
-  lines.push(`Live site: ${SITE_URL}`);
+  lines.push('The canonical release dataset is built from official Flutter SDK archive data, Flutter documentation release notes, the Flutter stable CHANGELOG, Flutter GitHub tags/releases, and the Flutter main branch/DEPS file where applicable. Missing facts remain absent instead of being inferred.');
 
   return lines.join('\n');
 }
@@ -2117,7 +2383,7 @@ async function run() {
   const faqItems = readFaqItems();
   const changelogItems = readChangelogItems();
   try {
-    items = readReleasesJson();
+    items = addDerivedSourceUrls(readReleasesJson());
   } catch (e) {
     console.error('Could not read releases.json:', e.message);
     process.exit(1);
@@ -2132,7 +2398,7 @@ async function run() {
   if (DRY_RUN) {
     console.log('Dry-run: skipping file writes.');
     console.log(`Would generate ${toProcess.length} HTML pages`);
-    console.log(`Would update sitemap.xml with ${items.filter(r => r.version).length + 9 + blogPosts.length} URLs`);
+    console.log(`Would update sitemap.xml with ${items.filter(r => r.version).length + 4 + blogPosts.length} URLs`);
     return;
   }
 
@@ -2149,6 +2415,8 @@ async function run() {
       const html = buildPageHtml(release, items);
       const outPath = path.join(DIST_DIR, 'release', slug, 'index.html');
       safeWrite(outPath, html);
+      const markdown = buildReleaseMarkdown(release, items);
+      safeWrite(path.join(DIST_DIR, 'release', `${slug}.md`), markdown);
       generated++;
     } catch (e) {
       console.error(`  Error generating page for ${release.version}:`, e.message);
@@ -2156,6 +2424,9 @@ async function run() {
     }
   }
   console.log(`Generated ${generated} HTML pages (${errors} errors)`);
+
+  updateHomepageHtml(items);
+  console.log('Updated homepage static fallback');
 
   // Update sitemap.xml in both dist and public
   const generatedAt = new Date().toISOString();
@@ -2166,7 +2437,7 @@ async function run() {
   if (fs.existsSync(DIST_DIR)) safeWrite(sitemapDist, sitemapXml);
   safeWrite(sitemapPublic, sitemapXml);
 
-  const urlCount = items.filter(r => r.version).length + 9 + blogPosts.length;
+  const urlCount = items.filter(r => r.version).length + 4 + blogPosts.length;
   console.log(`Updated sitemap.xml with ${urlCount} URLs`);
 
   // Generate Flutter versions SEO page in dist only. It is a route page, so
@@ -2174,12 +2445,14 @@ async function run() {
   const flutterVersionsHtml = buildFlutterVersionsPageHtml(items, generatedAt);
   if (fs.existsSync(DIST_DIR)) {
     safeWrite(path.join(DIST_DIR, 'flutter-versions', 'index.html'), flutterVersionsHtml);
+    safeWrite(path.join(DIST_DIR, 'flutter-versions.md'), buildFlutterVersionsMarkdown(items));
   }
   console.log('Generated flutter-versions/index.html');
 
   const versionCheckerHtml = buildVersionCheckerPageHtml(items, generatedAt, buildAppAssetTags());
   if (fs.existsSync(DIST_DIR)) {
     safeWrite(path.join(DIST_DIR, 'tools', 'flutter-version-checker', 'index.html'), versionCheckerHtml);
+    safeWrite(path.join(DIST_DIR, 'flutter-dart-compatibility.md'), buildCompatibilityMarkdown(items));
   }
   console.log('Generated tools/flutter-version-checker/index.html');
 
@@ -2192,6 +2465,7 @@ async function run() {
   const faqHtml = buildFaqPageHtml(faqItems, buildAppAssetTags());
   if (fs.existsSync(DIST_DIR)) {
     safeWrite(path.join(DIST_DIR, 'faq', 'index.html'), faqHtml);
+    safeWrite(path.join(DIST_DIR, 'faq.md'), buildFaqMarkdown(faqItems));
   }
   console.log('Generated faq/index.html');
 
@@ -2208,12 +2482,23 @@ async function run() {
     const articleHtml = buildBlogArticlePageHtml(article, generatedAt);
     if (fs.existsSync(DIST_DIR)) {
       safeWrite(path.join(DIST_DIR, slug, 'index.html'), articleHtml);
+      safeWrite(path.join(DIST_DIR, `${slug}.md`), buildBlogArticleMarkdownOutput(article));
       generatedBlogArticles++;
     }
   }
   console.log(`Generated ${generatedBlogArticles} blog article pages`);
 
+  if (fs.existsSync(DIST_DIR)) {
+    safeWrite(path.join(DIST_DIR, 'index.md'), buildHomeMarkdown(items));
+  }
+  console.log('Generated Markdown hub files');
+
   // Generate llms-full.txt in both dist and public
+  const llmsTxt = buildLlmsTxt(items);
+  if (fs.existsSync(DIST_DIR)) safeWrite(path.join(DIST_DIR, 'llms.txt'), llmsTxt);
+  safeWrite(path.join(PUBLIC_DIR, 'llms.txt'), llmsTxt);
+  console.log('Generated llms.txt');
+
   const llmsFullTxt = buildLlmsFullTxt(items, generatedAt);
   if (fs.existsSync(DIST_DIR)) safeWrite(path.join(DIST_DIR, 'llms-full.txt'), llmsFullTxt);
   safeWrite(path.join(PUBLIC_DIR, 'llms-full.txt'), llmsFullTxt);

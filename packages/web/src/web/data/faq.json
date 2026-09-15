@@ -56,6 +56,24 @@
     ]
   },
   {
+    "question": "Where can I download older Flutter versions?",
+    "answer": "Use the Flutter Versions page to find an older release, then open its release page for available download links. Flutter's official archive remains the authoritative download source.",
+    "links": [
+      {
+        "label": "Flutter Versions",
+        "href": "/flutter-versions/"
+      },
+      {
+        "label": "Official Flutter release archive",
+        "href": "https://docs.flutter.dev/release/archive"
+      }
+    ]
+  },
+  {
+    "question": "Does FlutterReleases host Flutter binaries?",
+    "answer": "No. FlutterReleases does not host Flutter SDK binaries. Download links point to Flutter's official release infrastructure when those links are available in the release dataset."
+  },
+  {
     "question": "Can I use releases.json directly?",
     "answer": "Yes. releases.json is public and can be used when you need structured Flutter release data for scripts, dashboards, or internal tooling.",
     "links": [
