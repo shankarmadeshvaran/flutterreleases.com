@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://flutterreleases.com/</loc>
-    <lastmod>2026-09-15T15:37:45.226Z</lastmod>
+    <lastmod>2026-09-15T15:39:04.427Z</lastmod>
     <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://flutterreleases.com/flutter-versions/</loc>
-    <lastmod>2026-09-15T15:37:45.226Z</lastmod>
+    <lastmod>2026-09-15T15:39:04.427Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://flutterreleases.com/tools/flutter-version-checker/</loc>
-    <lastmod>2026-09-15T15:37:45.226Z</lastmod>
+    <lastmod>2026-09-15T15:39:04.427Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -27,12 +27,6 @@
     <loc>https://flutterreleases.com/faq/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://flutterreleases.com/blog/flutter-cocoapods-to-swift-package-manager-migration/</loc>
-    <lastmod>2026-09-15T15:37:45.226Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://flutterreleases.com/release/main/</loc>
@@ -2506,4 +2500,5 @@
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
+
 </urlset>
