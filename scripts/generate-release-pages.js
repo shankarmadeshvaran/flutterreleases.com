@@ -533,6 +533,26 @@ function releaseUrl(release) {
   return `${siteBaseUrl()}${releasePath(release)}`;
 }
 
+function canonicalReleaseRecords(items) {
+  const rank = { stable: 0, beta: 1, dev: 2, main: 3 };
+  const score = release =>
+    (rank[release.channel] ?? 9) * 100 -
+    (release.dart_version ? 10 : 0) -
+    (release.released ? 1 : 0);
+  const byPath = new Map();
+
+  for (const release of items) {
+    if (!release.version) continue;
+    const key = releasePath(release);
+    const existing = byPath.get(key);
+    if (!existing || score(release) < score(existing)) {
+      byPath.set(key, release);
+    }
+  }
+
+  return [...byPath.values()];
+}
+
 function toRfc822(dateValue) {
   try {
     const dt = dateValue ? new Date(dateValue) : new Date();
@@ -2154,7 +2174,7 @@ function buildSitemapXml(items, generatedAt, blogPosts = []) {
   const priorityMap = { stable: '0.8', beta: '0.6', dev: '0.4', main: '0.3' };
   const changeMap = { stable: 'monthly', beta: 'weekly', dev: 'weekly', main: 'daily' };
 
-  for (const r of items.filter(r => r.version)) {
+  for (const r of canonicalReleaseRecords(items)) {
     const pri = priorityMap[r.channel] || '0.4';
     const freq = changeMap[r.channel] || 'monthly';
     const lastmod = r.released ? new Date(r.released).toISOString() : lm;
@@ -2218,11 +2238,12 @@ function buildRssXml(items, generatedAt) {
 function buildLinksHtml(items, generatedAt) {
   const date = generatedAt ? new Date(generatedAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
   const baseUrl = SITE_URL.replace(/\/$/, '');
+  const canonicalItems = canonicalReleaseRecords(items);
 
-  const stable = items.filter(r => r.channel === 'stable');
-  const beta   = items.filter(r => r.channel === 'beta');
-  const dev    = items.filter(r => r.channel === 'dev');
-  const main_  = items.filter(r => r.channel === 'main');
+  const stable = canonicalItems.filter(r => r.channel === 'stable');
+  const beta   = canonicalItems.filter(r => r.channel === 'beta');
+  const dev    = canonicalItems.filter(r => r.channel === 'dev');
+  const main_  = canonicalItems.filter(r => r.channel === 'main');
 
   function renderGroup(title, group) {
     if (!group.length) return '';
@@ -2266,7 +2287,7 @@ function buildLinksHtml(items, generatedAt) {
 <body>
   <nav><a href="${baseUrl}/">← Back to FlutterReleases</a></nav>
   <h1>All Flutter Releases</h1>
-  <p class="meta">${items.length} total releases &mdash; Generated ${date} &mdash; <a href="${baseUrl}/releases.json">releases.json</a></p>
+  <p class="meta">${canonicalItems.length} canonical release pages &mdash; ${items.length} dataset records &mdash; Generated ${date} &mdash; <a href="${baseUrl}/releases.json">releases.json</a></p>
 ${renderGroup('Stable', stable)}${renderGroup('Beta', beta)}${renderGroup('Dev', dev)}${renderGroup('Main', main_)}
   <footer>
     <p><a href="${baseUrl}/">FlutterReleases.com</a> &mdash; Updated daily &mdash; <a href="${baseUrl}/sitemap.xml">Sitemap</a> &mdash; <a href="${baseUrl}/feed.xml">RSS</a></p>
@@ -2389,16 +2410,17 @@ async function run() {
     process.exit(1);
   }
 
+  const canonicalItems = canonicalReleaseRecords(items);
   const toProcess = STABLE_ONLY
-    ? items.filter(r => r.channel === 'stable')
-    : items;
+    ? canonicalItems.filter(r => r.channel === 'stable')
+    : canonicalItems;
 
   console.log(`Processing ${toProcess.length} releases (${items.filter(r => r.channel === 'stable').length} stable)...`);
 
   if (DRY_RUN) {
     console.log('Dry-run: skipping file writes.');
     console.log(`Would generate ${toProcess.length} HTML pages`);
-    console.log(`Would update sitemap.xml with ${items.filter(r => r.version).length + 4 + blogPosts.length} URLs`);
+    console.log(`Would update sitemap.xml with ${canonicalItems.length + 4 + blogPosts.length} URLs`);
     return;
   }
 
@@ -2437,7 +2459,7 @@ async function run() {
   if (fs.existsSync(DIST_DIR)) safeWrite(sitemapDist, sitemapXml);
   safeWrite(sitemapPublic, sitemapXml);
 
-  const urlCount = items.filter(r => r.version).length + 4 + blogPosts.length;
+  const urlCount = canonicalReleaseRecords(items).length + 5 + blogPosts.length;
   console.log(`Updated sitemap.xml with ${urlCount} URLs`);
 
   // Generate Flutter versions SEO page in dist only. It is a route page, so

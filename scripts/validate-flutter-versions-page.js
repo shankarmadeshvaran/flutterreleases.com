@@ -141,6 +141,11 @@ assertIncludes(
 const sitemapReleaseUrls = [...sitemapXml.matchAll(/<loc>(https:\/\/flutterreleases\.com\/release\/[^<]+)<\/loc>/g)]
   .map(match => match[1]);
 assert.ok(sitemapReleaseUrls.length > 0, 'sitemap must include release URLs');
+assert.equal(
+  sitemapReleaseUrls.length,
+  new Set(sitemapReleaseUrls).size,
+  'sitemap release URLs must not contain duplicate canonical URLs'
+);
 for (const url of sitemapReleaseUrls) {
   assert.ok(url.endsWith('/'), `sitemap release URL must be canonical trailing slash: ${url}`);
 }
