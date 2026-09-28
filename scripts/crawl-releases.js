@@ -24,7 +24,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { sourceUrlsObject } from './release-data-utils.js';
+import { dedupeReleaseItems, sourceUrlsObject } from './release-data-utils.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -553,10 +553,13 @@ async function run() {
   }
   const existing = JSON.parse(fs.readFileSync(CURATED_PATH, 'utf8'));
   existing.items = Array.isArray(existing.items) ? existing.items : [];
+  const loadedCount = existing.items.length;
+  existing.items = dedupeReleaseItems(existing.items);
+  const removedDuplicateCount = loadedCount - existing.items.length;
   const releaseKey = (channel, version) => `${channel || 'stable'}::${version}`;
   const existingByReleaseKey = new Map(existing.items.map(i => [releaseKey(i.channel, i.version), i]));
   const latestByChannel = latestReleaseDateByChannel(existing.items);
-  console.log(`  Loaded existing releases: ${existing.items.length} entries\n`);
+  console.log(`  Loaded existing releases: ${existing.items.length} canonical entries\n`);
 
   const newItems = [];
   let refreshedCount = 0;
@@ -677,7 +680,7 @@ async function run() {
     item.summary || (item.requires && Object.keys(item.requires).length > 0) || !item.source_urls
   ).length;
 
-  if (newItems.length === 0 && refreshedCount === 0 && staleFactCount === 0) {
+  if (newItems.length === 0 && refreshedCount === 0 && staleFactCount === 0 && removedDuplicateCount === 0) {
     console.log('✓ releases.json is already up to date. Nothing to do.\n');
     process.exit(0);
   }
@@ -694,6 +697,9 @@ async function run() {
   if (staleFactCount > 0) {
     console.log(`\n🧹 Cleaning unsupported generated facts on ${staleFactCount} existing release record(s).`);
   }
+  if (removedDuplicateCount > 0) {
+    console.log(`\n🧹 Removing ${removedDuplicateCount} duplicate or invalid release record(s).`);
+  }
 
   if (DRY_RUN) {
     console.log('\n[dry-run] Would write to:', CURATED_PATH);
@@ -705,7 +711,9 @@ async function run() {
   }
 
   // Prepend new items (newest first) and write back
-  const updatedItems = [...newItems, ...(existing.items || [])].map(normalizeFactsForOutput);
+  const updatedItems = dedupeReleaseItems(
+    [...newItems, ...(existing.items || [])].map(normalizeFactsForOutput)
+  );
 
   const output = {
     meta: {
@@ -728,6 +736,7 @@ async function run() {
       `|---|---|`,
       `| New releases found | **${newItems.length}** |`,
       `| Existing releases refreshed | **${refreshedCount}** |`,
+      `| Duplicate/invalid records removed | **${removedDuplicateCount}** |`,
       `| Total releases | **${updatedItems.length}** |`,
       `| Channels crawled | ${CHANNELS.join(', ')} |`,
       `| Channels refreshed only | ${REFRESH_ONLY_CHANNELS.join(', ') || 'none'} |`,

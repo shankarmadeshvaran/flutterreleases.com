@@ -141,7 +141,7 @@ Analytics events and community research notes live in [docs/analytics-and-commun
 
 | Step | Trigger | What it does |
 |---|---|---|
-| `crawl-releases.yml` | Daily 06:00 UTC + manual | Hits Flutter SDK archive + GitHub/docs metadata, verifies release notes and recent downloads, writes canonical `releases.json`, commits |
+| `crawl-releases.yml` | Daily 06:17 UTC / 11:47 IST + manual | Hits Flutter SDK archive + GitHub/docs metadata, verifies release notes and recent downloads, removes duplicate/invalid records, writes canonical `releases.json`, commits |
 | `update-releases.yml` | Push to `releases.json` or `scripts/` | Regenerates `feed.xml` and `sitemap.xml`, commits |
 | `validate-release-data.yml` | Push to release data / schema files | Fails CI if schema drifts or item count drops below threshold |
 | `deploy.yml` | Push to `main` | Builds Vite app, runs `generate-release-pages.js`, deploys to Cloudflare Pages |
@@ -168,6 +168,8 @@ node scripts/crawl-releases.js --all-channels --verify-downloads  # full downloa
 ```
 
 The crawler uses the official Flutter SDK archive as the canonical source for versions, Dart SDK versions, release dates, framework hashes, and platform download URLs. Stable `.0` feature releases point to Flutter's official docs release-note pages. Stable hotfix/patch releases point to the Flutter stable `CHANGELOG.md` version anchor. Recent stable/beta download URLs are verified by default; `--verify-downloads` verifies all archive-backed downloads.
+
+Before writing `releases.json`, the crawler validates version identifiers and keeps one authoritative record per Flutter version. If the same version appears in more than one channel, it prefers stable, then beta, dev, and main, with verified and complete records preferred within a channel. Empty, `undefined`, and whitespace-corrupted versions are discarded. Static generators apply the same guard so HTML, Markdown, RSS, sitemap, LLM files, and the compatibility checker cannot publish duplicate release facts while historical data is being cleaned.
 
 ### Regenerating all static assets locally
 
@@ -311,6 +313,8 @@ Or create it in the Cloudflare dashboard under **Workers & Pages → Create appl
 | `release_notes` | Object with at minimum a `base` URL |
 | `source_urls` | Additive provenance URLs such as SDK archive, release notes, GitHub tag, or DEPS |
 | `link_status` | Optional verification metadata for `release_notes` and platform downloads |
+
+The dataset permits only one record per `version`. Supported identifiers follow Flutter version/tag forms such as `3.47.5`, `3.48.0-0.5.pre`, and `v1.9.1+hotfix.4`, plus the rolling `main` record. The daily crawler enforces these rules automatically; do not maintain duplicate channel records manually.
 
 Release-note URL rules:
 

@@ -1,6 +1,38 @@
 const CHANNEL_ORDER = { stable: 0, beta: 1, dev: 2, main: 3 };
 export const OFFICIAL_FLUTTER_ARCHIVE_URL = 'https://docs.flutter.dev/release/archive';
 
+export function isSupportedReleaseVersion(value) {
+  const version = String(value || '').trim();
+  if (version === 'main') return true;
+  return /^v?\d+\.\d+\.\d+(?:[-+][0-9A-Za-z][0-9A-Za-z.-]*)?$/.test(version);
+}
+
+function releaseRecordScore(release) {
+  const channelScore = (CHANNEL_ORDER[release.channel] ?? 4) * 100;
+  const verifiedScore = release.verified ? -20 : 0;
+  const dartScore = release.dart_version ? -10 : 0;
+  const dateScore = release.released ? -5 : 0;
+  const sourceScore = release.source_urls && Object.keys(release.source_urls).length > 0 ? -2 : 0;
+  return channelScore + verifiedScore + dartScore + dateScore + sourceScore;
+}
+
+export function dedupeReleaseItems(items) {
+  const byVersion = new Map();
+
+  for (const item of items || []) {
+    const version = String(item?.version || item?.flutter_version || '').trim();
+    if (!isSupportedReleaseVersion(version)) continue;
+
+    const release = item.version === version ? item : { ...item, version };
+    const existing = byVersion.get(version);
+    if (!existing || releaseRecordScore(release) < releaseRecordScore(existing)) {
+      byVersion.set(version, release);
+    }
+  }
+
+  return [...byVersion.values()];
+}
+
 export function normalizeSiteUrl(siteUrl = 'https://flutterreleases.com') {
   return String(siteUrl || 'https://flutterreleases.com').replace(/\/$/, '');
 }
@@ -31,7 +63,9 @@ export function getLatestBeta(items) {
 }
 
 export function getLatestDev(items) {
-  return latestByChannel(items, 'dev') || latestByChannel(items, 'main');
+  return items
+    .filter(release => (release.channel === 'dev' || release.channel === 'main') && release.version)
+    .sort((a, b) => releaseTime(b) - releaseTime(a))[0];
 }
 
 export function stableReleases(items) {

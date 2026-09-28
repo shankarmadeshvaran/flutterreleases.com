@@ -8,8 +8,8 @@ import { useReleases } from "../hooks/useReleases";
 import { trackEvent } from "../lib/analytics";
 import type { Release } from "../types/release";
 
-const TITLE = "Flutter Versions & Releases — Latest Stable Flutter SDK";
-const DESCRIPTION =
+const FALLBACK_TITLE = "Flutter Versions & Releases — Latest Stable Flutter SDK";
+const FALLBACK_DESCRIPTION =
   "See the latest Flutter stable, beta and dev versions, complete Flutter version history, Dart SDK compatibility and release details.";
 
 function formatDate(dateStr: string) {
@@ -143,15 +143,22 @@ export default function FlutterVersionsPage() {
   const { releases, loading, error } = useReleases();
   const { dark, toggle } = useDarkMode();
 
-  useMeta(TITLE, DESCRIPTION, "https://flutterreleases.com/flutter-versions/");
-
   const latestStable = releases.find((r) => r.channel === "stable");
   const latestBeta = releases.find((r) => r.channel === "beta");
-  const latestDev = releases.find((r) => r.channel === "dev") ?? releases.find((r) => r.channel === "main");
+  const latestDev = releases.find((r) => r.channel === "dev" || r.channel === "main");
   const stableReleases = releases.filter((r) => r.channel === "stable" && semverGroup(r.version));
   const prereleaseRows = releases.filter((r) => r.channel !== "stable" && semverGroup(r.version));
   const stableGroups = groupByMajorMinor(stableReleases);
   const prereleaseGroups = groupByMajorMinor(prereleaseRows);
+  const seoTitle = latestStable
+    ? `Flutter Versions: Latest Stable Flutter ${latestStable.version} & History`
+    : FALLBACK_TITLE;
+  const seoDescription = latestStable
+    ? `The latest stable Flutter version is ${latestStable.version}${latestStable.dartVersion ? ` with Dart ${latestStable.dartVersion}` : ""}${latestStable.releasedAt ? `, released ${formatDate(latestStable.releasedAt)}` : ""}. Browse Flutter version history, beta and dev releases, downloads and release notes.`
+    : FALLBACK_DESCRIPTION;
+
+  useMeta(seoTitle, seoDescription, "https://flutterreleases.com/flutter-versions/");
+
   return (
     <div
       className="min-h-screen flex flex-col"
@@ -171,6 +178,18 @@ export default function FlutterVersionsPage() {
             <h1 className="text-2xl font-bold tracking-tight mb-2" style={{ color: "var(--text-primary)" }}>
               Flutter Versions & Releases
             </h1>
+            {latestStable && (
+              <p className="text-base leading-relaxed max-w-3xl mb-2" style={{ color: "var(--text-primary)" }}>
+                The latest stable Flutter version is{" "}
+                <strong>
+                  <a href={`/release/${latestStable.version}/`} style={{ color: "var(--accent)" }}>
+                    Flutter {latestStable.version}
+                  </a>
+                </strong>
+                {latestStable.releasedAt ? `, released ${formatDate(latestStable.releasedAt)}` : ""}
+                {latestStable.dartVersion ? `, and it includes Dart ${latestStable.dartVersion}` : ""}.
+              </p>
+            )}
             <p className="text-sm leading-relaxed max-w-2xl" style={{ color: "var(--text-secondary)" }}>
               See the latest Flutter stable, beta and dev versions, complete Flutter version history, Dart SDK compatibility and release details.
             </p>

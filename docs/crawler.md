@@ -90,6 +90,10 @@ The current crawler keeps `requires` as `{}` unless requirements are verified fr
 
 ## Data Contract
 
+The canonical dataset must contain at most one record per Flutter version. When the same version appears in multiple archive channels, keep the strongest authoritative record in this order: stable, beta, dev, then main. Prefer records with verified sources, Dart mappings, and release dates. The crawler removes duplicate and invalid placeholder records before writing `releases.json`; generated representations apply the same guard while older data is being cleaned.
+
+Only publish release identifiers that match Flutter's version/tag forms (for example `3.47.5`, `3.48.0-0.5.pre`, or `v1.9.1+hotfix.4`) plus the rolling `main` record. Never generate routes for empty values, `undefined`, or whitespace-corrupted versions.
+
 The UI depends on these existing fields:
 
 - `version`

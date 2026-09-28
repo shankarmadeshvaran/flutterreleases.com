@@ -9,7 +9,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { sourceUrlsObject } from './release-data-utils.js';
+import { dedupeReleaseItems, sourceUrlsObject } from './release-data-utils.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -71,7 +71,7 @@ function readCanonicalReleaseItems() {
     const rawTxt = fs.readFileSync(FINAL_PATH, 'utf8');
     const parsed = JSON.parse(rawTxt);
     const items = Array.isArray(parsed?.items) ? parsed.items : (Array.isArray(parsed) ? parsed : []);
-    return items.filter(item => item && (item.version || item.flutter_version));
+    return dedupeReleaseItems(items.filter(item => item && (item.version || item.flutter_version)));
   } catch {
     return [];
   }
@@ -515,6 +515,8 @@ async function run(){
       console.warn(`Manifest discovery returned no items; reusing ${canonicalItems.length} canonical releases.`);
     }
 
+    finalItems = dedupeReleaseItems(finalItems);
+
     // Determine canonical output: prefer releases.json owned by crawler if present
     let out = { meta: { generated_at: nowIso(), count: finalItems.length }, items: finalItems };
     try {
@@ -546,6 +548,7 @@ async function run(){
         const cand = readCanonicalReleaseItems();
         if (cand.length > 0) itemsForFeed = cand;
       }catch{ /* ignore and fall back */ }
+      itemsForFeed = dedupeReleaseItems(itemsForFeed);
 
       // Filter to stable + beta only, sort newest-first, limit 50
       const feedItems = itemsForFeed

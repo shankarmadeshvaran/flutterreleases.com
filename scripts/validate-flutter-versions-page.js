@@ -2,6 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import assert from 'assert/strict';
+import { dedupeReleaseItems, getLatestDev } from './release-data-utils.js';
 
 const ROOT = process.cwd();
 const PUBLIC_RELEASES = path.join(ROOT, 'packages', 'web', 'public', 'releases.json');
@@ -15,7 +16,7 @@ const SITE_URL = process.env.SITE_URL || 'https://flutterreleases.com';
 
 function readReleases() {
   const parsed = JSON.parse(fs.readFileSync(PUBLIC_RELEASES, 'utf8'));
-  return Array.isArray(parsed) ? parsed : parsed.items || [];
+  return dedupeReleaseItems(Array.isArray(parsed) ? parsed : parsed.items || []);
 }
 
 function latestByChannel(items, channel) {
@@ -61,7 +62,7 @@ const redirects = fs.readFileSync(DIST_REDIRECTS, 'utf8');
 
 const latestStable = latestByChannel(releases, 'stable');
 const latestBeta = latestByChannel(releases, 'beta');
-const latestDev = latestByChannel(releases, 'dev') || latestByChannel(releases, 'main');
+const latestDev = getLatestDev(releases);
 const stable = stableReleases(releases);
 const latestFeatureStable = stable.find(release => isStableFeatureRelease(release.version));
 
@@ -101,7 +102,9 @@ for (const [platform] of latestStableDownloads) {
 }
 
 assertIncludes(pageHtml, '<h1>Flutter Versions &amp; Releases</h1>', 'flutter versions page');
-assertIncludes(pageHtml, '<title>Flutter Versions &amp; Releases — Latest Stable Flutter SDK</title>', 'flutter versions page title');
+assertIncludes(pageHtml, `<title>Flutter Versions: Latest Stable Flutter ${latestStable.version} &amp; History</title>`, 'flutter versions page title');
+assertIncludes(pageHtml, `The latest stable Flutter version is ${latestStable.version}`, 'flutter versions meta description');
+assertIncludes(pageHtml, `The latest stable Flutter version is <strong><a href="${SITE_URL}/release/${encodeURIComponent(latestStable.version)}/">Flutter ${latestStable.version}</a></strong>`, 'flutter versions direct answer');
 assertIncludes(pageHtml, `<link rel="canonical" href="${SITE_URL}/flutter-versions/" />`, 'flutter versions canonical');
 assertIncludes(pageHtml, `Latest Stable Flutter release`, 'flutter versions page');
 assertIncludes(pageHtml, `Flutter ${latestStable.version}`, 'latest stable');
@@ -131,6 +134,8 @@ for (const release of stable) {
 assertIncludes(feedXml, `<link>${SITE_URL}/release/${encodeURIComponent(latestStable.version)}/</link>`, 'RSS latest stable canonical link');
 
 assertIncludes(redirects, '/release/:version /release/:version/ 301', 'release trailing-slash redirect');
+assertIncludes(redirects, '/release/undefined/ /flutter-versions/ 301', 'invalid placeholder release redirect');
+assertIncludes(redirects, '/release/v1.9.1%20hotfix.4/ /release/v1.9.1%2Bhotfix.4/ 301', 'legacy hotfix URL redirect');
 
 assertIncludes(
   sitemapXml,
