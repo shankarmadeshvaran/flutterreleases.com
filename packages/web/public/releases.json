@@ -1,20 +1,20 @@
 {
   "meta": {
-    "generated_at": "2026-09-27T12:01:30.939Z",
+    "generated_at": "2026-09-28T13:53:28.528Z",
     "source": "auto-crawled",
-    "count": 414
+    "count": 408
   },
   "items": [
     {
       "version": "main",
       "channel": "main",
       "release_type": "Development",
-      "released": "2026-09-26",
+      "released": "2026-09-28",
       "dart_version": "3.14.0-226.0.dev",
-      "framework_revision": "8db5526",
+      "framework_revision": "43596b3",
       "engine_revision": null,
       "git_tag": null,
-      "build": "8db5526",
+      "build": "43596b3",
       "requires": {},
       "platforms": {
         "macos_arm64": null,
@@ -33,7 +33,7 @@
         "web": null,
         "tools": null
       },
-      "ref_url": "https://github.com/flutter/flutter/commit/8db55268667c738b90677d49857ff42938e9c9fa",
+      "ref_url": "https://github.com/flutter/flutter/commit/43596b3519f61ebd934229bb72c712caaefe6a9b",
       "verified": true,
       "sources": [
         "GitHub flutter/flutter main branch",
@@ -41,7 +41,7 @@
       ],
       "source_urls": {
         "release_notes": "https://github.com/flutter/flutter/commits/main",
-        "github": "https://github.com/flutter/flutter/commit/8db55268667c738b90677d49857ff42938e9c9fa",
+        "github": "https://github.com/flutter/flutter/commit/43596b3519f61ebd934229bb72c712caaefe6a9b",
         "deps": "https://github.com/flutter/flutter/blob/main/DEPS"
       }
     },
@@ -18008,96 +18008,6 @@
       }
     },
     {
-      "flutter_version": "3.19.0-0.1.pre",
-      "channel": "dev",
-      "released": "2024-01-11",
-      "dart_version": null,
-      "engine_revision": null,
-      "commit_ref": null,
-      "requires": {},
-      "platforms": {},
-      "notes_url": "https://github.com/flutter/flutter/releases/tag/3.19.0-0.1.pre",
-      "notes": [
-        {
-          "type": "release-notes",
-          "title": "Release notes & changelog",
-          "url": "https://github.com/flutter/flutter/releases/tag/3.19.0-0.1.pre"
-        },
-        {
-          "type": "release-notes",
-          "title": "Release notes 3.19.0-0.1.pre",
-          "url": "https://docs.flutter.dev/release/release-notes#3-19-0-0-1-pre"
-        },
-        {
-          "type": "breaking",
-          "title": "Breaking changes 3.19.0-0.1.pre",
-          "url": "https://docs.flutter.dev/release/migration-3-19-0-0-1-pre"
-        }
-      ],
-      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.19.0-0.1.pre",
-      "verified": false,
-      "release_notes": {
-        "base": null,
-        "framework": null,
-        "material": null,
-        "ios": null,
-        "android": null,
-        "windows": null,
-        "linux": null,
-        "web": null,
-        "tools": null
-      },
-      "version": "3.19.0-0.1.pre",
-      "source_urls": {
-        "github": "https://github.com/flutter/flutter/releases/tag/3.19.0-0.1.pre"
-      }
-    },
-    {
-      "flutter_version": "3.18.0-0.1.pre",
-      "channel": "dev",
-      "released": "2023-12-12",
-      "dart_version": null,
-      "engine_revision": null,
-      "commit_ref": null,
-      "requires": {},
-      "platforms": {},
-      "notes_url": "https://github.com/flutter/flutter/releases/tag/3.18.0-0.1.pre",
-      "notes": [
-        {
-          "type": "release-notes",
-          "title": "Release notes & changelog",
-          "url": "https://github.com/flutter/flutter/releases/tag/3.18.0-0.1.pre"
-        },
-        {
-          "type": "release-notes",
-          "title": "Release notes 3.18.0-0.1.pre",
-          "url": "https://docs.flutter.dev/release/release-notes#3-18-0-0-1-pre"
-        },
-        {
-          "type": "breaking",
-          "title": "Breaking changes 3.18.0-0.1.pre",
-          "url": "https://docs.flutter.dev/release/migration-3-18-0-0-1-pre"
-        }
-      ],
-      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.18.0-0.1.pre",
-      "verified": false,
-      "release_notes": {
-        "base": null,
-        "framework": null,
-        "material": null,
-        "ios": null,
-        "android": null,
-        "windows": null,
-        "linux": null,
-        "web": null,
-        "tools": null
-      },
-      "version": "3.18.0-0.1.pre",
-      "source_urls": {
-        "github": "https://github.com/flutter/flutter/releases/tag/3.18.0-0.1.pre"
-      }
-    },
-    {
       "flutter_version": "3.17.0-0.1.pre",
       "channel": "dev",
       "released": "2023-12-11",
@@ -18140,186 +18050,6 @@
       "version": "3.17.0-0.1.pre",
       "source_urls": {
         "github": "https://github.com/flutter/flutter/releases/tag/3.17.0-0.1.pre"
-      }
-    },
-    {
-      "flutter_version": "3.16.0-0.1.pre",
-      "channel": "dev",
-      "released": "2023-10-20",
-      "dart_version": null,
-      "engine_revision": null,
-      "commit_ref": null,
-      "requires": {},
-      "platforms": {},
-      "notes_url": "https://github.com/flutter/flutter/releases/tag/3.16.0-0.1.pre",
-      "notes": [
-        {
-          "type": "release-notes",
-          "title": "Release notes & changelog",
-          "url": "https://github.com/flutter/flutter/releases/tag/3.16.0-0.1.pre"
-        },
-        {
-          "type": "release-notes",
-          "title": "Release notes 3.16.0-0.1.pre",
-          "url": "https://docs.flutter.dev/release/release-notes#3-16-0-0-1-pre"
-        },
-        {
-          "type": "breaking",
-          "title": "Breaking changes 3.16.0-0.1.pre",
-          "url": "https://docs.flutter.dev/release/migration-3-16-0-0-1-pre"
-        }
-      ],
-      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.16.0-0.1.pre",
-      "verified": false,
-      "release_notes": {
-        "base": null,
-        "framework": null,
-        "material": null,
-        "ios": null,
-        "android": null,
-        "windows": null,
-        "linux": null,
-        "web": null,
-        "tools": null
-      },
-      "version": "3.16.0-0.1.pre",
-      "source_urls": {
-        "github": "https://github.com/flutter/flutter/releases/tag/3.16.0-0.1.pre"
-      }
-    },
-    {
-      "flutter_version": "3.15.0-15.1.pre",
-      "channel": "dev",
-      "released": "2023-09-15",
-      "dart_version": null,
-      "engine_revision": null,
-      "commit_ref": null,
-      "requires": {},
-      "platforms": {},
-      "notes_url": "https://github.com/flutter/flutter/releases/tag/3.15.0-15.1.pre",
-      "notes": [
-        {
-          "type": "release-notes",
-          "title": "Release notes & changelog",
-          "url": "https://github.com/flutter/flutter/releases/tag/3.15.0-15.1.pre"
-        },
-        {
-          "type": "release-notes",
-          "title": "Release notes 3.15.0-15.1.pre",
-          "url": "https://docs.flutter.dev/release/release-notes#3-15-0-15-1-pre"
-        },
-        {
-          "type": "breaking",
-          "title": "Breaking changes 3.15.0-15.1.pre",
-          "url": "https://docs.flutter.dev/release/migration-3-15-0-15-1-pre"
-        }
-      ],
-      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.15.0-15.1.pre",
-      "verified": false,
-      "release_notes": {
-        "base": null,
-        "framework": null,
-        "material": null,
-        "ios": null,
-        "android": null,
-        "windows": null,
-        "linux": null,
-        "web": null,
-        "tools": null
-      },
-      "version": "3.15.0-15.1.pre",
-      "source_urls": {
-        "github": "https://github.com/flutter/flutter/releases/tag/3.15.0-15.1.pre"
-      }
-    },
-    {
-      "flutter_version": "3.14.0-0.1.pre",
-      "channel": "dev",
-      "released": "2023-08-21",
-      "dart_version": null,
-      "engine_revision": null,
-      "commit_ref": null,
-      "requires": {},
-      "platforms": {},
-      "notes_url": "https://github.com/flutter/flutter/releases/tag/3.14.0-0.1.pre",
-      "notes": [
-        {
-          "type": "release-notes",
-          "title": "Release notes & changelog",
-          "url": "https://github.com/flutter/flutter/releases/tag/3.14.0-0.1.pre"
-        },
-        {
-          "type": "release-notes",
-          "title": "Release notes 3.14.0-0.1.pre",
-          "url": "https://docs.flutter.dev/release/release-notes#3-14-0-0-1-pre"
-        },
-        {
-          "type": "breaking",
-          "title": "Breaking changes 3.14.0-0.1.pre",
-          "url": "https://docs.flutter.dev/release/migration-3-14-0-0-1-pre"
-        }
-      ],
-      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.14.0-0.1.pre",
-      "verified": false,
-      "release_notes": {
-        "base": null,
-        "framework": null,
-        "material": null,
-        "ios": null,
-        "android": null,
-        "windows": null,
-        "linux": null,
-        "web": null,
-        "tools": null
-      },
-      "version": "3.14.0-0.1.pre",
-      "source_urls": {
-        "github": "https://github.com/flutter/flutter/releases/tag/3.14.0-0.1.pre"
-      }
-    },
-    {
-      "flutter_version": "3.13.0-0.1.pre",
-      "channel": "dev",
-      "released": "2023-07-12",
-      "dart_version": null,
-      "engine_revision": null,
-      "commit_ref": null,
-      "requires": {},
-      "platforms": {},
-      "notes_url": "https://github.com/flutter/flutter/releases/tag/3.13.0-0.1.pre",
-      "notes": [
-        {
-          "type": "release-notes",
-          "title": "Release notes & changelog",
-          "url": "https://github.com/flutter/flutter/releases/tag/3.13.0-0.1.pre"
-        },
-        {
-          "type": "release-notes",
-          "title": "Release notes 3.13.0-0.1.pre",
-          "url": "https://docs.flutter.dev/release/release-notes#3-13-0-0-1-pre"
-        },
-        {
-          "type": "breaking",
-          "title": "Breaking changes 3.13.0-0.1.pre",
-          "url": "https://docs.flutter.dev/release/migration-3-13-0-0-1-pre"
-        }
-      ],
-      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.13.0-0.1.pre",
-      "verified": false,
-      "release_notes": {
-        "base": null,
-        "framework": null,
-        "material": null,
-        "ios": null,
-        "android": null,
-        "windows": null,
-        "linux": null,
-        "web": null,
-        "tools": null
-      },
-      "version": "3.13.0-0.1.pre",
-      "source_urls": {
-        "github": "https://github.com/flutter/flutter/releases/tag/3.13.0-0.1.pre"
       }
     }
   ]
