@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-10-02T12:33:48.598Z",
+    "generated_at": "2026-10-03T11:39:02.812Z",
     "source": "auto-crawled",
     "count": 410
   },
@@ -9,12 +9,12 @@
       "version": "main",
       "channel": "main",
       "release_type": "Development",
-      "released": "2026-10-02",
+      "released": "2026-10-03",
       "dart_version": "3.14.0-226.0.dev",
-      "framework_revision": "d03768e",
+      "framework_revision": "53d381d",
       "engine_revision": null,
       "git_tag": null,
-      "build": "d03768e",
+      "build": "53d381d",
       "requires": {},
       "platforms": {
         "macos_arm64": null,
@@ -33,7 +33,7 @@
         "web": null,
         "tools": null
       },
-      "ref_url": "https://github.com/flutter/flutter/commit/d03768eef05516a030f4eb12457b0d297111d526",
+      "ref_url": "https://github.com/flutter/flutter/commit/53d381d9067f16b1d4132f5b8f059a9cc5ddb9ec",
       "verified": true,
       "sources": [
         "GitHub flutter/flutter main branch",
@@ -41,7 +41,7 @@
       ],
       "source_urls": {
         "release_notes": "https://github.com/flutter/flutter/commits/main",
-        "github": "https://github.com/flutter/flutter/commit/d03768eef05516a030f4eb12457b0d297111d526",
+        "github": "https://github.com/flutter/flutter/commit/53d381d9067f16b1d4132f5b8f059a9cc5ddb9ec",
         "deps": "https://github.com/flutter/flutter/blob/main/DEPS"
       }
     },
@@ -17471,7 +17471,7 @@
         "tools": null
       },
       "ref_url": "https://github.com/flutter/flutter/releases/tag/v1.12.13+hotfix.9",
-      "verified": false,
+      "verified": true,
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
@@ -17479,7 +17479,7 @@
       "link_status": {
         "release_notes": {
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#11213hotfix9",
-          "ok": false,
+          "ok": true,
           "source": "flutter-stable-changelog",
           "anchor_verified": false
         }
@@ -17519,7 +17519,7 @@
         "tools": null
       },
       "ref_url": "https://github.com/flutter/flutter/releases/tag/v1.12.13+hotfix.8",
-      "verified": false,
+      "verified": true,
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
@@ -17527,7 +17527,7 @@
       "link_status": {
         "release_notes": {
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#11213hotfix8",
-          "ok": false,
+          "ok": true,
           "source": "flutter-stable-changelog",
           "anchor_verified": false
         }
@@ -17567,7 +17567,7 @@
         "tools": null
       },
       "ref_url": "https://github.com/flutter/flutter/releases/tag/v1.12.13+hotfix.7",
-      "verified": false,
+      "verified": true,
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
@@ -17575,7 +17575,7 @@
       "link_status": {
         "release_notes": {
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#11213hotfix7",
-          "ok": false,
+          "ok": true,
           "source": "flutter-stable-changelog",
           "anchor_verified": false
         }
@@ -17615,7 +17615,7 @@
         "tools": null
       },
       "ref_url": "https://github.com/flutter/flutter/releases/tag/v1.12.13+hotfix.5",
-      "verified": false,
+      "verified": true,
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
@@ -17623,7 +17623,7 @@
       "link_status": {
         "release_notes": {
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#11213hotfix5",
-          "ok": false,
+          "ok": true,
           "source": "flutter-stable-changelog",
           "anchor_verified": false
         }
@@ -17663,7 +17663,7 @@
         "tools": null
       },
       "ref_url": "https://github.com/flutter/flutter/releases/tag/v1.9.1+hotfix.6",
-      "verified": false,
+      "verified": true,
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
@@ -17671,7 +17671,7 @@
       "link_status": {
         "release_notes": {
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#191hotfix6",
-          "ok": false,
+          "ok": true,
           "source": "flutter-stable-changelog",
           "anchor_verified": false
         }
@@ -17711,7 +17711,7 @@
         "tools": null
       },
       "ref_url": "https://github.com/flutter/flutter/releases/tag/v1.9.1+hotfix.5",
-      "verified": false,
+      "verified": true,
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
@@ -17719,7 +17719,7 @@
       "link_status": {
         "release_notes": {
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#191hotfix5",
-          "ok": false,
+          "ok": true,
           "source": "flutter-stable-changelog",
           "anchor_verified": false
         }
@@ -17759,7 +17759,7 @@
         "tools": null
       },
       "ref_url": "https://github.com/flutter/flutter/releases/tag/v1.9.1+hotfix.4",
-      "verified": false,
+      "verified": true,
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
@@ -17767,7 +17767,7 @@
       "link_status": {
         "release_notes": {
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#191hotfix4",
-          "ok": false,
+          "ok": true,
           "source": "flutter-stable-changelog",
           "anchor_verified": false
         }
@@ -17807,7 +17807,7 @@
         "tools": null
       },
       "ref_url": "https://github.com/flutter/flutter/releases/tag/v1.9.1+hotfix.2",
-      "verified": false,
+      "verified": true,
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
@@ -17815,7 +17815,7 @@
       "link_status": {
         "release_notes": {
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#191hotfix2",
-          "ok": false,
+          "ok": true,
           "source": "flutter-stable-changelog",
           "anchor_verified": false
         }
@@ -17855,7 +17855,7 @@
         "tools": null
       },
       "ref_url": "https://github.com/flutter/flutter/releases/tag/v1.7.8+hotfix.4",
-      "verified": false,
+      "verified": true,
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
@@ -17863,7 +17863,7 @@
       "link_status": {
         "release_notes": {
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#178hotfix4",
-          "ok": false,
+          "ok": true,
           "source": "flutter-stable-changelog",
           "anchor_verified": false
         }
@@ -17903,7 +17903,7 @@
         "tools": null
       },
       "ref_url": "https://github.com/flutter/flutter/releases/tag/v1.7.8+hotfix.3",
-      "verified": false,
+      "verified": true,
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
@@ -17911,7 +17911,7 @@
       "link_status": {
         "release_notes": {
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#178hotfix3",
-          "ok": false,
+          "ok": true,
           "source": "flutter-stable-changelog",
           "anchor_verified": false
         }
@@ -17951,7 +17951,7 @@
         "tools": null
       },
       "ref_url": "https://github.com/flutter/flutter/releases/tag/v1.7.8+hotfix.2",
-      "verified": false,
+      "verified": true,
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
@@ -17959,7 +17959,7 @@
       "link_status": {
         "release_notes": {
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#178hotfix2",
-          "ok": false,
+          "ok": true,
           "source": "flutter-stable-changelog",
           "anchor_verified": false
         }
@@ -17999,7 +17999,7 @@
         "tools": null
       },
       "ref_url": "https://github.com/flutter/flutter/releases/tag/v1.5.4-hotfix.2",
-      "verified": false,
+      "verified": true,
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
@@ -18007,7 +18007,7 @@
       "link_status": {
         "release_notes": {
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#154hotfix2",
-          "ok": false,
+          "ok": true,
           "source": "flutter-stable-changelog",
           "anchor_verified": false
         }
@@ -18047,7 +18047,7 @@
         "tools": null
       },
       "ref_url": "https://github.com/flutter/flutter/releases/tag/v1.2.1",
-      "verified": false,
+      "verified": true,
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
@@ -18055,7 +18055,7 @@
       "link_status": {
         "release_notes": {
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#121",
-          "ok": false,
+          "ok": true,
           "source": "flutter-stable-changelog",
           "anchor_verified": false
         }
@@ -18095,7 +18095,7 @@
         "tools": null
       },
       "ref_url": "https://github.com/flutter/flutter/releases/tag/v1.0.0",
-      "verified": false,
+      "verified": true,
       "sources": [
         "Flutter SDK Archive",
         "GitHub Tags"
@@ -18103,7 +18103,7 @@
       "link_status": {
         "release_notes": {
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#100",
-          "ok": false,
+          "ok": true,
           "source": "flutter-stable-changelog",
           "anchor_verified": false
         }
