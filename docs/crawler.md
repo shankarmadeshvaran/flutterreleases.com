@@ -70,6 +70,8 @@ Only store source URLs that actually exist in the record or can be derived from 
 
 Generated HTML, Markdown, RSS, LLM files, and compatibility pages must read from `releases.json` or shared selectors. Do not maintain separate release facts for a new representation.
 
+Shared generator selectors live in `scripts/release-data-utils.js`. Use them for latest-channel selection, release lookup, Flutter-to-Dart mapping, canonical release paths, provenance links, and previous/next/same-series context. This ensures newly crawled stable and prerelease records inherit the same generated navigation and discovery behavior automatically.
+
 ## Unknown Data Policy
 
 Use these states when adding release facts:
@@ -142,8 +144,10 @@ Then regenerate static output:
 ```sh
 bun run build:web
 SITE_URL=https://flutterreleases.com node scripts/generate-release-pages.js
-SITE_URL=https://flutterreleases.com node scripts/validate-flutter-versions-page.js
-SITE_URL=https://flutterreleases.com node scripts/validate-release-consistency.js
+bun run test:site-pages
+bun run test:release-consistency
+bun run test:flutter-versions
+bun run test:flutter-version-checker
 ```
 
 Spot-check representative releases:
