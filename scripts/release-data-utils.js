@@ -92,16 +92,21 @@ export function semverGroup(version) {
 
 export function getStableReleaseContext(items, release) {
   const stable = stableReleases(items);
-  const index = stable.findIndex(r => r.version === release.version);
+  return getReleaseContext(stable, release);
+}
+
+export function getReleaseContext(items, release) {
+  const releases = [...items].sort((a, b) => releaseTime(b) - releaseTime(a));
+  const index = releases.findIndex(r => r.version === release.version);
   const series = semverGroup(release.version);
   const sameSeries = series
-    ? stable.filter(r => semverGroup(r.version) === series)
+    ? releases.filter(r => semverGroup(r.version) === series)
     : [];
 
   return {
     series,
-    previous: index >= 0 ? stable[index + 1] || null : null,
-    next: index > 0 ? stable[index - 1] || null : null,
+    previous: index >= 0 ? releases[index + 1] || null : null,
+    next: index > 0 ? releases[index - 1] || null : null,
     sameSeries: sameSeries.filter(r => r.version !== release.version),
   };
 }

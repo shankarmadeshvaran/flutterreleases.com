@@ -6,7 +6,7 @@ import { useDarkMode } from "../hooks/useDarkMode";
 import { useMeta } from "../hooks/useMeta";
 
 const posts = blogPosts as BlogPost[];
-const TITLE = "Flutter Releases Blog | Flutter Versions, Dart Compatibility & SDK Guides";
+const TITLE = "Flutter Releases Blog: Guides & Compatibility";
 const DESCRIPTION =
   "Read Flutter release guides for latest Flutter versions, Dart SDK compatibility, release notes, SDK downloads, and version history.";
 

@@ -11,7 +11,7 @@ tags:
 takeaway: By the end of this article, you will be able to migrate an existing Flutter iOS application from CocoaPods to Swift Package Manager, identify dependencies that still require CocoaPods, and safely verify the migration before removing CocoaPods.
 slug: /blog/flutter-cocoapods-to-swift-package-manager-migration/
 meta_title: Flutter CocoaPods to Swift Package Manager Migration Guide
-meta_description: Learn how to migrate an existing Flutter iOS application from CocoaPods to Swift Package Manager using Flutter 3.44. Review dependencies, migrate remaining Pods, verify the migration, and safely remove CocoaPods.
+meta_description: Migrate a Flutter iOS app from CocoaPods to Swift Package Manager with Flutter 3.44, including dependency review, verification, and safe cleanup.
 primary_keyword: Flutter CocoaPods to Swift Package Manager migration
 secondary_keywords:
   - Flutter SPM migration

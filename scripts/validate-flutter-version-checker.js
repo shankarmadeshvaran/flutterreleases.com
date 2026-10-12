@@ -102,7 +102,7 @@ const canonical = `${SITE_URL}/tools/flutter-version-checker/`;
 const latestStableUrl = `${SITE_URL}/release/${encodeURIComponent(latestStable.version)}/`;
 
 assertIncludes(pageHtml, '<h1>Flutter &amp; Dart Version Compatibility Checker</h1>', 'checker H1');
-assertIncludes(pageHtml, '<title>Flutter &amp; Dart Version Compatibility Checker | FlutterReleases</title>', 'checker title');
+assertIncludes(pageHtml, '<title>Flutter &amp; Dart Compatibility Checker | FlutterReleases</title>', 'checker title');
 assert.match(pageHtml, /<script type="module" crossorigin src="\/assets\/index-[^"]+\.js"><\/script>/, 'checker should include the built SPA script for interactive use');
 assertIncludes(pageHtml, 'Check which Dart SDK version ships with any Flutter release and find Flutter versions compatible with a specific Dart version.', 'checker meta description');
 assertIncludes(pageHtml, `<link rel="canonical" href="${canonical}" />`, 'checker canonical');

@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import assert from 'assert/strict';
-import { dedupeReleaseItems, getLatestDev } from './release-data-utils.js';
+import { dedupeReleaseItems, getLatestDev, getReleaseContext } from './release-data-utils.js';
 
 const ROOT = process.cwd();
 const PUBLIC_RELEASES = path.join(ROOT, 'packages', 'web', 'public', 'releases.json');
@@ -212,6 +212,36 @@ assertIncludes(
 );
 assertIncludes(releaseHtml, '<h2>Sources</h2>', `sources section for ${latestStable.version}`);
 assertIncludes(releaseHtml, 'Flutter SDK Archive', `source link for ${latestStable.version}`);
+
+const betaReleasePage = path.join(
+  ROOT,
+  'packages',
+  'web',
+  'dist',
+  'release',
+  latestBeta.version,
+  'index.html'
+);
+const betaReleaseHtml = fs.readFileSync(betaReleasePage, 'utf8');
+const betaContext = getReleaseContext(
+  releases.filter(release => release.channel === latestBeta.channel),
+  latestBeta
+);
+assertIncludes(
+  betaReleaseHtml,
+  `Flutter ${latestBeta.version} is a beta Flutter SDK release`,
+  `beta release contextual copy for ${latestBeta.version}`
+);
+assertIncludes(betaReleaseHtml, '<h2>Beta release navigation</h2>', `beta release navigation for ${latestBeta.version}`);
+assertIncludes(betaReleaseHtml, `href="${SITE_URL}/flutter-versions/"`, `beta release backlink for ${latestBeta.version}`);
+assert.ok(!betaReleaseHtml.includes('Release release.'), `beta release description should not repeat release for ${latestBeta.version}`);
+if (betaContext.previous) {
+  assertIncludes(
+    betaReleaseHtml,
+    `Previous beta:</strong> <a href="${SITE_URL}/release/${encodeURIComponent(betaContext.previous.version)}/">Flutter ${betaContext.previous.version}</a>`,
+    `previous beta link for ${latestBeta.version}`
+  );
+}
 
 const releaseMarkdown = fs.readFileSync(
   path.join(ROOT, 'packages', 'web', 'dist', 'release', `${latestStable.version}.md`),

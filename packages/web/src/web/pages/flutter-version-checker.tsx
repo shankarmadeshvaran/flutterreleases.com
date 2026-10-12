@@ -17,7 +17,7 @@ import {
 } from "../lib/compatibility";
 import type { Channel, Release } from "../types/release";
 
-const TITLE = "Flutter & Dart Version Compatibility Checker | FlutterReleases";
+const TITLE = "Flutter & Dart Compatibility Checker | FlutterReleases";
 const DESCRIPTION =
   "Check which Dart SDK version ships with any Flutter release and find Flutter versions compatible with a specific Dart version.";
 

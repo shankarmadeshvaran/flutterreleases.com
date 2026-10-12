@@ -1,6 +1,6 @@
 # FlutterReleases
 
-Updated: 2026-09-15
+Updated: 2026-10-12
 
 ## About
 
@@ -8,9 +8,9 @@ FlutterReleases is an independent Flutter SDK release reference generated from t
 
 ## Current Flutter Releases
 
-- Latest stable: Flutter 3.47.4 — Dart 3.13.3 — https://flutterreleases.com/release/3.47.4/
-- Latest beta: Flutter 3.48.0-0.5.pre — Dart 3.14.0 — https://flutterreleases.com/release/3.48.0-0.5.pre/
-- Latest dev/main: Flutter 3.19.0-0.1.pre — https://flutterreleases.com/release/3.19.0-0.1.pre/
+- Latest stable: Flutter 3.47.7 — Dart 3.13.5 — https://flutterreleases.com/release/3.47.7/
+- Latest beta: Flutter 3.49.0-0.2.pre — Dart 3.14.0 — https://flutterreleases.com/release/3.49.0-0.2.pre/
+- Latest dev/main: Flutter main — Dart 3.14.0-226.0.dev — https://flutterreleases.com/release/main/
 
 ## Flutter and Dart Compatibility
 
@@ -33,6 +33,9 @@ Each Flutter release bundles a specific Dart SDK. Use the compatibility checker 
 
 | Version | Dart SDK | Released | Type | HTML | Markdown |
 |---|---|---|---|---|---|
+| 3.47.7 | 3.13.5 | 2026-10-08 | Hotfix | https://flutterreleases.com/release/3.47.7/ | https://flutterreleases.com/release/3.47.7.md |
+| 3.47.6 | 3.13.5 | 2026-10-01 | Hotfix | https://flutterreleases.com/release/3.47.6/ | https://flutterreleases.com/release/3.47.6.md |
+| 3.47.5 | 3.13.4 | 2026-09-18 | Hotfix | https://flutterreleases.com/release/3.47.5/ | https://flutterreleases.com/release/3.47.5.md |
 | 3.47.4 | 3.13.3 | 2026-09-11 | Hotfix | https://flutterreleases.com/release/3.47.4/ | https://flutterreleases.com/release/3.47.4.md |
 | 3.47.3 | 3.13.3 | 2026-09-09 | Hotfix | https://flutterreleases.com/release/3.47.3/ | https://flutterreleases.com/release/3.47.3.md |
 | 3.47.2 | 3.13.2 | 2026-08-27 | Hotfix | https://flutterreleases.com/release/3.47.2/ | https://flutterreleases.com/release/3.47.2.md |

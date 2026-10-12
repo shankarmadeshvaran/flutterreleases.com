@@ -154,7 +154,7 @@ export default function FlutterVersionsPage() {
     ? `Flutter Versions: Latest Stable Flutter ${latestStable.version} & History`
     : FALLBACK_TITLE;
   const seoDescription = latestStable
-    ? `The latest stable Flutter version is ${latestStable.version}${latestStable.dartVersion ? ` with Dart ${latestStable.dartVersion}` : ""}${latestStable.releasedAt ? `, released ${formatDate(latestStable.releasedAt)}` : ""}. Browse Flutter version history, beta and dev releases, downloads and release notes.`
+    ? `The latest stable Flutter version is ${latestStable.version}${latestStable.dartVersion ? ` with Dart ${latestStable.dartVersion}` : ""}${latestStable.releasedAt ? `, released ${formatDate(latestStable.releasedAt)}` : ""}. Browse Flutter history, beta, dev, downloads, and release notes.`
     : FALLBACK_DESCRIPTION;
 
   useMeta(seoTitle, seoDescription, "https://flutterreleases.com/flutter-versions/");

@@ -16,7 +16,7 @@ interface FaqItem {
 }
 
 const items = faqItems as FaqItem[];
-const TITLE = "FlutterReleases FAQ | Flutter Versions, Dart Compatibility & Downloads";
+const TITLE = "Flutter Releases FAQ: Versions, Dart & Downloads";
 const DESCRIPTION =
   "Answers about Flutter release data, latest stable versions, Dart SDK compatibility, downloads, release notes, and how FlutterReleases updates automatically.";
 

@@ -13,6 +13,7 @@ import {
   getLatestBeta,
   getLatestDev,
   getLatestStable,
+  getReleaseContext,
   getStableReleaseContext,
   markdownEscape,
   normalizeSiteUrl,
@@ -408,7 +409,10 @@ function buildPageDescription(release) {
   const ch = channelLabel(release.channel);
   const dart = release.dart_version ? ` Dart SDK ${release.dart_version}.` : '';
   const date = release.released ? ` Released ${release.released}.` : '';
-  const type = release.release_type ? ` ${release.release_type} release.` : '';
+  const releaseType = String(release.release_type || '').trim();
+  const type = releaseType && releaseType.toLowerCase() !== 'release'
+    ? ` ${releaseType} release.`
+    : '';
   return `Flutter ${release.version} ${ch} release.${type}${dart}${date} Download for macOS, Linux, and Windows.`;
 }
 
@@ -466,30 +470,35 @@ function buildSourcesHtml(release) {
     </section>`;
 }
 
-function buildStableIntroHtml(release) {
-  if (release.channel !== 'stable') return '';
+function buildReleaseIntroHtml(release) {
   const date = release.released ? ` published on ${htmlEscape(release.released)}` : '';
   const dart = release.dart_version ? ` and includes Dart ${htmlEscape(release.dart_version)}` : '';
-  return `<p>Flutter ${htmlEscape(release.version)} is a stable Flutter SDK release${date}${dart}.</p>`;
+  return `<p>Flutter ${htmlEscape(release.version)} is a ${htmlEscape(channelLabel(release.channel).toLowerCase())} Flutter SDK release${date}${dart}.</p>`;
 }
 
-function buildStableInternalLinksHtml(release, items) {
-  if (release.channel !== 'stable') return '';
-  const context = findStableContext(items, release);
+function buildReleaseInternalLinksHtml(release, items) {
+  const isStable = release.channel === 'stable';
+  const channelReleases = isStable
+    ? items.filter(item => item.channel === 'stable')
+    : items.filter(item => item.channel === release.channel);
+  const context = isStable
+    ? findStableContext(items, release)
+    : getReleaseContext(channelReleases, release);
   const related = context.sameSeries.slice(0, 8);
+  const label = channelLabel(release.channel);
 
   const previousHtml = context.previous
-    ? `<li><strong>Previous stable:</strong> <a href="${releaseUrl(context.previous)}">Flutter ${htmlEscape(context.previous.version)}</a></li>`
+    ? `<li><strong>Previous ${htmlEscape(label.toLowerCase())}:</strong> <a href="${releaseUrl(context.previous)}">Flutter ${htmlEscape(context.previous.version)}</a></li>`
     : '';
   const nextHtml = context.next
-    ? `<li><strong>Next stable:</strong> <a href="${releaseUrl(context.next)}">Flutter ${htmlEscape(context.next.version)}</a></li>`
+    ? `<li><strong>Next ${htmlEscape(label.toLowerCase())}:</strong> <a href="${releaseUrl(context.next)}">Flutter ${htmlEscape(context.next.version)}</a></li>`
     : '';
   const seriesHtml = context.series
     ? `<li><a href="${seriesUrl(context.series)}">View all Flutter ${htmlEscape(context.series)} releases</a></li>`
     : '';
   const relatedHtml = related.length
     ? `<section>
-      <h2>Related stable releases</h2>
+      <h2>Related ${htmlEscape(label.toLowerCase())} releases</h2>
       <ul>
         ${related.map(r => `<li><a href="${releaseUrl(r)}">Flutter ${htmlEscape(r.version)}</a>${r.dart_version ? ` — Dart ${htmlEscape(r.dart_version)}` : ''}${r.released ? ` — ${htmlEscape(r.released)}` : ''}</li>`).join('\n        ')}
       </ul>
@@ -497,7 +506,7 @@ function buildStableInternalLinksHtml(release, items) {
     : '';
 
   return `<section>
-      <h2>Stable release navigation</h2>
+      <h2>${htmlEscape(label)} release navigation</h2>
       <ul>
         ${previousHtml}
         ${nextHtml}
@@ -676,7 +685,7 @@ function buildBlogCardHtml(post) {
 
 function buildBlogPageHtml(posts, appAssetTags = '') {
   const pageUrl = `${siteBaseUrl()}/blog/`;
-  const title = 'Flutter Releases Blog | Flutter Versions, Dart Compatibility & SDK Guides';
+  const title = 'Flutter Releases Blog: Guides & Compatibility';
   const desc = 'Read Flutter release guides for latest Flutter versions, Dart SDK compatibility, release notes, SDK downloads, and version history.';
   const breadcrumbLd = buildBlogBreadcrumbLd(pageUrl);
   const webPageLd = buildBlogWebPageLd(pageUrl);
@@ -853,7 +862,7 @@ function buildFaqItemHtml(item) {
 
 function buildFaqPageHtml(items, appAssetTags = '') {
   const pageUrl = `${siteBaseUrl()}/faq/`;
-  const title = 'FlutterReleases FAQ | Flutter Versions, Dart Compatibility & Downloads';
+  const title = 'Flutter Releases FAQ: Versions, Dart & Downloads';
   const desc = 'Answers about Flutter release data, latest stable versions, Dart SDK compatibility, downloads, release notes, and how FlutterReleases updates automatically.';
   const breadcrumbLd = buildFaqBreadcrumbLd(pageUrl);
   const faqLd = buildFaqPageLd(pageUrl, items);
@@ -1410,7 +1419,7 @@ function buildVersionCheckerPageHtml(items, generatedAt, appAssetTags = '') {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flutter &amp; Dart Version Compatibility Checker | FlutterReleases</title>
+  <title>Flutter &amp; Dart Compatibility Checker | FlutterReleases</title>
   <meta name="description" content="Check which Dart SDK version ships with any Flutter release and find Flutter versions compatible with a specific Dart version." />
   <meta name="theme-color" content="#054D8E" />
   <meta name="msvalidate.01" content="B2298FC723DFA6F8AC3DF5D162CC845C" />
@@ -1422,13 +1431,13 @@ function buildVersionCheckerPageHtml(items, generatedAt, appAssetTags = '') {
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
-  <meta property="og:title" content="Flutter &amp; Dart Version Compatibility Checker | FlutterReleases" />
+  <meta property="og:title" content="Flutter &amp; Dart Compatibility Checker | FlutterReleases" />
   <meta property="og:description" content="Check which Dart SDK version ships with any Flutter release and find Flutter versions compatible with a specific Dart version." />
   <meta property="og:url" content="${pageUrl}" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="${SITE_URL}/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Flutter &amp; Dart Version Compatibility Checker | FlutterReleases" />
+  <meta name="twitter:title" content="Flutter &amp; Dart Compatibility Checker | FlutterReleases" />
   <meta name="twitter:description" content="Check which Dart SDK version ships with any Flutter release and find Flutter versions compatible with a specific Dart version." />
   <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
   <link rel="canonical" href="${pageUrl}" />
@@ -1619,7 +1628,7 @@ function buildFlutterVersionsPageHtml(items, generatedAt) {
     ? `Flutter Versions: Latest Stable Flutter ${latestStableVersion} & History`
     : 'Flutter Versions & Releases — Latest Stable Flutter SDK';
   const seoDescription = latestStableVersion
-    ? `The latest stable Flutter version is ${latestStableVersion}${latestStableDart ? ` with Dart ${latestStableDart}` : ''}${latestStableDate ? `, released ${latestStableDate}` : ''}. Browse Flutter version history, beta and dev releases, downloads and release notes.`
+    ? `The latest stable Flutter version is ${latestStableVersion}${latestStableDart ? ` with Dart ${latestStableDart}` : ''}${latestStableDate ? `, released ${latestStableDate}` : ''}. Browse Flutter history, beta, dev, downloads, and release notes.`
     : 'See the latest Flutter stable, beta and dev versions, complete Flutter version history, Dart SDK compatibility and release details.';
   const breadcrumbLd = buildFlutterVersionsBreadcrumbLd(pageUrl);
   const webPageLd = buildFlutterVersionsWebPageLd(pageUrl, seoTitle, seoDescription);
@@ -1856,8 +1865,8 @@ function buildPageHtml(release, items = [], appStylesheetTags = '') {
   const requiresHtml = buildRequiresHtml(release);
   const releaseNotesHtml = buildReleaseNotesHtml(release);
   const sourcesHtml = buildSourcesHtml(release);
-  const stableIntroHtml = buildStableIntroHtml(release);
-  const stableInternalLinksHtml = buildStableInternalLinksHtml(release, items);
+  const releaseIntroHtml = buildReleaseIntroHtml(release);
+  const releaseInternalLinksHtml = buildReleaseInternalLinksHtml(release, items);
   const dartDisplay = release.dart_version ? htmlEscape(release.dart_version) : 'N/A';
   const dateDisplay = release.released || 'Unknown';
   const typeDisplay = release.release_type ? htmlEscape(release.release_type) : '';
@@ -2010,7 +2019,7 @@ function buildPageHtml(release, items = [], appStylesheetTags = '') {
       <div class="release-title-row">
         <div>
           <h1 class="release-title">Flutter ${htmlEscape(version)}</h1>
-          <div class="release-intro">${stableIntroHtml || `<p>Flutter ${htmlEscape(version)} is a ${htmlEscape(chLabel)} Flutter SDK release.</p>`}</div>
+          <div class="release-intro">${releaseIntroHtml}</div>
         </div>
         <div class="release-badges" aria-label="Release classification">
           <span class="release-badge release-badge-${htmlEscape(channel)}">${htmlEscape(chLabel)}</span>
@@ -2031,7 +2040,7 @@ function buildPageHtml(release, items = [], appStylesheetTags = '') {
           ${downloadsHtml.replace('<ul>', '<ul class="release-list release-downloads">')}
         </section>
         ${requiresHtml ? `<section class="release-section"><h2>System Requirements</h2>${requiresHtml}</section>` : ''}
-        ${stableInternalLinksHtml.replaceAll('<section>', '<section class="release-section">').replaceAll('<ul>', '<ul class="release-list release-related">')}
+        ${releaseInternalLinksHtml.replaceAll('<section>', '<section class="release-section">').replaceAll('<ul>', '<ul class="release-list release-related">')}
       </div>
       <aside aria-label="Release references">
         ${sourcesHtml.replace('<section>', '<section class="release-section">').replace('<ul>', '<ul class="release-list release-sources">')}
@@ -2105,7 +2114,10 @@ function buildSourcesMarkdown(release) {
 }
 
 function buildRelatedMarkdown(release, items) {
-  const context = getStableReleaseContext(items, release);
+  const channelItems = items.filter(item => item.channel === release.channel);
+  const context = release.channel === 'stable'
+    ? getStableReleaseContext(items, release)
+    : getReleaseContext(channelItems, release);
   const lines = [];
   if (context.previous) lines.push(`- Previous: ${markdownLink(`Flutter ${context.previous.version}`, releaseUrl(context.previous))}`);
   if (context.next) lines.push(`- Next: ${markdownLink(`Flutter ${context.next.version}`, releaseUrl(context.next))}`);
