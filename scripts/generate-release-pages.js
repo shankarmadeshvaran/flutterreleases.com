@@ -1754,7 +1754,8 @@ ${rows}
     nav .right { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
     nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
     .theme-toggle { width: 2.25rem; height: 2.25rem; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--secondary); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
-    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .theme-toggle:hover, .theme-toggle:focus-visible { border-color: var(--accent); color: var(--accent); background: var(--subtle); }
+    .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .theme-toggle .moon { display: none; }
     .dark .theme-toggle .moon { display: inline; }
     .dark .theme-toggle .sun { display: none; }
@@ -1975,7 +1976,8 @@ function buildPageHtml(release, items = [], appStylesheetTags = '') {
     .release-nav-links a { padding: 0.45rem 0.65rem; border-radius: 6px; color: var(--text-secondary); font-size: 0.875rem; }
     .release-nav-links a:hover { background: var(--bg-subtle); color: var(--text-primary); text-decoration: none; }
     .release-theme-toggle { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--text-secondary); cursor: pointer; font: inherit; }
-    .release-theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .release-theme-toggle:hover, .release-theme-toggle:focus-visible { border-color: var(--accent); color: var(--accent); background: var(--bg-subtle); }
+    .release-theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .release-theme-toggle .moon { display: none; }
     .dark .release-theme-toggle .moon { display: inline; }
     .dark .release-theme-toggle .sun { display: none; }

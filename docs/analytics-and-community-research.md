@@ -100,6 +100,10 @@ binary finished downloading.
 
 ## Developer Problems Worth Tracking
 
+Automated JSON, sitemap, and RSS requests need edge analytics rather than GA4.
+See [Resource usage analytics](resource-usage-analytics.md) for the verified
+Cloudflare fields, reporting query, and interpretation rules.
+
 These are the strongest community-backed problems FlutterReleases can help
 answer with the existing `releases.json` data.
 

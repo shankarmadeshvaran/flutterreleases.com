@@ -126,12 +126,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
               trackEvent("Theme Toggle", { next_theme: dark ? "light" : "dark" });
               onToggleDark();
             }}
-            className="w-9 h-9 flex items-center justify-center rounded-md border transition-colors duration-150"
-            style={{
-              borderColor: "var(--border)",
-              color: "var(--text-secondary)",
-              backgroundColor: "transparent",
-            }}
+            className="theme-toggle w-9 h-9 flex items-center justify-center rounded-md border transition-colors duration-150"
             aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
             title={dark ? "Switch to light mode" : "Switch to dark mode"}
           >
