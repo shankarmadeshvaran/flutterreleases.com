@@ -27,6 +27,6 @@
 	},
 	"include": [
 		"vite.config.ts",
-		"src/server.ts"
+		"vite/plugins/**/*.ts"
 	]
 }

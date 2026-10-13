@@ -29,6 +29,7 @@ The local Vite server runs at `http://localhost:5173`. Copy `.env.template` to `
 | Release crawler/data rules | `scripts/crawl-releases.js` and `docs/crawler.md` |
 | Static release/SEO/Markdown output | `scripts/generate-release-pages.js` |
 | Markdown negotiation | `scripts/markdown-negotiation.js`, `docs/markdown-negotiation.md` |
+| Public API discovery | `scripts/api-catalog.js`, `data/api-docs.json`, `docs/api-discovery.md` |
 | Shared release selectors | `scripts/release-data-utils.js` |
 | Compatibility behavior | `packages/web/src/web/lib/compatibility.ts` |
 | FAQ | `packages/web/src/web/data/faq.json` |
@@ -74,6 +75,7 @@ bun run test:release-consistency
 bun run test:flutter-versions
 bun run test:flutter-version-checker
 bun run test:markdown-negotiation
+bun run test:api-catalog
 git diff --check
 ```
 

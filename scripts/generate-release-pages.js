@@ -8,6 +8,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { buildApiCatalog, buildOpenApi } from './api-catalog.js';
 import {
   dedupeReleaseItems,
   getLatestBeta,
@@ -908,10 +909,10 @@ function buildFaqItemHtml(item) {
     </article>`;
 }
 
-function buildFaqPageHtml(items, appAssetTags = '') {
-  const pageUrl = `${siteBaseUrl()}/faq/`;
-  const title = 'Flutter Releases FAQ: Versions, Dart & Downloads';
-  const desc = 'Answers about Flutter release data, latest stable versions, Dart SDK compatibility, downloads, release notes, and how FlutterReleases updates automatically.';
+function buildFaqPageHtml(items, appAssetTags = '', options = {}) {
+  const pageUrl = `${siteBaseUrl()}${options.path || '/faq/'}`;
+  const title = options.title || 'Flutter Releases FAQ: Versions, Dart & Downloads';
+  const desc = options.description || 'Answers about Flutter release data, latest stable versions, Dart SDK compatibility, downloads, release notes, and how FlutterReleases updates automatically.';
   const breadcrumbLd = buildFaqBreadcrumbLd(pageUrl);
   const faqLd = buildFaqPageLd(pageUrl, items);
 
@@ -942,15 +943,15 @@ function buildFaqPageHtml(items, appAssetTags = '') {
   <meta name="twitter:description" content="${htmlEscape(desc)}" />
   <meta name="twitter:image" content="${SITE_URL}/og-image.png" />
   <link rel="canonical" href="${pageUrl}" />
-  <link rel="alternate" type="text/markdown" href="${SITE_URL}/faq.md" />
+  ${options.bodyHtml ? '' : `<link rel="alternate" type="text/markdown" href="${SITE_URL}/faq.md" />`}
   <link rel="alternate" type="application/rss+xml" title="Flutter Releases Feed" href="${SITE_URL}/feed.xml" />
   ${appAssetTags}
-  <script type="application/ld+json">
+  ${options.bodyHtml ? '' : `<script type="application/ld+json">
     ${breadcrumbLd}
   </script>
   <script type="application/ld+json">
     ${faqLd}
-  </script>
+  </script>`}
   <script>
     (function () {
       try {
@@ -985,6 +986,15 @@ function buildFaqPageHtml(items, appAssetTags = '') {
     .info-card h2 { margin: 0; font-size: 1rem; line-height: 1.4; color: var(--text); }
     .info-card p { margin: 0.75rem 0 0; color: var(--secondary); font-size: 0.875rem; }
     .resource-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; font-size: 0.875rem; font-weight: 600; }
+    .api-docs { max-width: 900px; }
+    .api-docs section { padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
+    .api-docs h2 { font-size: 1rem; }
+    .api-docs p, .api-docs dd { color: var(--secondary); font-size: 0.875rem; }
+    .api-docs pre { padding: 1rem; overflow-x: auto; border: 1px solid var(--border); border-radius: 4px; background: var(--subtle); }
+    .api-docs dl > div { display: grid; grid-template-columns: 10rem minmax(0, 1fr); gap: 0.5rem; margin-bottom: 0.75rem; }
+    .api-docs dt { font-family: monospace; }
+    .api-docs dd { margin: 0; }
+    @media (max-width: 600px) { .api-docs dl > div { grid-template-columns: 1fr; } }
     .js #static-seo { display: none; }
     footer { border-top: 1px solid var(--border); }
     footer > div { padding-top: 1.25rem; padding-bottom: 1.25rem; font-size: 0.8125rem; }
@@ -1009,15 +1019,15 @@ function buildFaqPageHtml(items, appAssetTags = '') {
     </header>
     <section class="hero">
       <div class="hero-inner">
-        <p class="eyebrow">Help</p>
-        <h1>FlutterReleases FAQ</h1>
+        <p class="eyebrow">${options.bodyHtml ? 'Developer resources' : 'Help'}</p>
+        <h1>${htmlEscape(options.title || 'FlutterReleases FAQ')}</h1>
         <p class="intro">${htmlEscape(desc)}</p>
       </div>
     </section>
     <main>
-      <section class="faq-grid">
+      ${options.bodyHtml || `<section class="faq-grid">
         ${items.map(buildFaqItemHtml).join('\n        ')}
-      </section>
+      </section>`}
     </main>
     <footer>
       <div>
@@ -1027,6 +1037,27 @@ function buildFaqPageHtml(items, appAssetTags = '') {
   </div>
 </body>
 </html>`;
+}
+
+function generateApiResources(appAssetTags) {
+  const docs = JSON.parse(fs.readFileSync(path.join(path.dirname(FAQ_PATH), 'api-docs.json'), 'utf8'));
+  const base = siteBaseUrl();
+  const fieldsHtml = docs.fields.map(field => `<div><dt>${htmlEscape(field.name)}</dt><dd>${htmlEscape(field.description)}</dd></div>`).join('');
+  const bodyHtml = `<div class="api-docs">
+    <nav class="resource-links" aria-label="API resources">
+      <a href="${base}/releases.json">JSON dataset</a>
+      <a href="${base}/openapi.json">OpenAPI specification</a>
+      <a href="${base}/.well-known/api-catalog">API catalog</a>
+    </nav>
+    <pre><code>${htmlEscape(`curl -H 'Accept: application/json' '${base}/releases.json'`)}</code></pre>
+    ${docs.sections.map(section => `<section id="${htmlEscape(section.id)}"><h2>${htmlEscape(section.title)}</h2><p>${htmlEscape(section.text)}</p>${section.id === 'response' ? `<dl>${fieldsHtml}</dl>` : ''}</section>`).join('')}
+  </div>`;
+  safeWrite(path.join(DIST_DIR, '.well-known', 'api-catalog'), `${JSON.stringify(buildApiCatalog(base), null, 2)}\n`);
+  safeWrite(path.join(DIST_DIR, 'openapi.json'), `${JSON.stringify(buildOpenApi(base), null, 2)}\n`);
+  safeWrite(path.join(DIST_DIR, 'api-docs', 'index.html'), buildFaqPageHtml([], appAssetTags, {
+    path: '/api-docs/', title: docs.title, description: docs.description, bodyHtml,
+  }));
+  console.log('Generated API catalog, OpenAPI specification, and API documentation');
 }
 
 function buildChangelogBreadcrumbLd(pageUrl) {
@@ -1517,34 +1548,34 @@ function buildVersionCheckerPageHtml(items, generatedAt, appAssetTags = '') {
     a:hover { text-decoration: underline; }
     header, footer, .hero { background: var(--surface); border-color: var(--border); }
     header { border-bottom: 1px solid var(--border); }
-    nav, main, footer > div { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-    nav { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-    .brand { color: var(--text); }
-    nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
-    .hero { border-bottom: 1px solid var(--border); }
-    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; }
-    h1 { font-size: 1.875rem; line-height: 1.2; margin: 0 0 0.5rem; }
-    h2 { font-size: 1.125rem; margin: 0 0 0.75rem; }
-    h3 { font-size: 1rem; margin: 2rem 0 0.75rem; }
-    .intro { max-width: 44rem; color: var(--secondary); margin: 0; }
-    .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; font-weight: 700; margin: 0 0 0.75rem; }
-    main { padding-top: 2rem; padding-bottom: 2rem; }
-    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 2rem; }
-    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-    .muted { color: var(--secondary); }
-    .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, ui-monospace, monospace; }
-    .badge { display: inline-flex; align-items: center; border-radius: 999px; background: var(--subtle); color: var(--secondary); padding: 0.125rem 0.5rem; font-size: 0.75rem; }
-    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
-    .section-head p, footer p { color: var(--muted); margin: 0.25rem 0 0; }
-    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); margin-bottom: 2rem; }
-    table { border-collapse: collapse; width: 100%; min-width: 640px; }
-    th, td { text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
-    th { color: var(--muted); background: var(--subtle); text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.75rem; }
-    tr:hover td { background: var(--row-hover); }
+    #static-seo nav, #static-seo main, #static-seo footer > div { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    #static-seo nav { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    #static-seo .brand { color: var(--text); }
+    #static-seo nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
+    #static-seo .hero { border-bottom: 1px solid var(--border); }
+    #static-seo .hero-inner { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    #static-seo h1 { font-size: 1.875rem; line-height: 1.2; margin: 0 0 0.5rem; }
+    #static-seo h2 { font-size: 1.125rem; margin: 0 0 0.75rem; }
+    #static-seo h3 { font-size: 1rem; margin: 2rem 0 0.75rem; }
+    #static-seo .intro { max-width: 44rem; color: var(--secondary); margin: 0; }
+    #static-seo .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; font-weight: 700; margin: 0 0 0.75rem; }
+    #static-seo main { padding-top: 2rem; padding-bottom: 2rem; }
+    #static-seo .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 2rem; }
+    #static-seo .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    #static-seo .muted { color: var(--secondary); }
+    #static-seo .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, ui-monospace, monospace; }
+    #static-seo .badge { display: inline-flex; align-items: center; border-radius: 999px; background: var(--subtle); color: var(--secondary); padding: 0.125rem 0.5rem; font-size: 0.75rem; }
+    #static-seo .section-head { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+    #static-seo .section-head p, #static-seo footer p { color: var(--muted); margin: 0.25rem 0 0; }
+    #static-seo .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); margin-bottom: 2rem; }
+    #static-seo table { border-collapse: collapse; width: 100%; min-width: 640px; }
+    #static-seo th, #static-seo td { text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+    #static-seo th { color: var(--muted); background: var(--subtle); text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.75rem; }
+    #static-seo tr:hover td { background: var(--row-hover); }
     .js #static-seo { display: none; }
     footer { border-top: 1px solid var(--border); }
     footer > div { padding-top: 1.25rem; padding-bottom: 1.25rem; font-size: 0.8125rem; }
-    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } nav { align-items: flex-start; padding-top: 1rem; padding-bottom: 1rem; flex-direction: column; } }
+    @media (max-width: 760px) { #static-seo .grid { grid-template-columns: 1fr; } #static-seo nav { align-items: flex-start; padding-top: 1rem; padding-bottom: 1rem; flex-direction: column; } }
   </style>
 </head>
 <body>
@@ -2357,6 +2388,7 @@ function buildSitemapXml(items, generatedAt, blogPosts = []) {
     ['/tools/flutter-version-checker/', 'daily', '0.8'],
     ['/blog/', 'weekly', '0.7'],
     ['/faq/', 'monthly', '0.5'],
+    ['/api-docs/', 'monthly', '0.4'],
   ]) {
     lines.push('  <url>');
     lines.push(`    <loc>${baseUrl}${path_}</loc>`);
@@ -2626,7 +2658,7 @@ async function run() {
   if (DRY_RUN) {
     console.log('Dry-run: skipping file writes.');
     console.log(`Would generate ${toProcess.length} HTML pages`);
-    console.log(`Would update sitemap.xml with ${canonicalItems.length + 4 + blogPosts.length} URLs`);
+    console.log(`Would update sitemap.xml with ${canonicalItems.length + 6 + blogPosts.length} URLs`);
     return;
   }
 
@@ -2668,7 +2700,7 @@ async function run() {
   if (fs.existsSync(DIST_DIR)) safeWrite(sitemapDist, sitemapXml);
   safeWrite(sitemapPublic, sitemapXml);
 
-  const urlCount = canonicalItems.length + 5 + blogPosts.length;
+  const urlCount = canonicalItems.length + 6 + blogPosts.length;
   console.log(`Updated sitemap.xml with ${urlCount} URLs`);
 
   // Generate Flutter versions SEO page in dist only. It is a route page, so
@@ -2707,6 +2739,7 @@ async function run() {
     markdownRoutes['/faq/'] = '/faq.md';
   }
   console.log('Generated faq/index.html');
+  if (fs.existsSync(DIST_DIR)) generateApiResources(buildAppAssetTags());
 
   const changelogHtml = buildChangelogPageHtml(changelogItems, buildAppAssetTags());
   if (fs.existsSync(DIST_DIR)) {

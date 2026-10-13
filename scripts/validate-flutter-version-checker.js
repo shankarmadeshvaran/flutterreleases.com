@@ -96,6 +96,9 @@ assert.equal(incompatible.compatible, false, 'Mismatched Flutter/Dart pair shoul
 assert.equal(incompatible.bundledDartVersion, latestStable.dart_version, 'Incompatible result should expose bundled Dart version');
 
 const pageHtml = fs.readFileSync(DIST_PAGE, 'utf8');
+assert.ok(pageHtml.includes('#static-seo .grid {'), 'Fallback grid styles must not override React layouts');
+assert.ok(pageHtml.includes('#static-seo nav {'), 'Fallback navigation styles must stay scoped');
+assert.ok(!/^\s*\.grid\s*\{/m.test(pageHtml), 'No unscoped fallback grid selector');
 const homeHtml = fs.readFileSync(DIST_HOME, 'utf8');
 const sitemapXml = fs.readFileSync(path.join(ROOT, 'packages', 'web', 'dist', 'sitemap.xml'), 'utf8');
 const canonical = `${SITE_URL}/tools/flutter-version-checker/`;

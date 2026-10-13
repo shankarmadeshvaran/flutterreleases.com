@@ -406,6 +406,7 @@ export default function FlutterVersionCheckerPage() {
 
   useEffect(() => {
     if (!inputRevision || loading || mode !== "flutter-to-dart" || !compatibilityResult?.flutterRelease) return;
+    const flutterRelease = compatibilityResult.flutterRelease;
     const key = compatibilityResultKey;
     if (trackedCompatibility.current === key) return;
     const timer = window.setTimeout(() => {
@@ -416,7 +417,7 @@ export default function FlutterVersionCheckerPage() {
         bundled_dart_version: compatibilityResult.bundledDartVersion,
         compatible: compatibilityResult.compatible,
         matching_flutter_count: compatibilityResult.dartReleases.length,
-        channel: compatibilityResult.flutterRelease.channel,
+        channel: flutterRelease.channel,
         mode,
       });
     }, 700);

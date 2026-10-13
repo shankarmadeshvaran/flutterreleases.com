@@ -1,0 +1,23 @@
+{
+  "title": "Flutter Release Dataset API",
+  "description": "Read the public Flutter release dataset, including bundled Dart versions, release dates, downloads, and official source links.",
+  "sections": [
+    { "id": "access", "title": "Access", "text": "GET /releases.json returns the complete published JSON snapshot. No authentication or API key is required. There are no server-side filters, pagination, or write operations; filter the records in your own application." },
+    { "id": "response", "title": "Response", "text": "The response is an object with meta and items. meta.generated_at records when the dataset was generated; meta.count is the number of records. items contains the release records. Additional fields may be added, and optional fields may be absent or null." },
+    { "id": "updates", "title": "Updates and caching", "text": "A daily scheduled crawler and manual runs update the dataset when changes are found. Scheduled runs can be delayed or fail, so check meta.generated_at rather than assuming the snapshot is current. Responses have a five-minute cache lifetime with stale-while-revalidate enabled. Cache locally and avoid fetching repeatedly for each release." },
+    { "id": "provenance", "title": "Sources and missing data", "text": "The crawler uses Flutter's official SDK archive, Flutter documentation, and the Flutter GitHub repository. source_urls contains available provenance links. Missing facts remain missing rather than being guessed. A verified flag or saved link check is not a guarantee that all fields or upstream links are currently valid." },
+    { "id": "matching", "title": "Version matching", "text": "Use channel to identify stable releases, and dart_version to find the Dart SDK bundled with a Flutter release. A match describes the bundled SDK, not permission to substitute a different Dart version. Do not rely on array order to find the latest release; compare the available release dates within the desired channel. A main record can represent a moving development branch." },
+    { "id": "downloads", "title": "Downloads and other representations", "text": "platforms contains upstream download URLs; FlutterReleases does not host Flutter binaries. RSS, sitemap, and Markdown are separate representations, not additional APIs. There is no uptime SLA or dedicated health endpoint. No specific rate limit is promised; hosting and security policies may limit requests." }
+  ],
+  "fields": [
+    { "name": "version", "description": "Flutter identifier, including main development records." },
+    { "name": "channel", "description": "Upstream channel, such as stable, beta, dev, or main." },
+    { "name": "dart_version", "description": "Bundled Dart SDK version, when available." },
+    { "name": "released", "description": "Release date where available; historical values may be empty." },
+    { "name": "release_type", "description": "Dataset release classification." },
+    { "name": "platforms", "description": "Platform-to-download URL mapping; missing downloads may be null." },
+    { "name": "release_notes", "description": "Release-note links; base is the primary link where available." },
+    { "name": "source_urls", "description": "Available authoritative source links." },
+    { "name": "requires", "description": "Source-supported requirements; empty when unavailable." }
+  ]
+}

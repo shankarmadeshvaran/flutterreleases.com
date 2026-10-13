@@ -52,6 +52,8 @@ scripts/
                                    from releases.json
   submit-indexnow.js            ← Post-deploy: submits high-value URLs to IndexNow
   markdown-negotiation.js       ← Pages handler selecting existing Markdown using Accept
+  api-catalog.js               ← Catalog and OpenAPI builders for the public JSON interface
+  validate-api-catalog.js       ← Contract/data consistency and GET/HEAD discovery checks
   validate-markdown-negotiation.js ← Format, header, redirect, and resource-isolation checks
   validate-site-pages.js        ← Checks static homepage, FAQ, blog, metadata, and links
   validate-release-consistency.js ← Confirms HTML/Markdown/LLM output matches releases.json
@@ -79,10 +81,12 @@ packages/
         flutter-version-checker.tsx ← SPA Flutter & Dart compatibility checker route
         faq.tsx                 ← FAQ page using shared site theme and FAQ data
         changelog.tsx           ← Direct site changelog route, not linked in primary nav
+        api-docs.tsx            ← Public dataset documentation using the shared site theme
       data/
         blog-posts.json         ← Blog index metadata used by SPA and static generator
         faq.json                ← FAQ content shared by SPA route and static generator
         changelog.json          ← Site changelog content shared by SPA route and static generator
+        api-docs.json           ← API documentation copy shared by SPA and static generator
       content/blog/
         *.md                    ← Blog manuscripts and article metadata
       components/
@@ -98,12 +102,9 @@ packages/
         useReleases.ts          ← Fetches + normalises releases.json
         useDarkMode.ts
         useMeta.ts
-        use-desktop.ts
       lib/
         analytics.ts            ← Safe wrapper around the injected GA4 runtime
         compatibility.ts        ← Flutter ↔ Dart lookup, compatibility, and stable-first sorting helpers
-        api.ts
-        utils.ts
       types/
         release.ts              ← Release, Channel, ReleaseType types
     public/
@@ -263,7 +264,19 @@ After production deploys, `deploy.yml` and the deploy stage of `crawl-releases.y
 
 ---
 
+## API Discovery
+
+The existing public `GET /releases.json` dataset is discoverable through
+`/.well-known/api-catalog`, with an OpenAPI contract at `/openapi.json` and
+human-readable documentation at `/api-docs/`. These are static post-build
+outputs, not a new backend. No filtering, pagination, writes, API keys, or health
+endpoint are introduced. See [docs/api-discovery.md](docs/api-discovery.md) for
+generation, hosting, and GET/HEAD validation.
+
 ## Deploy
+
+`bun run build:web` now checks both application and Vite/plugin TypeScript before
+building. This same command runs in deployment and crawler deployment workflows.
 
 `robots.txt` allows public crawling and declares `ai-train=no, search=yes,
 ai-input=yes`: search indexing and AI retrieval are permitted, while model
@@ -302,6 +315,7 @@ bun run test:release-consistency
 bun run test:flutter-versions
 bun run test:flutter-version-checker
 bun run test:markdown-negotiation
+bun run test:api-catalog
 ```
 
 Before committing, inspect `git status --short` again and avoid committing generated churn or temporary build folders unless the generated files are the intended change.

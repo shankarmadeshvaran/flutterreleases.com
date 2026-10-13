@@ -209,6 +209,7 @@ function buildSitemapXml(siteUrl, lastMod, items = []){
     ['/tools/flutter-version-checker/', 'daily', '0.8'],
     ['/blog/', 'weekly', '0.7'],
     ['/faq/', 'monthly', '0.5'],
+    ['/api-docs/', 'monthly', '0.4'],
   ]) {
     lines.push('  <url>');
     lines.push(`    <loc>${xmlEscape(baseUrl + path_)}</loc>`);

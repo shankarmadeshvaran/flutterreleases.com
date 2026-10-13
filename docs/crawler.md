@@ -149,6 +149,7 @@ bun run test:release-consistency
 bun run test:flutter-versions
 bun run test:flutter-version-checker
 bun run test:markdown-negotiation
+bun run test:api-catalog
 ```
 
 Spot-check representative releases:

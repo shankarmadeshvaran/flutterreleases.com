@@ -60,6 +60,9 @@ jobs:
       - name: Validate Markdown negotiation output
         run: bun run test:markdown-negotiation
 
+      - name: Validate API discovery output
+        run: bun run test:api-catalog
+
       - name: Deploy to Cloudflare Pages
         run: npx --yes wrangler@4 pages deploy packages/web/dist --project-name=flutterreleases --commit-dirty=true
         env:

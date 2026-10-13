@@ -19,7 +19,16 @@ Flutter SDK archive + official Flutter/GitHub sources
 
 The frontend is a React 19 and Vite application using Wouter. SPA routes provide the interactive experience, including filtering, release expansion, theme switching, blog navigation, FAQ, and the Flutter/Dart compatibility checker.
 
+Release loading uses `useReleases`; there is no React Query integration, Hono API
+backend, Electron runtime, or separate provider context. Unused scaffolding and
+its dependencies were removed. Keep current source and configured functionality
+in the project rather than placeholders for unimplemented platforms.
+
 Search-critical routes are also generated as complete static HTML by `scripts/generate-release-pages.js`. Their initial HTML contains headings, metadata, canonical links, release facts, and internal links without requiring JavaScript. The generated pages may still load the Vite application assets for progressive enhancement.
+
+When static fallback content accompanies the React app, keep layout selectors
+scoped to its container. The checker's fallback styles use `#static-seo` so
+generic grid/navigation/table rules cannot override responsive React layouts.
 
 Canonical release URLs use a trailing slash:
 
@@ -100,6 +109,13 @@ Missing information must remain missing. Do not infer system requirements, platf
 
 ## Adding Functionality
 
+The public JSON interface is described by `scripts/api-catalog.js`. The post-build
+generator publishes an RFC 9727 catalog, OpenAPI specification, and static API
+documentation. Shared documentation copy lives in `data/api-docs.json` and is
+also consumed by the React page. These are static assets outside the negotiation
+worker and do not introduce a second database or API backend. Only the HTML docs
+join the sitemap. See [api-discovery.md](api-discovery.md).
+
 For a new page, add the SPA route when interaction is needed and add static generation when the page contains search-critical content. Reuse the existing header, footer, theme tokens, metadata conventions, and canonical URL rules.
 
 For a new release field, establish its authoritative upstream source first, add it without breaking existing JSON consumers, update both frontend and generator normalization if necessary, and add a consistency check.
@@ -129,10 +145,14 @@ robots response had no injected Cloudflare policy when this was implemented.
 The core checks protect different layers:
 
 - `bun run lint` checks JavaScript and TypeScript quality.
-- `bun run typecheck` checks workspace TypeScript contracts.
-- `bun run build:web` checks the Vite application build.
+- `bun run typecheck` checks both application sources and Vite/plugin TypeScript
+  using explicit project configs, not the empty reference-only root config.
+- `bun run build:web` runs those type checks before the production Vite build,
+  so deployment and crawler deployment reject application type errors.
 - `generate-release-pages.js` checks full static generation.
 - `test:site-pages` checks static knowledge pages and metadata.
+- `test:api-catalog` checks catalog discovery, contract/data consistency, static
+  documentation, and optional real GET/HEAD responses.
 - `test:release-consistency` checks that generated representations agree with canonical data.
 - `test:flutter-versions` checks the versions hub and release discovery.
 - `test:flutter-version-checker` checks compatibility data and static checker output.

@@ -7,12 +7,13 @@
     "packages/*"
   ],
   "scripts": {
+    "test:api-catalog": "node scripts/validate-api-catalog.js",
     "test:markdown-negotiation": "node scripts/validate-markdown-negotiation.js",
     "test:theme": "node scripts/validate-theme.js",
     "test:analytics": "node scripts/validate-analytics.js",
     "dev": "cd packages/web && bunx vite",
     "build": "turbo build",
-    "build:web": "cd packages/web && bunx vite build",
+    "build:web": "cd packages/web && bun run build",
     "lint": "oxlint . --deny-warnings --no-error-on-unmatched-pattern",
     "lint:fix": "oxlint . --fix --deny-warnings --no-error-on-unmatched-pattern",
     "submit:indexnow": "node scripts/submit-indexnow.js",

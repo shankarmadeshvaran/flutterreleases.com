@@ -14,7 +14,10 @@ bun run dev       # http://localhost:5173
 bun run build     # outputs to dist/
 ```
 
-The build copies `public/_headers` into `dist/` for Cloudflare Pages cache/security headers.
+The build checks application and Vite/plugin TypeScript, then builds Vite and
+copies public resources (including `_headers`) into `dist/`. For deployable
+release HTML, Markdown, and API discovery, also run the post-build generator
+from the repository root as shown below.
 
 ## Typecheck
 
@@ -36,6 +39,14 @@ bun run build:web
 SITE_URL=https://flutterreleases.com node scripts/generate-release-pages.js
 SITE_URL=https://flutterreleases.com node scripts/validate-flutter-versions-page.js
 SITE_URL=https://flutterreleases.com node scripts/validate-flutter-version-checker.js
+bun run test:site-pages
+bun run test:release-consistency
+bun run test:markdown-negotiation
+bun run test:api-catalog
+bun run test:theme
+bun run test:analytics
 ```
 
 See root [README](../../README.md) for full project docs.
+See [API discovery](../../docs/api-discovery.md) and
+[architecture](../../docs/architecture.md) for generation and ownership rules.
