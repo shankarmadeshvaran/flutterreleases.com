@@ -265,6 +265,13 @@ After production deploys, `deploy.yml` and the deploy stage of `crawl-releases.y
 
 ## Deploy
 
+`robots.txt` allows public crawling and declares `ai-train=no, search=yes,
+ai-input=yes`: search indexing and AI retrieval are permitted, while model
+training is declined. Content Signals express preferences, not enforced access
+restrictions, and do not guarantee crawler compliance or search visibility.
+Maintain the policy in `packages/web/public/robots.txt`; no Cloudflare setting
+is required. See [docs/architecture.md](docs/architecture.md#crawler-content-use-policy).
+
 HTML page URLs support `Accept: text/markdown`, serving the existing generated
 Markdown while normal browsers retain HTML. The post-build generator packages
 a scoped Pages Function and exact release redirects so `.md` filenames are not

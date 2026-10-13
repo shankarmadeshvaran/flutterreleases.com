@@ -25,6 +25,12 @@ const changelogHtml = read(CHANGELOG_HTML);
 const faqMarkdown = read(FAQ_MD);
 const flutterVersionsMarkdown = read(FLUTTER_VERSIONS_MD);
 const sitemapXml = read(SITEMAP);
+const robotsSource = read(path.join(ROOT, 'packages', 'web', 'public', 'robots.txt'));
+const robotsOutput = read(path.join(DIST_DIR, 'robots.txt'));
+assert.equal(robotsOutput, robotsSource, 'Built robots.txt should preserve the source policy');
+assert.match(robotsOutput, /^User-agent: \*\r?\nContent-Signal: ai-train=no, search=yes, ai-input=yes\r?\nAllow: \/$/m, 'Public content should permit crawling, search, and AI retrieval but decline training');
+assert.match(robotsOutput, /^Sitemap: https:\/\/flutterreleases\.com\/sitemap\.xml$/m);
+assert.ok(!/^Disallow:\s*\//m.test(robotsOutput), 'Public content should not be blocked');
 
 includes(faqHtml, '<h1>FlutterReleases FAQ</h1>', 'FAQ page');
 includes(faqHtml, '<link rel="canonical" href="https://flutterreleases.com/faq/" />', 'FAQ page');

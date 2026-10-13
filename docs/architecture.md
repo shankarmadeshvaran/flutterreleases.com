@@ -108,6 +108,22 @@ For a new machine-readable representation, generate it from `releases.json` or s
 
 For crawler changes, follow [crawler.md](crawler.md) and run the crawler-specific validation before regenerating the site.
 
+## Crawler Content-Use Policy
+
+`packages/web/public/robots.txt` is copied unchanged into the production build.
+The global `User-agent: *` group retains `Allow: /` and the canonical sitemap,
+and declares `Content-Signal: ai-train=no, search=yes, ai-input=yes`.
+This permits search indexing and AI retrieval/grounding while declining model
+training and fine-tuning. It applies equally to public HTML and machine-readable
+representations; it does not change release data, update schedules, or routing.
+
+These are usage preferences, not technical enforcement or a guarantee of legal
+effect or crawler compliance. See [Content Signals](https://contentsignals.org/).
+Do not introduce bot blocking or conflicting Cloudflare-managed robots policies
+without separately reviewing the effect on search and agent access. The live
+robots response had no injected Cloudflare policy when this was implemented.
+`test:site-pages` validates the source/build match, directives, and crawl access.
+
 ## Validation Boundaries
 
 The core checks protect different layers:
