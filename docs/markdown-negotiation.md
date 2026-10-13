@@ -48,6 +48,8 @@ automatically apply `_redirects` to Function-handled requests.
 - Markdown responses use `Content-Type: text/markdown; charset=utf-8`.
 - Negotiable page responses merge `Vary: Accept` with existing Vary values.
 - Markdown responses advertise canonical HTML through a Link header.
+- Successful homepage HTML and Markdown responses also append API discovery
+  Link headers generated from the catalog definitions. Existing links are retained.
 - GET and HEAD are supported; HEAD returns headers without a body.
 - HTML validators/ranges are not reused to validate a Markdown representation.
 - Unknown release/Markdown routes return 404, not a mislabeled SPA fallback.

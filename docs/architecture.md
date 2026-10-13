@@ -110,7 +110,11 @@ Missing information must remain missing. Do not infer system requirements, platf
 ## Adding Functionality
 
 The public JSON interface is described by `scripts/api-catalog.js`. The post-build
-generator publishes an RFC 9727 catalog, OpenAPI specification, and static API
+generator also derives homepage HTTP discovery links from the catalog definitions
+and embeds them in the existing negotiation worker. This adds no runtime fetches,
+new routes, dependencies, or changes to crawler/deployment workflows. See
+[api-discovery.md](api-discovery.md) for relation semantics and HTTP validation.
+The same generator publishes an RFC 9727 catalog, OpenAPI specification, and static API
 documentation. Shared documentation copy lives in `data/api-docs.json` and is
 also consumed by the React page. These are static assets outside the negotiation
 worker and do not introduce a second database or API backend. Only the HTML docs

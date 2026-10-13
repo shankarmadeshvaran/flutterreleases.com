@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { buildApiCatalog, buildOpenApi } from './api-catalog.js';
+import { buildApiCatalog, buildOpenApi, buildDiscoveryLinkHeader } from './api-catalog.js';
 
 const dist = 'packages/web/dist';
 const read = name => fs.readFileSync(path.join(dist, name), 'utf8');
@@ -74,6 +74,16 @@ for (const route of ['/.well-known/api-catalog', '/openapi.json', '/api-docs/'])
 
 const liveBase = process.argv.find(arg => arg.startsWith('--base-url='))?.slice('--base-url='.length);
 if (liveBase) {
+  for (const method of ['GET', 'HEAD']) {
+    for (const accept of ['text/html', 'text/markdown']) {
+      const response = await fetch(`${liveBase}/`, { method, headers: { Accept: accept } });
+      assert.equal(response.status, 200);
+      assert.ok(response.headers.get('Link')?.includes(buildDiscoveryLinkHeader(base)), 'Homepage discovery links');
+      assert.ok(response.headers.get('Content-Type')?.startsWith(accept));
+      if (accept === 'text/markdown') assert.ok(response.headers.get('Link').includes('rel="canonical"'));
+      if (method === 'HEAD') assert.equal(await response.text(), '');
+    }
+  }
   for (const [route, type] of [['/.well-known/api-catalog', 'application/linkset+json'], ['/openapi.json', 'application/json'], ['/api-docs/', 'text/html']]) {
     for (const method of ['GET', 'HEAD']) {
       const response = await fetch(`${liveBase}${route}`, { method, headers: { Accept: type }, redirect: 'manual' });

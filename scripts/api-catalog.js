@@ -3,6 +3,18 @@ import { normalizeSiteUrl } from './release-data-utils.js';
 const nullableString = description => ({ type: ['string', 'null'], description });
 const nullableStringMap = description => ({ type: 'object', description, additionalProperties: { type: ['string', 'null'] } });
 
+export function buildDiscoveryLinkHeader(siteUrl) {
+  const base = normalizeSiteUrl(siteUrl);
+  const service = buildApiCatalog(base).linkset[0];
+  const links = [`<${base}/.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"`];
+  for (const relation of ['service-desc', 'service-doc']) {
+    for (const link of service[relation]) {
+      links.push(`<${link.href}>; rel="${relation}"; type="${link.type}"; anchor="${service.anchor}"`);
+    }
+  }
+  return links.join(', ');
+}
+
 export function buildApiCatalog(siteUrl) {
   const base = normalizeSiteUrl(siteUrl);
   return {

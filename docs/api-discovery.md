@@ -29,6 +29,20 @@ upstream link health, service uptime, or a fixed rate-limit policy.
 
 ## Hosting
 
+Successful homepage GET and HEAD responses advertise the catalog (`api-catalog`),
+OpenAPI specification (`service-desc`), and API documentation (`service-doc`).
+Service links use the dataset URL as their `anchor`, rather than implying the
+homepage is an API endpoint. `buildDiscoveryLinkHeader()` consumes the catalog
+definitions at generation time; the generated Pages worker appends the result.
+HTML and negotiated Markdown retain their existing bodies, content types,
+caching, and `Vary: Accept`. Existing Link values, including Markdown's canonical
+HTML link, are preserved. No `describedby` relation is added without a distinct
+descriptive resource that needs it.
+
+No Transform Rule is needed. `_headers` alone is not the owner of these
+Function-handled responses. If Pages falls back to static hosting because the
+Function is unavailable, these homepage discovery headers may be absent.
+
 These resources remain static assets outside the Markdown negotiation worker's
 route scope. Cloudflare Pages `_headers` assigns the catalog
 `application/linkset+json` with the RFC profile and an `api-catalog` Link header
@@ -82,6 +96,11 @@ curl -X POST https://isitagentready.com/api/scan \
 
 Check `checks.discovery.apiCatalog.status`. A scanner result is supplementary;
 correct links and responses are the contract.
+
+Also check `checks.discoverability.linkHeaders.status` after deployment.
+Local `test:api-catalog --base-url=...` checks homepage discovery on GET/HEAD
+for HTML and Markdown, as well as the linked resources. A scan of production
+cannot validate uncommitted local changes.
 
 References: [RFC 9727](https://www.rfc-editor.org/info/rfc9727/),
 [OpenAPI 3.1.1](https://spec.openapis.org/oas/v3.1.1.html).

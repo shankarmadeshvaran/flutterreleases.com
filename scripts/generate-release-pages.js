@@ -8,7 +8,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { buildApiCatalog, buildOpenApi } from './api-catalog.js';
+import { buildApiCatalog, buildOpenApi, buildDiscoveryLinkHeader } from './api-catalog.js';
 import {
   dedupeReleaseItems,
   getLatestBeta,
@@ -85,7 +85,7 @@ function generateMarkdownNegotiation(routes) {
     .map(route => `${route.slice(0, -1)} ${route} 301`);
   safeWrite(path.join(DIST_DIR, '_redirects'), `${aliases}\n${releaseRedirects.join('\n')}\n`);
   const source = fs.readFileSync(path.join(__dirname, 'markdown-negotiation.js'), 'utf8');
-  safeWrite(path.join(DIST_DIR, '_worker.js'), `${source}\nexport default createMarkdownWorker(${JSON.stringify(routes)}, ${JSON.stringify(redirects)});\n`);
+  safeWrite(path.join(DIST_DIR, '_worker.js'), `${source}\nexport default createMarkdownWorker(${JSON.stringify(routes)}, ${JSON.stringify(redirects)}, ${JSON.stringify(buildDiscoveryLinkHeader(SITE_URL))});\n`);
   safeWrite(path.join(DIST_DIR, '_routes.json'), JSON.stringify({
     version: 1,
     include: ['/', '/index.html', '/release/*', '/flutter-versions', '/flutter-versions/',

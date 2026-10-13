@@ -53,7 +53,7 @@ function missing(request) {
   });
 }
 
-export function createMarkdownWorker(routes, redirects = {}) {
+export function createMarkdownWorker(routes, redirects = {}, discoveryLinks = '') {
   const markdownFiles = new Set(Object.values(routes));
   return {
     async fetch(request, env) {
@@ -95,8 +95,9 @@ export function createMarkdownWorker(routes, redirects = {}) {
       const outputHeaders = responseHeaders(asset, negotiated);
       if (markdown) {
         outputHeaders.set('Content-Type', 'text/markdown; charset=utf-8');
-        outputHeaders.set('Link', `<${url.origin}${negotiated ? pathname : Object.keys(routes).find(key => routes[key] === pathname)}>; rel="canonical"`);
+        outputHeaders.append('Link', `<${url.origin}${negotiated ? pathname : Object.keys(routes).find(key => routes[key] === pathname)}>; rel="canonical"`);
       }
+      if (pathname === '/' && asset.status === 200 && discoveryLinks) outputHeaders.append('Link', discoveryLinks);
       return new Response(request.method === 'HEAD' ? null : asset.body, {
         status: asset.status,
         statusText: asset.statusText,

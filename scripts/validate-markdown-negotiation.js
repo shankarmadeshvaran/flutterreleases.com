@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createMarkdownWorker, prefersMarkdown } from './markdown-negotiation.js';
+import { buildDiscoveryLinkHeader } from './api-catalog.js';
 
 for (const [header, expected] of [
   ['', false], ['text/html', false], ['*/*', false], ['text/*', false],
@@ -75,6 +76,25 @@ for (const [html, markdown] of [
 }
 
 const releasePath = `/release/${encodeURIComponent(latest.version)}`;
+for (const method of ['GET', 'HEAD']) {
+  for (const accept of ['', 'text/html', 'text/markdown']) {
+    const response = await fetchPage('/?source=test', accept, method);
+    const links = response.headers.get('Link');
+    assert.ok(links.includes(buildDiscoveryLinkHeader('https://flutterreleases.com')));
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get('Cache-Control'), 'private, no-store');
+    assert.equal(response.headers.get('Vary'), 'Accept-Encoding, Accept');
+    if (accept === 'text/markdown') assert.ok(links.includes('<https://flutterreleases.com/>; rel="canonical"'));
+    if (method === 'HEAD') assert.equal(await response.text(), '');
+  }
+}
+assert.ok(!(await fetchPage('/faq/')).headers.get('Link')?.includes('api-catalog'), 'Discovery headers are homepage-only');
+const existingLinks = createMarkdownWorker({ '/': '/index.md' }, {}, buildDiscoveryLinkHeader('https://example.com'));
+const withLink = { ASSETS: { async fetch() { return new Response('# Home', { headers: { 'Content-Type': 'text/markdown', Link: '</existing>; rel="alternate"' } }); } } };
+const merged = await existingLinks.fetch(new Request('https://example.com/', { headers: { Accept: 'text/markdown' } }), withLink);
+assert.ok(merged.headers.get('Link').includes('</existing>; rel="alternate"'));
+assert.ok(merged.headers.get('Link').includes('anchor="https://example.com/releases.json"'));
+assert.ok(merged.headers.get('Link').includes('<https://example.com/>; rel="canonical"'));
 const redirect = await fetchPage(`${releasePath}?source=test`, 'text/markdown');
 assert.equal(redirect.status, 301);
 assert.equal(redirect.headers.get('Location'), `https://flutterreleases.com${releasePath}/?source=test`);

@@ -4,6 +4,11 @@ Browse Flutter releases, bundled Dart SDK versions, channels, downloads, and off
 
 **Live site:** [flutterreleases.com](https://flutterreleases.com)
 
+The homepage advertises the API catalog, OpenAPI specification, and API docs
+through HTTP `Link` headers on HTML and negotiated Markdown GET/HEAD responses.
+These links are generated from the existing catalog definitions, with no separate
+Cloudflare dashboard rule. See [API discovery](docs/api-discovery.md) for validation.
+
 Privacy Policy (`/privacy-policy/`) and Terms and Conditions
 (`/terms-and-conditions/`) are generated from `packages/web/src/web/data/legal.json`
 and linked in the footer. This shared content also powers the React pages.
