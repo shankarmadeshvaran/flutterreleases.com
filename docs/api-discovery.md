@@ -40,6 +40,11 @@ OpenAPI description do not. No health endpoint is advertised: the generated
 status file is an internal pipeline artifact, not live service health. RSS,
 Markdown, and sitemap files are not presented as separate APIs.
 
+The Resources footer links to API Docs beside the direct JSON API download.
+Generated static page footers also link to the docs, including release and blog
+pages, so discovery does not depend on JavaScript. React footer clicks reuse
+the existing navigation analytics.
+
 No new dependencies, secrets, dashboard settings, or runtime service are needed.
 Deployment and crawler deployment workflows generate and validate these files
 before uploading, without changing the crawl schedule or update logic.

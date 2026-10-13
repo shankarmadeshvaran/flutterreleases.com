@@ -856,7 +856,7 @@ function buildBlogPageHtml(posts, appAssetTags = '') {
     </main>
     <footer>
       <div>
-        <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a></p>
+        <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a> &mdash; <a href="${siteBaseUrl()}/api-docs/">API Docs</a></p>
       </div>
     </footer>
   </div>
@@ -1031,7 +1031,7 @@ function buildFaqPageHtml(items, appAssetTags = '', options = {}) {
     </main>
     <footer>
       <div>
-        <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a></p>
+        <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a> &mdash; <a href="${siteBaseUrl()}/api-docs/">API Docs</a></p>
       </div>
     </footer>
   </div>
@@ -1185,7 +1185,7 @@ function buildChangelogPageHtml(items, appAssetTags = '') {
     </main>
     <footer>
       <div>
-        <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a></p>
+        <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a> &mdash; <a href="${siteBaseUrl()}/api-docs/">API Docs</a></p>
       </div>
     </footer>
   </div>
@@ -1392,7 +1392,7 @@ ${rendered.html}
   </main>
   <footer>
     <div>
-      <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/blog/">Blog</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a></p>
+      <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/blog/">Blog</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${siteBaseUrl()}/api-docs/">API Docs</a></p>
     </div>
   </footer>
   <script>
@@ -1682,7 +1682,7 @@ ${buildCompatibilityRowsHtml(prerelease)}
   </main>
   <footer>
     <div>
-      <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a></p>
+      <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a> &mdash; <a href="${siteBaseUrl()}/api-docs/">API Docs</a></p>
     </div>
   </footer>
   </div>
@@ -1912,7 +1912,7 @@ ${compatibilityRows}
   </main>
   <footer>
     <div>
-        <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/sitemap.xml">Sitemap</a></p>
+        <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/sitemap.xml">Sitemap</a> &mdash; <a href="${siteBaseUrl()}/api-docs/">API Docs</a></p>
     </div>
   </footer>
   <script>
@@ -2145,6 +2145,7 @@ function buildPageHtml(release, items = [], appStylesheetTags = '') {
   <footer class="release-footer">
     <div class="release-footer-inner">
       <p>Flutter release data, Dart compatibility, downloads, and official sources.</p>
+      <p><a href="${siteBaseUrl()}/api-docs/">API Docs</a></p>
       <p>Made by <a href="https://x.com/devinmaking" target="_blank" rel="noopener noreferrer">Shankar Madeshvaran</a>.</p>
     </div>
   </footer>
@@ -2528,7 +2529,7 @@ function buildLinksHtml(items, generatedAt) {
   <p class="meta">${canonicalItems.length} canonical release pages &mdash; ${items.length} dataset records &mdash; Generated ${date} &mdash; <a href="${baseUrl}/releases.json">releases.json</a></p>
 ${renderGroup('Stable', stable)}${renderGroup('Beta', beta)}${renderGroup('Dev', dev)}${renderGroup('Main', main_)}
   <footer>
-    <p><a href="${baseUrl}/">FlutterReleases.com</a> &mdash; Updated daily &mdash; <a href="${baseUrl}/sitemap.xml">Sitemap</a> &mdash; <a href="${baseUrl}/feed.xml">RSS</a></p>
+    <p><a href="${baseUrl}/">FlutterReleases.com</a> &mdash; Updated daily &mdash; <a href="${baseUrl}/sitemap.xml">Sitemap</a> &mdash; <a href="${baseUrl}/feed.xml">RSS</a> &mdash; <a href="${baseUrl}/api-docs/">API Docs</a></p>
   </footer>
 </body>
 </html>`;

@@ -57,7 +57,7 @@ The product promise is accuracy: official Flutter SDK archive data, verified dow
 - Hero section: compact, left-aligned, max 2xl text block inside the 1200px container — subtitle + trust cues
 - Table: full-width, dense but breathable, alternating hover, no vertical dividers between cells
 - Sticky table header
-- Footer: minimal, one-line
+- Footer: brand summary plus Product, Resources, and Community link groups; stack on mobile. Keep the author credit and automatic-update note below the groups. API Docs belongs beside the direct JSON API link in Resources.
 
 ## Spacing
 - Base unit: 4px
@@ -75,7 +75,7 @@ The product promise is accuracy: official Flutter SDK archive data, verified dow
 - Pagination icon buttons must have accessible names such as "Previous page" and "Next page"
 - Dark mode toggle: icon-only in header
 - Header brand: Flutter lockup asset plus "Releases" text on larger screens
-- Donate/contact actions: quiet header links; never compete with release data
+- Support: quiet header action; never compete with release data. Contact stays in the Community footer, not the header.
 - Trust cues: small muted text links under the hero, including "Downloads hosted by Google", "Flutter Versions", and unofficial-resource disclaimer
 
 ## Data Presentation

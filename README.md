@@ -4,7 +4,7 @@ Browse every Flutter release — version, Dart SDK, channel, downloads, and rele
 
 **Live site:** [flutterreleases.com](https://flutterreleases.com)
 
-Contributor entry points: [CONTRIBUTING.md](CONTRIBUTING.md) · [Architecture](docs/architecture.md) · [Crawler rules](docs/crawler.md)
+Contributor entry points: [CONTRIBUTING.md](CONTRIBUTING.md) · [AI agent instructions](AGENTS.md) · [Architecture](docs/architecture.md) · [Design](docs/design.md) · [Crawler rules](docs/crawler.md)
 
 ## Public URLs
 
@@ -155,7 +155,7 @@ Crawler-specific rules and validation steps live in [docs/crawler.md](docs/crawl
 
 The full source-of-truth, build, routing, and automation model lives in [docs/architecture.md](docs/architecture.md). New contributors should also read [CONTRIBUTING.md](CONTRIBUTING.md) before editing crawler-owned or generated files.
 
-Analytics events and community research notes live in [docs/analytics-and-community-research.md](docs/analytics-and-community-research.md). Read that guide before adding product analytics, new tracked properties, or community-research driven roadmap items.
+Analytics setup, events, funnels, and tracking rules live in [docs/analytics.md](docs/analytics.md). Read that guide before adding product analytics or new tracked properties.
 
 | Step | Trigger | What it does |
 |---|---|---|
@@ -334,7 +334,7 @@ Before committing, inspect `git status --short` again and avoid committing gener
 |---|---|
 | `VITE_GA_MEASUREMENT_ID` | GA4 web stream measurement ID such as `G-XXXXXXXXXX`; when omitted, no analytics script is injected |
 
-GA4 custom events are documented in [docs/analytics-and-community-research.md](docs/analytics-and-community-research.md). Register useful event parameters such as `version`, `channel`, `platform`, `location`, `label`, `href`, and `result_count` as custom dimensions in GA4 if you want to use them in reports and explorations.
+GA4 custom events are documented in [docs/analytics.md](docs/analytics.md). Register useful event parameters such as `version`, `channel`, `platform`, `location`, `label`, `href`, and `result_count` as custom dimensions in GA4 if you want to use them in reports and explorations.
 
 `VITE_GA_MEASUREMENT_ID` may be configured as either a GitHub Actions secret or repository variable. When it is omitted, the build leaves analytics code inactive.
 

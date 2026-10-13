@@ -14,6 +14,7 @@ const footerGroups = [
     title: "Resources",
     links: [
       { label: "JSON API", href: "/releases.json", external: true },
+      { label: "API Docs", href: "/api-docs/" },
       { label: "RSS Feed", href: "/feed.xml", external: true },
       { label: "FAQ", href: "/faq/" },
       { label: "Sitemap", href: "/sitemap.xml", external: true },

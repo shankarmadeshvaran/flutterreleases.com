@@ -1,4 +1,4 @@
-# Analytics and Community Research
+# Analytics
 
 FlutterReleases uses Google Analytics 4 because it has a free dashboard for
 traffic sources, pages, search terms, downloads, outbound links, and custom
@@ -97,37 +97,6 @@ Register categorical fields as event-scoped custom dimensions and numeric
 counts as custom metrics. Do not add automatic and custom download event counts
 together: they can represent the same action. A download click does not prove a
 binary finished downloading.
-
-## Developer Problems Worth Tracking
-
-Automated JSON, sitemap, and RSS requests need edge analytics rather than GA4.
-See [Resource usage analytics](resource-usage-analytics.md) for the verified
-Cloudflare fields, reporting query, and interpretation rules.
-
-These are the strongest community-backed problems FlutterReleases can help
-answer with the existing `releases.json` data.
-
-| Problem | Where it appears | Product opportunity |
-|---|---|---|
-| Dart SDK mismatch and version solving failures | Stack Overflow questions such as "Flutter requires SDK version" and "How to change the current Dart SDK version" | Make Flutter-to-Dart compatibility easier to find and link from every release page |
-| Upgrade uncertainty between Flutter versions | Stack Overflow questions about upgrading existing Flutter apps | Add an upgrade path view comparing two stable versions |
-| Hotfix/minor release-note confusion | Flutter stable changelog, Flutter release notes, and SDK archive have different best URLs depending on release type | Keep crawler rules strict: feature releases use docs release notes; stable patches use `CHANGELOG.md` version anchors |
-| Download link trust and platform selection | Flutter SDK archive is the source developers use to verify historical SDK downloads | Track download clicks by platform and keep crawler download verification visible |
-| "Latest stable Flutter version" discovery | Search Console opportunity plus Flutter community support channels | Keep `/flutter-versions/` as the stable-first hub and link it prominently |
-
-## Research Sources
-
-- Flutter community channels: https://flutter.dev/community
-- Flutter contribution and help locations: https://docs.flutter.dev/contribute
-- Dart community channels: https://dart.dev/community
-- Flutter SDK archive: https://docs.flutter.dev/install/archive
-- Flutter release notes: https://docs.flutter.dev/release/release-notes
-- Flutter stable changelog: https://github.com/flutter/flutter/blob/stable/CHANGELOG.md
-- Stack Overflow Dart SDK mismatch example: https://stackoverflow.com/questions/56351254/flutter-requires-sdk-version
-- Stack Overflow changing Dart SDK version example: https://stackoverflow.com/questions/69608798/how-to-change-the-current-dart-sdk-version
-- Stack Overflow upgrading Flutter apps example: https://stackoverflow.com/questions/64797607/how-do-i-upgrade-an-existing-flutter-app
-- FlutterDev Discord listing: https://discord.com/servers/420324994703163402
-- r/FlutterDev community listing: https://gummysearch.com/r/FlutterDev/
 
 ## Rules For Future Analytics Changes
 

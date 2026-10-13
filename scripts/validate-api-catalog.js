@@ -49,6 +49,10 @@ assert.throws(() => assertSchema({ channel: 'stable' }, spec.components.schemas.
 assert.throws(() => assertSchema({ version: 'main', channel: 'main', dart_version: 42 }, spec.components.schemas.Release));
 for (const field of docs.fields) assert.ok(field.name in spec.components.schemas.Release.properties, field.name);
 const html = read('api-docs/index.html');
+for (const file of fs.readdirSync(dist, { recursive: true }).filter(file => file.endsWith('.html') && file !== 'index.html')) {
+  const footer = read(file).match(/<footer\b[^>]*>[\s\S]*?<\/footer>/)?.[0];
+  assert.ok(footer?.includes(`href="${base}/api-docs/">API Docs</a>`), `${file}: static footer should link to API Docs`);
+}
 assert.ok(html.includes(`<h1>${docs.title}</h1>`));
 assert.ok(html.includes(`rel="canonical" href="${base}/api-docs/"`));
 assert.ok(!html.includes('"@type": "FAQPage"'), 'API docs are not a FAQ');

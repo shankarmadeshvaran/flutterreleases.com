@@ -4,6 +4,9 @@ Thank you for improving FlutterReleases. The project is both an interactive webs
 
 Read [docs/architecture.md](docs/architecture.md) before making architectural or generation changes. Read [docs/crawler.md](docs/crawler.md) before changing release discovery, release notes, downloads, provenance, or `releases.json` handling.
 
+AI coding tools should follow the repository [AGENTS.md](AGENTS.md). Before UI
+changes, read [docs/design.md](docs/design.md) and inspect the existing components.
+
 ## Setup
 
 Requirements:
@@ -110,5 +113,5 @@ Before opening the PR, confirm that unrelated generated churn, temporary files, 
 
 - [Architecture](docs/architecture.md)
 - [Crawler rules](docs/crawler.md)
-- [Design system guidance](design.md)
-- [Analytics and community research](docs/analytics-and-community-research.md)
+- [Design system guidance](docs/design.md)
+- [Analytics](docs/analytics.md)
