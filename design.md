@@ -88,6 +88,7 @@ The product promise is accuracy: official Flutter SDK archive data, verified dow
 - Loading states should reserve the same rough footprint as loaded content, especially on mobile, to avoid layout shift.
 - If a direct download link fails, keep the existing quiet fallback copy pointing users to Flutter's official archive.
 - Tool pages such as the Flutter & Dart Version Compatibility Checker must use the global theme state, shared header/footer, CSS variables, existing badges, and stable-first data ordering.
+- First-time visitors use the system color scheme. React pages follow system changes until the visitor toggles the theme; only a manual toggle saves `theme` in localStorage. A saved light/dark choice takes priority on later visits. The existing sun/moon toggle shows the active theme, with no third system-mode icon.
 
 ## Motion
 - Page load: fade-in stagger on table rows (CSS, 0.1s delay per row, max 500ms)

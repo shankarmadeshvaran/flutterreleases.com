@@ -1755,9 +1755,9 @@ ${rows}
     nav .links { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; }
     .theme-toggle { width: 2.25rem; height: 2.25rem; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--secondary); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
     .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
-    .theme-toggle .sun { display: none; }
-    .dark .theme-toggle .sun { display: inline; }
-    .dark .theme-toggle .moon { display: none; }
+    .theme-toggle .moon { display: none; }
+    .dark .theme-toggle .moon { display: inline; }
+    .dark .theme-toggle .sun { display: none; }
     .hero { border-bottom: 1px solid var(--border); }
     .hero-inner { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; }
     h1 { font-size: 1.875rem; line-height: 1.2; margin: 0 0 0.5rem; }
@@ -1976,6 +1976,9 @@ function buildPageHtml(release, items = [], appStylesheetTags = '') {
     .release-nav-links a:hover { background: var(--bg-subtle); color: var(--text-primary); text-decoration: none; }
     .release-theme-toggle { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--text-secondary); cursor: pointer; font: inherit; }
     .release-theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .release-theme-toggle .moon { display: none; }
+    .dark .release-theme-toggle .moon { display: inline; }
+    .dark .release-theme-toggle .sun { display: none; }
     .release-main { padding-top: 3rem; padding-bottom: 4rem; }
     .release-breadcrumbs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; color: var(--text-muted); font-size: 0.8125rem; }
     .release-breadcrumbs a { color: var(--text-secondary); }
@@ -2035,7 +2038,10 @@ function buildPageHtml(release, items = [], appStylesheetTags = '') {
         <a href="${SITE_URL}/flutter-versions/">Flutter Versions</a>
         <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
         <a href="${SITE_URL}/blog/">Blog</a>
-        <button class="release-theme-toggle" type="button" aria-label="Switch color theme" title="Switch color theme"><span aria-hidden="true">◐</span></button>
+        <button class="release-theme-toggle" type="button" aria-label="Switch color theme" title="Switch color theme">
+          <svg class="moon" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 7.5A9 9 0 1 1 12 3Z"></path></svg>
+          <svg class="sun" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
+        </button>
       </nav>
     </div>
   </header>

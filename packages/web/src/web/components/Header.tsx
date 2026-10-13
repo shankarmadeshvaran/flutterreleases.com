@@ -135,7 +135,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
             aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
             title={dark ? "Switch to light mode" : "Switch to dark mode"}
           >
-            {dark ? <Sun size={15} /> : <Moon size={15} />}
+            {dark ? <Moon size={15} /> : <Sun size={15} />}
           </button>
         </div>
       </div>

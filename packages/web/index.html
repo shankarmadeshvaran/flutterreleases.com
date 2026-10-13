@@ -32,6 +32,14 @@
 		<!-- Canonical -->
 		<link rel="canonical" href="https://flutterreleases.com/" />
 		<script>document.documentElement.classList.add('js');</script>
+		<script>
+			(function () {
+				var saved = null;
+				try { saved = localStorage.getItem('theme'); } catch {}
+				var dark = saved === 'dark' || (saved !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+				document.documentElement.classList.toggle('dark', dark);
+			})();
+		</script>
 		<!-- JSON-LD structured data -->
 		<script type="application/ld+json">
 		{

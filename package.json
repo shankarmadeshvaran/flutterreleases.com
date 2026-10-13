@@ -7,6 +7,7 @@
     "packages/*"
   ],
   "scripts": {
+    "test:theme": "node scripts/validate-theme.js",
     "test:analytics": "node scripts/validate-analytics.js",
     "dev": "cd packages/web && bunx vite",
     "build": "turbo build",
