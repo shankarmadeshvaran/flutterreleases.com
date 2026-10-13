@@ -64,6 +64,14 @@ Do not manually edit generated files such as `feed.xml`, `sitemap.xml`, `links.h
 
 ## Automated Release Flow
 
+Workflows use version-pinned `actions/checkout@v7.0.1` and
+`actions/setup-node@v7.1.0`, which support the Node 24 action runtime. Crawler
+and lightweight generator jobs explicitly select Node 24 with package-manager
+caching disabled because they run scripts without installing npm dependencies.
+GitHub-hosted `ubuntu-latest` supplies the required runner; no local or
+Cloudflare configuration is needed. Keep credential persistence and existing
+write permissions intact for crawler/generator commits.
+
 The daily schedule runs at 06:17 UTC (11:47 IST):
 
 1. `crawl-releases.yml` runs the crawler for all channels.
