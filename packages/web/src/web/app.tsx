@@ -7,6 +7,7 @@ import BlogPage from "./pages/blog";
 import FaqPage from "./pages/faq";
 import ChangelogPage from "./pages/changelog";
 import ApiDocsPage from "./pages/api-docs";
+import LegalPage from "./pages/legal";
 
 function ReleaseRedirect() {
   useEffect(() => {
@@ -28,6 +29,10 @@ function ReleaseRedirect() {
 function App() {
   return (
     <Switch>
+      <Route path="/privacy-policy/">{() => <LegalPage slug="privacy-policy" />}</Route>
+      <Route path="/privacy-policy">{() => <LegalPage slug="privacy-policy" />}</Route>
+      <Route path="/terms-and-conditions/">{() => <LegalPage slug="terms-and-conditions" />}</Route>
+      <Route path="/terms-and-conditions">{() => <LegalPage slug="terms-and-conditions" />}</Route>
       <Route path="/api-docs/" component={ApiDocsPage} />
       <Route path="/api-docs" component={ApiDocsPage} />
       <Route path="/release/:version/" component={ReleaseRedirect} />

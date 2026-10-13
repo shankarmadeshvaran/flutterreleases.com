@@ -48,3 +48,18 @@ includes(changelogHtml, '<link rel="canonical" href="https://flutterreleases.com
 assert.ok(!sitemapXml.includes('<loc>https://flutterreleases.com/changelog/</loc>'), 'changelog should not be promoted in sitemap');
 
 console.log('Site page validation passed.');
+
+const legal = JSON.parse(read(path.join(ROOT, 'packages/web/src/web/data/legal.json')));
+for (const page of legal.pages) {
+  const html = read(path.join(DIST_DIR, page.slug, 'index.html'));
+  includes(html, `<h1>${page.title}</h1>`, page.title);
+  includes(html, `rel="canonical" href="https://flutterreleases.com/${page.slug}/"`, page.title);
+  includes(html, `mailto:${legal.contact}`, page.title);
+  includes(html, `<time datetime="${legal.updated}">`, page.title);
+  for (const section of page.sections) includes(html, section.title, page.title);
+  assert.ok(!html.includes('"@type": "FAQPage"'), 'Legal pages must not claim FAQ schema');
+  includes(sitemapXml, `<loc>https://flutterreleases.com/${page.slug}/</loc>`, 'sitemap');
+  includes(faqHtml, `/${page.slug}/`, 'static footer');
+  includes(read(path.join(ROOT, 'packages/web/public/_redirects')), `/${page.slug} /${page.slug}/ 301`, 'legal redirect');
+}
+console.log('Legal page validation passed.');

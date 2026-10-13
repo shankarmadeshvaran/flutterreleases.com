@@ -17,6 +17,8 @@ const footerGroups = [
       { label: "API Docs", href: "/api-docs/" },
       { label: "RSS Feed", href: "/feed.xml", external: true },
       { label: "FAQ", href: "/faq/" },
+      { label: "Privacy Policy", href: "/privacy-policy/" },
+      { label: "Terms and Conditions", href: "/terms-and-conditions/" },
       { label: "Sitemap", href: "/sitemap.xml", external: true },
       { label: "Official Flutter Archive", href: "https://docs.flutter.dev/release/archive", external: true },
     ],

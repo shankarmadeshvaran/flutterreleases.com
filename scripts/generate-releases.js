@@ -210,6 +210,8 @@ function buildSitemapXml(siteUrl, lastMod, items = []){
     ['/blog/', 'weekly', '0.7'],
     ['/faq/', 'monthly', '0.5'],
     ['/api-docs/', 'monthly', '0.4'],
+    ['/privacy-policy/', 'yearly', '0.2'],
+    ['/terms-and-conditions/', 'yearly', '0.2'],
   ]) {
     lines.push('  <url>');
     lines.push(`    <loc>${xmlEscape(baseUrl + path_)}</loc>`);

@@ -142,6 +142,20 @@ robots response had no injected Cloudflare policy when this was implemented.
 
 ## Validation Boundaries
 
+### Legal Pages
+
+Privacy Policy and Terms and Conditions use `data/legal.json` as shared content
+for React and generated HTML at `/privacy-policy/` and
+`/terms-and-conditions/`. Shared and static footers link both pages; both sitemap
+generators include their canonical HTML URLs. They are HTML-only static routes,
+outside Markdown negotiation. Revision dates are content dates, not build dates.
+
+Review these drafts before publishing. Confirm operator jurisdiction, actual
+provider retention settings, and applicable analytics consent requirements.
+Adding a privacy notice does not implement consent or establish legal compliance.
+Update this content whenever data practices change. No crawler schedule or
+workflow changes are needed.
+
 The core checks protect different layers:
 
 - `bun run lint` checks JavaScript and TypeScript quality.

@@ -34,6 +34,20 @@ const DIST_DIR = path.join(process.cwd(), 'packages', 'web', 'dist');
 const PUBLIC_DIR = path.join(process.cwd(), 'packages', 'web', 'public');
 const BLOG_POSTS_PATH = path.join(process.cwd(), 'packages', 'web', 'src', 'web', 'data', 'blog-posts.json');
 const FAQ_PATH = path.join(process.cwd(), 'packages', 'web', 'src', 'web', 'data', 'faq.json');
+const LEGAL = JSON.parse(fs.readFileSync(path.join(path.dirname(FAQ_PATH), 'legal.json'), 'utf8'));
+
+function buildLegalFooterLinks() {
+  return `<div style="max-width:1200px;margin:0 auto;padding:0 1.5rem 1.25rem;font-size:0.8125rem"><p>${LEGAL.pages.map(page => `<a href="${siteBaseUrl()}/${page.slug}/">${htmlEscape(page.title)}</a>`).join(' &mdash; ')}</p></div>`;
+}
+
+function generateLegalPages(appAssetTags) {
+  for (const page of LEGAL.pages) {
+    const bodyHtml = `<div class="api-docs" style="overflow-wrap:anywhere"><p>Last revised: <time datetime="${LEGAL.updated}">${LEGAL.updated}</time></p><p><a href="mailto:${LEGAL.contact}">${LEGAL.contact}</a></p>${page.sections.map(section => `<section id="${section.id}"><h2>${htmlEscape(section.title)}</h2>${section.paragraphs.map(text => `<p>${htmlEscape(text)}</p>`).join('')}${(section.links || []).map(link => `<p><a href="${htmlEscape(link.href)}" target="_blank" rel="noopener noreferrer">${htmlEscape(link.label)}</a></p>`).join('')}</section>`).join('')}</div>`;
+    safeWrite(path.join(DIST_DIR, page.slug, 'index.html'), buildFaqPageHtml([], appAssetTags, {
+      path: `/${page.slug}/`, title: page.title, description: page.description, eyebrow: 'Legal', bodyHtml,
+    }));
+  }
+}
 const CHANGELOG_PATH = path.join(process.cwd(), 'packages', 'web', 'src', 'web', 'data', 'changelog.json');
 const BLOG_CONTENT_DIR = path.join(process.cwd(), 'packages', 'web', 'src', 'web', 'content', 'blog');
 
@@ -858,7 +872,8 @@ function buildBlogPageHtml(posts, appAssetTags = '') {
       <div>
         <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a> &mdash; <a href="${siteBaseUrl()}/api-docs/">API Docs</a></p>
       </div>
-    </footer>
+    ${buildLegalFooterLinks()}
+</footer>
   </div>
 </body>
 </html>`;
@@ -1019,7 +1034,7 @@ function buildFaqPageHtml(items, appAssetTags = '', options = {}) {
     </header>
     <section class="hero">
       <div class="hero-inner">
-        <p class="eyebrow">${options.bodyHtml ? 'Developer resources' : 'Help'}</p>
+        <p class="eyebrow">${htmlEscape(options.eyebrow || (options.bodyHtml ? 'Developer resources' : 'Help'))}</p>
         <h1>${htmlEscape(options.title || 'FlutterReleases FAQ')}</h1>
         <p class="intro">${htmlEscape(desc)}</p>
       </div>
@@ -1033,7 +1048,8 @@ function buildFaqPageHtml(items, appAssetTags = '', options = {}) {
       <div>
         <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a> &mdash; <a href="${siteBaseUrl()}/api-docs/">API Docs</a></p>
       </div>
-    </footer>
+    ${buildLegalFooterLinks()}
+</footer>
   </div>
 </body>
 </html>`;
@@ -1187,7 +1203,8 @@ function buildChangelogPageHtml(items, appAssetTags = '') {
       <div>
         <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a> &mdash; <a href="${siteBaseUrl()}/api-docs/">API Docs</a></p>
       </div>
-    </footer>
+    ${buildLegalFooterLinks()}
+</footer>
   </div>
 </body>
 </html>`;
@@ -1394,7 +1411,8 @@ ${rendered.html}
     <div>
       <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/blog/">Blog</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${siteBaseUrl()}/api-docs/">API Docs</a></p>
     </div>
-  </footer>
+  ${buildLegalFooterLinks()}
+</footer>
   <script>
     for (const button of document.querySelectorAll('[data-copy-code]')) {
       button.addEventListener('click', async () => {
@@ -1684,7 +1702,8 @@ ${buildCompatibilityRowsHtml(prerelease)}
     <div>
       <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/tools/flutter-version-checker/">Flutter Dart compatibility checker</a> &mdash; <a href="${siteBaseUrl()}/api-docs/">API Docs</a></p>
     </div>
-  </footer>
+  ${buildLegalFooterLinks()}
+</footer>
   </div>
 </body>
 </html>`;
@@ -1914,7 +1933,8 @@ ${compatibilityRows}
     <div>
         <p><a href="${SITE_URL}/">FlutterReleases.com</a> &mdash; <a href="${SITE_URL}/flutter-versions/">Flutter versions</a> &mdash; <a href="${SITE_URL}/sitemap.xml">Sitemap</a> &mdash; <a href="${siteBaseUrl()}/api-docs/">API Docs</a></p>
     </div>
-  </footer>
+  ${buildLegalFooterLinks()}
+</footer>
   <script>
     (function () {
       var button = document.querySelector('.theme-toggle');
@@ -2148,7 +2168,8 @@ function buildPageHtml(release, items = [], appStylesheetTags = '') {
       <p><a href="${siteBaseUrl()}/api-docs/">API Docs</a></p>
       <p>Made by <a href="https://x.com/devinmaking" target="_blank" rel="noopener noreferrer">Shankar Madeshvaran</a>.</p>
     </div>
-  </footer>
+  ${buildLegalFooterLinks()}
+</footer>
   <script>
     (function () {
       var button = document.querySelector('.release-theme-toggle');
@@ -2390,6 +2411,8 @@ function buildSitemapXml(items, generatedAt, blogPosts = []) {
     ['/blog/', 'weekly', '0.7'],
     ['/faq/', 'monthly', '0.5'],
     ['/api-docs/', 'monthly', '0.4'],
+    ['/privacy-policy/', 'yearly', '0.2'],
+    ['/terms-and-conditions/', 'yearly', '0.2'],
   ]) {
     lines.push('  <url>');
     lines.push(`    <loc>${baseUrl}${path_}</loc>`);
@@ -2530,7 +2553,8 @@ function buildLinksHtml(items, generatedAt) {
 ${renderGroup('Stable', stable)}${renderGroup('Beta', beta)}${renderGroup('Dev', dev)}${renderGroup('Main', main_)}
   <footer>
     <p><a href="${baseUrl}/">FlutterReleases.com</a> &mdash; Updated daily &mdash; <a href="${baseUrl}/sitemap.xml">Sitemap</a> &mdash; <a href="${baseUrl}/feed.xml">RSS</a> &mdash; <a href="${baseUrl}/api-docs/">API Docs</a></p>
-  </footer>
+  ${buildLegalFooterLinks()}
+</footer>
 </body>
 </html>`;
 }
@@ -2659,7 +2683,7 @@ async function run() {
   if (DRY_RUN) {
     console.log('Dry-run: skipping file writes.');
     console.log(`Would generate ${toProcess.length} HTML pages`);
-    console.log(`Would update sitemap.xml with ${canonicalItems.length + 6 + blogPosts.length} URLs`);
+    console.log(`Would update sitemap.xml with ${canonicalItems.length + 8 + blogPosts.length} URLs`);
     return;
   }
 
@@ -2701,7 +2725,7 @@ async function run() {
   if (fs.existsSync(DIST_DIR)) safeWrite(sitemapDist, sitemapXml);
   safeWrite(sitemapPublic, sitemapXml);
 
-  const urlCount = canonicalItems.length + 6 + blogPosts.length;
+  const urlCount = canonicalItems.length + 8 + blogPosts.length;
   console.log(`Updated sitemap.xml with ${urlCount} URLs`);
 
   // Generate Flutter versions SEO page in dist only. It is a route page, so
@@ -2741,6 +2765,7 @@ async function run() {
   }
   console.log('Generated faq/index.html');
   if (fs.existsSync(DIST_DIR)) generateApiResources(buildAppAssetTags());
+  if (fs.existsSync(DIST_DIR)) generateLegalPages(buildAppAssetTags());
 
   const changelogHtml = buildChangelogPageHtml(changelogItems, buildAppAssetTags());
   if (fs.existsSync(DIST_DIR)) {
