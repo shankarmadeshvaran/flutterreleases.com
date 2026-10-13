@@ -133,7 +133,8 @@ for (const release of stable) {
 }
 assertIncludes(feedXml, `<link>${SITE_URL}/release/${encodeURIComponent(latestStable.version)}/</link>`, 'RSS latest stable canonical link');
 
-assertIncludes(redirects, '/release/:version /release/:version/ 301', 'release trailing-slash redirect');
+assertIncludes(redirects, `/release/${encodeURIComponent(latestStable.version)} /release/${encodeURIComponent(latestStable.version)}/ 301`, 'release trailing-slash redirect');
+assert.ok(!redirects.includes('/release/:version'), 'release redirects must not capture Markdown filenames');
 assertIncludes(redirects, '/release/undefined/ /flutter-versions/ 301', 'invalid placeholder release redirect');
 assertIncludes(redirects, '/release/v1.9.1%20hotfix.4/ /release/v1.9.1%2Bhotfix.4/ 301', 'legacy hotfix URL redirect');
 

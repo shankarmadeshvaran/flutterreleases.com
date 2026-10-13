@@ -7,6 +7,7 @@
     "packages/*"
   ],
   "scripts": {
+    "test:markdown-negotiation": "node scripts/validate-markdown-negotiation.js",
     "test:theme": "node scripts/validate-theme.js",
     "test:analytics": "node scripts/validate-analytics.js",
     "dev": "cd packages/web && bunx vite",

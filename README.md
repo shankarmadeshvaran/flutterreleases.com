@@ -51,6 +51,8 @@ scripts/
                                    and consistency checks
                                    from releases.json
   submit-indexnow.js            ← Post-deploy: submits high-value URLs to IndexNow
+  markdown-negotiation.js       ← Pages handler selecting existing Markdown using Accept
+  validate-markdown-negotiation.js ← Format, header, redirect, and resource-isolation checks
   validate-site-pages.js        ← Checks static homepage, FAQ, blog, metadata, and links
   validate-release-consistency.js ← Confirms HTML/Markdown/LLM output matches releases.json
   validate-flutter-versions-page.js ← Verifies generated SEO page, latest channels,
@@ -210,6 +212,9 @@ This produces:
 - `dist/faq.md` — Markdown equivalent of the FAQ
 - `dist/index.md` — Markdown equivalent of the homepage release overview
 - `dist/blog/<slug>.md` — Markdown equivalent for generated blog posts
+- `dist/blog.md` — Markdown equivalent of the blog index
+- `dist/_worker.js` + `dist/_routes.json` — scoped Markdown content negotiation
+- `dist/_redirects` — legacy aliases plus exact per-release slash redirects
 - `dist/changelog/index.html` — direct site changelog route
 - `dist/sitemap.xml` + `public/sitemap.xml` — canonical indexable HTML URLs only
 - `dist/llms.txt` + `public/llms.txt` — lightweight LLM orientation file
@@ -260,6 +265,14 @@ After production deploys, `deploy.yml` and the deploy stage of `crawl-releases.y
 
 ## Deploy
 
+HTML page URLs support `Accept: text/markdown`, serving the existing generated
+Markdown while normal browsers retain HTML. The post-build generator packages
+a scoped Pages Function and exact release redirects so `.md` filenames are not
+captured by slash redirects. No new dependency or secret is required. Function
+requests use the Workers allowance, and negotiated responses use safe no-store
+caching. See [docs/markdown-negotiation.md](docs/markdown-negotiation.md) for the
+route list, hosting implications, and local testing through `wrangler pages dev`.
+
 Push to `main` → `deploy.yml` builds, runs the generator, and deploys automatically with `npx --yes wrangler@4 pages deploy`.
 
 Because every push to `main` can trigger deployment and release-data workflows, run the deploy-safe checks before committing or pushing:
@@ -281,6 +294,7 @@ bun run test:site-pages
 bun run test:release-consistency
 bun run test:flutter-versions
 bun run test:flutter-version-checker
+bun run test:markdown-negotiation
 ```
 
 Before committing, inspect `git status --short` again and avoid committing generated churn or temporary build folders unless the generated files are the intended change.

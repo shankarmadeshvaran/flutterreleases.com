@@ -27,7 +27,16 @@ Canonical release URLs use a trailing slash:
 /release/<version>/
 ```
 
-Cloudflare Pages applies `packages/web/public/_redirects` so the non-trailing form redirects to the canonical URL. Markdown alternates use `/release/<version>.md`; they are machine-readable alternatives, not canonical HTML replacements.
+The public `_redirects` file retains legacy aliases; the generator adds exact
+release slash redirects in `dist/_redirects`. The generated Pages handler applies
+these behaviors on Function routes. The old wildcard must not capture `.md` files.
+Markdown alternates use `/release/<version>.md`; HTML remains canonical.
+
+HTML URLs also support `Accept: text/markdown` through a scoped Pages Function.
+The generator packages `_worker.js` with a route map and `_routes.json` in `dist/`.
+The handler reads pre-generated files through `env.ASSETS`, without scraping HTML
+or generating release facts. See [markdown-negotiation.md](markdown-negotiation.md)
+for Accept handling, caching, Function quotas, and deployment validation.
 
 ## Data Ownership
 
@@ -39,6 +48,7 @@ Cloudflare Pages applies `packages/web/public/_redirects` so the non-trailing fo
 | Frontend release normalization | `packages/web/src/web/hooks/useReleases.ts` |
 | Flutter/Dart lookup behavior | `packages/web/src/web/lib/compatibility.ts` |
 | Static routes and machine formats | `scripts/generate-release-pages.js` |
+| Markdown negotiation | `scripts/markdown-negotiation.js`, generated `dist/_worker.js` |
 | Lightweight committed feed/sitemap refresh | `scripts/generate-releases.js` |
 | FAQ content | `packages/web/src/web/data/faq.json` |
 | Blog index metadata | `packages/web/src/web/data/blog-posts.json` |
@@ -110,5 +120,7 @@ The core checks protect different layers:
 - `test:release-consistency` checks that generated representations agree with canonical data.
 - `test:flutter-versions` checks the versions hub and release discovery.
 - `test:flutter-version-checker` checks compatibility data and static checker output.
+- `test:markdown-negotiation` checks format selection, redirects, headers, HEAD,
+  validators, direct Markdown, and unchanged machine resources.
 
 See [CONTRIBUTING.md](../CONTRIBUTING.md) for the complete pre-PR workflow.

@@ -28,6 +28,7 @@ The local Vite server runs at `http://localhost:5173`. Copy `.env.template` to `
 | Theme behavior | `useDarkMode.ts` and existing CSS variables; do not add page-specific theme state |
 | Release crawler/data rules | `scripts/crawl-releases.js` and `docs/crawler.md` |
 | Static release/SEO/Markdown output | `scripts/generate-release-pages.js` |
+| Markdown negotiation | `scripts/markdown-negotiation.js`, `docs/markdown-negotiation.md` |
 | Shared release selectors | `scripts/release-data-utils.js` |
 | Compatibility behavior | `packages/web/src/web/lib/compatibility.ts` |
 | FAQ | `packages/web/src/web/data/faq.json` |
@@ -72,12 +73,18 @@ bun run test:site-pages
 bun run test:release-consistency
 bun run test:flutter-versions
 bun run test:flutter-version-checker
+bun run test:markdown-negotiation
 git diff --check
 ```
 
 For crawler changes, also follow the validation checklist in [docs/crawler.md](docs/crawler.md), including a representative all-channel crawler run when data-selection rules changed.
 
 Visually verify affected pages in both light and dark themes and at desktop and mobile widths. Essential SEO content must exist in generated HTML without JavaScript.
+
+For negotiation changes, also use local `wrangler pages dev` as documented in
+[Markdown negotiation](docs/markdown-negotiation.md). Vite preview does not execute
+the Pages handler. Never hand-edit generated `_worker.js`, `_routes.json`, or
+exact release redirects in `dist/`.
 
 ## Automation Safety
 

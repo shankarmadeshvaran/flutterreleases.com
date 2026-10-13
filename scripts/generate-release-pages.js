@@ -63,6 +63,23 @@ function readBlogPosts() {
   return JSON.parse(raw);
 }
 
+function generateMarkdownNegotiation(routes) {
+  const aliases = fs.readFileSync(path.join(PUBLIC_DIR, '_redirects'), 'utf8').trim();
+  const redirects = Object.fromEntries(aliases.split('\n').filter(Boolean).map(line => line.trim().split(/\s+/).slice(0, 2)));
+  const releaseRedirects = Object.keys(routes).filter(route => route.startsWith('/release/'))
+    .map(route => `${route.slice(0, -1)} ${route} 301`);
+  safeWrite(path.join(DIST_DIR, '_redirects'), `${aliases}\n${releaseRedirects.join('\n')}\n`);
+  const source = fs.readFileSync(path.join(__dirname, 'markdown-negotiation.js'), 'utf8');
+  safeWrite(path.join(DIST_DIR, '_worker.js'), `${source}\nexport default createMarkdownWorker(${JSON.stringify(routes)}, ${JSON.stringify(redirects)});\n`);
+  safeWrite(path.join(DIST_DIR, '_routes.json'), JSON.stringify({
+    version: 1,
+    include: ['/', '/index.html', '/release/*', '/flutter-versions', '/flutter-versions/',
+      '/tools/flutter-version-checker', '/tools/flutter-version-checker/', '/faq', '/faq/', '/blog', '/blog/*'],
+    exclude: readBlogPosts().map(post => post.image).filter(image => image?.startsWith('/blog/')),
+  }, null, 2));
+  console.log(`Generated Markdown negotiation worker for ${Object.keys(routes).length} pages`);
+}
+
 function readFaqItems() {
   const raw = fs.readFileSync(FAQ_PATH, 'utf8');
   return JSON.parse(raw);
@@ -2615,6 +2632,7 @@ async function run() {
 
   // Generate per-release HTML pages into dist/release/<version>/index.html
   const appStylesheetTags = buildAppStylesheetTags();
+  const markdownRoutes = {};
   let generated = 0;
   let errors = 0;
   for (const _release of toProcess) {
@@ -2629,6 +2647,7 @@ async function run() {
       safeWrite(outPath, html);
       const markdown = buildReleaseMarkdown(release, canonicalItems);
       safeWrite(path.join(DIST_DIR, 'release', `${slug}.md`), markdown);
+      markdownRoutes[`/release/${encodeURIComponent(slug)}/`] = `/release/${encodeURIComponent(slug)}.md`;
       generated++;
     } catch (e) {
       console.error(`  Error generating page for ${release.version}:`, e.message);
@@ -2658,6 +2677,7 @@ async function run() {
   if (fs.existsSync(DIST_DIR)) {
     safeWrite(path.join(DIST_DIR, 'flutter-versions', 'index.html'), flutterVersionsHtml);
     safeWrite(path.join(DIST_DIR, 'flutter-versions.md'), buildFlutterVersionsMarkdown(canonicalItems));
+    markdownRoutes['/flutter-versions/'] = '/flutter-versions.md';
   }
   console.log('Generated flutter-versions/index.html');
 
@@ -2665,12 +2685,18 @@ async function run() {
   if (fs.existsSync(DIST_DIR)) {
     safeWrite(path.join(DIST_DIR, 'tools', 'flutter-version-checker', 'index.html'), versionCheckerHtml);
     safeWrite(path.join(DIST_DIR, 'flutter-dart-compatibility.md'), buildCompatibilityMarkdown(canonicalItems));
+    markdownRoutes['/tools/flutter-version-checker/'] = '/flutter-dart-compatibility.md';
   }
   console.log('Generated tools/flutter-version-checker/index.html');
 
   const blogHtml = buildBlogPageHtml(blogPosts, buildAppAssetTags());
   if (fs.existsSync(DIST_DIR)) {
-    safeWrite(path.join(DIST_DIR, 'blog', 'index.html'), blogHtml);
+    safeWrite(path.join(DIST_DIR, 'blog', 'index.html'), blogHtml.replace('</head>', `<link rel="alternate" type="text/markdown" href="${siteBaseUrl()}/blog.md" />\n</head>`));
+    const blogMarkdown = ['# Flutter Releases Blog', '', ...blogPosts.flatMap(post => [
+      `## [${markdownEscape(post.title)}](${siteBaseUrl()}${post.href})`, '', markdownEscape(post.description), '',
+    ])].join('\n');
+    safeWrite(path.join(DIST_DIR, 'blog.md'), blogMarkdown);
+    markdownRoutes['/blog/'] = '/blog.md';
   }
   console.log('Generated blog/index.html');
 
@@ -2678,6 +2704,7 @@ async function run() {
   if (fs.existsSync(DIST_DIR)) {
     safeWrite(path.join(DIST_DIR, 'faq', 'index.html'), faqHtml);
     safeWrite(path.join(DIST_DIR, 'faq.md'), buildFaqMarkdown(faqItems));
+    markdownRoutes['/faq/'] = '/faq.md';
   }
   console.log('Generated faq/index.html');
 
@@ -2695,6 +2722,7 @@ async function run() {
     if (fs.existsSync(DIST_DIR)) {
       safeWrite(path.join(DIST_DIR, slug, 'index.html'), articleHtml);
       safeWrite(path.join(DIST_DIR, `${slug}.md`), buildBlogArticleMarkdownOutput(article));
+      markdownRoutes[`/${slug}/`] = `/${slug}.md`;
       generatedBlogArticles++;
     }
   }
@@ -2702,6 +2730,8 @@ async function run() {
 
   if (fs.existsSync(DIST_DIR)) {
     safeWrite(path.join(DIST_DIR, 'index.md'), buildHomeMarkdown(canonicalItems));
+    markdownRoutes['/'] = '/index.md';
+    generateMarkdownNegotiation(markdownRoutes);
   }
   console.log('Generated Markdown hub files');
 

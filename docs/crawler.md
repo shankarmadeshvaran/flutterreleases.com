@@ -148,6 +148,7 @@ bun run test:site-pages
 bun run test:release-consistency
 bun run test:flutter-versions
 bun run test:flutter-version-checker
+bun run test:markdown-negotiation
 ```
 
 Spot-check representative releases:
@@ -159,6 +160,9 @@ Spot-check representative releases:
 - Generated `/release/<version>/index.html` contains the expected release-note and download links.
 - Generated `/release/<version>.md` contains the same Flutter, Dart, channel, release date, sources, and related-release values as the HTML page.
 - Generated release pages show a Sources section when source data exists.
+- New releases receive Markdown negotiation routes and exact slash redirects
+  automatically during generation. Verify direct `.md` and negotiated delivery;
+  do not reintroduce a wildcard that captures Markdown filenames.
 
 ## Do Not
 
