@@ -338,9 +338,40 @@ function renderBlogArticleMarkdown(body) {
 }
 
 function safeWrite(filePath, content) {
+  if (filePath.endsWith('.html') && !content.includes('flutterreleases-analytics:start')) {
+    const indexPath = path.join(DIST_DIR, 'index.html');
+    const indexHtml = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, 'utf8') : '';
+    const analytics = indexHtml.match(/<!-- flutterreleases-analytics:start -->[\s\S]*?<!-- flutterreleases-analytics:end -->/)?.[0];
+    if (analytics) content = content.replace('</head>', `${analytics}\n${buildStaticAnalyticsScript()}\n</head>`);
+  }
   const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(filePath, content, 'utf8');
+}
+
+function buildStaticAnalyticsScript() {
+  return String.raw`<script>
+    document.addEventListener('click', function(event) {
+      var link = event.target.closest && event.target.closest('a[href]');
+      if (!link || link.closest('#root') || !window.gtag) return;
+      var url = new URL(link.href, location.href);
+      if (url.protocol !== 'https:' && url.protocol !== 'http:') return;
+      var params = {location: 'static_page', destination_path: url.pathname};
+      var name;
+      var release = url.pathname.match(/^\/release\/([^/]+)\/$/);
+      if (url.hostname === location.hostname && release) {
+        name = 'release_page_click';
+        params.version = decodeURIComponent(release[1]);
+      } else if (url.hostname === 'storage.googleapis.com' && url.pathname.includes('/flutter_infra_release/')) {
+        name = 'download_click';
+      } else if (url.hostname === 'docs.flutter.dev' && url.pathname.includes('release-notes') || url.hostname === 'github.com' && url.pathname.includes('/flutter/flutter/blob/') && url.pathname.endsWith('/CHANGELOG.md')) {
+        name = 'release_notes_click';
+      } else if (url.hostname === location.hostname && url.pathname !== location.pathname) {
+        name = 'navigation_click';
+      }
+      if (name) window.gtag('event', name, params);
+    });
+  </script>`;
 }
 
 function buildAppAssetTags() {

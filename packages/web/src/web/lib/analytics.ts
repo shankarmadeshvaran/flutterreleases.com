@@ -40,6 +40,8 @@ export function trackView(path: string, props?: AnalyticsProps) {
   try {
     window.gtag?.("event", "page_view", {
       page_path: path,
+      page_location: new URL(path, window.location.origin).href,
+      page_title: document.title,
       ...cleanProps(props),
     });
   } catch {

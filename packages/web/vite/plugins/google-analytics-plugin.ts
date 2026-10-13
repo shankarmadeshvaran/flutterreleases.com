@@ -8,6 +8,7 @@ export default function googleAnalyticsPlugin(measurementId: string | undefined)
 			if (!measurementId) return html;
 
 			const scriptTag = `
+		<!-- flutterreleases-analytics:start -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=${measurementId}"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
@@ -15,7 +16,8 @@ export default function googleAnalyticsPlugin(measurementId: string | undefined)
 			window.gtag = gtag;
 			gtag('js', new Date());
 			gtag('config', '${measurementId}', { anonymize_ip: true });
-		</script>`;
+		</script>
+		<!-- flutterreleases-analytics:end -->`;
 
 			return html.replace("</head>", `${scriptTag}\n	</head>`);
 		},

@@ -5,7 +5,7 @@ import { ChannelBadge } from "../components/ChannelBadge";
 import { useDarkMode } from "../hooks/useDarkMode";
 import { useMeta } from "../hooks/useMeta";
 import { useReleases } from "../hooks/useReleases";
-import { trackEvent, trackView } from "../lib/analytics";
+import { trackEvent } from "../lib/analytics";
 import {
   checkFlutterDartCompatibility,
   filterFlutterVersions,
@@ -42,6 +42,14 @@ function formatDate(dateStr: string) {
 
 function releaseHref(release: Release) {
   return `/release/${release.version}/`;
+}
+
+function trackResultRelease(release: Release, mode: Mode) {
+  trackEvent("Checker Release Click", {
+    version: release.version,
+    mode,
+    location: "checker_result",
+  });
 }
 
 function FieldLabel({ htmlFor, children }: { htmlFor: string; children: React.ReactNode }) {
@@ -145,7 +153,7 @@ function ReleaseResults({
                   {formatDate(release.releasedAt)}
                 </td>
                 <td className="px-4 py-3">
-                  <a href={releaseHref(release)} className="text-sm" style={{ color: "var(--accent)" }}>
+                  <a href={releaseHref(release)} onClick={() => trackResultRelease(release, "dart-to-flutter")} className="text-sm" style={{ color: "var(--accent)" }}>
                     View release
                   </a>
                 </td>
@@ -254,7 +262,7 @@ function CompatibilityResult({
               Release details
             </dt>
             <dd className="text-sm mt-1">
-              <a href={releaseHref(result.flutterRelease)} style={{ color: "var(--accent)" }}>
+              <a href={releaseHref(result.flutterRelease)} onClick={() => result.flutterRelease && trackResultRelease(result.flutterRelease, "flutter-to-dart")} style={{ color: "var(--accent)" }}>
                 View release
               </a>
             </dd>
@@ -277,7 +285,7 @@ function CompatibilityResult({
               {result.dartReleases.slice(0, 4).map((release, index) => (
                 <span key={release.version}>
                   {index > 0 ? ", " : ""}
-                  <a href={releaseHref(release)} style={{ color: "var(--accent)" }}>
+                  <a href={releaseHref(release)} onClick={() => trackResultRelease(release, "flutter-to-dart")} style={{ color: "var(--accent)" }}>
                     Flutter {release.version}
                   </a>
                 </span>
@@ -302,6 +310,7 @@ export default function FlutterVersionCheckerPage() {
   const trackedDartLookup = useRef<string | null>(null);
   const trackedCompatibility = useRef<string | null>(null);
   const initializedDefault = useRef(false);
+  const [inputRevision, setInputRevision] = useState(0);
 
   useMeta(TITLE, DESCRIPTION, "https://flutterreleases.com/tools/flutter-version-checker/");
 
@@ -347,9 +356,6 @@ export default function FlutterVersionCheckerPage() {
     mode === "flutter-to-dart" ? Boolean(compatibilityResult) : Boolean(trimmedDartQuery);
 
   useEffect(() => {
-    trackView("/tools/flutter-version-checker/", {
-      page_title: "Flutter & Dart Version Compatibility Checker",
-    });
     trackEvent("Version Checker Viewed", {
       default_mode: "flutter-to-dart",
       default_channel: "stable",
@@ -364,48 +370,72 @@ export default function FlutterVersionCheckerPage() {
   }, [latestStable]);
 
   useEffect(() => {
-    if (!selectedFlutterRelease) return;
+    if (!inputRevision || loading || mode !== "flutter-to-dart" || !selectedFlutterRelease) return;
     const key = `${selectedFlutterRelease.version}:${selectedFlutterRelease.dartVersion}`;
     if (trackedFlutterLookup.current === key) return;
-    trackedFlutterLookup.current = key;
-    trackEvent("Version Checker Flutter Lookup", {
-      flutter_version: selectedFlutterRelease.version,
-      dart_version: selectedFlutterRelease.dartVersion,
-      channel: selectedFlutterRelease.channel,
-      release_type: selectedFlutterRelease.releaseType,
-      mode,
-    });
-  }, [mode, selectedFlutterRelease]);
+    const timer = window.setTimeout(() => {
+      trackedFlutterLookup.current = key;
+      trackEvent("Version Checker Flutter Lookup", {
+        flutter_version: selectedFlutterRelease.version,
+        dart_version: selectedFlutterRelease.dartVersion,
+        channel: selectedFlutterRelease.channel,
+        release_type: selectedFlutterRelease.releaseType,
+        mode,
+      });
+    }, 700);
+    return () => window.clearTimeout(timer);
+  }, [inputRevision, loading, mode, selectedFlutterRelease]);
 
   useEffect(() => {
-    if (!dartQuery.trim() || !dartMatches.length) return;
+    if (!inputRevision || loading || mode !== "dart-to-flutter" || !dartQuery.trim() || !dartMatches.length) return;
     const key = `${dartQuery}:${dartMatches.length}`;
     if (trackedDartLookup.current === key) return;
-    trackedDartLookup.current = key;
-    trackEvent("Version Checker Dart Lookup", {
-      dart_version: dartQuery,
-      result_count: dartMatches.length,
-      stable_count: dartMatches.filter((release) => release.channel === "stable").length,
-      beta_count: dartMatches.filter((release) => release.channel === "beta").length,
-      prerelease_count: dartMatches.filter((release) => release.channel !== "stable" && release.channel !== "beta").length,
-      mode,
-    });
-  }, [dartMatches, dartQuery, mode]);
+    const timer = window.setTimeout(() => {
+      trackedDartLookup.current = key;
+      trackEvent("Version Checker Dart Lookup", {
+        dart_version: dartQuery,
+        result_count: dartMatches.length,
+        stable_count: dartMatches.filter((release) => release.channel === "stable").length,
+        beta_count: dartMatches.filter((release) => release.channel === "beta").length,
+        prerelease_count: dartMatches.filter((release) => release.channel !== "stable" && release.channel !== "beta").length,
+        mode,
+      });
+    }, 700);
+    return () => window.clearTimeout(timer);
+  }, [inputRevision, loading, dartMatches, dartQuery, mode]);
 
   useEffect(() => {
-    if (!compatibilityResult?.flutterRelease) return;
+    if (!inputRevision || loading || mode !== "flutter-to-dart" || !compatibilityResult?.flutterRelease) return;
     const key = compatibilityResultKey;
     if (trackedCompatibility.current === key) return;
-    trackedCompatibility.current = key;
-    trackEvent("Version Checker Compatibility Check", {
-      flutter_version: trimmedFlutterQuery,
-      dart_version: trimmedDartQuery,
-      bundled_dart_version: compatibilityResult.bundledDartVersion,
-      compatible: compatibilityResult.compatible,
-      matching_flutter_count: compatibilityResult.dartReleases.length,
-      channel: compatibilityResult.flutterRelease.channel,
-    });
-  }, [compatibilityResult, compatibilityResultKey, trimmedDartQuery, trimmedFlutterQuery]);
+    const timer = window.setTimeout(() => {
+      trackedCompatibility.current = key;
+      trackEvent("Checker Compatibility Check", {
+        flutter_version: trimmedFlutterQuery,
+        dart_version: dartMatches.length ? trimmedDartQuery : undefined,
+        bundled_dart_version: compatibilityResult.bundledDartVersion,
+        compatible: compatibilityResult.compatible,
+        matching_flutter_count: compatibilityResult.dartReleases.length,
+        channel: compatibilityResult.flutterRelease.channel,
+        mode,
+      });
+    }, 700);
+    return () => window.clearTimeout(timer);
+  }, [inputRevision, loading, mode, dartMatches.length, compatibilityResult, compatibilityResultKey, trimmedDartQuery, trimmedFlutterQuery]);
+
+  useEffect(() => {
+    if (!inputRevision || loading) return;
+    const missingFlutter = mode === "flutter-to-dart" && Boolean(trimmedFlutterQuery) && !selectedFlutterRelease;
+    const missingDart = Boolean(trimmedDartQuery) && !dartMatches.length;
+    if (!missingFlutter && !missingDart) return;
+    const timer = window.setTimeout(() => trackEvent("Checker Lookup Unmatched", {
+      mode,
+      missing_flutter: missingFlutter,
+      missing_dart: missingDart,
+      channel,
+    }), 700);
+    return () => window.clearTimeout(timer);
+  }, [inputRevision, loading, mode, channel, trimmedFlutterQuery, trimmedDartQuery, selectedFlutterRelease, dartMatches.length]);
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--bg)" }}>
@@ -514,7 +544,10 @@ export default function FlutterVersionCheckerPage() {
                           <TextInput
                             id="flutter-version-input"
                             value={flutterQuery}
-                            onChange={setFlutterQuery}
+                            onChange={(value) => {
+                              setFlutterQuery(value);
+                              setInputRevision((revision) => revision + 1);
+                            }}
                             placeholder="Select Flutter version"
                             list="flutter-version-options"
                           />
@@ -564,7 +597,10 @@ export default function FlutterVersionCheckerPage() {
                       <TextInput
                         id="dart-version-input"
                         value={dartQuery}
-                        onChange={setDartQuery}
+                        onChange={(value) => {
+                          setDartQuery(value);
+                          setInputRevision((revision) => revision + 1);
+                        }}
                         placeholder="Select Dart version"
                         list="dart-version-options"
                       />

@@ -9,7 +9,7 @@ import { ReleaseTable, ReleaseTableSkeleton } from "../components/ReleaseTable";
 import { Pagination } from "../components/Pagination";
 import { Footer } from "../components/Footer";
 import type { Channel } from "../types/release";
-import { trackEvent, trackView } from "../lib/analytics";
+import { trackEvent } from "../lib/analytics";
 
 const PER_PAGE = 10;
 
@@ -49,10 +49,6 @@ export default function HomePage() {
 
   useEffect(() => {
     if (!selectedVersion) return;
-    trackView(`/release/${selectedVersion}/`, {
-      source: "spa_query",
-      version: selectedVersion,
-    });
     trackEvent("Release Deep Link Viewed", { version: selectedVersion });
   }, [selectedVersion]);
 
@@ -61,7 +57,7 @@ export default function HomePage() {
     if (!query) return;
     const timer = window.setTimeout(() => {
       trackEvent("Release Search", {
-        query: query.slice(0, 80),
+        query: /^(?:v?\d[\w.+-]*|main|stable|beta|dev|hotfix)$/i.test(query) ? query.slice(0, 80) : undefined,
         length: query.length,
         result_count: total,
       });
