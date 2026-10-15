@@ -39,6 +39,10 @@ test traffic into the production property.
 
 ## Event Taxonomy
 
+Homepage latest-stable downloads use `download_click` with
+`location=homepage_latest_stable`; the older-version link uses `navigation_click`
+with the same location. Static HTML retains its existing delegated tracking.
+
 | Event | Purpose |
 |---|---|
 | `navigation_click` | Header, footer, hero, and internal page navigation |

@@ -42,7 +42,15 @@ function responseHeaders(response, negotiated = false) {
   return headers;
 }
 
-function missing(request) {
+async function missing(request, env) {
+  if (!prefersMarkdown(request.headers.get('Accept')) && !new URL(request.url).pathname.endsWith('.md')) {
+    const url = new URL('/404.html', request.url);
+    const asset = await env.ASSETS.fetch(new Request(url, { method: request.method, headers: { Accept: 'text/html' } }));
+    return new Response(request.method === 'HEAD' ? null : asset.body, {
+      status: 404,
+      headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 'X-Robots-Tag': 'noindex' },
+    });
+  }
   return new Response(request.method === 'HEAD' ? null : 'Not found\n', {
     status: 404,
     headers: {
@@ -60,7 +68,7 @@ export function createMarkdownWorker(routes, redirects = {}, discoveryLinks = ''
       if (request.method !== 'GET' && request.method !== 'HEAD') return env.ASSETS.fetch(request);
       const url = new URL(request.url);
       const pathname = normalizedPath(url.pathname);
-      if (!pathname) return missing(request);
+      if (!pathname) return missing(request, env);
 
       let target = Object.hasOwn(redirects, pathname) ? redirects[pathname] : null;
       if (!target && pathname === '/index.html') target = '/';
@@ -74,7 +82,7 @@ export function createMarkdownWorker(routes, redirects = {}, discoveryLinks = ''
       const negotiated = Object.hasOwn(routes, pathname);
       const directMarkdown = markdownFiles.has(pathname);
       if (!negotiated && !directMarkdown) {
-        if (pathname.startsWith('/release/') || pathname.endsWith('.md')) return missing(request);
+        if (pathname.startsWith('/release/') || pathname.endsWith('.md')) return missing(request, env);
         return env.ASSETS.fetch(request);
       }
 
@@ -90,7 +98,7 @@ export function createMarkdownWorker(routes, redirects = {}, discoveryLinks = ''
       headers.set('Accept', markdown ? 'text/markdown' : 'text/html');
       const asset = await env.ASSETS.fetch(new Request(assetUrl, { method: request.method, headers }));
       if (markdown && asset.status === 200 && !(asset.headers.get('Content-Type') || '').startsWith('text/markdown')) {
-        return missing(request);
+        return missing(request, env);
       }
       const outputHeaders = responseHeaders(asset, negotiated);
       if (markdown) {

@@ -8,6 +8,7 @@ import FaqPage from "./pages/faq";
 import ChangelogPage from "./pages/changelog";
 import ApiDocsPage from "./pages/api-docs";
 import LegalPage from "./pages/legal";
+import NotFoundPage from "./pages/not-found";
 
 function ReleaseRedirect() {
   useEffect(() => {
@@ -27,6 +28,7 @@ function ReleaseRedirect() {
 }
 
 function App() {
+  if (document.querySelector('meta[name="page-status"][content="404"]')) return <NotFoundPage />;
   return (
     <Switch>
       <Route path="/privacy-policy/">{() => <LegalPage slug="privacy-policy" />}</Route>
@@ -48,6 +50,7 @@ function App() {
       <Route path="/flutter-versions/" component={FlutterVersions} />
       <Route path="/flutter-versions" component={FlutterVersions} />
       <Route path="/" component={Index} />
+      <Route component={NotFoundPage} />
     </Switch>
   );
 }

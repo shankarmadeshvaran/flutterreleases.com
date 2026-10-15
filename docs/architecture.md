@@ -17,6 +17,15 @@ Flutter SDK archive + official Flutter/GitHub sources
 
 ## Application and Routing
 
+Unknown public paths use the generated top-level `404.html`, with HTTP 404 and
+links to existing resources. Shared recovery copy lives in `data/not-found.json`;
+the React fallback reuses Header, Footer and global theme state. The generated
+error marker prevents release routes from redirecting a missing version to the
+homepage after JavaScript starts. The page is excluded from the sitemap and has
+no preferred-page URL tag. Vite's development fallback cannot prove HTTP status;
+test this behavior with local Pages. `/release` and `/release/` are explicit 301
+aliases to `/flutter-versions/`, not missing pages.
+
 The frontend is a React 19 and Vite application using Wouter. SPA routes provide the interactive experience, including filtering, release expansion, theme switching, blog navigation, FAQ, and the Flutter/Dart compatibility checker.
 
 Release loading uses `useReleases`; there is no React Query integration, Hono API
@@ -145,6 +154,11 @@ robots response had no injected Cloudflare policy when this was implemented.
 `test:site-pages` validates the source/build match, directives, and crawl access.
 
 ## Validation Boundaries
+
+Homepage latest-stable platform downloads consume canonical release data in
+React, static HTML, and `/index.md`. Missing download URLs are omitted. The
+complete release index retains its URL and links to the versions hub for grouped
+history and older SDK downloads. No extra dataset or crawler workflow is needed.
 
 ### Legal Pages
 

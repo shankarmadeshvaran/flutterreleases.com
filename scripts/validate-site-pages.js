@@ -63,3 +63,34 @@ for (const page of legal.pages) {
   includes(read(path.join(ROOT, 'packages/web/public/_redirects')), `/${page.slug} /${page.slug}/ 301`, 'legal redirect');
 }
 console.log('Legal page validation passed.');
+
+const notFound = read(path.join(DIST_DIR, '404.html'));
+includes(notFound, '<h1>Page not found</h1>', '404 page');
+includes(notFound, '<meta name="robots" content="noindex" />', '404 page');
+assert.ok(!notFound.includes('rel="canonical"'), 'Error page should not canonicalize a missing URL to another page');
+assert.ok(!sitemapXml.includes('/404.html'), 'Error page is not a sitemap entry');
+const recovery = JSON.parse(read(path.join(ROOT, 'packages/web/src/web/data/not-found.json')));
+for (const link of recovery.links) includes(notFound, `href="${link.href}"`, '404 recovery links');
+
+const baseUrl = process.argv.find(arg => arg.startsWith('--base-url='))?.slice('--base-url='.length);
+if (baseUrl) {
+  for (const route of ['/missing-page', '/tools/missing-tool/', '/blog/missing-article/', '/release/not-a-release/']) {
+    for (const method of ['GET', 'HEAD']) {
+      const response = await fetch(`${baseUrl}${route}`, { method, headers: { Accept: 'text/html' }, redirect: 'manual' });
+      assert.equal(response.status, 404, `${method} ${route}`);
+      assert.match(response.headers.get('Content-Type'), /^text\/html/);
+      const body = await response.text();
+      if (method === 'HEAD') assert.equal(body, '');
+      else includes(body, '<h1>Page not found</h1>', route);
+    }
+  }
+  for (const route of ['/release', '/release/']) {
+    const response = await fetch(`${baseUrl}${route}?source=legacy`, { redirect: 'manual' });
+    assert.equal(response.status, 301);
+    const destination = new URL(response.headers.get('Location'), baseUrl);
+    assert.equal(destination.pathname, '/flutter-versions/');
+    assert.equal(destination.search, '?source=legacy');
+  }
+  for (const link of recovery.links) assert.equal((await fetch(`${baseUrl}${link.href}`)).status, 200, link.href);
+  console.log('Live 404 status, recovery links and legacy hub redirects passed.');
+}

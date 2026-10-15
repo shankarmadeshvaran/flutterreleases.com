@@ -4,6 +4,15 @@ Browse Flutter releases, bundled Dart SDK versions, channels, downloads, and off
 
 **Live site:** [flutterreleases.com](https://flutterreleases.com)
 
+The homepage offers latest-stable Windows, macOS, and Linux SDK downloads when
+available in the dataset, plus a link to older versions. Static HTML and Markdown
+derive those downloads from the same data; crawler automation is unchanged.
+
+Unknown URLs return a themed 404 page with links to existing resources rather
+than redirecting to the homepage. `/release` and `/release/` permanently redirect
+to `/flutter-versions/`. Recovery copy is shared in `data/not-found.json`; the
+post-build generator creates `404.html`. Verify status codes with local Pages.
+
 The homepage advertises the API catalog, OpenAPI specification, and API docs
 through HTTP `Link` headers on HTML and negotiated Markdown GET/HEAD responses.
 These links are generated from the existing catalog definitions, with no separate

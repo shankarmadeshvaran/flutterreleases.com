@@ -76,6 +76,17 @@ for (const [html, markdown] of [
 }
 
 const releasePath = `/release/${encodeURIComponent(latest.version)}`;
+for (const route of ['/release', '/release/']) {
+  assert.ok(routing.include.some(rule => rule === route || (rule.endsWith('*') && route.startsWith(rule.slice(0, -1)))), 'Legacy release hub must reach the handler');
+  for (const method of ['GET', 'HEAD']) {
+    for (const accept of ['text/html', 'text/markdown']) {
+      const response = await fetchPage(`${route}?source=legacy`, accept, method);
+      assert.equal(response.status, 301);
+      assert.equal(response.headers.get('Location'), 'https://flutterreleases.com/flutter-versions/?source=legacy');
+      assert.equal(await response.text(), '');
+    }
+  }
+}
 for (const method of ['GET', 'HEAD']) {
   for (const accept of ['', 'text/html', 'text/markdown']) {
     const response = await fetchPage('/?source=test', accept, method);
@@ -102,6 +113,12 @@ const alias = await fetchPage('/release/v1.9.1%20hotfix.4/', 'text/markdown');
 assert.equal(alias.headers.get('Location'), 'https://flutterreleases.com/release/v1.9.1%2Bhotfix.4/');
 assert.equal((await fetchPage('/release/undefined/')).status, 301);
 assert.equal((await fetchPage('/release/not-a-release/')).status, 404);
+const missingHtml = await fetchPage('/release/not-a-release/', 'text/html');
+assert.match(missingHtml.headers.get('Content-Type'), /^text\/html/);
+assert.ok((await missingHtml.text()).includes('<h1>Page not found</h1>'));
+assert.equal(await (await fetchPage('/release/not-a-release/', 'text/html', 'HEAD')).text(), '');
+const missingMarkdown = await fetchPage('/release/not-a-release.md', 'text/markdown');
+assert.match(missingMarkdown.headers.get('Content-Type'), /^text\/plain/);
 assert.equal((await fetchPage('/release/not-a-release.md')).status, 404);
 assert.equal((await fetchPage('/release/%ZZ/')).status, 404);
 assert.equal((await fetchPage(releasePath + '.md/')).status, 301);

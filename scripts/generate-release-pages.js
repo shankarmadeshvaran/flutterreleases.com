@@ -48,6 +48,15 @@ function generateLegalPages(appAssetTags) {
     }));
   }
 }
+
+function generateNotFoundPage(appAssetTags) {
+  const content = JSON.parse(fs.readFileSync(path.join(path.dirname(FAQ_PATH), 'not-found.json'), 'utf8'));
+  const html = buildFaqPageHtml([], appAssetTags, {
+    path: '/404.html', title: content.title, description: content.description, eyebrow: '404',
+    bodyHtml: `<nav class="api-docs" aria-label="Available pages">${content.links.map(link => `<p><a href="${link.href}">${htmlEscape(link.label)} &rarr;</a></p>`).join('')}</nav>`,
+  }).replace(`<link rel="canonical" href="${siteBaseUrl()}/404.html" />`, '<meta name="robots" content="noindex" /><meta name="page-status" content="404" />');
+  safeWrite(path.join(DIST_DIR, '404.html'), html);
+}
 const CHANGELOG_PATH = path.join(process.cwd(), 'packages', 'web', 'src', 'web', 'data', 'changelog.json');
 const BLOG_CONTENT_DIR = path.join(process.cwd(), 'packages', 'web', 'src', 'web', 'content', 'blog');
 
@@ -88,7 +97,7 @@ function generateMarkdownNegotiation(routes) {
   safeWrite(path.join(DIST_DIR, '_worker.js'), `${source}\nexport default createMarkdownWorker(${JSON.stringify(routes)}, ${JSON.stringify(redirects)}, ${JSON.stringify(buildDiscoveryLinkHeader(SITE_URL))});\n`);
   safeWrite(path.join(DIST_DIR, '_routes.json'), JSON.stringify({
     version: 1,
-    include: ['/', '/index.html', '/release/*', '/flutter-versions', '/flutter-versions/',
+    include: ['/', '/index.html', '/release', '/release/*', '/flutter-versions', '/flutter-versions/',
       '/tools/flutter-version-checker', '/tools/flutter-version-checker/', '/faq', '/faq/', '/blog', '/blog/*'],
     exclude: readBlogPosts().map(post => post.image).filter(image => image?.startsWith('/blog/')),
   }, null, 2));
@@ -2282,6 +2291,7 @@ function buildHomeMarkdown(items) {
   if (latestStable) lines.push(`- Latest stable: ${markdownLink(`Flutter ${latestStable.version}`, releaseUrl(latestStable))}${latestStable.dart_version ? ` — Dart ${latestStable.dart_version}` : ''}`);
   if (latestBeta) lines.push(`- Latest beta: ${markdownLink(`Flutter ${latestBeta.version}`, releaseUrl(latestBeta))}${latestBeta.dart_version ? ` — Dart ${latestBeta.dart_version}` : ''}`);
   if (latestDev) lines.push(`- Latest dev/main: ${markdownLink(`Flutter ${latestDev.version}`, releaseUrl(latestDev))}${latestDev.dart_version ? ` — Dart ${latestDev.dart_version}` : ''}`);
+  if (latestStable) lines.push('', ...buildDownloadsMarkdown(latestStable));
   lines.push('', '## Core', '');
   lines.push(`- ${markdownLink('Flutter Versions', `${siteBaseUrl()}/flutter-versions/`)}`);
   lines.push(`- ${markdownLink('Flutter/Dart Compatibility Checker', `${siteBaseUrl()}/tools/flutter-version-checker/`)}`);
@@ -2358,6 +2368,7 @@ function buildHomepageStaticHtml(items) {
         ${latestStable ? `<li><a href="${releasePath(latestStable)}">Latest stable: Flutter ${htmlEscape(latestStable.version)}</a>${latestStable.dart_version ? ` — Dart ${htmlEscape(latestStable.dart_version)}` : ''}${latestStable.released ? ` — ${htmlEscape(latestStable.released)}` : ''}</li>` : ''}
         ${latestBeta ? `<li><a href="${releasePath(latestBeta)}">Latest beta: Flutter ${htmlEscape(latestBeta.version)}</a>${latestBeta.dart_version ? ` — Dart ${htmlEscape(latestBeta.dart_version)}` : ''}${latestBeta.released ? ` — ${htmlEscape(latestBeta.released)}` : ''}</li>` : ''}
       </ul>
+      ${latestStable && Object.values(latestStable.platforms || {}).some(Boolean) ? `<section aria-label="Latest stable downloads"><h2>Download Flutter ${htmlEscape(latestStable.version)} stable</h2>${buildDownloadsHtml(latestStable)}<p>Downloads hosted by Google. <a href="/flutter-versions/">Find older Flutter SDK versions and downloads</a></p></section>` : ''}
       <h2>Latest Stable Releases</h2>
       <ul>
         ${stable.map(release => `<li><a href="${releasePath(release)}">Flutter ${htmlEscape(release.version)}</a>${release.dart_version ? ` — Dart ${htmlEscape(release.dart_version)}` : ''}${release.released ? ` — ${htmlEscape(release.released)}` : ''}</li>`).join('\n        ')}
@@ -2549,6 +2560,7 @@ function buildLinksHtml(items, generatedAt) {
 <body>
   <nav><a href="${baseUrl}/">← Back to FlutterReleases</a></nav>
   <h1>All Flutter Releases</h1>
+  <p><a href="${baseUrl}/flutter-versions/">Browse Flutter SDK version history and find downloads</a> — stable releases grouped by series, bundled Dart versions, and release dates.</p>
   <p class="meta">${canonicalItems.length} canonical release pages &mdash; ${items.length} dataset records &mdash; Generated ${date} &mdash; <a href="${baseUrl}/releases.json">releases.json</a></p>
 ${renderGroup('Stable', stable)}${renderGroup('Beta', beta)}${renderGroup('Dev', dev)}${renderGroup('Main', main_)}
   <footer>
@@ -2766,6 +2778,7 @@ async function run() {
   console.log('Generated faq/index.html');
   if (fs.existsSync(DIST_DIR)) generateApiResources(buildAppAssetTags());
   if (fs.existsSync(DIST_DIR)) generateLegalPages(buildAppAssetTags());
+  if (fs.existsSync(DIST_DIR)) generateNotFoundPage(buildAppAssetTags());
 
   const changelogHtml = buildChangelogPageHtml(changelogItems, buildAppAssetTags());
   if (fs.existsSync(DIST_DIR)) {

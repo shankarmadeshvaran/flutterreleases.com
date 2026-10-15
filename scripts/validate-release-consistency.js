@@ -68,6 +68,15 @@ assert.ok(sourceLinksForRelease(latestStable).length > 0, 'latest stable should 
 const releaseHtml = fs.readFileSync(path.join(distDir, 'release', latestStable.version, 'index.html'), 'utf8');
 const releaseMd = fs.readFileSync(path.join(distDir, 'release', `${latestStable.version}.md`), 'utf8');
 const llmsFull = fs.readFileSync(path.join(distDir, 'llms-full.txt'), 'utf8');
+const homepage = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
+const homepageMd = fs.readFileSync(path.join(distDir, 'index.md'), 'utf8');
+const linksIndex = fs.readFileSync(path.join(distDir, 'links.html'), 'utf8');
+assert.ok(homepage.includes(`Download Flutter ${latestStable.version} stable`), 'homepage downloads should identify the canonical latest stable');
+for (const url of Object.values(latestStable.platforms || {}).filter(Boolean)) {
+  assert.ok(homepage.includes(`href="${url}"`), 'static homepage should expose the canonical download URL');
+  assert.ok(homepageMd.includes(`](${url})`), 'homepage Markdown should expose the same download URL');
+}
+assert.ok(linksIndex.includes('Browse Flutter SDK version history and find downloads'), 'complete release index should link readers to the versions hub');
 
 assert.ok(releaseHtml.includes(`Flutter ${latestStable.version}`), 'release HTML should include latest stable version');
 assert.ok(releaseHtml.includes(`<dt>Dart SDK</dt><dd class="mono">${latestStable.dart_version}</dd>`), 'release HTML should include dataset Dart version');

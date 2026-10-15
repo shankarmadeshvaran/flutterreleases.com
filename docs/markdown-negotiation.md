@@ -41,6 +41,16 @@ automatically apply `_redirects` to Function-handled requests.
 
 ## Negotiation Rules
 
+The legacy hub paths `/release` and `/release/` permanently redirect (301) directly
+to `/flutter-versions/`, preserving query parameters. Both GET and HEAD and both
+HTML and Markdown requests follow this redirect. Exact rules live in public
+`_redirects` and are embedded in the generated handler. Individual version HTML,
+Markdown files, and unknown-version 404 behavior are unchanged.
+Unknown version URLs retain HTTP 404; browsers now receive the generated recovery
+page while missing Markdown remains a plain-text 404. A top-level `dist/404.html`
+also makes Pages return 404 for unknown static paths instead of its implicit SPA
+fallback. The worker scope is not expanded to all requests.
+
 - Absent Accept, browser Accept, and wildcards retain HTML.
 - Explicit Markdown with positive quality is eligible; a higher HTML preference
   selects HTML. Equal preferences select explicit Markdown.

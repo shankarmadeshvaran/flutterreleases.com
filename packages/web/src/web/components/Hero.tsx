@@ -1,5 +1,6 @@
 import type { Release } from "../types/release";
 import { trackEvent } from "../lib/analytics";
+import { Download } from "lucide-react";
 
 interface HeroProps {
   latestStable: Release | undefined;
@@ -22,6 +23,12 @@ function LoadingPill({ width }: { width: string }) {
 }
 
 export function Hero({ latestStable, latestBeta, loading = false }: HeroProps) {
+  const downloads = latestStable ? [
+    { label: "Windows x64", url: latestStable.downloads.windowsX64 },
+    { label: "macOS Apple Silicon", url: latestStable.downloads.macosArm64 },
+    { label: "macOS Intel", url: latestStable.downloads.macosX64 },
+    { label: "Linux x64", url: latestStable.downloads.linuxX64 },
+  ].filter(item => item.url) : [];
   return (
     <div
       className="border-b"
@@ -36,7 +43,7 @@ export function Hero({ latestStable, latestBeta, loading = false }: HeroProps) {
             All Flutter versions in one place
           </h1>
           <p className="text-sm leading-relaxed mb-5" style={{ color: "var(--text-secondary)" }}>
-            Browse Flutter releases with matching Dart SDK versions, download links, and release notes — updated across stable, beta, and dev channels via GitHub Actions.
+            Browse Flutter SDK releases, bundled Dart versions, official downloads, and release notes across stable, beta, and dev channels.
           </p>
 
           {/* Latest release pills */}
@@ -84,6 +91,24 @@ export function Hero({ latestStable, latestBeta, loading = false }: HeroProps) {
               </a>
             )}
           </div>
+
+          {latestStable && downloads.length > 0 && <section aria-labelledby="stable-downloads-heading" className="mb-5">
+            <h2 id="stable-downloads-heading" className="text-sm font-semibold mb-3" style={{ color: "var(--text-primary)" }}>
+              Download Flutter {latestStable.version} stable
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {downloads.map(item => <a key={item.label} href={item.url!} target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded border px-3 py-2 text-xs hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
+                style={{ borderColor: "var(--border)", color: "var(--accent)" }}
+                onClick={() => trackEvent("Download Click", { version: latestStable.version, channel: latestStable.channel, platform: item.label, location: "homepage_latest_stable" })}>
+                <Download size={14} aria-hidden="true" />{item.label}
+              </a>)}
+            </div>
+            <a href="/flutter-versions/" className="inline-block mt-3 text-xs hover:underline" style={{ color: "var(--accent)" }}
+              onClick={() => trackEvent("Navigation Click", { label: "Older Flutter SDK versions", href: "/flutter-versions/", location: "homepage_latest_stable" })}>
+              Find older Flutter SDK versions and downloads
+            </a>
+          </section>}
 
           {/* Trust cues */}
           <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs" style={{ color: "var(--text-muted)" }}>

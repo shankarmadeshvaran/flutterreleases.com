@@ -1,0 +1,11 @@
+{
+  "title": "Page not found",
+  "description": "This page may have moved, or the address may be incorrect.",
+  "links": [
+    { "label": "Go to homepage", "href": "/" },
+    { "label": "Browse Flutter versions", "href": "/flutter-versions/" },
+    { "label": "Check Flutter and Dart compatibility", "href": "/tools/flutter-version-checker/" },
+    { "label": "Read the blog", "href": "/blog/" },
+    { "label": "Visit the FAQ", "href": "/faq/" }
+  ]
+}
