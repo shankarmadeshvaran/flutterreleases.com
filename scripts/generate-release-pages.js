@@ -1869,7 +1869,7 @@ ${rows}
       <div class="right">
         <div class="links">
           <a href="${SITE_URL}/">Home</a>
-          <a href="${SITE_URL}/links.html">All releases</a>
+          <a href="${SITE_URL}/links">All releases</a>
           <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
         </div>
         <button class="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">
@@ -2377,7 +2377,7 @@ function buildHomepageStaticHtml(items) {
       <p><a href="/tools/flutter-version-checker/">Flutter Dart Compatibility Checker</a></p>
       <p><a href="/faq/">FlutterReleases FAQ</a></p>
       <p><a href="/blog/">Flutter Releases Blog</a></p>
-      <p><a href="/links.html">Browse all Flutter releases →</a></p>
+      <p><a href="/links">Browse all Flutter releases →</a></p>
     </div>`;
 }
 
@@ -2544,7 +2544,7 @@ function buildLinksHtml(items, generatedAt) {
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
-  <link rel="canonical" href="${baseUrl}/links.html" />
+  <link rel="canonical" href="${baseUrl}/links" />
   <style>
     body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; line-height: 1.6; }
     a { color: #054D8E; }

@@ -25,6 +25,17 @@ const changelogHtml = read(CHANGELOG_HTML);
 const faqMarkdown = read(FAQ_MD);
 const flutterVersionsMarkdown = read(FLUTTER_VERSIONS_MD);
 const sitemapXml = read(SITEMAP);
+const linksHtml = read(path.join(DIST_DIR, 'links.html'));
+includes(linksHtml, '<link rel="canonical" href="https://flutterreleases.com/links" />', 'release index');
+includes(read(path.join(DIST_DIR, 'index.html')), 'href="/links"', 'homepage release index link');
+const versionsHtml = read(path.join(DIST_DIR, 'flutter-versions', 'index.html'));
+includes(versionsHtml, 'href="https://flutterreleases.com/links"', 'versions hub release index link');
+for (const html of [linksHtml, versionsHtml, read(path.join(DIST_DIR, 'index.html'))]) {
+  assert.ok(!/href="(?:https:\/\/flutterreleases\.com)?\/links\.html"/.test(html), 'Generated links must use the final extensionless release index URL');
+}
+for (const route of ['/links', '/links.html']) {
+  assert.ok(!sitemapXml.includes(`<loc>https://flutterreleases.com${route}</loc>`), 'Helper index sitemap policy should remain unchanged');
+}
 const robotsSource = read(path.join(ROOT, 'packages', 'web', 'public', 'robots.txt'));
 const robotsOutput = read(path.join(DIST_DIR, 'robots.txt'));
 assert.equal(robotsOutput, robotsSource, 'Built robots.txt should preserve the source policy');
@@ -74,6 +85,15 @@ for (const link of recovery.links) includes(notFound, `href="${link.href}"`, '40
 
 const baseUrl = process.argv.find(arg => arg.startsWith('--base-url='))?.slice('--base-url='.length);
 if (baseUrl) {
+  for (const method of ['GET', 'HEAD']) {
+    const response = await fetch(`${baseUrl}/links`, { method, redirect: 'manual' });
+    assert.equal(response.status, 200, `${method} release index must not redirect`);
+    if (method === 'GET') includes(await response.text(), 'rel="canonical" href="https://flutterreleases.com/links"', 'served release index');
+    else assert.equal(await response.text(), '');
+    const alias = await fetch(`${baseUrl}/links.html`, { method, redirect: 'manual' });
+    assert.equal(alias.status, 308, `${method} legacy index alias`);
+    assert.equal(new URL(alias.headers.get('Location'), baseUrl).pathname, '/links');
+  }
   for (const route of ['/missing-page', '/tools/missing-tool/', '/blog/missing-article/', '/release/not-a-release/']) {
     for (const method of ['GET', 'HEAD']) {
       const response = await fetch(`${baseUrl}${route}`, { method, headers: { Accept: 'text/html' }, redirect: 'manual' });

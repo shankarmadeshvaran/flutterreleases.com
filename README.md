@@ -310,7 +310,7 @@ This produces:
 - `dist/sitemap.xml` + `public/sitemap.xml` — canonical indexable HTML URLs only
 - `dist/llms.txt` + `public/llms.txt` — lightweight LLM orientation file
 - `dist/llms-full.txt` + `public/llms-full.txt` — compact LLM knowledge reference
-- `dist/links.html` + `public/links.html` — crawlable full release index (no JS)
+- `dist/links.html` + `public/links.html` — crawlable full release index (no JS), served and canonicalized at `/links`; `/links.html` remains a legacy redirect
 - `dist/feed.xml` + `public/feed.xml` — generated release RSS
 
 Here `dist/` means `packages/web/dist/` and `public/` means `packages/web/public/`. The generator also replaces the built homepage's crawler-readable fallback with dataset-derived content. `--stable-only` is a selective local generation option, not the production deployment mode; it does not filter every hub or sitemap to stable releases.

@@ -90,6 +90,12 @@ The full generator creates release HTML and Markdown, the versions hub, compatib
 
 Do not manually edit generated files such as `feed.xml`, `sitemap.xml`, `links.html`, `llms.txt`, `llms-full.txt`, generated Markdown, or generated route HTML.
 
+The complete release index remains generated as `links.html` in public and dist.
+Cloudflare Pages serves it at `/links`, so its canonical tag and generated internal
+links use `/links`. The legacy `/links.html` alias retains Pages' redirect. This
+helper stays outside the sitemap; crawler data, schedules and release URLs are
+unchanged. `test:site-pages --base-url=...` verifies GET/HEAD delivery and the alias.
+
 ## Automated Release Flow
 
 Workflows use version-pinned `actions/checkout@v7.0.1` and
