@@ -7,9 +7,19 @@
   <link>https://flutterreleases.com</link>
   <description>Browse the latest Flutter releases with matching Dart SDK versions, release notes, and direct download links — updated across stable, beta, and dev channels.</description>
   <language>en-US</language>
-  <pubDate>Thu, 15 Oct 2026 08:19:29 GMT</pubDate>
+  <pubDate>Fri, 16 Oct 2026 09:30:35 GMT</pubDate>
   <ttl>60</ttl>
   
+  <item>
+    <title>Flutter 3.50.0-0.1.pre (beta)</title>
+    <link>https://flutterreleases.com/release/3.50.0-0.1.pre/</link>
+    <guid isPermaLink="false">https://flutterreleases.com/release/3.50.0-0.1.pre/</guid>
+    <pubDate>Wed, 14 Oct 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p><strong>Dart SDK:</strong> 3.14.0</p>
+<p>Released: 2026-10-14</p>]]></description>
+  </item>
+
   <item>
     <title>Flutter 3.47.7 (stable)</title>
     <link>https://flutterreleases.com/release/3.47.7/</link>
@@ -498,16 +508,6 @@
     
     <description><![CDATA[<p><strong>Dart SDK:</strong> 3.12.0</p>
 <p>Released: 2026-02-25</p>]]></description>
-  </item>
-
-  <item>
-    <title>Flutter 3.41.2 (stable)</title>
-    <link>https://flutterreleases.com/release/3.41.2/</link>
-    <guid isPermaLink="false">https://flutterreleases.com/release/3.41.2/</guid>
-    <pubDate>Thu, 19 Feb 2026 00:00:00 GMT</pubDate>
-    
-    <description><![CDATA[<p><strong>Dart SDK:</strong> 3.11.0</p>
-<p>Released: 2026-02-19</p>]]></description>
   </item>
 
 </channel>
