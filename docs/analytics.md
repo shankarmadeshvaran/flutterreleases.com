@@ -1,5 +1,53 @@
 # Analytics
 
+## Minilytics
+
+Minilytics runs alongside GA4, not as a replacement. The single source script tag
+is in `packages/web/index.html`, between `flutterreleases-minilytics` markers:
+
+```html
+<script defer data-website-id="1d3z5p6r4c0h6x1r" src="https://minilytics.flutterreleases.workers.dev/js/script.js"></script>
+```
+
+The full generator copies this block into every generated HTML head exactly
+once, including release pages, the complete index, tools, blog, FAQ, legal and
+404 pages. This works without a GA4 measurement ID. JSON, Markdown, XML, and LLM
+files do not execute analytics. SPA navigation is handled by the vendor script;
+do not add manual pageviews. No CSP is currently configured in this repository;
+if one is added, permit the Minilytics origin in script-src and connect-src.
+
+Declarative `data-ml-goal` attributes track `download_sdk` on homepage/table and
+generated release downloads, `open_compatibility_checker` on entry links, and
+`support_click` on the existing Buy Me a Coffee links. These are clicks, not
+completed downloads, completed checks, or paid support transactions. Existing
+GA4 handlers remain independent; do not sum counts from the two services.
+
+Minilytics is used only for visitor analytics: visits, landing pages, navigation,
+referral sources and goal clicks. It does not identify account users or integrate
+with payments. No custom Minilytics JavaScript calls or browser API types are
+needed for the script and declarative goals.
+
+Use the dashboard's referrer/source breakdown to investigate search, AI
+assistants, Reddit and other social referrals. Classification depends on the
+Minilytics service and the referrer or campaign information the browser provides;
+missing referrers can appear as direct/unknown visits. Do not infer a source
+when that evidence is missing. Use non-sensitive utm_source, utm_medium and
+utm_campaign parameters on links you distribute when more reliable campaign
+identification is needed. Do not put visitor identities in campaign parameters.
+
+Verify a deployed browser visit sends a POST to
+`https://minilytics.flutterreleases.workers.dev/api/event` returning 202 and appears
+in the dashboard. Click a goal and check its event. The script ignores localhost;
+local browser tests should intercept the script with a stub rather than sending
+test visits to production. A temporary data-allow-localhost attribute must never
+ship. `test:analytics` checks every HTML file for exactly one correct tag and
+ensures machine-readable resources remain free of injected scripts. Dashboard
+delivery and cookie/subdomain behavior still require live verification.
+
+The Privacy Policy discloses Minilytics and its first-party cookies. Self-hosting
+does not by itself remove consent obligations; this integration adds no consent
+management and does not establish compliance.
+
 FlutterReleases uses Google Analytics 4 because it has a free dashboard for
 traffic sources, pages, search terms, downloads, outbound links, and custom
 events. The GA script is injected by

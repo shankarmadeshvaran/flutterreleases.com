@@ -84,6 +84,7 @@ export function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
+                      data-ml-goal={link.label === "Support" ? "support_click" : link.href === "/tools/flutter-version-checker/" ? "open_compatibility_checker" : undefined}
                       target={link.external ? "_blank" : undefined}
                       rel={link.external ? "noopener noreferrer" : undefined}
                       onClick={() => trackFooterLink(link.label, link.href, Boolean(link.external))}

@@ -28,6 +28,7 @@ function DownloadChips({ release }: { release: Release }) {
         <a
           key={item.label}
           href={item.url!}
+          data-ml-goal="download_sdk"
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => {
@@ -414,6 +415,7 @@ export function ReleaseTable({ releases, selectedVersion }: ReleaseTableProps) {
                       {release.downloads.macosArm64 && (
                         <a
                           href={release.downloads.macosArm64}
+                          data-ml-goal="download_sdk"
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => {
@@ -436,6 +438,7 @@ export function ReleaseTable({ releases, selectedVersion }: ReleaseTableProps) {
                       {release.downloads.windowsX64 && (
                         <a
                           href={release.downloads.windowsX64}
+                          data-ml-goal="download_sdk"
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => {
@@ -458,6 +461,7 @@ export function ReleaseTable({ releases, selectedVersion }: ReleaseTableProps) {
                       {release.downloads.linuxX64 && (
                         <a
                           href={release.downloads.linuxX64}
+                          data-ml-goal="download_sdk"
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => {

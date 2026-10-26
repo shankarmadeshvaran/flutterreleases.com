@@ -378,7 +378,13 @@ function renderBlogArticleMarkdown(body) {
   return { html: html.join('\n'), toc };
 }
 
+const minilyticsBootstrap = fs.readFileSync(path.join(process.cwd(), 'packages/web/index.html'), 'utf8')
+  .match(/<!-- flutterreleases-minilytics:start -->[\s\S]*?<!-- flutterreleases-minilytics:end -->/)?.[0];
+
 function safeWrite(filePath, content) {
+  if (filePath.endsWith('.html') && minilyticsBootstrap && !content.includes('flutterreleases-minilytics:start')) {
+    content = content.replace('</head>', `${minilyticsBootstrap}\n</head>`);
+  }
   if (filePath.endsWith('.html') && !content.includes('flutterreleases-analytics:start')) {
     const indexPath = path.join(DIST_DIR, 'index.html');
     const indexHtml = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, 'utf8') : '';
@@ -515,7 +521,7 @@ function buildDownloadsHtml(release) {
   const rows = entries.map(([key, url]) => {
     const label = htmlEscape(platformLabel(key));
     const safeUrl = htmlEscape(url);
-    return `<li><a href="${safeUrl}">${label}</a></li>`;
+    return `<li><a href="${safeUrl}" data-ml-goal="download_sdk">${label}</a></li>`;
   }).join('\n          ');
   return `<ul>\n          ${rows}\n        </ul>`;
 }
@@ -860,7 +866,7 @@ function buildBlogPageHtml(posts, appAssetTags = '') {
         <div class="links">
           <a href="${SITE_URL}/">Releases</a>
           <a href="${SITE_URL}/flutter-versions/">Flutter Versions</a>
-          <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
+          <a href="${SITE_URL}/tools/flutter-version-checker/" data-ml-goal="open_compatibility_checker">Compatibility Tool</a>
           <a href="${SITE_URL}/blog/">Blog</a>
         </div>
       </nav>
@@ -1035,7 +1041,7 @@ function buildFaqPageHtml(items, appAssetTags = '', options = {}) {
         <div class="links">
           <a href="${SITE_URL}/">Releases</a>
           <a href="${SITE_URL}/flutter-versions/">Flutter Versions</a>
-          <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
+          <a href="${SITE_URL}/tools/flutter-version-checker/" data-ml-goal="open_compatibility_checker">Compatibility Tool</a>
           <a href="${SITE_URL}/blog/">Blog</a>
           <a href="${SITE_URL}/faq/">FAQ</a>
         </div>
@@ -1191,7 +1197,7 @@ function buildChangelogPageHtml(items, appAssetTags = '') {
         <div class="links">
           <a href="${SITE_URL}/">Releases</a>
           <a href="${SITE_URL}/flutter-versions/">Flutter Versions</a>
-          <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
+          <a href="${SITE_URL}/tools/flutter-version-checker/" data-ml-goal="open_compatibility_checker">Compatibility Tool</a>
           <a href="${SITE_URL}/blog/">Blog</a>
         </div>
       </nav>
@@ -1395,7 +1401,7 @@ function buildBlogArticlePageHtml(article, generatedAt) {
       <div class="links">
         <a href="${SITE_URL}/">Releases</a>
         <a href="${SITE_URL}/flutter-versions/">Flutter Versions</a>
-        <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
+        <a href="${SITE_URL}/tools/flutter-version-checker/" data-ml-goal="open_compatibility_checker">Compatibility Tool</a>
         <a href="${SITE_URL}/blog/">Blog</a>
       </div>
     </nav>
@@ -1615,7 +1621,7 @@ function buildVersionCheckerPageHtml(items, generatedAt, appAssetTags = '') {
       <div class="links">
         <a href="${SITE_URL}/">Releases</a>
         <a href="${SITE_URL}/flutter-versions/">Flutter Versions</a>
-        <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
+        <a href="${SITE_URL}/tools/flutter-version-checker/" data-ml-goal="open_compatibility_checker">Compatibility Tool</a>
       </div>
     </nav>
   </header>
@@ -1870,7 +1876,7 @@ ${rows}
         <div class="links">
           <a href="${SITE_URL}/">Home</a>
           <a href="${SITE_URL}/links">All releases</a>
-          <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
+          <a href="${SITE_URL}/tools/flutter-version-checker/" data-ml-goal="open_compatibility_checker">Compatibility Tool</a>
         </div>
         <button class="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">
           <svg class="moon" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2115,7 +2121,7 @@ function buildPageHtml(release, items = [], appStylesheetTags = '') {
       <nav class="release-nav-links" aria-label="Primary navigation">
         <a href="${SITE_URL}/">Releases</a>
         <a href="${SITE_URL}/flutter-versions/">Flutter Versions</a>
-        <a href="${SITE_URL}/tools/flutter-version-checker/">Compatibility Tool</a>
+        <a href="${SITE_URL}/tools/flutter-version-checker/" data-ml-goal="open_compatibility_checker">Compatibility Tool</a>
         <a href="${SITE_URL}/blog/">Blog</a>
         <button class="release-theme-toggle" type="button" aria-label="Switch color theme" title="Switch color theme">
           <svg class="moon" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 7.5A9 9 0 1 1 12 3Z"></path></svg>
@@ -2374,7 +2380,7 @@ function buildHomepageStaticHtml(items) {
         ${stable.map(release => `<li><a href="${releasePath(release)}">Flutter ${htmlEscape(release.version)}</a>${release.dart_version ? ` — Dart ${htmlEscape(release.dart_version)}` : ''}${release.released ? ` — ${htmlEscape(release.released)}` : ''}</li>`).join('\n        ')}
       </ul>
       <p><a href="/flutter-versions/">Flutter Versions</a></p>
-      <p><a href="/tools/flutter-version-checker/">Flutter Dart Compatibility Checker</a></p>
+      <p><a href="/tools/flutter-version-checker/" data-ml-goal="open_compatibility_checker">Flutter Dart Compatibility Checker</a></p>
       <p><a href="/faq/">FlutterReleases FAQ</a></p>
       <p><a href="/blog/">Flutter Releases Blog</a></p>
       <p><a href="/links">Browse all Flutter releases →</a></p>

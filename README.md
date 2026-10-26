@@ -48,7 +48,7 @@ Contributor entry points: [CONTRIBUTING.md](CONTRIBUTING.md) · [AI agent instru
 | Build | Bun workspaces + Turborepo; explicit application/Vite TypeScript checks |
 | Deploy | Static assets and a scoped Pages Function via GitHub Actions and `npx --yes wrangler@4` |
 | Data pipeline | Node.js scripts; automation uses Node 24 |
-| Analytics | Optional build-time GA4 injection and existing event helpers |
+| Analytics | Minilytics across all HTML pages, plus optional GA4 injection and existing event helpers |
 
 ---
 
@@ -440,12 +440,12 @@ The crawler uses GitHub's automatically supplied `GITHUB_TOKEN`; no personal-tok
 
 | Variable | Purpose |
 |---|---|
-| `VITE_GA_MEASUREMENT_ID` | GA4 web stream measurement ID such as `G-XXXXXXXXXX`; when omitted, no analytics script is injected |
+| `VITE_GA_MEASUREMENT_ID` | GA4 web stream measurement ID such as `G-XXXXXXXXXX`; when omitted, GA4 is disabled (Minilytics remains enabled) |
 | `INDEXNOW_KEY` | Optional secret or repository variable when rotating the public IndexNow key; also publish its matching root key file |
 
 GA4 custom events are documented in [docs/analytics.md](docs/analytics.md). Register useful event parameters such as `version`, `channel`, `platform`, `location`, `label`, `href`, and `result_count` as custom dimensions in GA4 if you want to use them in reports and explorations.
 
-`VITE_GA_MEASUREMENT_ID` may be configured as either a GitHub Actions secret or repository variable. When it is omitted, the build leaves analytics code inactive.
+`VITE_GA_MEASUREMENT_ID` may be configured as either a GitHub Actions secret or repository variable. When it is omitted, the build leaves GA4 inactive. Minilytics is configured by the public script tag in `packages/web/index.html` and requires no secret. See [analytics](docs/analytics.md) for visitor/referral analytics, goals and verification.
 
 ### Cloudflare Pages headers
 

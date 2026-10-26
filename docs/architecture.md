@@ -58,6 +58,13 @@ for Accept handling, caching, Function quotas, and deployment validation.
 
 ## Data Ownership
 
+Analytics is separate from release-data ownership. The Minilytics script in
+`packages/web/index.html` is copied by the full generator into every HTML head,
+independently of optional GA4 injection. No analytics is injected into JSON,
+Markdown, RSS, sitemap, or LLM files. Both normal and crawler deployments use the
+same build/generator path, so new releases receive tracking automatically without
+workflow or dataset changes. See [analytics.md](analytics.md) for goals and limits.
+
 | Concern | Owning files |
 |---|---|
 | Release discovery and verification | `scripts/crawl-releases.js`, `docs/crawler.md` |

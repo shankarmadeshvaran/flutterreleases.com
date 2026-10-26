@@ -97,7 +97,7 @@ export function Hero({ latestStable, latestBeta, loading = false }: HeroProps) {
               Download Flutter {latestStable.version} stable
             </h2>
             <div className="flex flex-wrap gap-2">
-              {downloads.map(item => <a key={item.label} href={item.url!} target="_blank" rel="noopener noreferrer"
+              {downloads.map(item => <a key={item.label} href={item.url!} data-ml-goal="download_sdk" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded border px-3 py-2 text-xs hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
                 style={{ borderColor: "var(--border)", color: "var(--accent)" }}
                 onClick={() => trackEvent("Download Click", { version: latestStable.version, channel: latestStable.channel, platform: item.label, location: "homepage_latest_stable" })}>
@@ -127,6 +127,7 @@ export function Hero({ latestStable, latestBeta, loading = false }: HeroProps) {
             </a>
             <a
               href="/tools/flutter-version-checker/"
+              data-ml-goal="open_compatibility_checker"
               onClick={() => trackEvent("Navigation Click", {
                 label: "Flutter Dart Compatibility Checker",
                 href: "/tools/flutter-version-checker/",

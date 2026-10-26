@@ -66,6 +66,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
             <a
               key={item.label}
               href={item.href}
+              data-ml-goal={item.href === "/tools/flutter-version-checker/" ? "open_compatibility_checker" : undefined}
               target={item.external ? "_blank" : undefined}
               rel={item.external ? "noopener noreferrer" : undefined}
               onClick={() =>
@@ -94,6 +95,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
         <div className="flex items-center gap-2">
           <a
             href="https://buymeacoffee.com/shankarmadeshvaran"
+            data-ml-goal="support_click"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() =>

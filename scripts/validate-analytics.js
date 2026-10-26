@@ -20,10 +20,26 @@ for (const file of files) {
   const html = fs.readFileSync(file, 'utf8');
   const tags = html.match(/googletagmanager\.com\/gtag\/js/g) || [];
   assert.equal(tags.length, enabled ? 1 : 0, `${file}: GA4 bootstrap count`);
+  const minilytics = [...html.matchAll(/<script\b([^>]*\bsrc="https:\/\/minilytics\.flutterreleases\.workers\.dev\/js\/script\.js"[^>]*)><\/script>/g)];
+  assert.equal(minilytics.length, 1, `${file}: Minilytics must load once, independently of GA4`);
+  assert.ok(html.indexOf(minilytics[0][0]) < html.indexOf('</head>'), `${file}: Minilytics must be in the head`);
+  assert.match(minilytics[0][1], /\bdefer\b/);
+  assert.match(minilytics[0][1], /data-website-id="1d3z5p6r4c0h6x1r"/);
+  assert.ok(!minilytics[0][1].includes('data-allow-localhost'), 'Local tracking override must not ship');
   for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)) {
     if (/type="(?:module|application\/ld\+json)"|src=/.test(match[1])) continue;
     new vm.Script(match[2], { filename: file });
   }
+}
+
+const releaseData = JSON.parse(fs.readFileSync(path.join(dist, 'releases.json'), 'utf8'));
+const stable = releaseData.items.find(item => item.channel === 'stable');
+const releasePage = fs.readFileSync(path.join(dist, 'release', stable.version, 'index.html'), 'utf8');
+assert.ok(home.includes('data-ml-goal="download_sdk"'), 'Static homepage downloads have Minilytics goals');
+assert.ok(home.includes('data-ml-goal="open_compatibility_checker"'), 'Static homepage checker CTA has a goal');
+assert.ok(releasePage.includes('data-ml-goal="download_sdk"'), 'Static release downloads have goals');
+for (const resource of ['releases.json', 'feed.xml', 'sitemap.xml', 'index.md', 'llms.txt', 'llms-full.txt']) {
+  assert.ok(!fs.readFileSync(path.join(dist, resource), 'utf8').includes('flutterreleases-minilytics:start'), `${resource}: machine resources must not contain tracking scripts`);
 }
 
 if (enabled) {
