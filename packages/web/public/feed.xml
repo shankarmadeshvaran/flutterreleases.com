@@ -7,9 +7,29 @@
   <link>https://flutterreleases.com</link>
   <description>Browse the latest Flutter releases with matching Dart SDK versions, release notes, and direct download links — updated across stable, beta, and dev channels.</description>
   <language>en-US</language>
-  <pubDate>Fri, 16 Oct 2026 09:30:35 GMT</pubDate>
+  <pubDate>Mon, 26 Oct 2026 17:42:12 GMT</pubDate>
   <ttl>60</ttl>
   
+  <item>
+    <title>Flutter 3.47.8 (stable)</title>
+    <link>https://flutterreleases.com/release/3.47.8/</link>
+    <guid isPermaLink="false">https://flutterreleases.com/release/3.47.8/</guid>
+    <pubDate>Fri, 23 Oct 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p><strong>Dart SDK:</strong> 3.13.7</p>
+<p>Released: 2026-10-23</p>]]></description>
+  </item>
+
+  <item>
+    <title>Flutter 3.50.0-0.2.pre (beta)</title>
+    <link>https://flutterreleases.com/release/3.50.0-0.2.pre/</link>
+    <guid isPermaLink="false">https://flutterreleases.com/release/3.50.0-0.2.pre/</guid>
+    <pubDate>Fri, 23 Oct 2026 00:00:00 GMT</pubDate>
+    
+    <description><![CDATA[<p><strong>Dart SDK:</strong> 3.14.0</p>
+<p>Released: 2026-10-23</p>]]></description>
+  </item>
+
   <item>
     <title>Flutter 3.50.0-0.1.pre (beta)</title>
     <link>https://flutterreleases.com/release/3.50.0-0.1.pre/</link>
@@ -488,26 +508,6 @@
     
     <description><![CDATA[<p><strong>Dart SDK:</strong> 3.11.1</p>
 <p>Released: 2026-03-04</p>]]></description>
-  </item>
-
-  <item>
-    <title>Flutter 3.41.3 (stable)</title>
-    <link>https://flutterreleases.com/release/3.41.3/</link>
-    <guid isPermaLink="false">https://flutterreleases.com/release/3.41.3/</guid>
-    <pubDate>Wed, 04 Mar 2026 00:00:00 GMT</pubDate>
-    
-    <description><![CDATA[<p><strong>Dart SDK:</strong> 3.11.1</p>
-<p>Released: 2026-03-04</p>]]></description>
-  </item>
-
-  <item>
-    <title>Flutter 3.42.0-0.1.pre (beta)</title>
-    <link>https://flutterreleases.com/release/3.42.0-0.1.pre/</link>
-    <guid isPermaLink="false">https://flutterreleases.com/release/3.42.0-0.1.pre/</guid>
-    <pubDate>Wed, 25 Feb 2026 00:00:00 GMT</pubDate>
-    
-    <description><![CDATA[<p><strong>Dart SDK:</strong> 3.12.0</p>
-<p>Released: 2026-02-25</p>]]></description>
   </item>
 
 </channel>

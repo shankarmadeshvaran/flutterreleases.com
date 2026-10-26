@@ -1,28 +1,14 @@
 {
   "status": "ok",
-  "generated_at": "2026-10-16T09:30:35.787Z",
+  "generated_at": "2026-10-26T17:42:12.622Z",
   "counts": {},
   "channels": {
-    "main": {
-      "total": 1,
-      "verified": 1
-    },
-    "beta": {
-      "total": 216,
-      "verified": 216
-    },
-    "stable": {
-      "total": 194,
-      "verified": 194
-    },
     "dev": {
-      "total": 1,
+      "total": 7,
       "verified": 0
     }
   },
-  "errors": [
-    "Manifest discovery returned no items; reused canonical releases.json"
-  ],
-  "feed_count": 412,
-  "count": 412
+  "errors": [],
+  "feed_count": 414,
+  "count": 414
 }
