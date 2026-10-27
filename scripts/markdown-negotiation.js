@@ -61,10 +61,38 @@ async function missing(request, env) {
   });
 }
 
+export function reportBotRequest(request, env, ctx) {
+  const ua = request.headers.get('User-Agent') || '';
+  if (!env.MINILYTICS_SITE_API_KEY || !ctx || !['GET', 'HEAD'].includes(request.method)
+    || !/bot|crawl|spider|slurp|facebookexternalhit|embedly|quora link preview|whatsapp|telegram|discord|preview|headless|phantom|puppeteer|playwright|selenium|lighthouse|pingdom|uptime|monitor|curl|wget|python|axios|node-fetch|go-http|java\/|okhttp|httpclient|vercel|chatgpt-user|claude-user|perplexity|bytespider|ahrefs|semrush|mj12|dotbot/i.test(ua)) return;
+  const url = new URL(request.url);
+  // Production only. Never report query strings, credentials, fragments or IPs.
+  if (url.hostname !== 'flutterreleases.com' && url.hostname !== 'www.flutterreleases.com') return;
+  url.search = '';
+  url.hash = '';
+  url.username = '';
+  url.password = '';
+  ctx.waitUntil((async () => {
+    try {
+      const response = await fetch('https://minilytics.flutterreleases.workers.dev/api/v1/bots', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${env.MINILYTICS_SITE_API_KEY}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url.href, user_agent: ua.slice(0, 1024) }),
+        signal: AbortSignal.timeout(3000),
+      });
+      if (response.body) await response.body.cancel();
+      if (!response.ok) console.warn('Bot reporting rejected', response.status);
+    } catch {
+      console.warn('Bot reporting unavailable');
+    }
+  })());
+}
+
 export function createMarkdownWorker(routes, redirects = {}, discoveryLinks = '') {
   const markdownFiles = new Set(Object.values(routes));
   return {
-    async fetch(request, env) {
+    async fetch(request, env, ctx) {
+      reportBotRequest(request, env, ctx);
       if (request.method !== 'GET' && request.method !== 'HEAD') return env.ASSETS.fetch(request);
       const url = new URL(request.url);
       const pathname = normalizedPath(url.pathname);

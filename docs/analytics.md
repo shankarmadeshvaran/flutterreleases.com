@@ -2,6 +2,30 @@
 
 ## Minilytics
 
+### Server-side crawler reporting
+
+The generated Pages handler reports crawler GET/HEAD requests in the background
+to Minilytics `/api/v1/bots`. Set the **production Pages secret**
+`MINILYTICS_SITE_API_KEY` to the Flutter Releases site's API key from Minilytics
+Settings. Never put this key in a Vite variable or generated assets. The secret
+persists across normal and crawler deployments.
+
+Reporting runs only on `flutterreleases.com` and `www.flutterreleases.com`, uses
+user-agent claims rather than verified identities, strips query strings, and
+sends no IPs or cookies. It times out after three seconds, never retries, and
+does not delay or fail the page response. Missing configuration disables it.
+The handler covers existing negotiated pages plus direct Markdown, release JSON,
+feeds, robots, LLM files and the complete index. Images and scripts stay static.
+Each incoming GET or HEAD counts separately, including redirects. Requests blocked
+by Cloudflare or outside the handler's routes are not counted, so counts differ
+from Cloudflare analytics. Historical traffic is not imported.
+
+Run `node scripts/validate-bot-reporting.js` and the Markdown negotiation checks.
+Test the generated handler with `wrangler pages dev`; preview/localhost requests
+must not report to production. Verify new live crawler requests in Minilytics.
+
+### Browser tracking
+
 Minilytics runs alongside GA4, not as a replacement. The single source script tag
 is in `packages/web/index.html`, between `flutterreleases-minilytics` markers:
 

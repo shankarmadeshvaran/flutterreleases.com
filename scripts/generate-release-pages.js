@@ -98,7 +98,9 @@ function generateMarkdownNegotiation(routes) {
   safeWrite(path.join(DIST_DIR, '_routes.json'), JSON.stringify({
     version: 1,
     include: ['/', '/index.html', '/release', '/release/*', '/flutter-versions', '/flutter-versions/',
-      '/tools/flutter-version-checker', '/tools/flutter-version-checker/', '/faq', '/faq/', '/blog', '/blog/*'],
+      '/tools/flutter-version-checker', '/tools/flutter-version-checker/', '/faq', '/faq/', '/blog', '/blog/*',
+      '/index.md', '/flutter-versions.md', '/flutter-dart-compatibility.md', '/faq.md', '/blog.md',
+      '/releases.json', '/feed.xml', '/sitemap.xml', '/robots.txt', '/llms.txt', '/llms-full.txt', '/links', '/links.html'],
     exclude: readBlogPosts().map(post => post.image).filter(image => image?.startsWith('/blog/')),
   }, null, 2));
   console.log(`Generated Markdown negotiation worker for ${Object.keys(routes).length} pages`);

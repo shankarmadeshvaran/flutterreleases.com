@@ -29,8 +29,9 @@ the built-in `env.ASSETS` binding. It does not scrape HTML, convert at runtime,
 fetch upstream sources, or create another release database.
 
 Normal and crawler deployment workflows validate the generated handler before
-the existing `wrangler pages deploy` command. No new dependency, secret, binding,
-or paid Cloudflare Markdown-conversion setting is needed. The scheduled crawler,
+the existing `wrangler pages deploy` command. Negotiation needs no secret or paid
+Markdown-conversion setting. Optional bot reporting uses the production Pages
+secret `MINILYTICS_SITE_API_KEY`; see [analytics.md](analytics.md). The scheduled crawler,
 its JSON schema, and discovery logic remain unchanged. New releases are included
 on the next generation/deployment.
 
@@ -80,7 +81,9 @@ rules over these routes without testing representation isolation.
 
 Function routing uses paths rather than Accept headers. Browsers on supported
 routes also invoke the Function. Requests count toward the shared Workers/Pages
-Functions allowance; other static resources remain outside the handler.
+Functions allowance. Bot reporting also routes direct Markdown, releases.json,
+feed.xml, sitemap.xml, robots.txt, llms.txt, llms-full.txt and the complete index
+through the handler, preserving their asset responses. Images and scripts stay static.
 
 Choose fail-open in Pages Runtime settings if static HTML should remain available
 when the allowance is exhausted. Negotiation may temporarily stop in this state;

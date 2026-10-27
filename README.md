@@ -445,7 +445,7 @@ The crawler uses GitHub's automatically supplied `GITHUB_TOKEN`; no personal-tok
 
 GA4 custom events are documented in [docs/analytics.md](docs/analytics.md). Register useful event parameters such as `version`, `channel`, `platform`, `location`, `label`, `href`, and `result_count` as custom dimensions in GA4 if you want to use them in reports and explorations.
 
-`VITE_GA_MEASUREMENT_ID` may be configured as either a GitHub Actions secret or repository variable. When it is omitted, the build leaves GA4 inactive. Minilytics is configured by the public script tag in `packages/web/index.html` and requires no secret. See [analytics](docs/analytics.md) for visitor/referral analytics, goals and verification.
+`VITE_GA_MEASUREMENT_ID` may be configured as either a GitHub Actions secret or repository variable. When it is omitted, the build leaves GA4 inactive. Minilytics browser tracking is configured by the public script tag in `packages/web/index.html`. Server-side bot reporting additionally needs the production Pages secret `MINILYTICS_SITE_API_KEY`. See [analytics](docs/analytics.md) for setup, coverage, goals and verification.
 
 ### Cloudflare Pages headers
 
