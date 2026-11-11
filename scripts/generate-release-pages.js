@@ -473,41 +473,61 @@ function platformLabel(key) {
   return map[key] || key;
 }
 
+function releaseOperatingSystems(release) {
+  const keys = Object.entries(release.platforms || {}).filter(([, url]) => url).map(([key]) => key);
+  const systems = [];
+  if (keys.some(key => key.startsWith('macos'))) systems.push('macOS');
+  if (keys.some(key => key.startsWith('windows'))) systems.push('Windows');
+  if (keys.some(key => key.startsWith('linux'))) systems.push('Linux');
+  return systems;
+}
+
+function joinWithAnd(values) {
+  if (values.length <= 1) return values.join('');
+  return `${values.slice(0, -1).join(', ')} and ${values[values.length - 1]}`;
+}
+
+function releaseNotesUrl(release) {
+  return release.release_notes?.base || release.ref_url || null;
+}
+
 function buildPageTitle(release) {
+  const dart = release.dart_version ? ` — Dart ${release.dart_version}` : '';
   if (release.channel === 'stable') {
-    const dart = release.dart_version ? ` — Dart ${release.dart_version}` : '';
     return `Flutter ${release.version} Release${dart}, Downloads & Release Notes`;
   }
-  const dart = release.dart_version ? ` — Dart ${release.dart_version}` : '';
-  return `Flutter ${release.version}${dart} | FlutterReleases`;
+  return `Flutter ${release.version} ${channelLabel(release.channel)} Release${dart} & Downloads`;
 }
 
 function buildPageDescription(release) {
-  if (release.channel === 'stable') {
-    return `Flutter ${release.version} release details including Dart SDK version, release date, downloads, official sources and release notes.`;
-  }
-  const ch = channelLabel(release.channel);
-  const dart = release.dart_version ? ` Dart SDK ${release.dart_version}.` : '';
-  const date = release.released ? ` Released ${release.released}.` : '';
+  const ch = channelLabel(release.channel).toLowerCase();
+  const date = release.released ? ` published ${formatChangelogDate(release.released)}` : '';
+  const dart = release.dart_version ? ` with Dart ${release.dart_version}` : '';
   const releaseType = String(release.release_type || '').trim();
   const type = releaseType && releaseType.toLowerCase() !== 'release'
-    ? ` ${releaseType} release.`
+    ? ` (${releaseType.toLowerCase()})`
     : '';
-  return `Flutter ${release.version} ${ch} release.${type}${dart}${date} Download for macOS, Linux, and Windows.`;
+  const systems = releaseOperatingSystems(release);
+  const download = systems.length ? `SDK downloads for ${joinWithAnd(systems)}` : '';
+  const notes = releaseNotesUrl(release) ? 'release notes' : '';
+  const extras = [download, notes, 'source links'].filter(Boolean);
+  return `Flutter ${release.version} is a ${ch} release${type}${date}${dart}. Get ${joinWithAnd(extras)}.`;
 }
 
 function buildStructuredData(release, pageUrl) {
+  const systems = releaseOperatingSystems(release);
   const data = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
     name: `Flutter ${release.version}`,
     version: release.version,
     applicationCategory: 'DeveloperApplication',
-    operatingSystem: 'macOS, Windows, Linux',
+    operatingSystem: systems.length ? systems.join(', ') : undefined,
     url: pageUrl,
-    downloadUrl: release.platforms?.macos_arm64 || release.platforms?.macos_x64 || release.platforms?.windows_x64 || null,
+    downloadUrl: release.platforms?.macos_arm64 || release.platforms?.macos_x64 || release.platforms?.windows_x64 || release.platforms?.linux_x64 || undefined,
     softwareVersion: release.version,
     datePublished: release.released || undefined,
+    releaseNotes: releaseNotesUrl(release) || undefined,
     description: buildPageDescription(release),
   };
   if (release.dart_version) {
@@ -797,6 +817,7 @@ function buildBlogPageHtml(posts, appAssetTags = '') {
   <meta property="og:description" content="${htmlEscape(desc)}" />
   <meta property="og:url" content="${pageUrl}" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="FlutterReleases" />
   <meta property="og:image" content="${SITE_URL}/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${htmlEscape(title)}" />
@@ -969,6 +990,7 @@ function buildFaqPageHtml(items, appAssetTags = '', options = {}) {
   <meta property="og:description" content="${htmlEscape(desc)}" />
   <meta property="og:url" content="${pageUrl}" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="FlutterReleases" />
   <meta property="og:image" content="${SITE_URL}/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${htmlEscape(title)}" />
@@ -1139,6 +1161,7 @@ function buildChangelogPageHtml(items, appAssetTags = '') {
   <meta property="og:description" content="${htmlEscape(desc)}" />
   <meta property="og:url" content="${pageUrl}" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="FlutterReleases" />
   <meta property="og:image" content="${SITE_URL}/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${htmlEscape(title)}" />
@@ -1314,6 +1337,7 @@ function buildBlogArticlePageHtml(article, generatedAt) {
   <meta property="og:description" content="${htmlEscape(desc)}" />
   <meta property="og:url" content="${pageUrl}" />
   <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="FlutterReleases" />
   <meta property="og:image" content="${SITE_URL}/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${htmlEscape(title)}" />
@@ -1549,6 +1573,7 @@ function buildVersionCheckerPageHtml(items, generatedAt, appAssetTags = '') {
   <meta property="og:description" content="Check which Dart SDK version ships with any Flutter release and find Flutter versions compatible with a specific Dart version." />
   <meta property="og:url" content="${pageUrl}" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="FlutterReleases" />
   <meta property="og:image" content="${SITE_URL}/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Flutter &amp; Dart Compatibility Checker | FlutterReleases" />
@@ -1799,6 +1824,7 @@ ${rows}
   <meta property="og:description" content="${htmlEscape(seoDescription)}" />
   <meta property="og:url" content="${pageUrl}" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="FlutterReleases" />
   <meta property="og:image" content="${SITE_URL}/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${htmlEscape(seoTitle)}" />
@@ -2011,6 +2037,7 @@ function buildPageHtml(release, items = [], appStylesheetTags = '') {
   <meta property="og:description" content="${htmlEscape(desc)}" />
   <meta property="og:url" content="${htmlEscape(pageUrl)}" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="FlutterReleases" />
   <meta property="og:image" content="${SITE_URL}/og-image.png" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />

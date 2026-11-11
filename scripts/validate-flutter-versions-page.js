@@ -191,7 +191,7 @@ assertIncludes(
 );
 assertIncludes(
   releaseHtml,
-  `Flutter ${latestStable.version} release details including Dart SDK version, release date, downloads, official sources and release notes.`,
+  `Flutter ${latestStable.version} is a stable release`,
   `stable release meta description for ${latestStable.version}`
 );
 assertIncludes(
