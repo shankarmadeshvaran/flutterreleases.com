@@ -186,7 +186,7 @@ assert.ok(
 );
 assertIncludes(
   releaseHtml,
-  `Flutter ${latestStable.version} Release — Dart ${latestStable.dart_version}, Downloads &amp; Release Notes`,
+  `Flutter ${latestStable.version} — Dart ${latestStable.dart_version}, Downloads &amp; Release Notes`,
   `stable release title for ${latestStable.version}`
 );
 assertIncludes(
@@ -211,6 +211,19 @@ assertIncludes(
   `<link rel="alternate" type="text/markdown" href="${SITE_URL}/release/${encodeURIComponent(latestStable.version)}.md" />`,
   `Markdown alternate for ${latestStable.version}`
 );
+assertIncludes(releaseHtml, '<h2>Release timeline</h2>', `release timeline for ${latestStable.version}`);
+assertIncludes(
+  releaseHtml,
+  'This is the newest stable Flutter release in the data.',
+  `latest stable timeline fact for ${latestStable.version}`
+);
+if (previousStable) {
+  assertIncludes(
+    releaseHtml,
+    `the previous stable release, <a href="${SITE_URL}/release/${encodeURIComponent(previousStable.version)}/">Flutter ${previousStable.version}</a>`,
+    `timeline previous stable link for ${latestStable.version}`
+  );
+}
 assertIncludes(releaseHtml, '<h2>Sources</h2>', `sources section for ${latestStable.version}`);
 assertIncludes(releaseHtml, 'Flutter SDK Archive', `source link for ${latestStable.version}`);
 

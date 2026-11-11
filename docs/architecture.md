@@ -123,6 +123,15 @@ The daily schedule runs at 06:17 UTC (11:47 IST):
 
 The generators use dataset-derived selectors, so a newly crawled release automatically appears in the homepage data, release pages, version history, compatibility data, RSS, sitemap, Markdown, and LLM files on the next successful build. Contributors should not add a second update path for a new representation.
 
+## Release Page Content
+
+Release pages include a "Release timeline" section and archive file names under
+Downloads. Every timeline fact (series position, gap from the previous release in
+the channel, Dart change, first stable of the series, latest patch, newest release
+in the channel, Git tag and revisions) is computed from `releases.json` in
+`buildReleaseTimelineFacts`, and is shared by the HTML page and its Markdown
+alternate. Facts whose inputs are missing are omitted.
+
 ## Provenance and Unknown Data
 
 Published facts should be verified by an authoritative source or mechanically derived from authoritative structured data. Trusted sources are the Flutter SDK archive, Flutter documentation, the Flutter GitHub repository, and official Dart sources where available.

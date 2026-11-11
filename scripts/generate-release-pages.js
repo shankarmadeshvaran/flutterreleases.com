@@ -494,7 +494,7 @@ function releaseNotesUrl(release) {
 function buildPageTitle(release) {
   const dart = release.dart_version ? ` — Dart ${release.dart_version}` : '';
   if (release.channel === 'stable') {
-    return `Flutter ${release.version} Release${dart}, Downloads & Release Notes`;
+    return `Flutter ${release.version}${dart}, Downloads & Release Notes`;
   }
   return `Flutter ${release.version} ${channelLabel(release.channel)} Release${dart} & Downloads`;
 }
@@ -543,7 +543,9 @@ function buildDownloadsHtml(release) {
   const rows = entries.map(([key, url]) => {
     const label = htmlEscape(platformLabel(key));
     const safeUrl = htmlEscape(url);
-    return `<li><a href="${safeUrl}" data-ml-goal="download_sdk">${label}</a></li>`;
+    const fileName = archiveFileName(url);
+    const fileHtml = fileName ? ` <span class="mono">${htmlEscape(fileName)}</span>` : '';
+    return `<li><a href="${safeUrl}" data-ml-goal="download_sdk">${label}</a>${fileHtml}</li>`;
   }).join('\n          ');
   return `<ul>\n          ${rows}\n        </ul>`;
 }
@@ -568,6 +570,159 @@ function buildSourcesHtml(release) {
         ${sources.map(source => `<li><a href="${htmlEscape(source.url)}" target="_blank" rel="noopener noreferrer">${htmlEscape(source.label)}</a></li>`).join('\n        ')}
       </ul>
     </section>`;
+}
+
+function daysBetween(fromDate, toDate) {
+  if (!fromDate || !toDate) return null;
+  const from = Date.parse(`${fromDate}T00:00:00Z`);
+  const to = Date.parse(`${toDate}T00:00:00Z`);
+  if (Number.isNaN(from) || Number.isNaN(to)) return null;
+  return Math.round((to - from) / 86400000);
+}
+
+function pluralDays(count) {
+  return `${count} day${count === 1 ? '' : 's'}`;
+}
+
+function ordinal(value) {
+  const mod100 = value % 100;
+  if (mod100 >= 11 && mod100 <= 13) return `${value}th`;
+  return `${value}${({ 1: 'st', 2: 'nd', 3: 'rd' })[value % 10] || 'th'}`;
+}
+
+function archiveFileName(url) {
+  try {
+    return decodeURIComponent(new URL(url).pathname.split('/').pop() || '');
+  } catch {
+    return '';
+  }
+}
+
+/**
+ * Release timeline facts mechanically derived from the canonical dataset.
+ * Each fact is a list of parts: plain strings or { label, release } links,
+ * so HTML and Markdown share one source of wording.
+ */
+function buildReleaseTimelineFacts(release, items) {
+  const facts = [];
+  const label = channelLabel(release.channel).toLowerCase();
+  const byTime = (a, b) => releaseTime(a) - releaseTime(b);
+  const channelReleases = items.filter(item => item.channel === release.channel).sort(byTime);
+  const index = channelReleases.findIndex(item => item.version === release.version);
+  const previous = index > 0 ? channelReleases[index - 1] : null;
+  const latestInChannel = channelReleases[channelReleases.length - 1] || null;
+  const series = semverGroup(release.version);
+  const date = value => formatChangelogDate(value);
+
+  if (series && release.channel !== 'main') {
+    const seriesReleases = channelReleases.filter(item => semverGroup(item.version) === series);
+    const position = seriesReleases.findIndex(item => item.version === release.version) + 1;
+    const first = seriesReleases[0];
+    const last = seriesReleases[seriesReleases.length - 1];
+    if (position > 0 && seriesReleases.length > 1) {
+      const range = first.released && last.released
+        ? `, published between ${date(first.released)} and ${date(last.released)}`
+        : '';
+      facts.push([`This is the ${ordinal(position)} of ${seriesReleases.length} ${label} releases in the Flutter ${series} series${range}.`]);
+    } else if (position > 0) {
+      facts.push([`This is the only ${label} release in the Flutter ${series} series.`]);
+    }
+  }
+
+  if (previous) {
+    const gap = daysBetween(previous.released, release.released);
+    const when = gap !== null && gap >= 0
+      ? `${gap === 0 ? 'on the same day as' : `${pluralDays(gap)} after`} the previous ${label} release, `
+      : `after the previous ${label} release, `;
+    facts.push([`It was published ${when}`, { label: `Flutter ${previous.version}`, release: previous }, previous.released ? ` (${date(previous.released)}).` : '.']);
+    if (release.dart_version && previous.dart_version) {
+      facts.push(release.dart_version === previous.dart_version
+        ? [`The bundled Dart SDK, ${release.dart_version}, is unchanged from `, { label: `Flutter ${previous.version}`, release: previous }, '.']
+        : [`The bundled Dart SDK changed from Dart ${previous.dart_version} in `, { label: `Flutter ${previous.version}`, release: previous }, ` to Dart ${release.dart_version}.`]);
+    }
+  }
+
+  if (series && release.channel !== 'stable' && release.channel !== 'main') {
+    const seriesStable = items.filter(item => item.channel === 'stable' && semverGroup(item.version) === series).sort(byTime);
+    const firstStable = seriesStable[0];
+    if (firstStable) {
+      const gap = daysBetween(release.released, firstStable.released);
+      const after = gap !== null && gap > 0 ? `, ${pluralDays(gap)} after this ${label} release` : '';
+      facts.push([`The first stable release of the Flutter ${series} series is `, { label: `Flutter ${firstStable.version}`, release: firstStable }, firstStable.released ? `, published on ${date(firstStable.released)}${after}.` : '.']);
+      const latestStablePatch = seriesStable[seriesStable.length - 1];
+      if (latestStablePatch && latestStablePatch !== firstStable) {
+        facts.push([`The latest stable patch in the series is `, { label: `Flutter ${latestStablePatch.version}`, release: latestStablePatch }, latestStablePatch.released ? ` (${date(latestStablePatch.released)}).` : '.']);
+      }
+    } else {
+      facts.push([`No stable Flutter ${series} release appears in the release data.`]);
+    }
+  }
+
+  if (series && release.channel === 'stable') {
+    const seriesStable = channelReleases.filter(item => semverGroup(item.version) === series);
+    const latestPatch = seriesStable[seriesStable.length - 1];
+    if (latestPatch && latestPatch.version !== release.version) {
+      facts.push([`The latest patch release in the Flutter ${series} series is `, { label: `Flutter ${latestPatch.version}`, release: latestPatch }, latestPatch.released ? ` (${date(latestPatch.released)}).` : '.']);
+    } else if (seriesStable.length > 1) {
+      facts.push([`This is the latest patch release in the Flutter ${series} series.`]);
+    }
+  }
+
+  if (latestInChannel && latestInChannel.version !== release.version && release.channel !== 'main') {
+    facts.push([`The newest ${label} release in the data is `, { label: `Flutter ${latestInChannel.version}`, release: latestInChannel }, latestInChannel.released ? `, published on ${date(latestInChannel.released)}.` : '.']);
+  } else if (latestInChannel && release.channel !== 'main') {
+    facts.push([`This is the newest ${label} Flutter release in the data.`]);
+  }
+
+  if (release.channel === 'main') {
+    const latestStable = getLatestStable(items);
+    const latestBeta = getLatestBeta(items);
+    if (release.released) facts.push([`The main channel entry reflects the flutter/flutter main branch as of ${date(release.released)}.`]);
+    facts.push(['No SDK archive downloads are listed for the main channel.']);
+    if (latestStable) facts.push(['For a published SDK archive, the latest stable release is ', { label: `Flutter ${latestStable.version}`, release: latestStable }, latestStable.dart_version ? ` with Dart ${latestStable.dart_version}.` : '.']);
+    if (latestBeta) facts.push(['The latest beta release is ', { label: `Flutter ${latestBeta.version}`, release: latestBeta }, latestBeta.dart_version ? ` with Dart ${latestBeta.dart_version}.` : '.']);
+  }
+
+  return facts;
+}
+
+function buildReleaseIdentifiers(release) {
+  const rows = [];
+  if (release.git_tag) rows.push(['Git tag', release.git_tag]);
+  if (release.framework_revision) rows.push(['Framework revision', release.framework_revision]);
+  if (release.engine_revision) rows.push(['Engine revision', release.engine_revision]);
+  return rows;
+}
+
+function buildReleaseTimelineHtml(release, items) {
+  const facts = buildReleaseTimelineFacts(release, items);
+  const identifiers = buildReleaseIdentifiers(release);
+  if (!facts.length && !identifiers.length) return '';
+  const factItems = facts.map(parts => `<li>${parts.map(part => typeof part === 'string'
+    ? htmlEscape(part)
+    : `<a href="${releaseUrl(part.release)}">${htmlEscape(part.label)}</a>`).join('')}</li>`);
+  const identifierItems = identifiers.map(([name, value]) => `<li><strong>${htmlEscape(name)}:</strong> <code>${htmlEscape(value)}</code></li>`);
+  return `<section class="release-section">
+          <h2>Release timeline</h2>
+          <ul class="release-list release-timeline">
+            ${[...factItems, ...identifierItems].join('\n            ')}
+          </ul>
+        </section>`;
+}
+
+function buildReleaseTimelineMarkdown(release, items) {
+  const facts = buildReleaseTimelineFacts(release, items);
+  const identifiers = buildReleaseIdentifiers(release);
+  if (!facts.length && !identifiers.length) return [];
+  return [
+    '## Release Timeline',
+    '',
+    ...facts.map(parts => `- ${parts.map(part => typeof part === 'string'
+      ? markdownEscape(part)
+      : markdownLink(part.label, releaseUrl(part.release))).join('')}`),
+    ...identifiers.map(([name, value]) => `- ${name}: \`${value}\``),
+    '',
+  ];
 }
 
 function buildReleaseIntroHtml(release) {
@@ -2010,6 +2165,7 @@ function buildPageHtml(release, items = [], appStylesheetTags = '') {
   const sourcesHtml = buildSourcesHtml(release);
   const releaseIntroHtml = buildReleaseIntroHtml(release);
   const releaseInternalLinksHtml = buildReleaseInternalLinksHtml(release, items);
+  const releaseTimelineHtml = buildReleaseTimelineHtml(release, items);
   const dartDisplay = release.dart_version ? htmlEscape(release.dart_version) : 'N/A';
   const dateDisplay = release.released || 'Unknown';
   const typeDisplay = release.release_type ? htmlEscape(release.release_type) : '';
@@ -2191,6 +2347,7 @@ function buildPageHtml(release, items = [], appStylesheetTags = '') {
           ${downloadsHtml.replace('<ul>', '<ul class="release-list release-downloads">')}
         </section>
         ${requiresHtml ? `<section class="release-section"><h2>System Requirements</h2>${requiresHtml}</section>` : ''}
+        ${releaseTimelineHtml}
         ${releaseInternalLinksHtml.replaceAll('<section>', '<section class="release-section">').replaceAll('<ul>', '<ul class="release-list release-related">')}
       </div>
       <aside aria-label="Release references">
@@ -2239,7 +2396,10 @@ function buildDownloadsMarkdown(release) {
   return [
     '## Downloads',
     '',
-    ...entries.map(([key, url]) => `- ${markdownLink(platformLabel(key), url)}`),
+    ...entries.map(([key, url]) => {
+      const fileName = archiveFileName(url);
+      return `- ${markdownLink(platformLabel(key), url)}${fileName ? ` — \`${fileName}\`` : ''}`;
+    }),
     '',
   ];
 }
@@ -2304,6 +2464,7 @@ function buildReleaseMarkdown(release, items = []) {
   if (release.released) lines.push(`- Released: ${markdownEscape(release.released)}`);
   lines.push('');
   lines.push(...buildDownloadsMarkdown(release));
+  lines.push(...buildReleaseTimelineMarkdown(release, items));
   lines.push(...buildReleaseNotesMarkdown(release));
   lines.push(...buildSourcesMarkdown(release));
   lines.push(...buildRelatedMarkdown(release, items));
