@@ -1,20 +1,20 @@
 {
   "meta": {
-    "generated_at": "2026-11-11T14:20:44.644Z",
+    "generated_at": "2026-11-12T15:13:32.658Z",
     "source": "auto-crawled",
-    "count": 417
+    "count": 419
   },
   "items": [
     {
       "version": "main",
       "channel": "main",
       "release_type": "Development",
-      "released": "2026-11-11",
+      "released": "2026-11-12",
       "dart_version": null,
-      "framework_revision": "b98afb5",
+      "framework_revision": "9c427b5",
       "engine_revision": null,
       "git_tag": null,
-      "build": "b98afb5",
+      "build": "9c427b5",
       "requires": {},
       "platforms": {
         "macos_arm64": null,
@@ -33,7 +33,7 @@
         "web": null,
         "tools": null
       },
-      "ref_url": "https://github.com/flutter/flutter/commit/b98afb52407777ee1b2544b93b064335ed56e340",
+      "ref_url": "https://github.com/flutter/flutter/commit/9c427b5d7b1ce814fd68ddd2d701cb8c2a115707",
       "verified": true,
       "sources": [
         "GitHub flutter/flutter main branch",
@@ -41,8 +41,115 @@
       ],
       "source_urls": {
         "release_notes": "https://github.com/flutter/flutter/commits/main",
-        "github": "https://github.com/flutter/flutter/commit/b98afb52407777ee1b2544b93b064335ed56e340",
+        "github": "https://github.com/flutter/flutter/commit/9c427b5d7b1ce814fd68ddd2d701cb8c2a115707",
         "deps": "https://github.com/flutter/flutter/blob/main/DEPS"
+      }
+    },
+    {
+      "version": "3.50.0",
+      "channel": "stable",
+      "release_type": "Release",
+      "released": "2026-11-11",
+      "dart_version": "3.14.0",
+      "framework_revision": "ab29120",
+      "engine_revision": null,
+      "git_tag": "3.50.0",
+      "build": "ab29120",
+      "requires": {},
+      "platforms": {
+        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.50.0-stable.zip",
+        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_3.50.0-stable.zip",
+        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_3.50.0-stable.zip",
+        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.50.0-stable.tar.xz"
+      },
+      "release_notes": {
+        "base": "https://docs.flutter.dev/release/release-notes/release-notes-3.50.0",
+        "framework": "https://docs.flutter.dev/release/release-notes/release-notes-3.50.0#framework",
+        "material": "https://docs.flutter.dev/release/release-notes/release-notes-3.50.0#material",
+        "ios": "https://docs.flutter.dev/release/release-notes/release-notes-3.50.0#ios",
+        "android": "https://docs.flutter.dev/release/release-notes/release-notes-3.50.0#android",
+        "windows": "https://docs.flutter.dev/release/release-notes/release-notes-3.50.0#windows",
+        "linux": "https://docs.flutter.dev/release/release-notes/release-notes-3.50.0#linux",
+        "web": "https://docs.flutter.dev/release/release-notes/release-notes-3.50.0#web",
+        "tools": null
+      },
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.50.0",
+      "verified": true,
+      "link_status": {
+        "release_notes": {
+          "url": "https://docs.flutter.dev/release/release-notes/release-notes-3.50.0",
+          "ok": true,
+          "source": "flutter-docs-release-notes",
+          "anchor_verified": true
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      },
+      "sources": [
+        "Flutter SDK Archive",
+        "GitHub Tags"
+      ],
+      "source_urls": {
+        "sdk_archive": "https://docs.flutter.dev/release/archive",
+        "release_notes": "https://docs.flutter.dev/release/release-notes/release-notes-3.50.0",
+        "github": "https://github.com/flutter/flutter/releases/tag/3.50.0"
+      }
+    },
+    {
+      "version": "3.51.0-0.1.pre",
+      "channel": "beta",
+      "release_type": "Release",
+      "released": "2026-11-11",
+      "dart_version": "3.15.0",
+      "framework_revision": "d040ef5",
+      "engine_revision": null,
+      "git_tag": "3.51.0-0.1.pre",
+      "build": "d040ef5",
+      "requires": {},
+      "platforms": {
+        "macos_arm64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/macos/flutter_macos_arm64_3.51.0-0.1.pre-beta.zip",
+        "macos_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/macos/flutter_macos_3.51.0-0.1.pre-beta.zip",
+        "windows_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/windows/flutter_windows_3.51.0-0.1.pre-beta.zip",
+        "linux_x64": "https://storage.googleapis.com/flutter_infra_release/releases/beta/linux/flutter_linux_3.51.0-0.1.pre-beta.tar.xz"
+      },
+      "release_notes": {
+        "base": null,
+        "framework": null,
+        "material": null,
+        "ios": null,
+        "android": null,
+        "windows": null,
+        "linux": null,
+        "web": null,
+        "tools": null
+      },
+      "ref_url": "https://github.com/flutter/flutter/releases/tag/3.51.0-0.1.pre",
+      "verified": true,
+      "link_status": {
+        "release_notes": {
+          "url": "https://github.com/flutter/flutter/releases/tag/3.51.0-0.1.pre",
+          "ok": true,
+          "source": "github-release-tag",
+          "anchor_verified": false
+        },
+        "downloads": {
+          "macos_arm64": true,
+          "macos_x64": true,
+          "windows_x64": true,
+          "linux_x64": true
+        }
+      },
+      "sources": [
+        "Flutter SDK Archive",
+        "GitHub Tags"
+      ],
+      "source_urls": {
+        "sdk_archive": "https://docs.flutter.dev/release/archive",
+        "github": "https://github.com/flutter/flutter/releases/tag/3.51.0-0.1.pre"
       }
     },
     {
@@ -133,7 +240,7 @@
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3479",
           "ok": true,
           "source": "flutter-stable-changelog",
-          "anchor_verified": true
+          "anchor_verified": false
         },
         "downloads": {
           "macos_arm64": true,
@@ -240,7 +347,7 @@
           "url": "https://github.com/flutter/flutter/blob/stable/CHANGELOG.md#3478",
           "ok": true,
           "source": "flutter-stable-changelog",
-          "anchor_verified": true
+          "anchor_verified": false
         },
         "downloads": {
           "macos_arm64": true,
