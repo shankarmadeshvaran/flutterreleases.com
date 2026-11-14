@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generated_at": "2026-11-13T14:33:49.619Z",
+    "generated_at": "2026-11-14T13:29:58.992Z",
     "source": "auto-crawled",
     "count": 419
   },
@@ -9,12 +9,12 @@
       "version": "main",
       "channel": "main",
       "release_type": "Development",
-      "released": "2026-11-13",
+      "released": "2026-11-14",
       "dart_version": null,
-      "framework_revision": "bd40044",
+      "framework_revision": "e8ac49a",
       "engine_revision": null,
       "git_tag": null,
-      "build": "bd40044",
+      "build": "e8ac49a",
       "requires": {},
       "platforms": {
         "macos_arm64": null,
@@ -33,7 +33,7 @@
         "web": null,
         "tools": null
       },
-      "ref_url": "https://github.com/flutter/flutter/commit/bd400446b7324ca890d8f7877bf9353aca9357f1",
+      "ref_url": "https://github.com/flutter/flutter/commit/e8ac49ab53c7a5db0c64f8d3664977de6c19f94b",
       "verified": true,
       "sources": [
         "GitHub flutter/flutter main branch",
@@ -41,7 +41,7 @@
       ],
       "source_urls": {
         "release_notes": "https://github.com/flutter/flutter/commits/main",
-        "github": "https://github.com/flutter/flutter/commit/bd400446b7324ca890d8f7877bf9353aca9357f1",
+        "github": "https://github.com/flutter/flutter/commit/e8ac49ab53c7a5db0c64f8d3664977de6c19f94b",
         "deps": "https://github.com/flutter/flutter/blob/main/DEPS"
       }
     },
